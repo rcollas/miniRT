@@ -1,4 +1,10 @@
-//
-// Created by rcollas on 1/18/22.
-//
+#include "miniRT.h"
 
+_Bool	is_valid_extension(char *arg)
+{
+
+}
+
+int parsing(char **argv)
+{
+}
