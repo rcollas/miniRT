@@ -9,9 +9,16 @@
 # include "mlx.h"
 # include "mlx_int.h"
 
-# define TRUE 1
-# define FALSE 0
-# define SUCCESS 0
-# define FAIL 1
+typedef enum s_define {
+	TRUE = 1,
+	FALSE = 0,
+	SUCCESS = 0,
+	FAIL = 1
+}	t_define;
+
+typedef enum s_error {
+	OPEN_ERROR = 255,
+	MALLOC_ERROR = 254,
+}	t_error;
 
 #endif

@@ -12,6 +12,12 @@ MLX_DIR		= ./mlx
 
 MLX_INC		= ./mlx
 
+LIBFT_PATH	=	./libft
+
+LIBFT_LIB	=	libft/libft.a
+
+LIBFT_MAKE	=	$(MAKE) --no-print-directory -C $(LIBFT_PATH)
+
 INC_DIR		= ./incs
 
 INC_FILES	= miniRT.h
@@ -34,14 +40,17 @@ $(OBJS_DIR)/%.o: $(SRC_DIR)/%.c $(INCS)
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-				@$(CC) $(CFLAGS) $^ -o $@ $(MLX_DIR)/libmlx.a -lXext -lX11
+				@$(LIBFT_MAKE)
+				@$(CC) $(CFLAGS) $^ -o $@ $(LIBFT_LIB) $(MLX_DIR)/libmlx.a -lXext -lX11
 				@echo "$(NAME) created"
 
 clean:
+			@make --no-print-directory -C $(LIBFT_PATH) clean
 			@$(RM) $(OBJS) $(OBJS_DIR)
 			@echo "$(NAME) .o deleted"
 
 fclean:		clean
+				@$(RM) $(NAME) $(LIBFT_LIB)
 				@$(RM) $(NAME) $(DEBUG)
 				@echo "$(NAME) deleted"
 
