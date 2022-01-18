@@ -2,7 +2,9 @@ NAME		= miniRT
 
 DEBUG		= philosophers_debug
 
-SRC_FILES	= main.c
+SRC_FILES	= main.c\
+			  parsing/parsing.c\
+			  parsing/parsing_error.c\
 
 OBJS_DIR	= ./objs
 
@@ -20,7 +22,8 @@ LIBFT_MAKE	=	$(MAKE) --no-print-directory -C $(LIBFT_PATH)
 
 INC_DIR		= ./incs
 
-INC_FILES	= miniRT.h
+INC_FILES	= miniRT.h\
+			  libft.h\
 
 OBJS		= $(addprefix $(OBJS_DIR)/, $(SRC_FILES:.c=.o))
 
