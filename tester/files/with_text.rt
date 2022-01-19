@@ -1,0 +1,18 @@
+# File with text
+
+C  0,0,8   0,0,-1   100
+sp 0,0,0   8   216,56,136
+
+A  0.5   255,255,255
+Lorem ipsum dolor sit amet, ligula suspendisse nulla pretium, rhoncus tempor fermentum, enim integer ad
+vestibulum volutpat. Nisl rhoncus turpis est, vel elit, congue wisi enim nunc ultricies sit, magna
+tincidunt. Maecenas aliquam maecenas ligula nostra, accumsan taciti. Sociis mauris in integer, a dolor
+netus non dui aliquet, sagittis felis sodales, dolor sociis mauris, vel eu libero cras. Faucibus at.
+Arcu habitasse elementum est, ipsum purus pede porttitor class, ut adipiscing, aliquet sed auctor,
+imperdiet arcu per diam dapibus libero duis. Enim eros in vel, volutpat nec pellentesque leo, temporibus
+scelerisque nec. Ac dolor ac adipiscing amet bibendum nullam, lacus molestie ut libero nec, diam et,
+pharetra sodales, feugiat ullamcorper id tempor id vitae. Mauris pretium aliquet, lectus tincidunt.
+Porttitor mollis imperdiet libero senectus pulvinar.
+
+L  0,4,4   0.1   255,255,255
+pl 	0,0,0   0,0,1   0,176,240
