@@ -18,7 +18,6 @@ RESET="\033[0m"
 
 #########################     INITIALISATION    ##########################
 
-make
 sum=0
 right=0
 false=0
@@ -27,8 +26,6 @@ SEP="...........................................................................
 TITLE=".............................  START TEST  ............................"
 END="..............................  END TEST  ............................."
 COLS=$(tput cols)
-printf "\n${BLUE}%*s${RESET}\n" $(((${#TITLE} + $COLS) / 2)) "$TITLE"
-printf "\n"
 
 ###########################   TEST FUNCTION   ###########################
 
@@ -66,8 +63,17 @@ function run_test()
 
 #############################       MAIN      ############################
 
-run_test
-printf "\n${BLUE}%*s${RESET}\n\n" $(((${#END} + $COLS) / 2)) "$END"
-RESULT=`echo -e "${GREEN_B}  $right passed,${RESET}${RED_B}  $false failed,${RESET}${WHITE_B}  $sum total  ${RESET}"`
-printf "\n%*s\n\n" $(((${#RESULT} + $COLS) / 2 + 29)) "$RESULT"
-rm miniRT
+make -C ../miniRT
+if [ -f "miniRT" ]
+then
+	printf "\n${BLUE}%*s${RESET}\n" $(((${#TITLE} + $COLS) / 2)) "$TITLE"
+	printf "\n"
+	run_test
+	printf "\n${BLUE}%*s${RESET}\n\n" $(((${#END} + $COLS) / 2)) "$END"
+	RESULT=`echo -e "${GREEN_B}  $right passed,${RESET}${RED_B}  $false failed,${RESET}${WHITE_B}  $sum total  ${RESET}"`
+	printf "\n%*s\n\n" $(((${#RESULT} + $COLS) / 2 + 29)) "$RESULT"
+	rm miniRT
+else
+	PROBLEM=`echo -e "${RED}------ Problem compilation ------${RESET}"`
+	printf "\n%*s\n\n" $(((${#PROBLEM} + $COLS) / 2)) "$PROBLEM"
+fi
