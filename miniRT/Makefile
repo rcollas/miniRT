@@ -5,7 +5,9 @@ DEBUG		= philosophers_debug
 SRC_FILES	= main.c \
 			setup.c \
 			events.c \
-			cleanup.c
+			cleanup.c \
+			parsing/parsing.c \
+			parsing/parsing_error.c
 
 OBJS_DIR	= objs
 
@@ -23,7 +25,8 @@ LIBFT_MAKE	=	$(MAKE) --no-print-directory -C $(LIBFT_PATH)
 
 INC_DIR		= ./incs
 
-INC_FILES	= miniRT.h
+INC_FILES	= miniRT.h\
+			  libft.h\
 
 OBJS		= $(addprefix $(OBJS_DIR)/, $(SRC_FILES:.c=.o))
 
@@ -43,7 +46,7 @@ BLUE			= \033[34m
 YELLOW			= \033[33m
 
 -include $(DEP)
-$(OBJS_DIR)/%.o: $(SRC_DIR)/%.c $(INCS)
+$(OBJS_DIR)/%.o: $(SRC_DIR)/%.c $(INCS) $(LIBFT_LIB)
 			@mkdir -p $(@D)
 			@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(MLX_INC) -c $< -o $@
 			@echo "$(BLUE)clang $(RESET)$(notdir $@)"

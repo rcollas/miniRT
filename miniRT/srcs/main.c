@@ -6,11 +6,12 @@ void	exit_error(t_mlx *mlx)
 	exit(EXIT_FAILURE);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_mlx	*mlx;
 
 	mlx = setup_mlx();
-	events_loop(mlx);
+	// events_loop(mlx);
+	parsing(argv, argc);
 	return (0);
 }
