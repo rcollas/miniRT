@@ -8,7 +8,9 @@
 # include <string.h>
 # include <errno.h>
 # include "mlx.h"
+# ifdef __linux__
 # include "mlx_int.h"
+# endif
 # include "libft.h"
 # include "error.h"
 # include "enum.h"

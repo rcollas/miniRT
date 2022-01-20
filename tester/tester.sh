@@ -14,6 +14,7 @@ GREEN_B="\033[40;1;38;5;83m"
 LIGHT_BLUE="\033[38;5;123m"
 BLUE="\033[1;38;5;33m"
 BLUE_B="\033[40;1;38;5;33m"
+BLUE_U="\033[1;38;5;33;4m"
 WHITE_B="\033[40;1;37m"
 RESET="\033[0m"
 
@@ -46,15 +47,9 @@ function execute_test()
 }
 
 function run_test()
-{
+{		
 	echo "Error" > ref.txt
-	ERROR_MAP=$(find files/error_map -type f -name "*.rt" -print | sort -n)
-	for FILE in $ERROR_MAP
-	do
-		execute_test $FILE
-		sum=`expr $sum + 1`
-	done
-		
+	printf "\n ${BLUE_U}ERROR EXT :${RESET}\n\n"
 	ERROR_FILES=$(find files/error_file -type f -name "wrong_ext*" -print | sort -n)
 	for FILE in $ERROR_FILES
 	do
@@ -62,8 +57,33 @@ function run_test()
 		sum=`expr $sum + 1`
 	done
 
+	printf "\n ${BLUE_U}ERROR DIR :${RESET}\n\n"
+	ERROR_DIR=$(find files/error_file -type d -name "dir*" -print | sort -n)
+	for FILE in $ERROR_DIR
+	do
+		execute_test $FILE
+		sum=`expr $sum + 1`
+	done
+
+	printf "\n ${BLUE_U}ERROR LINK :${RESET}\n\n"
+	ERROR_LINK=$(find files/error_file -type l -name "link*" -print | sort -n)
+	for FILE in $ERROR_LINK
+	do
+		execute_test $FILE
+		sum=`expr $sum + 1`
+	done
+
+	printf "\n ${BLUE_U}ERROR SCENE :${RESET}\n\n"
+	ERROR_SCENE=$(find files/error_scene -type f -name "*.rt" -print | sort -n)
+	for FILE in $ERROR_SCENE
+	do
+		execute_test $FILE
+		sum=`expr $sum + 1`
+	done
+
 	rm ref.txt
 	touch ref.txt
+	printf "\n ${BLUE_U}CORRECT FILES :${RESET}\n\n"
 	CORRECT_FILES=$(find files/correct_file -type f -name "*.rt" -print | sort -n)
 	for FILE in $CORRECT_FILES
 	do

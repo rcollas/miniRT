@@ -16,7 +16,11 @@ SRC_DIR		= srcs
 
 MLX_DIR		= mlx
 
-MLX_INC		= mlx
+ifeq ($(UNAME), Darwin)
+	MLX_INC		= mlx_osx
+else
+	MLX_INC		= mlx
+endif
 
 LIBFT_PATH	=	libft
 
