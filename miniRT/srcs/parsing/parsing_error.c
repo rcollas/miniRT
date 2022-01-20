@@ -23,6 +23,7 @@ int	is_dir_error(char *str)
 	return (IS_DIR_ERROR);
 }
 
+/*
 int	access_error(char *str)
 {
 	ft_putstr_fd("Argument error: ", 2);
@@ -31,14 +32,15 @@ int	access_error(char *str)
 	ft_putstr_fd(strerror(EACCES), 2);
 	return (EACCES);
 }
+ */
 
-int	file_not_found(char *str)
+int	file_error(char *str)
 {
 	ft_putstr_fd("Argument error: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(strerror(ENOENT), 2);
-	return (ENOENT);
+	ft_putstr_fd(strerror(errno), 2);
+	return (errno);
 }
 
 int parsing_error(int errnum, char *str)
@@ -50,20 +52,35 @@ int parsing_error(int errnum, char *str)
 		return (arg_nb_error());
 	if (errnum == IS_DIR_ERROR)
 		return (is_dir_error(str));
-	if (errnum == EACCES)
-		return (access_error(str));
-	if (errnum == ENOENT)
-		return (file_not_found(str));
+	if (errnum == FILE_ERROR)
+		return (file_error(str));
 	return (0);
 }
 
 int	close_error(char *str)
 {
-	ft_putstr_fd("Close failed: ", 2);
+	ft_putstr_fd("Close failed: fd ", 2);
 	ft_putstr_fd(str, 2);
-	ft_putstr_fd(strerror(EBADF), 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(strerror(errno), 2);
 	ft_free(str);
-	return (CLOSE_ERROR);
+	return (errno);
+}
+
+int	read_error(char *str)
+{
+	ft_putstr_fd("Read failed: fd ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(strerror(errno), 2);
+	ft_free(str);
+	return (errno);
+}
+
+int	strjoin_error(void)
+{
+	ft_putstr_fd("Critical error: strjoin failed", 2);
+	return (STRJOIN_ERROR);
 }
 
 int	error(int errnum, char *str)
@@ -71,5 +88,9 @@ int	error(int errnum, char *str)
 	ft_putstr_fd("Error\n", 2);
 	if (errnum == CLOSE_ERROR)
 		return (close_error(str));
+	if (errnum == READ_ERROR)
+		return (read_error(str));
+	if (errnum == STRJOIN_ERROR)
+		return (strjoin_error());
 	return (0);
 }

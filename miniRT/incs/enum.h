@@ -13,10 +13,13 @@ typedef enum s_define {
 typedef enum s_error {
 	OPEN_ERROR			= 255,
 	CLOSE_ERROR			= 254,
-	MALLOC_ERROR		= 253,
-	EXTENSION_ERROR		= 252,
-	ARG_NUMBER_ERROR	= 251,
-	IS_DIR_ERROR		= 250
+	READ_ERROR			= 253,
+	MALLOC_ERROR		= 252,
+	STRJOIN_ERROR		= 251,
+	EXTENSION_ERROR		= 250,
+	ARG_NUMBER_ERROR	= 249,
+	IS_DIR_ERROR		= 248,
+	FILE_ERROR			= 247
 }	t_error;
 
 # ifdef __linux__

@@ -1,6 +1,10 @@
 #ifndef MINI_RT_ERROR_H
 #define MINI_RT_ERROR_H
 
+# include <fcntl.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
 # include "enum.h"
 # include "struct.h"
 

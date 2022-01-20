@@ -24,34 +24,29 @@ _Bool	is_valid_extension(char *arg)
 	return (TRUE);
 }
 
-int	ft_open(char *file, int *fd)
+int	convert_file_to_string(int fd, char *input)
 {
-	if ((*fd = open(file, O_DIRECTORY)) >= 0)
-	{
-		close(*fd);
-		return (parsing_error(IS_DIR_ERROR, file));
-	}
-	if ((*fd = open(file, O_RDONLY)) < 0)
-		return (parsing_error(errno, file));
-	return (SUCCESS);
-}
+	int 	ret;
+	char	buff[2];
 
-void	safe_close(int fd)
-{
-	if (fd >= 0)
+	ret = 1;
+	input = ft_strdup("");
+	while (ret > 0)
 	{
-		if (close(fd) == -1)
-		{
-			error(CLOSE_ERROR, ft_itoa(fd));
-			exit(CLOSE_ERROR);
-		}
+		buff[1] = 0;
+		ret = safe_read(fd, buff, 1, input);
+		if (ret > 0)
+			safe_ft_strjoin(&input, buff, fd);
 	}
+	return (0);
 }
 
 int	parsing(char **argv, int argc)
 {
-	int	fd;
+	int		fd;
+	char	*input;
 
+	input = NULL;
 	if (argc != 2)
 		return (parsing_error(ARG_NUMBER_ERROR, NULL));
 	if (ft_open(argv[1], &fd) != SUCCESS)
@@ -64,5 +59,6 @@ int	parsing(char **argv, int argc)
 		parsing_error(EXTENSION_ERROR, argv[1]);
 		safe_close(fd);
 	}
+	convert_file_to_string(fd, input);
 	return (SUCCESS);
 }
