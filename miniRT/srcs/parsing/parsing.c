@@ -24,27 +24,45 @@ _Bool	is_valid_extension(char *arg)
 	return (TRUE);
 }
 
-int	ft_open(char *file)
+int	ft_open(char *file, int *fd)
 {
-	int	fd;
-
-	if ((fd = open(file, O_DIRECTORY)) >= 0)
+	if ((*fd = open(file, O_DIRECTORY)) >= 0)
 	{
-		close(fd);
+		close(*fd);
 		return (parsing_error(IS_DIR_ERROR, file));
 	}
-	if ((fd = open(file, O_RDONLY)) < 0)
+	if ((*fd = open(file, O_RDONLY)) < 0)
 		return (parsing_error(errno, file));
 	return (SUCCESS);
 }
 
+void	safe_close(int fd)
+{
+	if (fd >= 0)
+	{
+		if (close(fd) == -1)
+		{
+			error(CLOSE_ERROR, ft_itoa(fd));
+			exit(CLOSE_ERROR);
+		}
+	}
+}
+
 int	parsing(char **argv, int argc)
 {
+	int	fd;
+
 	if (argc != 2)
 		return (parsing_error(ARG_NUMBER_ERROR, NULL));
-	if (is_valid_extension(argv[1]) == FALSE)
-		return (parsing_error(EXTENSION_ERROR, argv[1]));
-	if (ft_open(argv[1]) != SUCCESS)
+	if (ft_open(argv[1], &fd) != SUCCESS)
+	{
+		safe_close(fd);
 		return (FAIL);
+	}
+	if (is_valid_extension(argv[1]) == FALSE)
+	{
+		parsing_error(EXTENSION_ERROR, argv[1]);
+		safe_close(fd);
+	}
 	return (SUCCESS);
 }

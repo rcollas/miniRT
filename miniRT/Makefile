@@ -6,6 +6,7 @@ SRC_FILES	= main.c \
 			setup.c \
 			events.c \
 			cleanup.c \
+			utils.c \
 			parsing/parsing.c \
 			parsing/parsing_error.c
 
@@ -25,8 +26,12 @@ LIBFT_MAKE	=	$(MAKE) --no-print-directory -C $(LIBFT_PATH)
 
 INC_DIR		= ./incs
 
-INC_FILES	= miniRT.h\
-			  libft.h
+INC_FILES	= miniRT.h \
+			  libft.h \
+			  enum.h \
+			  error.h \
+			  utils.h \
+			  struct.h \
 
 OBJS		= $(addprefix $(OBJS_DIR)/, $(SRC_FILES:.c=.o))
 
