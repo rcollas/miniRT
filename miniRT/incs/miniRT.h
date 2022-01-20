@@ -6,6 +6,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <errno.h>
 # include "mlx.h"
 # include "mlx_int.h"
 # include "libft.h"
@@ -23,10 +24,12 @@ typedef enum s_error {
 	OPEN_ERROR = 255,
 	MALLOC_ERROR = 254,
 	EXTENSION_ERROR = 253,
-	ARG_NUMBER_ERROR = 252
+	ARG_NUMBER_ERROR = 252,
+	IS_DIR_ERROR = 251
 }	t_error;
 
 int parsing(char **argv, int argc);
 int parsing_error(int errnum, char *str);
+int	is_dir_error(char *str);
 
 #endif
