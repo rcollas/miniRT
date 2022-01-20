@@ -12,20 +12,20 @@
 # include "libft.h"
 
 typedef enum s_define {
-	TRUE = 1,
-	FALSE = 0,
-	SUCCESS = 0,
-	FAIL = 1,
-	EQUAL = 1,
-	DIFFERENT = 0
+	TRUE		= 1,
+	FALSE		= 0,
+	SUCCESS		= 0,
+	FAIL		= 1,
+	EQUAL		= 1,
+	DIFFERENT	= 0
 }	t_define;
 
 typedef enum s_error {
-	OPEN_ERROR = 255,
-	MALLOC_ERROR = 254,
-	EXTENSION_ERROR = 253,
-	ARG_NUMBER_ERROR = 252,
-	IS_DIR_ERROR = 251
+	OPEN_ERROR			= 255,
+	MALLOC_ERROR		= 254,
+	EXTENSION_ERROR		= 253,
+	ARG_NUMBER_ERROR	= 252,
+	IS_DIR_ERROR		= 251
 }	t_error;
 
 # ifdef __linux__
@@ -52,6 +52,48 @@ typedef enum s_key
 #  define IS_LINUX 0
 # endif
 
+typedef enum s_types
+{
+	AMBIENT_LIGHT	= 1,
+	DIFFUSE_LIGHT	= 2,
+	CAMERA			= 3,
+	SPHERE			= 4,
+	CYLINDER		= 5,
+	PLAN			= 6,
+}	t_types;
+
+typedef struct s_ambient_light
+{
+	int 			type;
+	float 			intensity;
+	struct s_rgb	*rgb;
+}	t_ambient_light;
+
+typedef struct s_diffuse_light
+{
+	int 			type;
+	struct s_coord	*coord;
+	float 			intensity;
+	struct s_rgb	*rgb;
+}	t_diffuse_light;
+
+typedef struct s_camera
+{
+	int 				type;
+	struct s_coord		*coord;
+	struct s_vertex		*vertex;
+	int 				fov;
+}	t_camera;
+
+typedef struct s_obj
+{
+	int 			type;
+	struct t_coord	*coord;
+	struct t_rgb	*rgb;
+	//pointer to t_sphere
+	//pointer to next obj
+}		t_obj;
+
 typedef struct s_coord
 {
 	float	x;
@@ -59,12 +101,12 @@ typedef struct s_coord
 	float	z;
 }	t_coord;
 
-typedef struct s_vector
+typedef struct s_vertex
 {
 	float	x;
 	float	y;
 	float	z;
-}	t_vector;
+}	t_vertex;
 
 typedef struct s_rgb
 {
