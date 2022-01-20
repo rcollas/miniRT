@@ -32,8 +32,9 @@ COLS=$(tput cols)
 
 function execute_test()
 {
-	$PATH_EXEC/miniRT $@ > result.txt
-	if [ "$(head -1 result.txt)" = "$(head -1 files/ref.txt)" ]
+	$PATH_EXEC/miniRT $@ 2> result.txt
+	# if [ "$(head -1 result.txt)" = "$(head -1 files/ref.txt)" ]
+	if [[ $(head -1 result.txt) == "$(head -1 files/ref.txt)" ]]
 	then
 		echo -e "${GREEN}   ✔  $1${RESET}"
 		right=`expr $right + 1`
@@ -41,7 +42,6 @@ function execute_test()
 		echo -e "${RED}   ✘  $1${RESET}"
 		false=`expr $false + 1`
 	fi
-
 	rm result.txt
 }
 
@@ -73,7 +73,7 @@ then
 	printf "\n${BLUE}%*s${RESET}\n\n" $(((${#END} + $COLS) / 2)) "$END"
 	RESULT=`echo -e "${GREEN_B}  $right passed,${RESET}${RED_B}  $false failed,${RESET}${WHITE_B}  $sum total  ${RESET}"`
 	printf "\n%*s\n\n" $(((${#RESULT} + $COLS) / 2 + 29)) "$RESULT"
-	rm $PATH_EXEC//miniRT
+	# rm $PATH_EXEC//miniRT
 else
 	PROBLEM=`echo -e "${RED}------ Problem compilation ------${RESET}"`
 	printf "\n%*s\n\n" $(((${#PROBLEM} + $COLS) / 2)) "$PROBLEM"

@@ -88,8 +88,8 @@ t_mlx	*setup_mlx(void);
 void	events_loop(t_mlx *mlx);
 void	clean_mlx(t_mlx *mlx);
 void	exit_error(t_mlx *mlx);
-int 	parsing(char **argv, int argc);
-int 	parsing_error(int errnum, char *str);
+int		parsing(char **argv, int argc);
+int		parsing_error(int errnum, char *str);
 int		is_dir_error(char *str);
 
 #endif

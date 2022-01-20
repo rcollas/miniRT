@@ -19,7 +19,7 @@ _Bool	is_valid_extension(char *arg)
 	char *extension;
 
 	extension = ft_strnstr(arg, ".rt", ft_strlen(arg));
-	if (!extension || ft_strcmp(extension, ".rt") == DIFFERENT || arg[0] == '.')
+	if (!extension || ft_strcmp(extension, ".rt") == DIFFERENT)
 		return (FALSE);
 	return (TRUE);
 }
@@ -38,7 +38,7 @@ int	ft_open(char *file)
 	return (SUCCESS);
 }
 
-int parsing(char **argv, int argc)
+int	parsing(char **argv, int argc)
 {
 	if (argc != 2)
 		return (parsing_error(ARG_NUMBER_ERROR, NULL));

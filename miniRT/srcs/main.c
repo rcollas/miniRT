@@ -10,7 +10,10 @@ int	main(int argc, char **argv)
 {
 	t_mlx	*mlx;
 
-	mlx = setup_mlx();
+	(void)mlx;
+	(void)argc;
+	(void)argv;
+	// mlx = setup_mlx();
 	// events_loop(mlx);
 	parsing(argv, argc);
 	return (0);

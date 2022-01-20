@@ -26,27 +26,24 @@ LIBFT_MAKE	=	$(MAKE) --no-print-directory -C $(LIBFT_PATH)
 INC_DIR		= ./incs
 
 INC_FILES	= miniRT.h\
-			  libft.h\
+			  libft.h
 
 OBJS		= $(addprefix $(OBJS_DIR)/, $(SRC_FILES:.c=.o))
-
-DEP			= $(addprefix $(OBJS_DIR)/,$(SRC_FILES:.c=.d))
 
 INCS		= $(addprefix $(INC_DIR)/, $(INC_FILES))
 
 CC			= clang
 
-CFLAGS		= -Wall -Wextra -Werror -MMD -MP -g3
+CFLAGS		= -Wall -Wextra -Werror -g3
 
 RM			= rm -rf
 
-RESET			= \033[0m
-GREEN			= \033[32m
-BLUE			= \033[34m
-YELLOW			= \033[33m
+RESET		= \033[0m
+GREEN		= \033[32m
+BLUE		= \033[34m
+YELLOW		= \033[33m
 
--include $(DEP)
-$(OBJS_DIR)/%.o: $(SRC_DIR)/%.c $(INCS) $(LIBFT_LIB)
+$(OBJS_DIR)/%.o: $(SRC_DIR)/%.c $(INCS) $(LIBFT_PATH)/*.c
 			@mkdir -p $(@D)
 			@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(MLX_INC) -c $< -o $@
 			@echo "$(BLUE)clang $(RESET)$(notdir $@)"
