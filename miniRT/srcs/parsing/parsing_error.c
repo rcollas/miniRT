@@ -56,3 +56,20 @@ int parsing_error(int errnum, char *str)
 		return (file_not_found(str));
 	return (0);
 }
+
+int	close_error(char *str)
+{
+	ft_putstr_fd("Close failed: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(strerror(EBADF), 2);
+	ft_free(str);
+	return (CLOSE_ERROR);
+}
+
+int	error(int errnum, char *str)
+{
+	ft_putstr_fd("Error\n", 2);
+	if (errnum == CLOSE_ERROR)
+		return (close_error(str));
+	return (0);
+}
