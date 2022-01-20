@@ -60,7 +60,7 @@ all:		$(NAME)
 ifeq ($(UNAME), Darwin)
 $(NAME):	$(OBJS)
 				@$(LIBFT_MAKE)
-				@$(CC) $(CFLAGS) $^ -o $@ $(LIBFT_LIB) $(MLX_DIR)/libmlx_mac.a -framework OpenGL -framework Appkit
+				@$(CC) $(CFLAGS) $^ -o $@ $(LIBFT_LIB) $(MLX_DIR)/libmlx_osx.a -framework OpenGL -framework Appkit
 				@echo "$(GREEN)$(NAME) created$(RESET)"
 else
 $(NAME):	$(OBJS)
