@@ -55,10 +55,12 @@ RM			= rm -rf
 
 CFLAGS		= -Wall -Wextra -Werror -Iincludes
 
-RESET			= \033[0m
-GREEN			= \033[32m
-BLUE			= \033[34m
-YELLOW			= \033[33m
+RESET		= \033[0m
+RED			= \033[1;31m
+GREEN		= \033[1;32m
+YELLOW		= \033[1;33m
+BLUE		= \033[1;34m
+WHITE		= \033[1;37m
 
 all:		$(NAME)
 
@@ -67,23 +69,19 @@ all:		$(NAME)
 
 $(NAME):	$(OBJS)
 				@ar rc $(NAME) $^
-				@echo "$(NAME) created"
+				@echo "$(YELLOW)$(NAME) created$(RESET)"
 				@ranlib $(NAME)
-				@echo "$(NAME) table of contents added"
 
 bonus:		$(OBJS) $(OBJS_BONUS)
 				@ar rc $(NAME) $^ 
-				@echo "$(NAME) created with bonus"
+				@echo "$(YELLOW)$(NAME) bonus created$(RESET)"
 				@ranlib $(NAME)
-				@echo "$(NAME) table of contents added"
 
 clean:
 				@${RM} ${OBJS} ${OBJS_BONUS}
-				@echo "$(YELLOW)objects $(NAME) removed$(RESET)"
 
 fclean:		clean
 				@${RM} $(NAME)
-				@echo "$(YELLOW)$(NAME) deleted$(RESET)"
 
 re:			fclean all
 

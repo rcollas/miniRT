@@ -25,8 +25,8 @@ LIBFT_MAKE	=	$(MAKE) --no-print-directory -C $(LIBFT_PATH)
 
 INC_DIR		= ./incs
 
-INC_FILES	= miniRT.h\
-			  libft.h
+INC_FILES	= miniRT.h \
+			libft.h
 
 OBJS		= $(addprefix $(OBJS_DIR)/, $(SRC_FILES:.c=.o))
 
@@ -39,9 +39,12 @@ CFLAGS		= -Wall -Wextra -Werror -g3
 RM			= rm -rf
 
 RESET		= \033[0m
-GREEN		= \033[32m
-BLUE		= \033[34m
-YELLOW		= \033[33m
+RED			= \033[1;31m
+GREEN		= \033[1;32m
+YELLOW		= \033[1;33m
+BLUE		= \033[1;34m
+WHITE		= \033[1;37m
+
 
 $(OBJS_DIR)/%.o: $(SRC_DIR)/%.c $(INCS) $(LIBFT_PATH)/*.c
 			@mkdir -p $(@D)
@@ -59,12 +62,12 @@ $(NAME):	$(OBJS)
 clean:
 			@make --no-print-directory -C $(LIBFT_PATH) clean
 			@$(RM) $(OBJS) $(OBJS_DIR)
-			@echo "$(YELLOW)objects $(NAME) removed$(RESET)"
+			@echo "$(RED)clean$(RESET)"
 
 fclean:		clean
 				@$(RM) $(NAME) $(LIBFT_LIB)
 				@$(RM) $(NAME) $(DEBUG)
-				@echo "$(YELLOW)$(NAME) deleted$(RESET)"
+				@echo "$(RED)fclean$(RESET)"
 
 re:			fclean all
 

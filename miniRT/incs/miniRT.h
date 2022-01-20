@@ -64,30 +64,30 @@ typedef enum s_types
 
 typedef struct s_ambient_light
 {
-	int 			type;
-	float 			intensity;
+	int				type;
+	float			intensity;
 	struct s_rgb	*rgb;
 }	t_ambient_light;
 
 typedef struct s_diffuse_light
 {
-	int 			type;
+	int				type;
 	struct s_coord	*coord;
-	float 			intensity;
+	float			intensity;
 	struct s_rgb	*rgb;
 }	t_diffuse_light;
 
 typedef struct s_camera
 {
-	int 				type;
+	int					type;
 	struct s_coord		*coord;
 	struct s_vertex		*vertex;
-	int 				fov;
+	int					fov;
 }	t_camera;
 
 typedef struct s_obj
 {
-	int 			type;
+	int				type;
 	struct t_coord	*coord;
 	struct t_rgb	*rgb;
 	//pointer to t_sphere

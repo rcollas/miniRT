@@ -47,15 +47,22 @@ function execute_test()
 
 function run_test()
 {
-	ERROR_FILES=$(find files -type f -name "*.rt" -print)
-	for FILE in $ERROR_FILES
+	ERROR_MAP=$(find files/error_map -type f -name "*.rt" -print | sort -n)
+	for FILE in $ERROR_MAP
 	do
 		execute_test $FILE
 		sum=`expr $sum + 1`
 	done
 		
-	WRONG_FILES=$(find files -type f -name "wrong_ext*" -print)
-	for FILE in $WRONG_FILES
+	ERROR_FILES=$(find files/error_file -type f -name "wrong_ext*" -print | sort -n)
+	for FILE in $ERROR_FILES
+	do
+		execute_test $FILE
+		sum=`expr $sum + 1`
+	done
+
+	CORRECT_FILES=$(find files/correct_file -type f -name "*.rt" -print | sort -n)
+	for FILE in $CORRECT_FILES
 	do
 		execute_test $FILE
 		sum=`expr $sum + 1`
