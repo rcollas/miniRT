@@ -13,6 +13,7 @@
 # include "error.h"
 # include "enum.h"
 # include "struct.h"
+# include "utils.h"
 
 t_mlx	*setup_mlx(void);
 void	events_loop(t_mlx *mlx);
