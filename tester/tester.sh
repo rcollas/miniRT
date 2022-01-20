@@ -34,7 +34,7 @@ function execute_test()
 {
 	$PATH_EXEC/miniRT $@ 2> result.txt
 	# if [ "$(head -1 result.txt)" = "$(head -1 files/ref.txt)" ]
-	if [[ $(head -1 result.txt) == "$(head -1 files/ref.txt)" ]]
+	if [[ $(head -1 result.txt) == "$(head -1 ref.txt)" ]]
 	then
 		echo -e "${GREEN}   ✔  $1${RESET}"
 		right=`expr $right + 1`
@@ -47,6 +47,7 @@ function execute_test()
 
 function run_test()
 {
+	echo "Error" > ref.txt
 	ERROR_MAP=$(find files/error_map -type f -name "*.rt" -print | sort -n)
 	for FILE in $ERROR_MAP
 	do
@@ -61,12 +62,15 @@ function run_test()
 		sum=`expr $sum + 1`
 	done
 
+	rm ref.txt
+	touch ref.txt
 	CORRECT_FILES=$(find files/correct_file -type f -name "*.rt" -print | sort -n)
 	for FILE in $CORRECT_FILES
 	do
 		execute_test $FILE
 		sum=`expr $sum + 1`
 	done
+	rm ref.txt
 }
 
 #############################       MAIN      ############################
