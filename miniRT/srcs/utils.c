@@ -60,3 +60,15 @@ int	safe_ft_strjoin(char **input, char *buff, int fd)
 	ft_free(tmp);
 	return (SUCCESS);
 }
+
+int	safe_ft_strdup(char **dest, char *to_copy, int fd)
+{
+	*dest = ft_strdup(to_copy);
+	if (!dest)
+	{
+		error(STRDUP_ERROR, NULL);
+		safe_close(fd);
+		exit(STRDUP_ERROR);
+	}
+	return (SUCCESS);
+}

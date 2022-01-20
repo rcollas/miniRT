@@ -71,8 +71,14 @@ int	read_error(char *str)
 
 int	strjoin_error(void)
 {
-	ft_putstr_fd("Critical error: strjoin failed\n", 2);
+	ft_putstr_fd("Critical error: Strjoin failed\n", 2);
 	return (STRJOIN_ERROR);
+}
+
+int strdup_error(void)
+{
+	ft_putstr_fd("Critical error: Strdup failed\n", 2);
+	return (STRDUP_ERROR);
 }
 
 int	error(int errnum, char *str)

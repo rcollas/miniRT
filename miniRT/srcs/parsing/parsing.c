@@ -30,7 +30,7 @@ int	convert_file_to_string(int fd, char *input)
 	char	buff[2];
 
 	ret = 1;
-	input = ft_strdup("");
+	safe_ft_strdup(&input, "", fd);
 	while (ret > 0)
 	{
 		buff[1] = 0;
@@ -38,7 +38,7 @@ int	convert_file_to_string(int fd, char *input)
 		if (ret > 0)
 			safe_ft_strjoin(&input, buff, fd);
 	}
-	return (0);
+	return (SUCCESS);
 }
 
 int	parsing(char **argv, int argc)
