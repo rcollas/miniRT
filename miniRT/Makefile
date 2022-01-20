@@ -2,17 +2,20 @@ NAME		= miniRT
 
 DEBUG		= philosophers_debug
 
-SRC_FILES	= main.c
+SRC_FILES	= main.c \
+			setup.c \
+			events.c \
+			cleanup.c
 
-OBJS_DIR	= ./objs
+OBJS_DIR	= objs
 
-SRC_DIR		= ./srcs
+SRC_DIR		= srcs
 
-MLX_DIR		= ./mlx
+MLX_DIR		= mlx
 
-MLX_INC		= ./mlx
+MLX_INC		= mlx
 
-LIBFT_PATH	=	./libft
+LIBFT_PATH	=	libft
 
 LIBFT_LIB	=	libft/libft.a
 
@@ -24,17 +27,26 @@ INC_FILES	= miniRT.h
 
 OBJS		= $(addprefix $(OBJS_DIR)/, $(SRC_FILES:.c=.o))
 
+DEP			= $(addprefix $(OBJS_DIR)/,$(SRC_FILES:.c=.d))
+
 INCS		= $(addprefix $(INC_DIR)/, $(INC_FILES))
 
 CC			= clang
 
-CFLAGS		= -Wall -Wextra -Werror -g
+CFLAGS		= -Wall -Wextra -Werror -MMD -MP -g3
 
 RM			= rm -rf
 
+RESET			= \033[0m
+GREEN			= \033[32m
+BLUE			= \033[34m
+YELLOW			= \033[33m
+
+-include $(DEP)
 $(OBJS_DIR)/%.o: $(SRC_DIR)/%.c $(INCS)
 			@mkdir -p $(@D)
 			@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(MLX_INC) -c $< -o $@
+			@echo "$(BLUE)clang $(RESET)$(notdir $@)"
 
 
 all:		$(NAME)
@@ -42,17 +54,17 @@ all:		$(NAME)
 $(NAME):	$(OBJS)
 				@$(LIBFT_MAKE)
 				@$(CC) $(CFLAGS) $^ -o $@ $(LIBFT_LIB) $(MLX_DIR)/libmlx.a -lXext -lX11
-				@echo "$(NAME) created"
+				@echo "$(GREEN)$(NAME) created$(RESET)"
 
 clean:
 			@make --no-print-directory -C $(LIBFT_PATH) clean
 			@$(RM) $(OBJS) $(OBJS_DIR)
-			@echo "$(NAME) .o deleted"
+			@echo "$(YELLOW)objects $(NAME) removed$(RESET)"
 
 fclean:		clean
 				@$(RM) $(NAME) $(LIBFT_LIB)
 				@$(RM) $(NAME) $(DEBUG)
-				@echo "$(NAME) deleted"
+				@echo "$(YELLOW)$(NAME) deleted$(RESET)"
 
 re:			fclean all
 

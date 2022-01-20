@@ -1,13 +1,16 @@
 #include "miniRT.h"
 
+void	exit_error(t_mlx *mlx)
+{
+	clean_mlx(mlx);
+	exit(EXIT_FAILURE);
+}
+
 int	main(void)
 {
-	void	*mlx;
-	void	*mlx_win;
+	t_mlx	*mlx;
 
-	mlx = mlx_init();
-	(void)mlx_win;
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	mlx_loop(mlx);
+	mlx = setup_mlx();
+	events_loop(mlx);
 	return (0);
 }

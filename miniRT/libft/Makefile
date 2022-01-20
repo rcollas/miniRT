@@ -55,6 +55,11 @@ RM			= rm -rf
 
 CFLAGS		= -Wall -Wextra -Werror -Iincludes
 
+RESET			= \033[0m
+GREEN			= \033[32m
+BLUE			= \033[34m
+YELLOW			= \033[33m
+
 all:		$(NAME)
 
 %.o : %.c
@@ -74,11 +79,11 @@ bonus:		$(OBJS) $(OBJS_BONUS)
 
 clean:
 				@${RM} ${OBJS} ${OBJS_BONUS}
-				@echo ".o deleted"
+				@echo "$(YELLOW)objects $(NAME) removed$(RESET)"
 
 fclean:		clean
 				@${RM} $(NAME)
-				@echo "$(NAME) deleted"
+				@echo "$(YELLOW)$(NAME) deleted$(RESET)"
 
 re:			fclean all
 

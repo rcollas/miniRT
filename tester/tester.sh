@@ -2,6 +2,7 @@
 
 #########################      COLORS CODE     ##########################
 
+PATH_EXEC="../miniRT"
 EXPAND_BG="\033[K"
 RED="\033[38;5;203m"
 RED_B="\033[40;1;38;2;255;65;65m"
@@ -31,7 +32,7 @@ COLS=$(tput cols)
 
 function execute_test()
 {
-	./miniRT $@ > result.txt
+	$PATH_EXEC/miniRT $@ > result.txt
 	if [ "$(head -1 result.txt)" = "$(head -1 files/ref.txt)" ]
 	then
 		echo -e "${GREEN}   ✔  $1${RESET}"
@@ -64,7 +65,7 @@ function run_test()
 #############################       MAIN      ############################
 
 make -C ../miniRT
-if [ -f "miniRT" ]
+if [ -f "$PATH_EXEC/miniRT" ]
 then
 	printf "\n${BLUE}%*s${RESET}\n" $(((${#TITLE} + $COLS) / 2)) "$TITLE"
 	printf "\n"
@@ -72,7 +73,7 @@ then
 	printf "\n${BLUE}%*s${RESET}\n\n" $(((${#END} + $COLS) / 2)) "$END"
 	RESULT=`echo -e "${GREEN_B}  $right passed,${RESET}${RED_B}  $false failed,${RESET}${WHITE_B}  $sum total  ${RESET}"`
 	printf "\n%*s\n\n" $(((${#RESULT} + $COLS) / 2 + 29)) "$RESULT"
-	rm miniRT
+	rm $PATH_EXEC//miniRT
 else
 	PROBLEM=`echo -e "${RED}------ Problem compilation ------${RESET}"`
 	printf "\n%*s\n\n" $(((${#PROBLEM} + $COLS) / 2)) "$PROBLEM"
