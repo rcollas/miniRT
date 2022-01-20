@@ -58,17 +58,64 @@ int is_valid_type(char *type)
 	return (INVALID_TYPE_ERROR);
 }
 
-void	fill_structure(char **input_list)
+int	fill_rgb(char *rgb_values, t_rgb *rgb)
+{
+	char	**split_rgb;
+	int 	i;
+
+	i = 0;
+	split_rgb = ft_split(rgb_values, ',');
+	while (split_rgb[i])
+		i++;
+	if (i != 3)
+		return (FAIL);
+	rgb->r = ft_atoi(split_rgb[0]);
+	rgb->g = ft_atoi(split_rgb[1]);
+	rgb->b = ft_atoi(split_rgb[2]);
+	return (SUCCESS);
+}
+
+void	fill_ambient_light(char **obj_info, t_obj *objs)
+{
+	t_ambient_light ambient_light;
+
+	ambient_light.type = ft_atoi(obj_info[0]);
+	ambient_light.intensity = atof(obj_info[1]);
+	fill_rgb(obj_info[2], ambient_light.rgb);
+}
+
+void	fill_by_type(int type, char **obj_info, t_obj *objs)
+{
+	if (type == AMBIENT_LIGHT)
+		fill_ambient_light(obj_info, objs);
+	/*
+	if (type == DIFFUSE_LIGHT)
+		fill_diffuse_light(obj_info, objs);
+	if (type == CAMERA)
+		fill_camera(obj_info, objs);
+	if (type == SPHERE)
+		fill_sphere(obj_info, objs);
+	if (type == CYLINDER)
+		fill_cylinder(obj_info, objs);
+	if (type == PLAN)
+		fill_plan(obj_info, objs);
+	 */
+}
+
+void	fill_structure(char **input_list, t_obj *objs)
 {
 	int		i;
-	char	**obj_line;
+	char	**obj_info;
+	int		type;
 
 	i = 0;
 	while (input_list[i])
 	{
-		obj_line = ft_split(input_list[i], ' ');
-		if (is_valid_type(obj_line[0]) == INVALID_TYPE_ERROR)
+		obj_info = ft_split(input_list[i], ' ');
+		type = is_valid_type(obj_info[0]);
+		if (type == INVALID_TYPE_ERROR)
 			return (ft_putstr_fd("Error\n", 2));
+		fill_by_type(type, obj_info, objs);
 		i++;
 	}
 }
@@ -78,6 +125,7 @@ int	parsing(char **argv, int argc)
 	int		fd;
 	char	*input;
 	char 	**input_list;
+	t_obj	objs;
 
 	input = NULL;
 	if (argc != 2)
@@ -94,6 +142,7 @@ int	parsing(char **argv, int argc)
 	}
 	convert_file_to_string(fd, &input);
 	input_list = ft_split(input, '\n');
-	fill_structure(input_list);
+	fill_structure(input_list, &objs);
+	printf("%f\n", objs.(t_ambient_light)obj.rgb);
 	return (SUCCESS);
 }
