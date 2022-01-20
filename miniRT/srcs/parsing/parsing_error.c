@@ -19,20 +19,9 @@ int	is_dir_error(char *str)
 {
 	ft_putstr_fd("Argument error: ", 2);
 	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": Is a directory", 2);
+	ft_putstr_fd(": Is a directory\n", 2);
 	return (IS_DIR_ERROR);
 }
-
-/*
-int	access_error(char *str)
-{
-	ft_putstr_fd("Argument error: ", 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(strerror(EACCES), 2);
-	return (EACCES);
-}
- */
 
 int	file_error(char *str)
 {
@@ -40,6 +29,7 @@ int	file_error(char *str)
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(strerror(errno), 2);
+	ft_putstr_fd("\n", 2);
 	return (errno);
 }
 
@@ -63,6 +53,7 @@ int	close_error(char *str)
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(strerror(errno), 2);
+	ft_putstr_fd("\n", 2);
 	ft_free(str);
 	return (errno);
 }
@@ -73,13 +64,14 @@ int	read_error(char *str)
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(strerror(errno), 2);
+	ft_putstr_fd("\n", 2);
 	ft_free(str);
 	return (errno);
 }
 
 int	strjoin_error(void)
 {
-	ft_putstr_fd("Critical error: strjoin failed", 2);
+	ft_putstr_fd("Critical error: strjoin failed\n", 2);
 	return (STRJOIN_ERROR);
 }
 

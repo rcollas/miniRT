@@ -51,7 +51,6 @@ int	safe_ft_strjoin(char **input, char *buff, int fd)
 
 	tmp = *input;
 	*input = ft_strjoin(*input, buff);
-	*input = NULL;
 	if (!*input)
 	{
 		error(STRJOIN_ERROR, NULL);
