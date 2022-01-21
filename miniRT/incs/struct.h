@@ -21,7 +21,6 @@ typedef struct s_diffuse_light
 	int 					type;
 	struct s_coord			*coord;
 	float 					intensity;
-	struct s_rgb			*rgb;
 }	t_diffuse_light;
 
 typedef struct s_sphere
@@ -95,5 +94,12 @@ typedef struct s_mlx
 	int			size_line;
 	int			endian;
 }				t_mlx;
+
+typedef struct s_parsing
+{
+	char	**input_list;
+	char 	**obj_info;
+	t_obj	*objs;
+}	t_parsing;
 
 #endif

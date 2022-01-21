@@ -9,6 +9,71 @@ void	ft_free(void *to_free)
 	}
 }
 
+void	free_sphere(t_sphere *list)
+{
+	t_sphere	*tmp;
+
+	while (list && list->next)
+	{
+		tmp = list->next;
+		ft_free(list);
+		list = tmp;
+	}
+}
+
+void	free_plan(t_plan *list)
+{
+	t_plan	*tmp;
+
+	while (list && list->next)
+	{
+		tmp = list->next;
+		ft_free(list);
+		list = tmp;
+	}
+}
+
+void	free_cylinder(t_cylinder *list)
+{
+	t_cylinder *tmp;
+
+	while (list && list->next)
+	{
+		tmp = list->next;
+		ft_free(list);
+		list = tmp;
+
+	}
+}
+
+void	free_objs(t_obj *objs)
+{
+	if (objs)
+	{
+		free_sphere(objs->sphere);
+		free_plan(objs->plan);
+		free_cylinder(objs->cylinder);
+	}
+}
+
+void	free_str_tab(char **tab)
+{
+	int	i;
+
+	i = -1;
+	while (tab[++i])
+		ft_free(tab[i]);
+	ft_free(tab);
+}
+
+void	ft_exit_parsing(int errnum, t_parsing *parsing_var)
+{
+	free_objs(parsing_var->objs);
+	free_str_tab(parsing_var->input_list);
+	free_str_tab(parsing_var->obj_info);
+	exit(errnum);
+}
+
 int	ft_open(char *file, int *fd)
 {
 	if ((*fd = open(file, O_DIRECTORY)) >= 0)
