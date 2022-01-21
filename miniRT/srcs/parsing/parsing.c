@@ -79,6 +79,7 @@ void	fill_ambient_light(char **obj_info, t_obj *objs)
 {
 	t_ambient_light ambient_light;
 
+	(void)objs;
 	ambient_light.type = ft_atoi(obj_info[0]);
 	ambient_light.intensity = atof(obj_info[1]);
 	fill_rgb(obj_info[2], ambient_light.rgb);
@@ -143,6 +144,5 @@ int	parsing(char **argv, int argc)
 	convert_file_to_string(fd, &input);
 	input_list = ft_split(input, '\n');
 	fill_structure(input_list, &objs);
-	printf("%f\n", objs.(t_ambient_light)obj.rgb);
 	return (SUCCESS);
 }
