@@ -7,7 +7,7 @@ typedef enum s_define {
 	SUCCESS		= 0,
 	FAIL		= 1,
 	EQUAL		= 1,
-	DIFFERENT	= 0
+	DIFFERENT	= 0,
 }	t_define;
 
 typedef enum s_error {
@@ -20,7 +20,8 @@ typedef enum s_error {
 	EXTENSION_ERROR		= 249,
 	ARG_NUMBER_ERROR	= 248,
 	IS_DIR_ERROR		= 247,
-	FILE_ERROR			= 246
+	FILE_ERROR			= 246,
+	INVALID_TYPE_ERROR	= 245,
 }	t_error;
 
 # ifdef __linux__
