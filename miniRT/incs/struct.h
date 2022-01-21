@@ -3,9 +3,9 @@
 
 typedef struct s_ambient_light
 {
-	int 			type;
-	float 			intensity;
-	struct s_rgb	*rgb;
+	int 					type;
+	float 					intensity;
+	struct s_rgb			*rgb;
 }	t_ambient_light;
 
 typedef struct s_camera
@@ -18,10 +18,10 @@ typedef struct s_camera
 
 typedef struct s_diffuse_light
 {
-	int 			type;
-	struct s_coord	*coord;
-	float 			intensity;
-	struct s_rgb	*rgb;
+	int 					type;
+	struct s_coord			*coord;
+	float 					intensity;
+	struct s_rgb			*rgb;
 }	t_diffuse_light;
 
 typedef struct s_sphere
@@ -30,6 +30,7 @@ typedef struct s_sphere
 	struct s_coord	*coord;
 	float			diameter;
 	struct s_rgb	*rgb;
+	struct s_sphere	*next;
 }	t_sphere;
 
 typedef struct s_plan
@@ -38,27 +39,29 @@ typedef struct s_plan
 	struct s_coord	*coord;
 	struct s_vertex	*vertex;
 	struct s_rgb	*rgb;
+	struct s_plan	*next;
 }	t_plan;
 
 typedef struct s_cylinder
 {
-	int 			type;
-	struct s_coord	*coord;
-	struct s_vertex	*vertex;
-	float			diameter;
-	float			height;
-	struct s_rgb	*rgb;
+	int 				type;
+	struct s_coord		*coord;
+	struct s_vertex		*vertex;
+	float				diameter;
+	float				height;
+	struct s_rgb		*rgb;
+	struct s_cylinder	*next;
 }	t_cylinder;
 
 typedef struct s_obj
 {
 	int 			type;
-	void			*obj;
-	struct s_obj	*next;
-	//struct t_coord	*coord;
-	//struct t_rgb	*rgb;
-	//pointer to t_sphere
-	//pointer to next obj
+	t_ambient_light *ambient_light;
+	t_camera		*camera;
+	t_diffuse_light	*diffuse_light;
+	t_plan			*plan;
+	t_sphere 		*sphere;
+	t_cylinder 		*cylinder;
 }		t_obj;
 
 typedef struct s_coord
