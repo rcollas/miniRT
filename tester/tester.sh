@@ -34,7 +34,6 @@ COLS=$(tput cols)
 function execute_test()
 {
 	$PATH_EXEC/miniRT $@ 2> result.txt
-	# if [ "$(head -1 result.txt)" = "$(head -1 files/ref.txt)" ]
 	if [[ $(head -1 result.txt) == "$(head -1 ref.txt)" ]]
 	then
 		echo -e "${GREEN}   ✔  $1${RESET}"
@@ -95,7 +94,13 @@ function run_test()
 
 #############################       MAIN      ############################
 
-make -C ../miniRT
+if [ "$1" == "debug" ]
+then
+	make debug --no-print-directory -C ../miniRT
+else
+	make --no-print-directory -C ../miniRT
+fi
+
 if [ -f "$PATH_EXEC/miniRT" ]
 then
 	printf "\n${BLUE}%*s${RESET}\n" $(((${#TITLE} + $COLS) / 2)) "$TITLE"

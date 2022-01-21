@@ -1,5 +1,7 @@
 NAME		= miniRT
 
+NAME_DEBUG	= miniRT_debug
+
 SRC_FILES	= main.c \
 			setup.c \
 			events.c \
@@ -8,7 +10,9 @@ SRC_FILES	= main.c \
 			parsing/parsing.c \
 			parsing/parsing_error.c
 
-UNAME		:=	$(shell uname)
+UNAME		=	$(shell uname)
+
+DEBUG 		= off
 
 OBJS_DIR	= objs
 
@@ -44,6 +48,9 @@ INCS		= $(addprefix $(INC_DIR)/, $(INC_FILES))
 CC			= clang
 
 CFLAGS		= -Wall -Wextra -Werror -g3
+ifeq ($(DEBUG), on)
+	CFLAGS += -fsanitize=address
+endif
 
 RM			= rm -rf
 
@@ -53,6 +60,7 @@ GREEN		= \033[1;32m
 YELLOW		= \033[1;33m
 BLUE		= \033[1;34m
 WHITE		= \033[1;37m
+ORANGE		= \033[1;38;5;208m
 
 $(OBJS_DIR)/%.o: $(SRC_DIR)/%.c $(INCS) $(LIBFT_PATH)/*.c
 			@mkdir -p $(@D)
@@ -73,6 +81,12 @@ $(NAME):	$(OBJS)
 				@echo "$(GREEN)$(NAME) created$(RESET)"
 endif
 
+debug:	 $(NAME_DEBUG)	
+
+$(NAME_DEBUG):	$(OBJS) 
+					@make DEBUG=on --no-print-directory
+					@echo "$(BLUE)[mode DEBUG=on]$(RESET)"
+
 clean:
 			@make --no-print-directory -C $(LIBFT_PATH) clean
 			@$(RM) $(OBJS) $(OBJS_DIR)
@@ -85,4 +99,4 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:		all clean fclean re
+.PHONY:		all clean fclean re debug
