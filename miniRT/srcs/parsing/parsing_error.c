@@ -71,8 +71,74 @@ int	read_error(char *str)
 
 int	strjoin_error(void)
 {
-	ft_putstr_fd("Critical error: strjoin failed\n", 2);
+	ft_putstr_fd("Critical error: Strjoin failed\n", 2);
 	return (STRJOIN_ERROR);
+}
+
+int strdup_error(void)
+{
+	ft_putstr_fd("Critical error: Strdup failed\n", 2);
+	return (STRDUP_ERROR);
+}
+
+int	ambient_light_format_error(char *str)
+{
+	ft_putstr_fd("File format error: \n", 2);
+	ft_putstr_fd("Yours: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("Expected: [ID]:A [INTENSITY]0-255,0-255,0-255\n", 2);
+	return (AMBIENT_LIGHT_FORMAT_ERROR);
+}
+
+int	camera_format_error(char *str)
+{
+	ft_putstr_fd("File format error: \n", 2);
+	ft_putstr_fd("Yours: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("Expected: [ID]:C [COORDINATES]0.0,0.0,0.0 [\n", 2);
+	return (CAMERA_FORMAT_ERROR);
+}
+
+int	diffuse_light_format_error(char *str)
+{
+	ft_putstr_fd("File format error: \n", 2);
+	ft_putstr_fd("Yours: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("Expected: [ID]:C [COORDINATES]0.0,0.0,0.0 [\n", 2);
+	return (DIFFUSE_LIGHT_FORMAT_ERROR);
+}
+
+int	sphere_format_error(char *str)
+{
+	ft_putstr_fd("File format error: \n", 2);
+	ft_putstr_fd("Yours: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("Expected: [ID]:C [COORDINATES]0.0,0.0,0.0 [\n", 2);
+	return (SPHERE_FORMAT_ERROR);
+}
+
+int	plan_format_error(char *str)
+{
+	ft_putstr_fd("File format error: \n", 2);
+	ft_putstr_fd("Yours: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("Expected: [ID]:C [COORDINATES]0.0,0.0,0.0 [\n", 2);
+	return (PLAN_FORMAT_ERROR);
+}
+
+int	cylinder_format_error(char *str)
+{
+	ft_putstr_fd("File format error: \n", 2);
+	ft_putstr_fd("Yours: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("Expected: [ID]:C [COORDINATES]0.0,0.0,0.0 [\n", 2);
+	return (CYLINDER_FORMAT_ERROR);
 }
 
 int	error(int errnum, char *str)
@@ -84,5 +150,17 @@ int	error(int errnum, char *str)
 		return (read_error(str));
 	if (errnum == STRJOIN_ERROR)
 		return (strjoin_error());
+	if (errnum == AMBIENT_LIGHT_FORMAT_ERROR)
+		return (ambient_light_format_error(str));
+	if (errnum == CAMERA_FORMAT_ERROR)
+		return (camera_format_error(str));
+	if (errnum == DIFFUSE_LIGHT_FORMAT_ERROR)
+		return (diffuse_light_format_error(str));
+	if (errnum == SPHERE_FORMAT_ERROR)
+		return (sphere_format_error(str));
+	if (errnum == PLAN_FORMAT_ERROR)
+		return (plan_format_error(str));
+	if (errnum == CYLINDER_FORMAT_ERROR)
+		return (cylinder_format_error(str));
 	return (0);
 }

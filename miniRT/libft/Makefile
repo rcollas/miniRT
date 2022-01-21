@@ -44,6 +44,8 @@ BONUS		= ft_lstnew.c\
 			  ft_lstiter.c\
 			  ft_lstmap.c\
 
+INCS		= libft.h
+
 OBJS		= $(SRCS:.c=.o)
 
 OBJS_BONUS	= $(BONUS:.c=.o)
@@ -65,7 +67,7 @@ WHITE		= \033[1;37m
 
 all:		$(NAME)
 
-%.o : %.c
+%.o : %.c $(INCS)
 	@${CC} -c ${CFLAGS} $< -o $@
 
 $(NAME):	$(OBJS)
