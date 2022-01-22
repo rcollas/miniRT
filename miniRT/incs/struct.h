@@ -12,7 +12,7 @@ typedef struct s_camera
 {
 	int 				type;
 	struct s_coord		*coord;
-	struct s_vertex		*vertex;
+	struct s_vector3	*vertex;
 	int 				fov;
 }	t_camera;
 
@@ -34,18 +34,18 @@ typedef struct s_sphere
 
 typedef struct s_plan
 {
-	int 			type;
-	struct s_coord	*coord;
-	struct s_vertex	*vertex;
-	struct s_rgb	*rgb;
-	struct s_plan	*next;
+	int 				type;
+	struct s_coord		*coord;
+	struct s_vector3	*vertex;
+	struct s_rgb		*rgb;
+	struct s_plan		*next;
 }	t_plan;
 
 typedef struct s_cylinder
 {
 	int 				type;
 	struct s_coord		*coord;
-	struct s_vertex		*vertex;
+	struct s_vector3	*vertex;
 	float				diameter;
 	float				height;
 	struct s_rgb		*rgb;
@@ -69,13 +69,6 @@ typedef struct s_coord
 	float	y;
 	float	z;
 }	t_coord;
-
-typedef struct s_vertex
-{
-	float	x;
-	float	y;
-	float	z;
-}	t_vertex;
 
 typedef struct s_rgb
 {

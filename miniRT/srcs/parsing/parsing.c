@@ -94,7 +94,7 @@ int	fill_coordinates(char *coordinates_values, t_coord *coordinates)
 	return (SUCCESS);
 }
 
-int	fill_vertex(char *vertex_values, t_vertex *vertex)
+int	fill_vertex(char *vertex_values, t_vector3 *vertex)
 {
 	char	**split_vertex;
 	int 	i;
@@ -105,7 +105,7 @@ int	fill_vertex(char *vertex_values, t_vertex *vertex)
 		i++;
 	if (i != 3)
 		return (FAIL);
-	vertex = malloc(sizeof(t_vertex));
+	vertex = malloc(sizeof(t_vector3));
 	vertex->x = atof(split_vertex[0]);
 	vertex->y = atof(split_vertex[1]);
 	vertex->z = atof(split_vertex[2]);
