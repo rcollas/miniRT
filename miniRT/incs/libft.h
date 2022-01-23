@@ -66,5 +66,6 @@ char		*ft_substr(const char *s, unsigned int start, size_t len);
 int			ft_tolower(int c);
 int			ft_toupper(int c);
 double		ft_atof(const char *nptr);
+_Bool		ft_strcmp(char *s1, char *s2);
 
 #endif

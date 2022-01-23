@@ -1,29 +1,5 @@
 #include "miniRT.h"
 
-_Bool	ft_strcmp(char *s1, char *s2)
-{
-	int i;
-
-	i = 0;
-	while (s1 && s1[i] && s2 && s2[i] && s1[i] == s2[i])
-	{
-		if (s1[i + 1] == 0 && s2[i + 1] == 0)
-			return (EQUAL);
-		i++;
-	}
-	return (DIFFERENT);
-}
-
-_Bool	is_valid_extension(char *arg)
-{
-	char *extension;
-
-	extension = ft_strnstr(arg, ".rt", ft_strlen(arg));
-	if (!extension || ft_strcmp(extension, ".rt") == DIFFERENT)
-		return (FALSE);
-	return (TRUE);
-}
-
 int	convert_file_to_string(int fd, char **input)
 {
 	int 	ret;
@@ -41,33 +17,43 @@ int	convert_file_to_string(int fd, char **input)
 	return (SUCCESS);
 }
 
-int is_valid_type(char *type)
+void	fill_structure(t_parsing *parsing_var)
 {
-	if (ft_strcmp(type, "A") == EQUAL)
-		return (AMBIENT_LIGHT);
-	if (ft_strcmp(type, "L") == EQUAL)
-		return (DIFFUSE_LIGHT);
-	if (ft_strcmp(type, "C") == EQUAL)
-		return (CAMERA);
-	if (ft_strcmp(type, "sp") == EQUAL)
-		return (SPHERE);
-	if (ft_strcmp(type, "cy") == EQUAL)
-		return (CYLINDER);
-	if (ft_strcmp(type, "pl") == EQUAL)
-		return (PLAN);
-	return (INVALID_TYPE_ERROR);
+	int		i;
+	int		type;
+
+	i = 0;
+	while (parsing_var->input_list[i])
+	{
+		if (parsing_var->input_list[i][0] == '#')
+			i++;
+		else
+		{
+			parsing_var->obj_info = ft_split(parsing_var->input_list[i], "\t \r");
+			type = is_valid_type(parsing_var->obj_info[0]);
+			if (parsing_var->obj_info[0] && type == INVALID_TYPE_ERROR)
+			{
+				error(INVALID_TYPE_ERROR, parsing_var->input_list[i]);
+				ft_exit_parsing(INVALID_TYPE_ERROR, parsing_var);
+			}
+			fill_scene(type, parsing_var, parsing_var->input_list[i]);
+			fill_obj(type, parsing_var, parsing_var->input_list[i]);
+			free_str_tab(parsing_var->obj_info);
+			i++;
+		}
+	}
 }
 
-int	parsing(char **argv, int argc)
+int	parsing(char **argv, int argc, t_parsing *parsing_var)
 {
 	int		fd;
 	char	*input;
-	t_parsing	parsing_var[1];
 
 	input = NULL;
 	parsing_var->camera = FALSE;
 	parsing_var->diffuse_light = FALSE;
 	parsing_var->ambient_light= FALSE;
+	parsing_var->objs = NULL;
 	if (argc != 2)
 		return (parsing_error(ARG_NUMBER_ERROR, NULL));
 	if (ft_open(argv[1], &fd) != SUCCESS)
@@ -84,5 +70,6 @@ int	parsing(char **argv, int argc)
 	parsing_var->input_list = ft_split(input, "\n");
 	ft_free(input);
 	fill_structure(parsing_var);
+	free_str_tab(parsing_var->input_list);
 	return (SUCCESS);
 }

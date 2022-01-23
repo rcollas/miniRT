@@ -1,18 +1,31 @@
 #include "../../incs/miniRT.h"
 
+t_obj	*last_obj(t_obj *obj_list)
+{
+	if (!obj_list)
+		return (NULL);
+	while (obj_list)
+	{
+		if (obj_list->next == NULL)
+			return (obj_list);
+		obj_list = obj_list->next;
+	}
+	return (obj_list);
+}
+
 void	obj_add_back(t_obj **obj_list, t_obj *to_add)
 {
-	int	i;
+	t_obj	*last;
 
-	i = 0;
-	if (!*obj_list)
-		*obj_list = to_add;
-	else
+	if (!obj_list || !to_add)
+		return ;
+	if (*obj_list)
 	{
-		while ((*obj_list)[i].next)
-			i++;
-		(*obj_list)[i].next = to_add;
+		last = last_obj(*obj_list);
+		last->next = to_add;
 	}
+	else
+		*obj_list = to_add;
 }
 
 t_obj	*new_obj(int type, double diameter, double height)
@@ -23,5 +36,6 @@ t_obj	*new_obj(int type, double diameter, double height)
 	obj->type = type;
 	obj->diameter = diameter;
 	obj->height = height;
+	obj->next = NULL;
 	return (obj);
 }
