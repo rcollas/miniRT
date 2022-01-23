@@ -1,27 +1,8 @@
 #ifndef MINI_RT_STRUCT_H
 #define MINI_RT_STRUCT_H
 
-typedef struct s_ambient_light
-{
-	int 					type;
-	float 					intensity;
-	struct s_rgb			*rgb;
-}	t_ambient_light;
+/*
 
-typedef struct s_camera
-{
-	int 				type;
-	struct s_coord		*coord;
-	struct s_vertex		*vertex;
-	int 				fov;
-}	t_camera;
-
-typedef struct s_diffuse_light
-{
-	int 					type;
-	struct s_coord			*coord;
-	float 					intensity;
-}	t_diffuse_light;
 
 typedef struct s_sphere
 {
@@ -62,19 +43,20 @@ typedef struct s_obj
 	t_sphere 		*sphere;
 	t_cylinder 		*cylinder;
 }		t_obj;
+ */
 
 typedef struct s_coord
 {
-	float	x;
-	float	y;
-	float	z;
+	double	x;
+	double	y;
+	double	z;
 }	t_coord;
 
 typedef struct s_vertex
 {
-	float	x;
-	float	y;
-	float	z;
+	double	x;
+	double	y;
+	double	z;
 }	t_vertex;
 
 typedef struct s_rgb
@@ -83,6 +65,46 @@ typedef struct s_rgb
 	int	g;
 	int	b;
 }	t_rgb;
+
+typedef struct s_ambient_light
+{
+	int 					type;
+	double					intensity;
+	struct s_rgb			rgb[1];
+}	t_ambient_light;
+
+typedef struct s_camera
+{
+	int 				type;
+	struct s_coord		coord[1];
+	struct s_vertex		vertex[1];
+	int 				fov;
+}	t_camera;
+
+typedef struct s_diffuse_light
+{
+	int 					type;
+	struct s_coord			coord[1];
+	double					intensity;
+}	t_diffuse_light;
+
+typedef struct s_scene
+{
+	struct s_camera			camera[1];
+	struct s_diffuse_light	diffuse_light[1];
+	struct s_ambient_light	ambient_light[1];
+}	t_scene;
+
+typedef struct s_obj
+{
+	int				type;
+	struct s_coord	coord[1];
+	struct s_vertex	vertex[1];
+	struct s_rgb	rgb[1];
+	double			diameter;
+	double			height;
+	struct s_obj	*next;
+}	t_obj;
 
 typedef struct s_mlx
 {
@@ -100,6 +122,10 @@ typedef struct s_parsing
 	char	**input_list;
 	char 	**obj_info;
 	t_obj	*objs;
+	t_scene scene[1];
+	_Bool 	camera;
+	_Bool	ambient_light;
+	_Bool 	diffuse_light;
 }	t_parsing;
 
 #endif
