@@ -33,6 +33,16 @@ int	file_error(char *str)
 	return (errno);
 }
 
+int	incomplete_file_error(char *str)
+{
+	ft_putstr_fd("File error: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": File is incomplete\n", 2);
+	ft_putstr_fd(".rt must contain at least one camera C,"
+				 " one diffuse light L and one ambient light A\n", 2);
+	return (INCOMPLETE_FILE_ERROR);
+}
+
 int parsing_error(int errnum, char *str)
 {
 	ft_putstr_fd("Error\n", 2);
@@ -44,6 +54,8 @@ int parsing_error(int errnum, char *str)
 		return (is_dir_error(str));
 	if (errnum == FILE_ERROR)
 		return (file_error(str));
+	if (errnum == INCOMPLETE_FILE_ERROR)
+		return (incomplete_file_error(str));
 	return (0);
 }
 

@@ -28,7 +28,7 @@ typedef enum s_error {
 	SPHERE_FORMAT_ERROR			= 240,
 	PLAN_FORMAT_ERROR			= 239,
 	CYLINDER_FORMAT_ERROR		= 238,
-	EMPTY_FILE					= 237,
+	INCOMPLETE_FILE_ERROR		= 237,
 }	t_error;
 
 # ifdef __linux__

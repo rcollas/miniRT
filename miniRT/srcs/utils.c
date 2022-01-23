@@ -61,7 +61,8 @@ void	ft_exit_parsing(int errnum, t_parsing *parsing_var)
 {
 	free_list(parsing_var->objs);
 	free_str_tab(parsing_var->input_list);
-	free_str_tab(parsing_var->obj_info);
+	if (parsing_var->objs)
+		free_str_tab(parsing_var->obj_info);
 	exit(errnum);
 }
 
