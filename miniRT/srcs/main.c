@@ -8,13 +8,16 @@ void	exit_error(t_mlx *mlx)
 
 int	main(int argc, char **argv)
 {
-	t_mlx	*mlx;
+	t_mlx		*mlx;
+	t_parsing	parsing_var[1];
 
 	(void)mlx;
 	(void)argc;
 	(void)argv;
-	parsing(argv, argc);
-	mlx = setup_mlx();
-	events_loop(mlx);
+	// mlx = setup_mlx();
+	// events_loop(mlx);
+	parsing(argv, argc, parsing_var);
+	print_list(parsing_var->objs);
+	free_list(parsing_var->objs);
 	return (0);
 }

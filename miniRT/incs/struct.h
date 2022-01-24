@@ -17,18 +17,18 @@ typedef struct s_sphere
 
 typedef struct s_plan
 {
-	int 				type;
-	struct s_coord		*coord;
-	struct s_vector3	*vertex;
-	struct s_rgb		*rgb;
-	struct s_plan		*next;
+	int 			type;
+	struct s_coord	*coord;
+	struct s_vec3	*vertex;
+	struct s_rgb	*rgb;
+	struct s_plan	*next;
 }	t_plan;
 
 typedef struct s_cylinder
 {
 	int 				type;
 	struct s_coord		*coord;
-	struct s_vector3	*vertex;
+	struct s_vec3		*vertex;
 	float				diameter;
 	float				height;
 	struct s_rgb		*rgb;
