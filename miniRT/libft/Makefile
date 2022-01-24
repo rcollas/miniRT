@@ -24,6 +24,7 @@ SRCS		= ft_memset.c\
 			  ft_calloc.c\
 			  ft_strdup.c\
 			  ft_substr.c\
+			  ft_strcmp.c\
 			  ft_strjoin.c\
 			  ft_strtrim.c\
 			  ft_split.c\
@@ -43,6 +44,8 @@ BONUS		= ft_lstnew.c\
 			  ft_lstclear.c\
 			  ft_lstiter.c\
 			  ft_lstmap.c\
+
+INCS		= libft.h
 
 OBJS		= $(SRCS:.c=.o)
 
@@ -65,7 +68,7 @@ WHITE		= \033[1;37m
 
 all:		$(NAME)
 
-%.o : %.c
+%.o : %.c $(INCS)
 	@${CC} -c ${CFLAGS} $< -o $@
 
 $(NAME):	$(OBJS)

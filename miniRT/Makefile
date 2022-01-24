@@ -8,7 +8,12 @@ SRC_FILES	= main.c \
 			cleanup.c \
 			utils.c \
 			parsing/parsing.c \
-			parsing/parsing_error.c
+			parsing/parsing_error.c \
+			parsing/fill_objs.c \
+			parsing/fill_scene.c \
+			parsing/check.c \
+			parsing/obj_list.c \
+			parsing/fill_utils.c \
 
 UNAME		=	$(shell uname)
 

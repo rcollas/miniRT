@@ -12,14 +12,21 @@
 
 #include "libft.h"
 
-static int	is_charset(char c, char charset)
+static int	is_charset(char c, char *charset)
 {
-	if (c == charset)
-		return (1);
+	int	i;
+
+	i = 0;
+	while (charset[i])
+	{
+		if (c == charset[i])
+			return (1);
+		i++;
+	}
 	return (0);
 }
 
-static unsigned int	ft_ult_strlen(char const *str, char charset)
+static unsigned int	ft_ult_strlen(char const *str, char *charset)
 {
 	unsigned int	i;
 
@@ -29,7 +36,7 @@ static unsigned int	ft_ult_strlen(char const *str, char charset)
 	return (i);
 }
 
-static unsigned int	ft_count_words(char const *str, char charset)
+static unsigned int	ft_count_words(char const *str, char *charset)
 {
 	unsigned int	words_count;
 	unsigned int	is_word;
@@ -61,7 +68,7 @@ static char	**ft_free(char **str, unsigned int size)
 	return (0);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char *c)
 {
 	char			**tab;
 	int				j;

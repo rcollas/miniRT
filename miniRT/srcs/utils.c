@@ -9,11 +9,68 @@ void	ft_free(void *to_free)
 	}
 }
 
+void	print_list(t_obj *obj)
+{
+	int i;
+
+	i = 1;
+	while (obj) {
+		printf("-------OBJ %d--------\n", i);
+		if (obj->type == SPHERE)
+			printf("TYPE = SPHERE\n");
+		if (obj->type == CYLINDER)
+			printf("TYPE = CYLINDER\n");
+		if (obj->type == PLAN)
+			printf("TYPE = PLAN\n");
+		printf("RGB VALUE: R = %d\n", obj->rgb->r);
+		printf("           G = %d\n", obj->rgb->g);
+		printf("           B = %d\n", obj->rgb->b);
+		printf("COORDINATES: X = %f\n", obj->coord->x);
+		printf("             Y = %f\n", obj->coord->y);
+		printf("             Z = %f\n", obj->coord->z);
+		printf("DIAMETER VALUE = %f\n", obj->diameter);
+		printf("HEIGHT VALUE = %f\n\n", obj->height);
+		i++;
+		obj = obj->next;
+	}
+}
+
+void	free_list(t_obj *obj)
+{
+	t_obj	*tmp;
+
+	while (obj)
+	{
+		tmp = obj->next;
+		ft_free(obj);
+		obj = tmp;
+	}
+}
+
+void	free_str_tab(char **tab)
+{
+	int	i;
+
+	i = -1;
+	while (tab[++i])
+		ft_free(tab[i]);
+	ft_free(tab);
+}
+
+void	ft_exit_parsing(int errnum, t_parsing *parsing_var)
+{
+	free_list(parsing_var->objs);
+	free_str_tab(parsing_var->input_list);
+	if (parsing_var->objs)
+		free_str_tab(parsing_var->obj_info);
+	exit(errnum);
+}
+
 int	ft_open(char *file, int *fd)
 {
 	if ((*fd = open(file, O_DIRECTORY)) >= 0)
 		return (parsing_error(IS_DIR_ERROR, file));
-	if ((*fd = open(file, O_RDONLY)) < 0)
+	if ((*fd = open(file, O_RDONLY | O_NOFOLLOW)) < 0)
 		return (parsing_error(FILE_ERROR, file));
 	return (SUCCESS);
 }
@@ -59,4 +116,43 @@ int	safe_ft_strjoin(char **input, char *buff, int fd)
 	}
 	ft_free(tmp);
 	return (SUCCESS);
+}
+
+int	safe_ft_strdup(char **dest, char *to_copy, int fd)
+{
+	*dest = ft_strdup(to_copy);
+	if (!*dest)
+	{
+		error(STRDUP_ERROR, NULL);
+		safe_close(fd);
+		exit(STRDUP_ERROR);
+	}
+	return (SUCCESS);
+}
+
+_Bool	is_valid_extension(char *arg)
+{
+	char *extension;
+
+	extension = ft_strnstr(arg, ".rt", ft_strlen(arg));
+	if (!extension || ft_strcmp(extension, ".rt") == DIFFERENT)
+		return (FALSE);
+	return (TRUE);
+}
+
+int is_valid_type(char *type)
+{
+	if (ft_strcmp(type, "A") == EQUAL)
+		return (AMBIENT_LIGHT);
+	if (ft_strcmp(type, "L") == EQUAL)
+		return (DIFFUSE_LIGHT);
+	if (ft_strcmp(type, "C") == EQUAL)
+		return (CAMERA);
+	if (ft_strcmp(type, "sp") == EQUAL)
+		return (SPHERE);
+	if (ft_strcmp(type, "cy") == EQUAL)
+		return (CYLINDER);
+	if (ft_strcmp(type, "pl") == EQUAL)
+		return (PLAN);
+	return (INVALID_TYPE_ERROR);
 }

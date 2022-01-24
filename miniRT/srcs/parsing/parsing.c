@@ -1,64 +1,105 @@
 #include "miniRT.h"
 
-_Bool	ft_strcmp(char *s1, char *s2)
-{
-	int i;
-
-	i = 0;
-	while (s1 && s1[i] && s2 && s2[i] && s1[i] == s2[i])
-	{
-		if (s1[i + 1] == 0 && s2[i + 1] == 0)
-			return (EQUAL);
-		i++;
-	}
-	return (DIFFERENT);
-}
-
-_Bool	is_valid_extension(char *arg)
-{
-	char *extension;
-
-	extension = ft_strnstr(arg, ".rt", ft_strlen(arg));
-	if (!extension || ft_strcmp(extension, ".rt") == DIFFERENT)
-		return (FALSE);
-	return (TRUE);
-}
-
-int	convert_file_to_string(int fd, char *input)
+int	convert_file_to_string(int fd, char **input)
 {
 	int 	ret;
 	char	buff[2];
 
 	ret = 1;
-	input = ft_strdup("");
+	safe_ft_strdup(input, "", fd);
 	while (ret > 0)
 	{
 		buff[1] = 0;
-		ret = safe_read(fd, buff, 1, input);
+		ret = safe_read(fd, buff, 1, *input);
 		if (ret > 0)
-			safe_ft_strjoin(&input, buff, fd);
+			safe_ft_strjoin(input, buff, fd);
 	}
-	return (0);
+	safe_close(fd);
+	return (SUCCESS);
 }
 
-int	parsing(char **argv, int argc)
+void	fill_structure(t_parsing *parsing_var)
 {
-	int		fd;
-	char	*input;
+	int		i;
+	int		type;
 
-	input = NULL;
+	i = 0;
+	while (parsing_var->input_list[i])
+	{
+		if (parsing_var->input_list[i][0] == '#')
+			i++;
+		else
+		{
+			parsing_var->obj_info = ft_split(parsing_var->input_list[i], "\t \r");
+			type = is_valid_type(parsing_var->obj_info[0]);
+			if (parsing_var->obj_info[0] && type == INVALID_TYPE_ERROR)
+			{
+				error(INVALID_TYPE_ERROR, parsing_var->input_list[i]);
+				ft_exit_parsing(INVALID_TYPE_ERROR, parsing_var);
+			}
+			fill_scene(type, parsing_var, parsing_var->input_list[i]);
+			fill_obj(type, parsing_var, parsing_var->input_list[i]);
+			free_str_tab(parsing_var->obj_info);
+			i++;
+		}
+	}
+}
+
+void	parsing_var_init(t_parsing *var)
+{
+	var->camera = FALSE;
+	var->diffuse_light = FALSE;
+	var->ambient_light= FALSE;
+	var->objs = NULL;
+	var->obj_info = NULL;
+	var->objs = NULL;
+}
+
+int	load_file(char **argv, int argc, int *fd)
+{
 	if (argc != 2)
 		return (parsing_error(ARG_NUMBER_ERROR, NULL));
-	if (ft_open(argv[1], &fd) != SUCCESS)
+	if (ft_open(argv[1], fd) != SUCCESS)
 	{
-		safe_close(fd);
+		safe_close(*fd);
 		return (FAIL);
 	}
 	if (is_valid_extension(argv[1]) == FALSE)
 	{
 		parsing_error(EXTENSION_ERROR, argv[1]);
-		safe_close(fd);
+		safe_close(*fd);
 	}
-	convert_file_to_string(fd, input);
+	return (SUCCESS);
+}
+
+_Bool	file_is_complete(t_parsing *var, char *file)
+{
+	int	scene_objs;
+
+	scene_objs = var->diffuse_light + var->ambient_light + var->camera;
+	if (scene_objs != 3)
+	{
+		parsing_error(INCOMPLETE_FILE_ERROR, file);
+		return (FAIL);
+	}
+	return (SUCCESS);
+}
+
+int	parsing(char **argv, int argc, t_parsing *parsing_var)
+{
+	int		fd;
+	char	*input;
+
+	input = NULL;
+
+	parsing_var_init(parsing_var);
+	load_file(argv, argc, &fd);
+	convert_file_to_string(fd, &input);
+	parsing_var->input_list = ft_split(input, "\n");
+	ft_free(input);
+	fill_structure(parsing_var);
+	if (file_is_complete(parsing_var, argv[1]) == FAIL)
+		ft_exit_parsing(INCOMPLETE_FILE_ERROR, parsing_var);
+	free_str_tab(parsing_var->input_list);
 	return (SUCCESS);
 }
