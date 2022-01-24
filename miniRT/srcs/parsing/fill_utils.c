@@ -36,7 +36,7 @@ int	fill_coordinates(char *coordinates_values, t_coord *coordinates)
 	return (SUCCESS);
 }
 
-int	fill_vertex(char *vertex_values, t_vertex *vertex)
+int	fill_vertex(char *vertex_values, t_vec3 *vertex)
 {
 	char	**split_vertex;
 	int 	i;

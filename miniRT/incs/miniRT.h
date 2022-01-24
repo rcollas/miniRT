@@ -28,7 +28,7 @@ int		check(void *obj, int type);
 
 int		fill_rgb(char *rgb_values, t_rgb *rgb);
 int		fill_coordinates(char *coordinates_values, t_coord *coordinates);
-int		fill_vertex(char *vertex_values, t_vertex *vertex);
+int		fill_vertex(char *vertex_values, t_vec3 *vertex);
 void	fill_ambient_light(t_parsing *parsing, t_ambient_light *ambient_light, char *line);
 void	fill_camera(t_parsing *parsing, t_camera *camera, char *line);
 void	fill_diffuse_light(t_parsing *parsing, t_diffuse_light *diffuse_light, char *line);

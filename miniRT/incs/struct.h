@@ -17,7 +17,7 @@ typedef struct s_plan
 {
 	int 			type;
 	struct s_coord	*coord;
-	struct s_vertex	*vertex;
+	struct s_vec3	*vertex;
 	struct s_rgb	*rgb;
 	struct s_plan	*next;
 }	t_plan;
@@ -26,7 +26,7 @@ typedef struct s_cylinder
 {
 	int 				type;
 	struct s_coord		*coord;
-	struct s_vertex		*vertex;
+	struct s_vec3		*vertex;
 	float				diameter;
 	float				height;
 	struct s_rgb		*rgb;
@@ -52,12 +52,12 @@ typedef struct s_coord
 	double	z;
 }	t_coord;
 
-typedef struct s_vertex
+typedef struct s_vec3
 {
 	double	x;
 	double	y;
 	double	z;
-}	t_vertex;
+}	t_vec3;
 
 typedef struct s_rgb
 {
@@ -77,7 +77,7 @@ typedef struct s_camera
 {
 	int 				type;
 	struct s_coord		coord[1];
-	struct s_vertex		vertex[1];
+	struct s_vec3		vertex[1];
 	int 				fov;
 }	t_camera;
 
@@ -99,7 +99,7 @@ typedef struct s_obj
 {
 	int				type;
 	struct s_coord	coord[1];
-	struct s_vertex	vertex[1];
+	struct s_vec3	vertex[1];
 	struct s_rgb	rgb[1];
 	double			diameter;
 	double			height;
