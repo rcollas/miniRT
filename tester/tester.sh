@@ -33,7 +33,8 @@ COLS=$(tput cols)
 
 function execute_test()
 {
-	$PATH_EXEC/miniRT $@ 2> result.txt
+	$PATH_EXEC/miniRT $@ 2> result.txt | kill -9 $(ps | grep "miniRT" | grep -v grep | awk '{ print $1 }') 2> /dev/null
+
 	if [[ $(head -1 result.txt) == "$(head -1 ref.txt)" ]]
 	then
 		echo -e "${GREEN}   ✔  $1${RESET}"

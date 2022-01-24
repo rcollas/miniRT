@@ -58,7 +58,10 @@ void	parsing_var_init(t_parsing *var)
 int	load_file(char **argv, int argc, int *fd)
 {
 	if (argc != 2)
-		return (parsing_error(ARG_NUMBER_ERROR, NULL));
+	{
+		parsing_error(ARG_NUMBER_ERROR, NULL);
+		return (FAIL);
+	}
 	if (ft_open(argv[1], fd) != SUCCESS)
 	{
 		safe_close(*fd);
@@ -93,7 +96,8 @@ int	parsing(char **argv, int argc, t_parsing *parsing_var)
 	input = NULL;
 
 	parsing_var_init(parsing_var);
-	load_file(argv, argc, &fd);
+	if (load_file(argv, argc, &fd) == FAIL)
+		return (FAIL);
 	convert_file_to_string(fd, &input);
 	parsing_var->input_list = ft_split(input, "\n");
 	ft_free(input);
