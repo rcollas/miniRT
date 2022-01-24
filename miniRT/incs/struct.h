@@ -1,11 +1,7 @@
 #ifndef MINI_RT_STRUCT_H
 #define MINI_RT_STRUCT_H
 
-# include "lib_vector.h"
-
 /*
-
-
 typedef struct s_sphere
 {
 	int				type;

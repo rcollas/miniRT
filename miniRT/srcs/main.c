@@ -14,9 +14,9 @@ int	main(int argc, char **argv)
 	(void)mlx;
 	(void)argc;
 	(void)argv;
-	// mlx = setup_mlx();
-	// events_loop(mlx);
 	parsing(argv, argc, parsing_var);
+	mlx = setup_mlx();
+	events_loop(mlx);
 	print_list(parsing_var->objs);
 	free_list(parsing_var->objs);
 	return (0);
