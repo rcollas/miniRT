@@ -155,7 +155,7 @@ void	fill_diffuse_light(t_parsing *parsing, t_diffuse_light *diffuse_light, char
 	i = 0;
 	while (parsing->obj_info[i])
 		i++;
-	if (i != 4 /*|| parsing->objs->diffuse_light->coord*/)
+	if (i != 3 /*|| parsing->objs->diffuse_light->coord*/)
 	{
 		error(AMBIENT_LIGHT_FORMAT_ERROR, line);
 		ft_exit_parsing(AMBIENT_LIGHT_FORMAT_ERROR, parsing);

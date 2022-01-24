@@ -42,7 +42,6 @@ void	free_cylinder(t_cylinder *list)
 		tmp = list->next;
 		ft_free(list);
 		list = tmp;
-
 	}
 }
 
