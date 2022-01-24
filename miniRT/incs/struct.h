@@ -1,6 +1,8 @@
 #ifndef MINI_RT_STRUCT_H
 #define MINI_RT_STRUCT_H
 
+# include "lib_vector.h"
+
 /*
 
 
@@ -45,19 +47,19 @@ typedef struct s_obj
 }		t_obj;
  */
 
-typedef struct s_coord
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_coord;
-
 typedef struct s_vec3
 {
 	double	x;
 	double	y;
 	double	z;
 }	t_vec3;
+
+typedef struct s_coord
+{
+	double	x;
+	double	y;
+	double	z;
+}	t_coord;
 
 typedef struct s_rgb
 {
