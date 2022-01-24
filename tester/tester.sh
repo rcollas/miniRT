@@ -95,12 +95,13 @@ function run_test()
 
 #############################       MAIN      ############################
 
-rm -rf ref.txt
+rm -rf ref.txt result.txt
 
 if [ "$1" == "debug" ]
 then
 	make debug --no-print-directory -C ../miniRT
 else
+	# make re -C ../miniRT
 	make --no-print-directory -C ../miniRT
 fi
 

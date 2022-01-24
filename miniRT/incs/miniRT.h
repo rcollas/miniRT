@@ -18,6 +18,9 @@
 # include "utils.h"
 # include "lib_vector.h"
 
+# define WIDTH 1280
+# define HEIGHT 720
+
 t_mlx	*setup_mlx(void);
 void	events_loop(t_mlx *mlx);
 void	clean_mlx(t_mlx *mlx);
