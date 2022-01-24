@@ -16,11 +16,30 @@
 # include "enum.h"
 # include "struct.h"
 # include "utils.h"
+# include "lib_vector.h"
 
 t_mlx	*setup_mlx(void);
 void	events_loop(t_mlx *mlx);
 void	clean_mlx(t_mlx *mlx);
 int		parsing(char **argv, int argc);
+int		is_valid_type(char *type);
 void	ft_free(void *to_free);
+int		check(void *obj, int type);
+
+int		fill_rgb(char *rgb_values, t_rgb *rgb);
+int		fill_coordinates(char *coordinates_values, t_coord *coordinates);
+int		fill_vertex(char *vertex_values, t_vertex *vertex);
+void	fill_ambient_light(t_parsing *parsing, t_ambient_light *ambient_light, char *line);
+void	fill_camera(t_parsing *parsing, t_camera *camera, char *line);
+void	fill_diffuse_light(t_parsing *parsing, t_diffuse_light *diffuse_light, char *line);
+/*
+void	fill_sphere(t_parsing *parsing, t_sphere *sphere, char *line);
+void	fill_plan(t_parsing *parsing, t_plan *plan, char *line);
+void	fill_cylinder(t_parsing *parsing, t_cylinder *cylinder, char *line);
+void	fill_by_type(int type, t_parsing *var, char *line);
+ */
+void	fill_structure(t_parsing *parsing_var);
+t_obj	*new_obj(int type, double diameter, double height);
+void	obj_add_back(t_obj **obj_list, t_obj *to_add);
 
 #endif

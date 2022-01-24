@@ -13,8 +13,8 @@ int	main(int argc, char **argv)
 	(void)mlx;
 	(void)argc;
 	(void)argv;
-	// mlx = setup_mlx();
-	// events_loop(mlx);
 	parsing(argv, argc);
+	mlx = setup_mlx();
+	events_loop(mlx);
 	return (0);
 }
