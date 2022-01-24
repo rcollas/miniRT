@@ -94,6 +94,8 @@ function run_test()
 
 #############################       MAIN      ############################
 
+rm -rf ref.txt
+
 if [ "$1" == "debug" ]
 then
 	make debug --no-print-directory -C ../miniRT
