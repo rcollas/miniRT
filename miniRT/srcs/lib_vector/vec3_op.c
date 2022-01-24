@@ -24,6 +24,16 @@ float	get_norm_vec3(t_vector3 vector)
 	return (norm);
 }
 
+void	normalize_vec3(t_vector3 *vector)
+{
+	float	norm;
+
+	norm = get_norm_vec3(*vector);
+	vector->x = vector->x / norm;
+	vector->y = vector->y / norm;
+	vector->z = vector->z / norm;
+}
+
 t_vector4	convert_vec3_to_vec4(t_vector3 vector)
 {
 	t_vector4	new_vector;
@@ -32,5 +42,15 @@ t_vector4	convert_vec3_to_vec4(t_vector3 vector)
 	new_vector.y = vector.y;
 	new_vector.z = vector.z;
 	new_vector.t = 1;
+	return (new_vector);
+}
+
+t_vector3	convert_vec4_to_vec3(t_vector4 vector)
+{
+	t_vector3	new_vector;
+
+	new_vector.x = vector.x;
+	new_vector.y = vector.y;
+	new_vector.z = vector.z;
 	return (new_vector);
 }
