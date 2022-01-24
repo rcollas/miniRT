@@ -52,16 +52,6 @@ typedef struct s_coord
 	double	z;
 }	t_coord;
 
-<<<<<<< HEAD
-=======
-typedef struct s_vertex
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_vertex;
-
->>>>>>> e3d237baf704df1d7f25c6a8e2b0ce939eea952a
 typedef struct s_rgb
 {
 	int	r;
