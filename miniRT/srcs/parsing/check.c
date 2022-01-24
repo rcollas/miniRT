@@ -19,7 +19,7 @@ int	is_valid_rgb(t_rgb *rgb)
 	return (TRUE);
 }
 
-int	is_valid_vertex(t_vertex *vertex)
+int	is_valid_vertex(t_vec3 *vertex)
 {
 	if (!vertex)
 		return (FALSE);

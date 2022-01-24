@@ -1,6 +1,8 @@
 #ifndef MINI_RT_STRUCT_H
 #define MINI_RT_STRUCT_H
 
+# include "lib_vector.h"
+
 /*
 
 
@@ -45,6 +47,13 @@ typedef struct s_obj
 }		t_obj;
  */
 
+typedef struct s_vec3
+{
+	double	x;
+	double	y;
+	double	z;
+}	t_vec3;
+
 typedef struct s_coord
 {
 	double	x;
@@ -70,7 +79,7 @@ typedef struct s_camera
 {
 	int 				type;
 	struct s_coord		coord[1];
-	struct s_vertex		vertex[1];
+	struct s_vec3		vertex[1];
 	int 				fov;
 }	t_camera;
 
@@ -92,7 +101,7 @@ typedef struct s_obj
 {
 	int				type;
 	struct s_coord	coord[1];
-	struct s_vertex	vertex[1];
+	struct s_vec3	vertex[1];
 	struct s_rgb	rgb[1];
 	double			diameter;
 	double			height;
