@@ -7,6 +7,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <errno.h>
+# include <math.h>
 # include "mlx.h"
 # ifdef __linux__
 # include "mlx_int.h"
@@ -22,11 +23,15 @@
 # define WIDTH 720
 
 /*********************************************** MLX_SETUP *********************************************************/
+
 t_mlx	*setup_mlx(void);
-void	init_image(t_mlx *mlx);
-void	events_loop(t_mlx *mlx);
+void	events_loop(t_data *data);
+void	clean_data(t_data *data);
 void	clean_mlx(t_mlx *mlx);
 void	free_list(t_obj *obj);
+int		check(void *obj, int type);
+void	init_data(t_parsing *parsing_var, t_data *data);
+void 	init_image(t_mlx *mlx, t_data *data);
 
 /************************************************ PARSING **********************************************************/
 

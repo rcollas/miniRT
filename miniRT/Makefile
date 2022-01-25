@@ -82,7 +82,7 @@ $(NAME):	$(OBJS)
 else
 $(NAME):	$(OBJS)
 				@$(LIBFT_MAKE)
-				@$(CC) $(CFLAGS) $^ -o $@ $(LIBFT_LIB) $(MLX_DIR)/libmlx.a -lXext -lX11
+				@$(CC) $(CFLAGS) $^ -o $@ $(LIBFT_LIB) $(MLX_DIR)/libmlx.a -lXext -lX11 -lm
 				@echo "$(GREEN)$(NAME) created$(RESET)"
 endif
 

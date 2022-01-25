@@ -1,21 +1,25 @@
 #include "miniRT.h"
 
-int	exit_hook(void)
+int	exit_hook(t_data *data)
 {
+	clean_data(data);
 	exit(EXIT_SUCCESS);
 	return (0);
 }
 
-int	key_hook(int key)
+int	key_hook(int key, t_data *data)
 {
 	if (key == KEY_ESC)
+	{
+		clean_data(data);
 		exit(EXIT_SUCCESS);
+	}
 	return (0);
 }
 
-void	events_loop(t_mlx *mlx)
+void	events_loop(t_data *data)
 {
-	mlx_hook(mlx->window, 17, 0, exit_hook, NULL);
-	mlx_key_hook(mlx->window, key_hook, NULL);
-	mlx_loop(mlx->ptr);
+	mlx_hook(data->mlx->window, 17, 0, exit_hook, data);
+	mlx_key_hook(data->mlx->window, key_hook, data);
+	mlx_loop(data->mlx->ptr);
 }

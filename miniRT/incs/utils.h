@@ -1,5 +1,5 @@
-#ifndef MINI_RT_UTILS_H
-#define MINI_RT_UTILS_H
+#ifndef UTILS_H
+# define UTILS_H
 
 # include <stdlib.h>
 # include <errno.h>

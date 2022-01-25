@@ -1,10 +1,11 @@
 #include "miniRT.h"
 
-void	exit_error(t_mlx *mlx)
+void	exit_error(t_data *data)
 {
-	clean_mlx(mlx);
+	clean_data(data);
 	exit(EXIT_FAILURE);
 }
+
 int	create_trgb(int transparency, int red, int green, int blue)
 {
 	return (transparency << 24 | red << 16 | green << 8 | blue);
@@ -15,7 +16,7 @@ void	draw_pixel(t_image *image, int x, int y, int color)
 	char			*dest;
 
 	dest = image->addr + (y * image->line_len + x * image->bpp / 8);
-	*(int *)dest = color;
+	*(unsigned int *)dest = color;
 }
 
 void	fill_background(t_mlx *mlx, int color)
@@ -73,32 +74,57 @@ void	draw_coordinate_system(t_mlx *mlx, int scale, int color)
 	}
 }
 
-void	print_window(t_mlx *mlx)
+void	copy_coord(t_coord *dest, t_coord *src)
 {
-	int	color;
+	dest->x = src->x;
+	dest->y = src->y;
+	dest->z = src->z;
+}
 
-	init_image(mlx);
-	color = create_trgb(80, 255, 255, 255);
-	fill_background(mlx, color);
-	color = create_trgb(80, 0, 0, 0);
-	draw_coordinate_system(mlx, 10, color);
-	color = create_trgb(80, 0, 0, 255);
-	draw_square(250, 100, 50, color, mlx);
+void	copy_vec3(t_vec3 *dest, t_vec3 *src)
+{
+	dest->x = src->x;
+	dest->y = src->y;
+	dest->z = src->z;
+}
+
+void	print_window(t_mlx *mlx, t_scene *scene, t_data *data)
+{
+	int		x;
+	int		y;
+	int		color;
+	t_ray	ray[1];
+
+	y = -1;
+	scene->camera->fov = scene->camera->fov * M_PI / 180;
+	copy_coord(ray->origin, scene->camera->coord);
+	init_image(mlx, data);
+	while (++y < HEIGHT)
+	{
+		ray->dir->y = y - HEIGHT / 2;
+		x = -1;
+		while (++x < WIDTH)
+		{
+			ray->dir->x = x - WIDTH / 2;
+			ray->dir->z = -1 * (WIDTH / (2 * tan(scene->camera->fov / 2)));
+			color = create_trgb(80, 255, 0, 0);
+			draw_pixel(mlx->image, x, y, color);
+		}
+	}
 	mlx_put_image_to_window(mlx->ptr, mlx->window, mlx->image->img_ptr, 0, 0);
-	mlx_string_put(mlx->ptr, mlx->window, WIDTH / 2 - 20, HEIGHT / 2 + 20, create_trgb(0, 0, 0, 0), "0");
 }
 
 int	main(int argc, char **argv)
 {
-	t_mlx		*mlx;
 	t_parsing	parsing_var[1];
+	t_data		data[1];
 
 	if (parsing(argv, argc, parsing_var) == FAIL)
 		return (EXIT_FAILURE);
-	mlx = setup_mlx();
-	print_window(mlx);
-	events_loop(mlx);
-	//print_list(parsing_var->objs);
-	free_list(parsing_var->objs);
+	init_data(parsing_var, data);
+	print_window(data->mlx, data->scene, data);
+	events_loop(data);
+	print_list(data->obj);
+	clean_data(data);
 	return (0);
 }
