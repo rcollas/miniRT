@@ -10,7 +10,7 @@
 
 int		parsing_error(int errnum, char *str);
 int		is_dir_error(char *str);
-void	exit_error(t_mlx *mlx);
+void	exit_error(t_data *data);
 int		error(int errnum, char *str);
 
 #endif

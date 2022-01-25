@@ -1,8 +1,8 @@
 #include "miniRT.h"
 
-void	exit_error(t_mlx *mlx)
+void	exit_error(t_data *data)
 {
-	clean_mlx(mlx);
+	clean_data(data);
 	exit(EXIT_FAILURE);
 }
 
@@ -19,25 +19,38 @@ void	draw_pixel(t_mlx *mlx, int x, int y, int color)
 	*(unsigned int *)dest = color;
 }
 
+void	copy_coord(t_coord *dest, t_coord *src)
+{
+	dest->x = src->x;
+	dest->y = src->y;
+	dest->z = src->z;
+}
+
+void	copy_vec3(t_vec3 *dest, t_vec3 *src)
+{
+	dest->x = src->x;
+	dest->y = src->y;
+	dest->z = src->z;
+}
+
 void	print_window(t_mlx *mlx, t_scene *scene)
 {
 	int		x;
 	int		y;
 	int		color;
-	t_ray	ray;
+	t_ray	ray[1];
 
 	y = -1;
 	scene->camera->fov = scene->camera->fov * M_PI / 180;
-	(void)ray;
-	// ray.origin = scene->camera->coord;
+	copy_coord(ray->origin, scene->camera->coord);
 	while (++y < HEIGHT)
 	{
-		// ray.dir->y = y - HEIGHT / 2;
+		ray->dir->y = y - HEIGHT / 2;
 		x = -1;
 		while (++x < WIDTH)
 		{
-			// ray.dir->x = x - WIDTH / 2;
-			// ray.dir->z = -1 * (WIDTH / (2 * tan(scene->camera->fov / 2)));
+			ray->dir->x = x - WIDTH / 2;
+			ray->dir->z = -1 * (WIDTH / (2 * tan(scene->camera->fov / 2)));
 			color = create_trgb(80, 255, 0, 0);
 			draw_pixel(mlx, x, y, color);
 		}
@@ -47,18 +60,15 @@ void	print_window(t_mlx *mlx, t_scene *scene)
 
 int	main(int argc, char **argv)
 {
-	t_mlx		*mlx;
 	t_parsing	parsing_var[1];
+	t_data		data[1];
 
-	(void)mlx;
-	(void)argc;
-	(void)argv;
 	if (parsing(argv, argc, parsing_var) == FAIL)
 		exit(EXIT_FAILURE);
-	mlx = setup_mlx();
-	print_window(mlx, parsing_var->scene);
-	events_loop(mlx);
-	print_list(parsing_var->objs);
-	free_list(parsing_var->objs);
+	init_data(parsing_var, data);
+	print_window(data->mlx, parsing_var->scene);
+	events_loop(data);
+	print_list(data->obj);
+	free_list(data->obj);
 	return (0);
 }

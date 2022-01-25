@@ -23,13 +23,15 @@
 # define HEIGHT 720
 
 t_mlx	*setup_mlx(void);
-void	events_loop(t_mlx *mlx);
+void	events_loop(t_data *data);
+void	clean_data(t_data *data);
 void	clean_mlx(t_mlx *mlx);
 int		parsing(char **argv, int argc, t_parsing *parsing_var);
 int		is_valid_type(char *type);
 void	ft_free(void *to_free);
 void	free_list(t_obj *obj);
 int		check(void *obj, int type);
+void	init_data(t_parsing *parsing_var, t_data *data);
 
 int		fill_rgb(char *rgb_values, t_rgb *rgb);
 int		fill_coordinates(char *coordinates_values, t_coord *coordinates);

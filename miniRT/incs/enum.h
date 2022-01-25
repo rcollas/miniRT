@@ -1,5 +1,5 @@
-#ifndef MINI_RT_ENUM_H
-#define MINI_RT_ENUM_H
+#ifndef ENUM_H
+# define ENUM_H
 
 typedef enum s_define {
 	TRUE		= 1,
