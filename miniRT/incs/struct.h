@@ -1,52 +1,6 @@
 #ifndef MINI_RT_STRUCT_H
 #define MINI_RT_STRUCT_H
 
-# include "lib_vector.h"
-
-/*
-
-
-typedef struct s_sphere
-{
-	int				type;
-	struct s_coord	*coord;
-	float			diameter;
-	struct s_rgb	*rgb;
-	struct s_sphere	*next;
-}	t_sphere;
-
-typedef struct s_plan
-{
-	int 			type;
-	struct s_coord	*coord;
-	struct s_vec3	*vertex;
-	struct s_rgb	*rgb;
-	struct s_plan	*next;
-}	t_plan;
-
-typedef struct s_cylinder
-{
-	int 				type;
-	struct s_coord		*coord;
-	struct s_vec3		*vertex;
-	float				diameter;
-	float				height;
-	struct s_rgb		*rgb;
-	struct s_cylinder	*next;
-}	t_cylinder;
-
-typedef struct s_obj
-{
-	int 			type;
-	t_ambient_light *ambient_light;
-	t_camera		*camera;
-	t_diffuse_light	*diffuse_light;
-	t_plan			*plan;
-	t_sphere 		*sphere;
-	t_cylinder 		*cylinder;
-}		t_obj;
- */
-
 typedef struct s_vec3
 {
 	double	x;
@@ -108,15 +62,20 @@ typedef struct s_obj
 	struct s_obj	*next;
 }	t_obj;
 
+typedef struct s_image
+{
+	void	*img_ptr;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}				t_image;
+
 typedef struct s_mlx
 {
 	void		*ptr;
 	void		*window;
-	void		*image;
-	char		*addr;
-	int			bpp;
-	int			size_line;
-	int			endian;
+	t_image		*image;
 }				t_mlx;
 
 typedef struct s_parsing

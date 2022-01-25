@@ -26,12 +26,12 @@ float	get_norm_vec3(t_vec3 vector)
 
 void	normalize_vec3(t_vec3 *vector)
 {
-	float	norm;
+	float	norm_reciprocal;
 
-	norm = get_norm_vec3(*vector);
-	vector->x = vector->x / norm;
-	vector->y = vector->y / norm;
-	vector->z = vector->z / norm;
+	norm_reciprocal = 1 / get_norm_vec3(*vector);
+	vector->x = vector->x * norm_reciprocal;
+	vector->y = vector->y * norm_reciprocal;
+	vector->z = vector->z * norm_reciprocal;
 }
 
 t_vec4	convert_vec3_to_vec4(t_vec3 vector)
