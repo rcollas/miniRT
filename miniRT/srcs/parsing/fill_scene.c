@@ -38,7 +38,7 @@ void	fill_camera(t_parsing *parsing, t_camera *camera, char *line)
 	camera->type = CAMERA;
 	fill_coordinates(parsing->obj_info[1], camera->coord);
 	fill_vertex(parsing->obj_info[2], camera->vertex);
-	camera->fov = ft_atoi(parsing->obj_info[3]);
+	camera->fov = ft_atoi(parsing->obj_info[3]) * M_PI / 180;
 	if (check(camera, CAMERA) == FAIL)
 	{
 		error(CAMERA_FORMAT_ERROR, line);

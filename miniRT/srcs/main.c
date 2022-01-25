@@ -96,7 +96,6 @@ void	print_window(t_mlx *mlx, t_scene *scene, t_data *data)
 	t_ray	ray[1];
 
 	y = -1;
-	scene->camera->fov = scene->camera->fov * M_PI / 180;
 	copy_coord(ray->origin, scene->camera->coord);
 	init_image(mlx, data);
 	while (++y < HEIGHT)
