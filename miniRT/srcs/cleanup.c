@@ -6,8 +6,8 @@ void	clean_mlx(t_mlx *mlx)
 		return ;
 	if (mlx->image)
 	{
-		mlx_destroy_image(mlx->ptr, mlx->image);
-		mlx->image = NULL;
+		mlx_destroy_image(mlx->ptr, mlx->image->img_ptr);
+		ft_free(mlx->image);
 	}
 	if (mlx->window)
 	{
@@ -15,9 +15,9 @@ void	clean_mlx(t_mlx *mlx)
 		mlx->window = NULL;
 	}
 	mlx_destroy_display(mlx->ptr);
-	free(mlx->ptr);
+	ft_free(mlx->ptr);
 	mlx->ptr = NULL;
-	free(mlx);
+	ft_free(mlx);
 	mlx = NULL;
 }
 
