@@ -57,6 +57,12 @@ typedef struct s_coord
 	double	z;
 }	t_coord;
 
+typedef struct	s_ray
+{
+	t_coord		*origin;
+	t_vec3		*dir;
+}	t_ray;
+
 typedef struct s_rgb
 {
 	int	r;

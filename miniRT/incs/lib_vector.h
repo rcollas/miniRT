@@ -5,10 +5,10 @@
 
 typedef struct s_vec4
 {
-	float	x;
-	float	y;
-	float	z;
-	float	t;
+	double	x;
+	double	y;
+	double	z;
+	double	t;
 }	t_vec4;
 
 typedef struct s_matrix4
@@ -21,10 +21,10 @@ typedef struct s_matrix4
 
 struct s_vec3	add_vec3(struct s_vec3 vector_1, struct s_vec3 vector_2);
 struct s_vec3	sub_vec3(struct s_vec3 vector_1, struct s_vec3 vector_2);
-struct s_vec3	add_vec3_and_const(struct s_vec3 vector, float k);
-struct s_vec3	sub_vec3_and_const(struct s_vec3 vector, float k);
-struct s_vec3	mul_vec3_and_const(struct s_vec3 vector, float k);
-struct s_vec3	add_vec3_and_const(struct s_vec3 vector, float k);
+struct s_vec3	add_vec3_and_const(struct s_vec3 vector, double k);
+struct s_vec3	sub_vec3_and_const(struct s_vec3 vector, double k);
+struct s_vec3	mul_vec3_and_const(struct s_vec3 vector, double k);
+struct s_vec3	div_vec3_and_const(struct s_vec3 vector, double k);
 
 float			dot_product_vec3(
 					struct s_vec3 vector_1, struct s_vec3 vector_2);

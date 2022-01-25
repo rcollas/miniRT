@@ -19,18 +19,25 @@ void	draw_pixel(t_mlx *mlx, int x, int y, int color)
 	*(unsigned int *)dest = color;
 }
 
-void	print_window(t_mlx *mlx)
+void	print_window(t_mlx *mlx, t_scene *scene)
 {
-	int	x;
-	int	y;
-	int	color;
+	int		x;
+	int		y;
+	int		color;
+	t_ray	ray;
 
 	y = -1;
-	while (++y < HEIGHT - 1)
+	scene->camera->fov = scene->camera->fov * M_PI / 180;
+	(void)ray;
+	// ray.origin = scene->camera->coord;
+	while (++y < HEIGHT)
 	{
+		// ray.dir->y = y - HEIGHT / 2;
 		x = -1;
-		while (++x < WIDTH - 1)
+		while (++x < WIDTH)
 		{
+			// ray.dir->x = x - WIDTH / 2;
+			// ray.dir->z = -1 * (WIDTH / (2 * tan(scene->camera->fov / 2)));
 			color = create_trgb(80, 255, 0, 0);
 			draw_pixel(mlx, x, y, color);
 		}
@@ -49,7 +56,7 @@ int	main(int argc, char **argv)
 	if (parsing(argv, argc, parsing_var) == FAIL)
 		exit(EXIT_FAILURE);
 	mlx = setup_mlx();
-	print_window(mlx);
+	print_window(mlx, parsing_var->scene);
 	events_loop(mlx);
 	print_list(parsing_var->objs);
 	free_list(parsing_var->objs);

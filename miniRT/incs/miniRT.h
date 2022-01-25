@@ -7,6 +7,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <errno.h>
+# include <math.h>
 # include "mlx.h"
 # ifdef __linux__
 # include "mlx_int.h"
