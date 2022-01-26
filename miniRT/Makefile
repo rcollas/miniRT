@@ -14,6 +14,9 @@ SRC_FILES	= main.c \
 			parsing/check.c \
 			parsing/obj_list.c \
 			parsing/fill_utils.c \
+			raytracing/raytracer.c \
+			lib_vector/vec3_basic_op.c \
+			lib_vector/vec3_op.c
 
 UNAME		=	$(shell uname)
 

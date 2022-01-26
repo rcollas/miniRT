@@ -18,7 +18,7 @@ int	fill_rgb(char *rgb_values, t_rgb *rgb)
 	return (SUCCESS);
 }
 
-int	fill_coordinates(char *coordinates_values, t_coord *coordinates)
+int	fill_coordinates(char *coordinates_values, t_vec3 *coordinates)
 {
 	char **split_coordinates;
 	int i;

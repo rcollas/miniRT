@@ -9,15 +9,18 @@
 # include <errno.h>
 # include <math.h>
 # include "mlx.h"
-# ifdef __linux__
-# include "mlx_int.h"
-# endif
 # include "libft.h"
 # include "error.h"
 # include "enum.h"
 # include "struct.h"
 # include "utils.h"
 # include "lib_vector.h"
+# ifdef __linux__
+# include "mlx_int.h"
+#  define IS_LINUX 1
+# else
+#  define IS_LINUX 0
+# endif
 
 # define HEIGHT 480
 # define WIDTH 720
@@ -37,7 +40,7 @@ void 	init_image(t_mlx *mlx, t_data *data);
 
 void	fill_structure(t_parsing *parsing_var);
 int		fill_rgb(char *rgb_values, t_rgb *rgb);
-int		fill_coordinates(char *coordinates_values, t_coord *coordinates);
+int		fill_coordinates(char *coordinates_values, t_vec3 *coordinates);
 int		fill_vertex(char *vertex_values, t_vec3 *vertex);
 void	fill_ambient_light(t_parsing *parsing, t_ambient_light *ambient_light, char *line);
 void	fill_camera(t_parsing *parsing, t_camera *camera, char *line);
@@ -52,5 +55,10 @@ void	print_list(t_obj *obj);
 int		parsing(char **argv, int argc, t_parsing *parsing_var);
 int		is_valid_type(char *type);
 void	ft_free(void *to_free);
+
+/*********************************************** RAYTRACING ********************************************************/
+
+void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data);
+void	draw_pixel(t_image *image, int x, int y, int color);
 
 #endif

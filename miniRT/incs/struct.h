@@ -17,8 +17,8 @@ typedef struct s_coord
 
 typedef struct s_ray
 {
-	t_coord		origin[1];
-	t_vec3		dir[1];
+	t_vec3	origin[1];
+	t_vec3	dir[1];
 }	t_ray;
 
 typedef struct s_rgb
@@ -30,24 +30,24 @@ typedef struct s_rgb
 
 typedef struct s_ambient_light
 {
-	int						type;
-	double					intensity;
-	struct s_rgb			rgb[1];
+	int				type;
+	double			intensity;
+	struct s_rgb	rgb[1];
 }	t_ambient_light;
 
 typedef struct s_camera
 {
-	int					type;
-	struct s_coord		coord[1];
-	struct s_vec3		vertex[1];
-	int					fov;
+	int			type;
+	t_vec3		coord[1];
+	t_vec3		vertex[1];
+	double		fov;
 }	t_camera;
 
 typedef struct s_diffuse_light
 {
-	int						type;
-	struct s_coord			coord[1];
-	double					intensity;
+	int				type;
+	t_vec3			coord[1];
+	double			intensity;
 }	t_diffuse_light;
 
 typedef struct s_scene
@@ -60,9 +60,9 @@ typedef struct s_scene
 typedef struct s_obj
 {
 	int				type;
-	struct s_coord	coord[1];
-	struct s_vec3	vertex[1];
-	struct s_rgb	rgb[1];
+	t_vec3			coord[1];
+	t_vec3			vertex[1];
+	t_rgb			rgb[1];
 	double			diameter;
 	double			height;
 	struct s_obj	*next;

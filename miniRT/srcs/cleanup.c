@@ -14,7 +14,8 @@ void	clean_mlx(t_mlx *mlx)
 		mlx_destroy_window(mlx->ptr, mlx->window);
 		mlx->window = NULL;
 	}
-	mlx_destroy_display(mlx->ptr);
+	if (IS_LINUX)
+		mlx_destroy_display(mlx->ptr);
 	ft_free(mlx->ptr);
 	mlx->ptr = NULL;
 	ft_free(mlx);
