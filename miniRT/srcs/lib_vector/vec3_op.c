@@ -42,6 +42,12 @@ void	normalize_vec3(t_vec3 *vector)
 	vector->z *= norm_reciprocal;
 }
 
+t_vec3	get_normalized_vec3(t_vec3 vector)
+{
+	normalize_vec3(&vector);
+	return (vector);
+}
+
 t_vec4	convert_vec3_to_vec4(t_vec3 vector)
 {
 	t_vec4	new_vector;

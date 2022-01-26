@@ -17,8 +17,8 @@ typedef struct s_coord
 
 typedef struct s_ray
 {
-	t_vec3	origin[1];
-	t_vec3	dir[1];
+	t_vec3	origin;
+	t_vec3	dir;
 }	t_ray;
 
 typedef struct s_rgb

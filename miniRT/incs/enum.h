@@ -8,6 +8,9 @@ typedef enum s_define {
 	FAIL		= 1,
 	EQUAL		= 1,
 	DIFFERENT	= 0,
+	A			= 0,
+	B			= 1,
+	C			= 2,
 }	t_define;
 
 typedef enum s_error {
