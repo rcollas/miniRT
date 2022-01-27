@@ -27,10 +27,8 @@ _Bool	hit_cylinder(t_ray ray, t_obj *obj, t_vec3 *intersection, t_vec3 *normal)
 	t_vec3	normalized_dir;
 	t_vec3	cylinder_to_origin;
 	t_vec3	new_ray_dir;
-	double	max;
 
 	radius = obj->diameter / 2;
-	max = sqrt(pow(obj->height /2, 2) + pow(radius, 2));
 	normalized_dir = get_normalized_vec3(*obj->dir);
 	cylinder_to_origin = sub_vec3(ray.origin, *obj->origin);
 	new_ray_dir = cross_product_vec3(ray.dir, normalized_dir);
