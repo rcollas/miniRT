@@ -19,6 +19,8 @@ typedef struct s_matrix4
 	t_vec4	row_4;
 }	t_matrix4;
 
+t_vec3		create_vec3(double x, double y, double z);
+t_vec4		create_vec4(double x, double y, double z, double t);
 t_vec3		add_vec3(t_vec3 vector_1, t_vec3 vector_2);
 t_vec3		sub_vec3(t_vec3 vector_1, t_vec3 vector_2);
 t_vec3		add_vec3_and_const(t_vec3 vector, double k);

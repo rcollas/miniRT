@@ -17,6 +17,8 @@ SRC_FILES	= main.c \
 			raytracing/raytracer.c \
 			raytracing/color.c \
 			raytracing/sphere.c \
+			raytracing/plan.c \
+			raytracing/cam_to_world.c \
 			lib_vector/vec3_basic_op.c \
 			lib_vector/vec3_op.c
 

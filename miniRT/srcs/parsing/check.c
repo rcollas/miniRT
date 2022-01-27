@@ -44,7 +44,7 @@ int	ambient_light_check(t_ambient_light *ambient_light)
 
 int	camera_check(t_camera *camera)
 {
-	if (!is_valid_vertex(camera->vertex))
+	if (!is_valid_vertex(camera->dir))
 		return (FAIL);
 	if (!is_in_range((double)0, (double)180, (float)camera->fov))
 		return (FAIL);
@@ -69,7 +69,7 @@ int	sphere_check(t_obj *sphere)
 
 int	plan_check(t_obj *plan)
 {
-	if (!is_valid_vertex(plan->vertex))
+	if (!is_valid_vertex(plan->dir))
 		return (FAIL);
 	if (!is_valid_rgb(plan->rgb))
 		return (FAIL);
@@ -78,7 +78,7 @@ int	plan_check(t_obj *plan)
 
 int	cylinder_check(t_obj *cylinder)
 {
-	if (!is_valid_vertex(cylinder->vertex))
+	if (!is_valid_vertex(cylinder->dir))
 		return (FAIL);
 	if (cylinder->diameter <= 0)
 		return (FAIL);

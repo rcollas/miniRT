@@ -29,11 +29,11 @@ _Bool	hit_sphere(t_ray ray, t_obj *obj, t_vec3 *intersection, t_vec3 *normal)
 
 	radius = obj->diameter / 2;
 	coeff[A] = 1;
-	coeff[B] = 2 * dot_product_vec3(ray.dir, sub_vec3(ray.origin, *obj->coord));
-	coeff[C] = get_norm2_vec3(sub_vec3(ray.origin, *obj->coord)) - radius * radius;
+	coeff[B] = 2 * dot_product_vec3(ray.dir, sub_vec3(ray.origin, *obj->origin));
+	coeff[C] = get_norm2_vec3(sub_vec3(ray.origin, *obj->origin)) - radius * radius;
 	if (detect_intersection_with_sphere(ray, coeff, intersection))
 	{
-		*normal = get_normalized_vec3(sub_vec3(*intersection, *obj->coord));
+		*normal = get_normalized_vec3(sub_vec3(*intersection, *obj->origin));
 		return (TRUE);
 	}
 	return (FALSE);

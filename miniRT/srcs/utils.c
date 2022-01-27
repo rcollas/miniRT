@@ -25,9 +25,9 @@ void	print_list(t_obj *obj)
 		printf("RGB VALUE: R = %d\n", obj->rgb->r);
 		printf("           G = %d\n", obj->rgb->g);
 		printf("           B = %d\n", obj->rgb->b);
-		printf("COORDINATES: X = %f\n", obj->coord->x);
-		printf("             Y = %f\n", obj->coord->y);
-		printf("             Z = %f\n", obj->coord->z);
+		printf("COORDINATES: X = %f\n", obj->origin->x);
+		printf("             Y = %f\n", obj->origin->y);
+		printf("             Z = %f\n", obj->origin->z);
 		printf("DIAMETER VALUE = %f\n", obj->diameter);
 		printf("HEIGHT VALUE = %f\n\n", obj->height);
 		i++;

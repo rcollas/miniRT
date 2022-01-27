@@ -38,8 +38,8 @@ typedef struct s_ambient_light
 typedef struct s_camera
 {
 	int			type;
-	t_vec3		coord[1];
-	t_vec3		vertex[1];
+	t_vec3		origin[1];
+	t_vec3		dir[1];
 	double		fov;
 }	t_camera;
 
@@ -60,8 +60,8 @@ typedef struct s_scene
 typedef struct s_obj
 {
 	int				type;
-	t_vec3			coord[1];
-	t_vec3			vertex[1];
+	t_vec3			origin[1];
+	t_vec3			dir[1];
 	t_rgb			rgb[1];
 	double			diameter;
 	double			height;
