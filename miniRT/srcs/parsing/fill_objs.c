@@ -15,7 +15,7 @@ void	fill_sphere(t_parsing *var, char *line)
 	}
 	obj = new_obj(SPHERE, ft_atof(var->obj_info[2]), -1);
 	fill_coordinates(var->obj_info[1], obj->origin);
-	fill_rgb(var->obj_info[3], obj->rgb);
+	fill_rgb(var->obj_info[3], obj->color);
 	if (check(obj, SPHERE) == FAIL)
 	{
 		error(SPHERE_FORMAT_ERROR, line);
@@ -39,7 +39,7 @@ void	fill_plan(t_parsing *var, char *line)
 	}
 	obj = new_obj(PLAN, -1, -1);
 	fill_vertex(var->obj_info[2], obj->dir);
-	fill_rgb(var->obj_info[3], obj->rgb);
+	fill_rgb(var->obj_info[3], obj->color);
 	fill_coordinates(var->obj_info[1], obj->origin);
 	if (check(obj, PLAN) == FAIL)
 	{
@@ -65,7 +65,7 @@ void	fill_cylinder(t_parsing *var, char *line)
 	obj = new_obj(CYLINDER, ft_atof(var->obj_info[3]),
 				  ft_atof(var->obj_info[4]));
 	fill_vertex(var->obj_info[2], obj->dir);
-	fill_rgb(var->obj_info[5], obj->rgb);
+	fill_rgb(var->obj_info[5], obj->color);
 	fill_coordinates(var->obj_info[1], obj->origin);
 	if (check(obj, CYLINDER) == FAIL)
 	{

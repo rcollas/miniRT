@@ -37,7 +37,7 @@ int	ambient_light_check(t_ambient_light *ambient_light)
 	if (!is_in_range((double)0, (double)1, (double)ambient_light->intensity))
 		return (FAIL);
 
-	if (!is_valid_rgb(ambient_light->rgb))
+	if (!is_valid_rgb(ambient_light->color))
 		return (FAIL);
 	return (SUCCESS);
 }
@@ -62,7 +62,7 @@ int	sphere_check(t_obj *sphere)
 {
 	if (sphere->diameter <= 0)
 		return (FAIL);
-	if (!is_valid_rgb(sphere->rgb))
+	if (!is_valid_rgb(sphere->color))
 		return (FAIL);
 	return (SUCCESS);
 }
@@ -71,7 +71,7 @@ int	plan_check(t_obj *plan)
 {
 	if (!is_valid_vertex(plan->dir))
 		return (FAIL);
-	if (!is_valid_rgb(plan->rgb))
+	if (!is_valid_rgb(plan->color))
 		return (FAIL);
 	return (SUCCESS);
 }
@@ -84,7 +84,7 @@ int	cylinder_check(t_obj *cylinder)
 		return (FAIL);
 	if (cylinder->height <= 0)
 		return (FAIL);
-	if (!is_valid_rgb(cylinder->rgb))
+	if (!is_valid_rgb(cylinder->color))
 		return (FAIL);
 	return (SUCCESS);
 }

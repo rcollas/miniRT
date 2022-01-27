@@ -22,9 +22,9 @@ void	print_list(t_obj *obj)
 			printf("TYPE = CYLINDER\n");
 		if (obj->type == PLAN)
 			printf("TYPE = PLAN\n");
-		printf("RGB VALUE: R = %d\n", obj->rgb->r);
-		printf("           G = %d\n", obj->rgb->g);
-		printf("           B = %d\n", obj->rgb->b);
+		printf("RGB VALUE: R = %d\n", obj->color->r);
+		printf("           G = %d\n", obj->color->g);
+		printf("           B = %d\n", obj->color->b);
 		printf("COORDINATES: X = %f\n", obj->origin->x);
 		printf("             Y = %f\n", obj->origin->y);
 		printf("             Z = %f\n", obj->origin->z);

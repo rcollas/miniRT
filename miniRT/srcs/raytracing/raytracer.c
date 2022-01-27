@@ -1,99 +1,67 @@
 #include "miniRT.h"
 
-// void	detect_hit_object(t_ray *ray, t_obj *obj, _Bool *hit_obj, double *dist_min, t_intersection *inter_min)
-// {
-// 	t_intersection	intersection;
+void	init_hit_object(t_op *hit_object[2])
+{
+	hit_object[SPHERE] = hit_sphere;
+	hit_object[PLAN] = hit_plan;
+}
+
+_Bool	check_hit_object(t_ray *ray, t_obj *obj, t_hit *hit_min)
+{
+	t_hit	hit;
+	t_op	*hit_object[2];
 	
-// 	if (obj->type == SPHERE && hit_sphere(ray, obj, &intersection.intersection, &intersection.normal))
-// 	{
-// 		*hit_obj = TRUE;
-// 		if (*dist_min > ray->closest_hit)
-// 		{
-// 			*dist_min = ray->closest_hit;
-// 			inter_min->intersection = intersection.intersection;
-// 			inter_min->normal = intersection.normal;
-// 		}
-// 	}
-// 	else if (obj->type == PLAN && hit_plan(ray, obj, &intersection.intersection, &intersection.normal))
-// 	{
-// 		*hit_obj = TRUE;
-// 		// *color = create_trgb(80, 255, 0, 0);
-// 	}
-// }
+	init_hit_object(hit_object);
+	if (hit_object[obj->type](ray, obj, &hit))
+	{
+		if (hit_min->dist > ray->closest_hit)
+		{
+			hit_min->dist = ray->closest_hit;
+			hit_min->intersection = hit.intersection;
+			hit_min->normal = hit.normal;
+			hit_min->color = *obj->color;
+		}
+		return (TRUE);
+	}
+	// *color = create_trgb(80, 255, 0, 0);
+	return (FALSE);
+}
 
-// _Bool	detect_intersection(t_ray *ray, t_obj *obj, int *color, t_data *data)
-// {
-// 	_Bool			hit_obj;
-// 	double			dist_min;
-// 	t_intersection	inter_min;
-
-// 	hit_obj = FALSE;
-// 	dist_min = 1E99;
-// 	while (obj)
-// 	{
-// 		detect_hit_object(ray, obj, &hit_obj, &dist_min, &inter_min);
-// 		obj = obj->next;
-// 	}
-// 	get_color_pixel(data->scene, inter_min.intersection, inter_min.normal, color);
-// 	return (hit_obj);
-// }
-
-_Bool	detect_intersection(t_ray *ray, t_obj *obj, int *color, t_data *data)
+_Bool	detect_intersection(t_ray ray, t_obj *obj, int *color, t_data *data)
 {
 	_Bool	hit_obj;
-	t_vec3	intersection_min;
-	t_vec3	normal_min;
-	double	dist_min;
-	t_vec3	intersection;
-	t_vec3	normal;
+	t_hit	hit_min;
 
 	hit_obj = FALSE;
-	dist_min = 1E99;
+	hit_min.dist = 1E99;
+	update_camera_ray(&ray, data);
 	while (obj)
 	{
-		if (obj->type == SPHERE && hit_sphere(ray, obj, &intersection, &normal))
-		{
+		if (check_hit_object(&ray, obj, &hit_min))
 			hit_obj = TRUE;
-			if (dist_min > ray->closest_hit)
-			{
-				dist_min = ray->closest_hit;
-				intersection_min = intersection;
-				normal_min = normal;
-			}
-		}
-		else if (obj->type == PLAN && hit_plan(ray, obj, &intersection, &normal))
-		{
-			hit_obj = TRUE;
-			// *color = create_trgb(80, 255, 0, 0);
-		}
 		obj = obj->next;
 	}
-	get_color_pixel(data->scene, intersection_min, normal_min, color);
+	get_color_pixel(data->scene, hit_min, color);
 	return (hit_obj);
 }
 
 void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
 {
-	int			x;
-	int			y;
-	int			color;
-	t_ray		cam_ray;
-	t_matrix4	cam_to_world_matrix;
+	int		pixel_color;
+	t_ray	cam_ray;
 
-	y = -1;
-	cam_to_world_matrix = built_cam_to_word_matrix(data->scene->camera);
 	init_image(mlx, data);
 	init_camera_ray(&cam_ray, scene);
-	while (++y < HEIGHT)
+	data->cam_to_world_matrix = built_cam_to_word_matrix(data->scene->camera);
+	data->pixel_y = -1;
+	while (++data->pixel_y < HEIGHT)
 	{
-		x = -1;
-		while (++x < WIDTH)
+		data->pixel_x = -1;
+		while (++data->pixel_x < WIDTH)
 		{
-			update_camera_ray(&cam_ray, scene, y, x);
-			// printf("ray.dir = %f, %f, %f\n", cam_ray.dir->x, cam_ray.dir->y, cam_ray.dir->z);
-			if (!detect_intersection(&cam_ray, data->obj, &color, data))
-				color = create_trgb(10, 0, 0, 0);
-			draw_pixel(mlx->image, x, y, color);
+			if (!detect_intersection(cam_ray, data->obj, &pixel_color, data))
+				pixel_color = create_trgb(10, 0, 0, 0);
+			draw_pixel(mlx->image, data->pixel_x, data->pixel_y, pixel_color);
 		}
 	}
 	mlx_put_image_to_window(mlx->ptr, mlx->window, mlx->image->img_ptr, 0, 0);

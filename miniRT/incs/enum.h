@@ -60,12 +60,12 @@ typedef enum s_key
 
 typedef enum s_types
 {
-	AMBIENT_LIGHT	= 1,
-	DIFFUSE_LIGHT	= 2,
+	SPHERE			= 0,
+	PLAN			= 1,
+	CYLINDER		= 2,
 	CAMERA			= 3,
-	SPHERE			= 4,
-	CYLINDER		= 5,
-	PLAN			= 6,
+	AMBIENT_LIGHT	= 4,
+	DIFFUSE_LIGHT	= 5,
 }	t_types;
 
 #endif

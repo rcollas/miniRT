@@ -14,7 +14,7 @@ void	fill_ambient_light(t_parsing *parsing, t_ambient_light *ambient_light, char
 	}
 	ambient_light->type = AMBIENT_LIGHT;
 	ambient_light->intensity = ft_atof(parsing->obj_info[1]);
-	fill_rgb(parsing->obj_info[2], ambient_light->rgb);
+	fill_rgb(parsing->obj_info[2], ambient_light->color);
 	if (check(ambient_light, AMBIENT_LIGHT) == FAIL)
 	{
 		error(AMBIENT_LIGHT_FORMAT_ERROR, line);

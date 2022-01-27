@@ -29,16 +29,16 @@ t_matrix4	built_cam_to_word_matrix(t_camera *camera)
 void	init_camera_ray(t_ray *cam_ray, t_scene *scene)
 {
 	copy_vec3(&cam_ray->origin, scene->camera->origin);
-	cam_ray->dir.z = 0;
 	cam_ray->dir.x = 0;
 	cam_ray->dir.y = 0;
+	cam_ray->dir.z = -1 * (WIDTH / (2 * tan(scene->camera->fov / 2)));
 }
 
-void	update_camera_ray(t_ray *cam_ray, t_scene *scene, int y, int x)
+void	update_camera_ray(t_ray *cam_ray, t_data *data)
 {
-	(void)scene;
-	cam_ray->dir.z = -1 * (WIDTH / (2 * tan(scene->camera->fov / 2)));
-	cam_ray->dir.y = y - HEIGHT / 2;
-	cam_ray->dir.x = x - WIDTH / 2;
+	cam_ray->dir.y = data->pixel_y - HEIGHT / 2;
+	cam_ray->dir.x = data->pixel_x - WIDTH / 2;
 	normalize_vec3(&cam_ray->dir);
+	// cam_ray->dir = mul_vec3_and_matrix4(cam_ray->dir, data->cam_to_world_matrix);
+	// normalize_vec3(&cam_ray->dir);
 }

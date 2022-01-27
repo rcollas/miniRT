@@ -20,8 +20,12 @@ SRC_FILES	= main.c \
 			raytracing/sphere.c \
 			raytracing/plan.c \
 			raytracing/camera.c \
-			lib_vector/vec3_basic_op.c \
-			lib_vector/vec3_op.c
+			lib_math/vec3_init.c \
+			lib_math/vec4_init.c \
+			lib_math/vec3_op.c \
+			lib_math/vec3_and_const_op.c \
+			lib_math/vec3_norm.c \
+			lib_math/matrix.c
 
 UNAME		=	$(shell uname)
 

@@ -10,11 +10,11 @@
 # include <math.h>
 # include "mlx.h"
 # include "libft.h"
+# include "lib_math.h"
+# include "struct.h"
 # include "error.h"
 # include "enum.h"
-# include "struct.h"
 # include "utils.h"
-# include "lib_vector.h"
 # ifdef __linux__
 # include "mlx_int.h"
 #  define IS_LINUX 1
@@ -59,18 +59,18 @@ void		ft_free(void *to_free);
 /*********************************************** RAYTRACING ********************************************************/
 
 void		run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data);
-_Bool		hit_sphere(t_ray *ray, t_obj *obj, t_vec3 *intersection, t_vec3 *normal);
-_Bool		hit_plan(t_ray *ray, t_obj *obj, t_vec3 *intersection, t_vec3 *normal);
+_Bool		hit_sphere(t_ray *ray, t_obj *obj, t_hit *hit);
+_Bool		hit_plan(t_ray *ray, t_obj *obj, t_hit *hit);
 
 /************************************************* CAMERA **********************************************************/
 
 t_matrix4	built_cam_to_word_matrix(t_camera *camera);
-void		update_camera_ray(t_ray *cam_ray, t_scene *scene, int y, int x);
+void		update_camera_ray(t_ray *cam_ray, t_data *data);
 void		init_camera_ray(t_ray *cam_ray, t_scene *scene);
 
 /************************************************** COLOR **********************************************************/
 
-void		get_color_pixel(t_scene *scene, t_vec3 intersection, t_vec3 normal, int *color);
+void		get_color_pixel(t_scene *scene, t_hit hit, int *color);
 void		draw_pixel(t_image *image, int x, int y, int color);
 int			create_trgb(int transparency, int red, int green, int blue);
 void		check_limit_color(t_rgb *color);
