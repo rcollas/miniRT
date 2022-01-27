@@ -26,7 +26,7 @@ void	get_color(t_scene *scene, t_vec3 intersection, t_vec3 normal, int *color)
 
 	light_vector = sub_vec3(*scene->diffuse_light->coord, intersection);
 	normalized_light_vector = get_normalized_vec3(light_vector);
-	intensity = 1000 * dot_product_vec3(normalized_light_vector, normal);
+	intensity = 2000 * dot_product_vec3(normalized_light_vector, normal);
 	intensity /= get_norm2_vec3(light_vector);
 	// printf("intensity = %f\n", intensity);
 	clamp_intensity(&intensity);
@@ -40,11 +40,17 @@ _Bool	detect_intersection(t_ray ray, t_obj *obj, int *color, t_data *data)
 	t_vec3	normal;
 
 	(void)color;
+	(void)data;
 	hit_obj = FALSE;
 	while (obj)
 	{
-		if (obj->type == SPHERE && hit_sphere(ray, obj, &intersection, &normal))
+		if (obj->type == CYLINDER && hit_cylinder(ray, obj, &intersection, &normal))
+		{
 			hit_obj = TRUE;
+			//*color = create_trgb(98, 255, 0, 0);
+		}
+		//if (obj->type == SPHERE && hit_sphere(ray, obj, &intersection, &normal))
+		//	hit_obj = TRUE;
 		// else if (obj->type == PLAN && hit_plan(ray, obj, &intersection, &normal))
 		// {
 		// 	hit_obj = TRUE;
@@ -79,5 +85,6 @@ void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
 			draw_pixel(mlx->image, x, y, color);
 		}
 	}
+	printf("Render complete\n");
 	mlx_put_image_to_window(mlx->ptr, mlx->window, mlx->image->img_ptr, 0, 0);
 }
