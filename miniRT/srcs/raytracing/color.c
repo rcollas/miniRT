@@ -1,40 +1,16 @@
 #include "miniRT.h"
 
-void	draw_pixel(t_image *image, int x, int y, int color)
+void	get_color_pixel(t_scene *scene, t_vec3 intersection, t_vec3 normal, int *color)
 {
-	char			*dest;
+	t_vec3		light_vector;
+	t_vec3		normalized_light_vector;
+	double		intensity;
 
-	dest = image->addr + (y * image->line_len + x * image->bpp / 8);
-	*(unsigned int *)dest = color;
-}
-
-void	clamp_intensity(double *intensity)
-{
-	if (*intensity > 1)
-		*intensity = 1;
-	if (*intensity < 0)
-		*intensity = 0;
-}
-
-void	clamp_color(int *color)
-{
-	if (*color > 255)
-		*color = 255;
-	if (*color < 0)
-		*color = 0;
-}
-
-void	check_limit_color(t_rgb *color)
-{
-	clamp_color(&color->r);
-	clamp_color(&color->g);
-	clamp_color(&color->b);
-}
-
-int	create_trgb(int transparency, int red, int green, int blue)
-{
-	clamp_color(&red);
-	clamp_color(&green);
-	clamp_color(&blue);
-	return (transparency << 24 | red << 16 | green << 8 | blue);
+	light_vector = sub_vec3(*scene->diffuse_light->coord, intersection);
+	normalized_light_vector = get_normalized_vec3(light_vector);
+	intensity = 1000 * dot_product_vec3(normalized_light_vector, normal);
+	intensity /= get_norm2_vec3(light_vector);
+	// printf("intensity = %f\n", intensity);
+	clamp_intensity(&intensity);
+	*color = create_trgb(98, 136 * intensity, 32 * intensity, 250 * intensity);
 }

@@ -25,3 +25,20 @@ t_matrix4	built_cam_to_word_matrix(t_camera *camera)
 	matrix.row_4 = create_vec4(camera->origin->x, camera->origin->y, camera->origin->z, 1);
 	return (matrix);
 }
+
+void	init_camera_ray(t_ray *cam_ray, t_scene *scene)
+{
+	copy_vec3(&cam_ray->origin, scene->camera->origin);
+	cam_ray->dir.z = 0;
+	cam_ray->dir.x = 0;
+	cam_ray->dir.y = 0;
+}
+
+void	update_camera_ray(t_ray *cam_ray, t_scene *scene, int y, int x)
+{
+	(void)scene;
+	cam_ray->dir.z = -1 * (WIDTH / (2 * tan(scene->camera->fov / 2)));
+	cam_ray->dir.y = y - HEIGHT / 2;
+	cam_ray->dir.x = x - WIDTH / 2;
+	normalize_vec3(&cam_ray->dir);
+}

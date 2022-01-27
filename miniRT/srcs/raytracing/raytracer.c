@@ -1,57 +1,74 @@
 #include "miniRT.h"
 
-void	init_camera_ray(t_ray *cam_ray, t_scene *scene)
-{
-	// printf("fov = %f | tan(fov / 2) = %f\n", scene->camera->fov, tan(scene->camera->fov / 2));
-	copy_vec3(&cam_ray->origin, scene->camera->origin);
-	cam_ray->dir.z = 0;
-	cam_ray->dir.x = 0;
-	cam_ray->dir.y = 0;
-}
+// void	detect_hit_object(t_ray *ray, t_obj *obj, _Bool *hit_obj, double *dist_min, t_intersection *inter_min)
+// {
+// 	t_intersection	intersection;
+	
+// 	if (obj->type == SPHERE && hit_sphere(ray, obj, &intersection.intersection, &intersection.normal))
+// 	{
+// 		*hit_obj = TRUE;
+// 		if (*dist_min > ray->closest_hit)
+// 		{
+// 			*dist_min = ray->closest_hit;
+// 			inter_min->intersection = intersection.intersection;
+// 			inter_min->normal = intersection.normal;
+// 		}
+// 	}
+// 	else if (obj->type == PLAN && hit_plan(ray, obj, &intersection.intersection, &intersection.normal))
+// 	{
+// 		*hit_obj = TRUE;
+// 		// *color = create_trgb(80, 255, 0, 0);
+// 	}
+// }
 
-void	update_camera_ray(t_ray *cam_ray, t_scene *scene, int y, int x)
-{
-	(void)scene;
-	cam_ray->dir.z = -1 * (WIDTH / (2 * tan(scene->camera->fov / 2)));
-	cam_ray->dir.y = y - HEIGHT / 2;
-	cam_ray->dir.x = x - WIDTH / 2;
-	normalize_vec3(&cam_ray->dir);
-}
+// _Bool	detect_intersection(t_ray *ray, t_obj *obj, int *color, t_data *data)
+// {
+// 	_Bool			hit_obj;
+// 	double			dist_min;
+// 	t_intersection	inter_min;
 
-void	get_color(t_scene *scene, t_vec3 intersection, t_vec3 normal, int *color)
-{
-	t_vec3		light_vector;
-	t_vec3		normalized_light_vector;
-	double		intensity;
+// 	hit_obj = FALSE;
+// 	dist_min = 1E99;
+// 	while (obj)
+// 	{
+// 		detect_hit_object(ray, obj, &hit_obj, &dist_min, &inter_min);
+// 		obj = obj->next;
+// 	}
+// 	get_color_pixel(data->scene, inter_min.intersection, inter_min.normal, color);
+// 	return (hit_obj);
+// }
 
-	light_vector = sub_vec3(*scene->diffuse_light->coord, intersection);
-	normalized_light_vector = get_normalized_vec3(light_vector);
-	intensity = 1000 * dot_product_vec3(normalized_light_vector, normal);
-	intensity /= get_norm2_vec3(light_vector);
-	// printf("intensity = %f\n", intensity);
-	clamp_intensity(&intensity);
-	*color = create_trgb(98, 136 * intensity, 32 * intensity, 250 * intensity);
-}
-
-_Bool	detect_intersection(t_ray ray, t_obj *obj, int *color, t_data *data)
+_Bool	detect_intersection(t_ray *ray, t_obj *obj, int *color, t_data *data)
 {
 	_Bool	hit_obj;
+	t_vec3	intersection_min;
+	t_vec3	normal_min;
+	double	dist_min;
 	t_vec3	intersection;
 	t_vec3	normal;
 
-	(void)color;
 	hit_obj = FALSE;
+	dist_min = 1E99;
 	while (obj)
 	{
 		if (obj->type == SPHERE && hit_sphere(ray, obj, &intersection, &normal))
+		{
 			hit_obj = TRUE;
-		// else if (obj->type == PLAN && hit_plan(ray, obj, &intersection, &normal))
-		// {
-		// 	hit_obj = TRUE;
-		// }
+			if (dist_min > ray->closest_hit)
+			{
+				dist_min = ray->closest_hit;
+				intersection_min = intersection;
+				normal_min = normal;
+			}
+		}
+		else if (obj->type == PLAN && hit_plan(ray, obj, &intersection, &normal))
+		{
+			hit_obj = TRUE;
+			// *color = create_trgb(80, 255, 0, 0);
+		}
 		obj = obj->next;
 	}
-	get_color(data->scene, intersection, normal, color);
+	get_color_pixel(data->scene, intersection_min, normal_min, color);
 	return (hit_obj);
 }
 
@@ -74,7 +91,7 @@ void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
 		{
 			update_camera_ray(&cam_ray, scene, y, x);
 			// printf("ray.dir = %f, %f, %f\n", cam_ray.dir->x, cam_ray.dir->y, cam_ray.dir->z);
-			if (!detect_intersection(cam_ray, data->obj, &color, data))
+			if (!detect_intersection(&cam_ray, data->obj, &color, data))
 				color = create_trgb(10, 0, 0, 0);
 			draw_pixel(mlx->image, x, y, color);
 		}

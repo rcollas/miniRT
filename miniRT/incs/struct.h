@@ -19,7 +19,14 @@ typedef struct s_ray
 {
 	t_vec3	origin;
 	t_vec3	dir;
+	double	closest_hit;
 }	t_ray;
+
+typedef struct s_intersection
+{
+	t_vec3	intersection;
+	t_vec3	normal;
+}	t_intersection;
 
 typedef struct s_rgb
 {
