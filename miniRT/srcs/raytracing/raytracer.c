@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-void	init_hit_object(t_op *hit_object[2])
+void	init_hit_object(t_op *hit_object[3])
 {
 	hit_object[SPHERE] = hit_sphere;
 	hit_object[PLAN] = hit_plan;
@@ -131,7 +131,7 @@ _Bool	trace_shadow_ray(t_ray *shadow_ray, t_obj *obj)
 				dist_min = shadow_ray->closest_hit;
 			}
 		}
-			obj = obj->next;
+		obj = obj->next;
 	}
 	/*
 	if (hit_obj)
@@ -147,8 +147,7 @@ _Bool	in_shadow(t_obj *obj, t_vec3 intersection, t_diffuse_light *light)
 	t_ray	shadow_ray;
 
 	(void)obj;
-	// shadow_ray.origin = add_vec3_and_const(intersection, 0.0001);
-	shadow_ray.origin = intersection;
+	shadow_ray.origin = add_vec3_and_const(intersection, 0.001);
 	shadow_ray.dir = sub_vec3(*light->coord, shadow_ray.origin);
 	normalize_vec3(&shadow_ray.dir);
 	if (trace_shadow_ray(&shadow_ray, obj) == TRUE)

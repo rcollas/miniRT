@@ -10,8 +10,8 @@ void	get_color_pixel(t_scene *scene, t_hit hit, int *color, double pixel_shadow)
 	normalized_light_vector = get_normalized_vec3(light_vector);
 	intensity = 1000 * dot_vec3(normalized_light_vector, hit.normal);
 	intensity /= get_norm2_vec3(light_vector);
+	intensity *= pixel_shadow;
 	// printf("intensity = %f\n", intensity);
 	clamp_intensity(&intensity);
-	*color = create_trgb(98, hit.color.r * intensity * pixel_shadow,
-			hit.color.g * intensity * pixel_shadow, hit.color.b * intensity* pixel_shadow);
+	*color = create_trgb(98, hit.color.r * intensity, hit.color.g * intensity, hit.color.b * intensity);
 }
