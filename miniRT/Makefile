@@ -19,6 +19,7 @@ SRC_FILES	= main.c \
 			raytracing/color_utils.c \
 			raytracing/sphere.c \
 			raytracing/plan.c \
+			raytracing/cylinder.c \
 			raytracing/camera.c \
 			lib_math/vec3_init.c \
 			lib_math/vec4_init.c \

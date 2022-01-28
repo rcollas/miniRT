@@ -30,13 +30,13 @@ t_vec3	inverse_vec3(t_vec3 vector)
 	return (new_vector);
 }
 
-double	dot_product_vec3(t_vec3 vector_1, t_vec3 vector_2)
+double	dot_vec3(t_vec3 vector_1, t_vec3 vector_2)
 {
 	return (vector_1.x * vector_2.x + vector_1.y * vector_2.y
 		+ vector_1.z * vector_2.z);
 }
 
-t_vec3	cross_product_vec3(t_vec3 vector_1, t_vec3 vector_2)
+t_vec3	cross_vec3(t_vec3 vector_1, t_vec3 vector_2)
 {
 	t_vec3	new_vector;
 

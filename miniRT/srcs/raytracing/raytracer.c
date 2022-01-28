@@ -11,7 +11,7 @@ _Bool	check_hit_object(t_ray *ray, t_obj *obj, t_hit *hit_min)
 {
 	t_hit	hit;
 	t_op	*hit_object[3];
-	
+
 	init_hit_object(hit_object);
 	if (hit_object[obj->type](ray, obj, &hit))
 	{
@@ -32,14 +32,13 @@ _Bool	trace_shadow_ray(t_ray *shadow_ray, t_obj *obj)
 {
 	_Bool	hit_obj;
 	double	dist_min;
-	t_vec3	intersection;
-	t_vec3	normal;
+	t_hit	hit;
 
 	hit_obj = FALSE;
 	dist_min = 1E99;
 	while (obj)
 	{
-		if (obj->type == SPHERE && hit_sphere(shadow_ray, obj, &intersection, &normal))
+		if (obj->type == SPHERE && hit_sphere(shadow_ray, obj, &hit))
 		{
 			hit_obj = TRUE;
 			if (dist_min > shadow_ray->closest_hit)
@@ -47,7 +46,8 @@ _Bool	trace_shadow_ray(t_ray *shadow_ray, t_obj *obj)
 				dist_min = shadow_ray->closest_hit;
 			}
 		}
-		else if (obj->type == CYLINDER && hit_cylinder(*shadow_ray, obj, &intersection, &normal)) {
+		else if (obj->type == CYLINDER && hit_cylinder(shadow_ray, obj, &hit))
+		{
 			hit_obj = TRUE;
 			if (dist_min > shadow_ray->closest_hit)
 			{
