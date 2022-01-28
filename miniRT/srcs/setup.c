@@ -10,7 +10,7 @@ t_mlx	*setup_mlx(void)
 	mlx->ptr = mlx_init();
 	if (!mlx->ptr)
 		return (NULL);
-	mlx->window = mlx_new_window(mlx->ptr, WIDTH, HEIGHT, "Hello world!");
+	mlx->window = mlx_new_window(mlx->ptr, WIDTH, HEIGHT, "miniRT");
 	if (!mlx->window)
 		return (NULL);
 	return (mlx);
@@ -18,7 +18,7 @@ t_mlx	*setup_mlx(void)
 
 void	init_image(t_mlx *mlx, t_data *data)
 {
-	t_image *image;
+	t_image	*image;
 
 	image = (t_image *)malloc(sizeof(t_image));
 	image->img_ptr = mlx_new_image(mlx->ptr, WIDTH, HEIGHT);
