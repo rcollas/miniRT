@@ -49,7 +49,7 @@ LIBFT_LIB	=	libft/libft.a
 
 LIBFT_MAKE	=	$(MAKE) --no-print-directory -C $(LIBFT_PATH)
 
-INC_DIR		= ./incs
+INCLUDE		= ./incs
 
 INC_FILES	= miniRT.h \
 			  libft.h \
@@ -60,7 +60,7 @@ INC_FILES	= miniRT.h \
 
 OBJS		= $(addprefix $(OBJS_DIR)/, $(SRC_FILES:.c=.o))
 
-INCS		= $(addprefix $(INC_DIR)/, $(INC_FILES))
+INCS		= $(addprefix $(INCLUDE)/, $(INC_FILES))
 
 CC			= clang
 
@@ -81,7 +81,7 @@ ORANGE		= \033[1;38;5;208m
 
 $(OBJS_DIR)/%.o: $(SRC_DIR)/%.c $(INCS) $(LIBFT_PATH)/*.c
 			@mkdir -p $(@D)
-			@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(MLX_INC) -c $< -o $@
+			@$(CC) $(CFLAGS) -I$(INCLUDE) -I$(MLX_INC) -c $< -o $@
 			@echo "$(BLUE)clang $(RESET)$(notdir $@)"
 
 all:		$(NAME)
