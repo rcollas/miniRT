@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-void	get_color_pixel(t_scene *scene, t_vec3 intersection, t_vec3 normal, int *color)
+void	get_color_pixel(t_scene *scene, t_vec3 intersection, t_vec3 normal, int *color, double pixel_shadow)
 {
 	t_vec3		light_vector;
 	t_vec3		normalized_light_vector;
@@ -12,5 +12,5 @@ void	get_color_pixel(t_scene *scene, t_vec3 intersection, t_vec3 normal, int *co
 	intensity /= get_norm2_vec3(light_vector);
 	// printf("intensity = %f\n", intensity);
 	clamp_intensity(&intensity);
-	*color = create_trgb(98, 136 * intensity, 32 * intensity, 250 * intensity);
+	*color = create_trgb(98, 136 * intensity * pixel_shadow, 32 * intensity * pixel_shadow, 250 * intensity * pixel_shadow);
 }

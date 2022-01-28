@@ -38,7 +38,7 @@
 // 	return (hit_obj);
 // }
 
-_Bool	detect_intersection(t_ray *ray, t_obj *obj, int *color, t_data *data)
+_Bool	trace_shadow_ray(t_ray *shadow_ray, t_obj *obj)
 {
 	_Bool	hit_obj;
 	t_vec3	intersection_min;
@@ -51,7 +51,58 @@ _Bool	detect_intersection(t_ray *ray, t_obj *obj, int *color, t_data *data)
 	dist_min = 1E99;
 	while (obj)
 	{
-		if (obj->type == SPHERE && hit_sphere(ray, obj, &intersection, &normal))
+		if (obj->type == SPHERE && hit_sphere(shadow_ray, obj, &intersection, &normal))
+		{
+			hit_obj = TRUE;
+			if (dist_min > shadow_ray->closest_hit)
+			{
+				dist_min = shadow_ray->closest_hit;
+				intersection_min = intersection;
+				normal_min = normal;
+			}
+		}
+		obj = obj->next;
+	}
+	/*
+	if (hit_obj)
+		printf("TRUE\n");
+	else
+		printf("FALSE\n");
+	 */
+	return (hit_obj);
+}
+
+_Bool	in_shadow(t_obj *obj, t_vec3 intersection, t_diffuse_light *light)
+{
+	t_ray	shadow_ray;
+
+	(void)obj;
+	//shadow_ray.origin = add_vec3_and_const(intersection, 0.0001);
+	shadow_ray.origin = intersection;
+	shadow_ray.dir = sub_vec3(*light->coord, shadow_ray.origin);
+	normalize_vec3(&shadow_ray.dir);
+	if (trace_shadow_ray(&shadow_ray, obj) == TRUE)
+		return (TRUE);
+	return (FALSE);
+}
+
+_Bool	detect_intersection(t_ray *ray, t_obj *obj, int *color, t_data *data)
+{
+	_Bool	hit_obj;
+	t_vec3	intersection_min;
+	t_vec3	normal_min;
+	double	dist_min;
+	t_vec3	intersection;
+	t_vec3	normal;
+	t_obj	*tmp;
+	double	pixel_shadow = 1;
+
+	tmp = obj;
+	hit_obj = FALSE;
+	dist_min = 1E99;
+	while (tmp)
+	{
+		if (tmp->type == SPHERE && hit_sphere(ray, tmp, &intersection, &normal))
 		{
 			hit_obj = TRUE;
 			if (dist_min > ray->closest_hit)
@@ -61,16 +112,20 @@ _Bool	detect_intersection(t_ray *ray, t_obj *obj, int *color, t_data *data)
 				normal_min = normal;
 			}
 		}
-		else if (obj->type == PLAN && hit_plan(ray, obj, &intersection, &normal))
+		else if (tmp->type == PLAN && hit_plan(ray, tmp, &intersection, &normal))
 		{
 			hit_obj = TRUE;
 			// *color = create_trgb(80, 255, 0, 0);
 		}
-		obj = obj->next;
+		tmp = tmp->next;
 	}
-	get_color_pixel(data->scene, intersection_min, normal_min, color);
+	if (in_shadow(obj, intersection_min, data->scene->diffuse_light) == TRUE)
+		pixel_shadow = 0.5;
+	//normalize_vec3(data->scene->diffuse_light->coord);
+	get_color_pixel(data->scene, intersection_min, normal_min, color, pixel_shadow);
 	return (hit_obj);
 }
+
 
 void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
 {

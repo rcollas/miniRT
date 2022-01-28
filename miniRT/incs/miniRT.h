@@ -70,7 +70,7 @@ void		init_camera_ray(t_ray *cam_ray, t_scene *scene);
 
 /************************************************** COLOR **********************************************************/
 
-void		get_color_pixel(t_scene *scene, t_vec3 intersection, t_vec3 normal, int *color);
+void		get_color_pixel(t_scene *scene, t_vec3 intersection, t_vec3 normal, int *color, double pixel_shadow);
 void		draw_pixel(t_image *image, int x, int y, int color);
 int			create_trgb(int transparency, int red, int green, int blue);
 void		check_limit_color(t_rgb *color);
