@@ -37,6 +37,60 @@
 // 	get_color_pixel(data->scene, inter_min.intersection, inter_min.normal, color);
 // 	return (hit_obj);
 // }
+_Bool	solve_quadratic(double *coeff, double *roots, double *closest_hit)
+{
+	double	delta;
+
+	delta = coeff[B] * coeff[B] - (4 * coeff[A] * coeff[C]);
+	if (delta < 0)
+		return (0);
+	roots[0] = (-coeff[B] - (sqrt(delta))) / (2 * coeff[A]);
+	roots[1] = (-coeff[B] + (sqrt(delta))) / (2 * coeff[A]);
+	if (roots[1] < 0)
+		return (FALSE);
+	if (roots[0] > 0)
+		*closest_hit = roots[0];
+	else
+		*closest_hit = roots[1];
+	return (TRUE);
+}
+
+_Bool	hit_cylinder(t_ray ray, t_obj *obj, t_vec3 *intersection, t_vec3 *normal)
+{
+	double	radius;
+	double	coeff[3];
+	double	roots[2];
+	double	closest_hit;
+	t_vec3	normalized_dir;
+	t_vec3	cylinder_to_origin;
+	t_vec3	new_ray_dir;
+	double	max;
+
+	radius = obj->diameter / 2;
+	max = sqrt(pow(obj->height /2, 2) + pow(radius, 2));
+	normalized_dir = get_normalized_vec3(*obj->dir);
+	cylinder_to_origin = sub_vec3(ray.origin, *obj->origin);
+	new_ray_dir = cross_product_vec3(ray.dir, normalized_dir);
+	coeff[A] = dot_product_vec3(new_ray_dir, new_ray_dir);
+	coeff[B] = 2 * dot_product_vec3(new_ray_dir, cross_product_vec3(cylinder_to_origin, normalized_dir));
+	coeff[C] = dot_product_vec3(cross_product_vec3(cylinder_to_origin, normalized_dir), cross_product_vec3(cylinder_to_origin, normalized_dir)) - radius * radius;
+	if (solve_quadratic(coeff, roots, &closest_hit))
+	{
+		*intersection = add_vec3(ray.origin, mul_vec3_and_const(ray.dir, closest_hit));
+		*normal = get_normalized_vec3(sub_vec3(*intersection, *obj->origin));
+		if (get_norm_vec3(sub_vec3(*intersection, *obj->origin)) > obj->height)
+		{
+			closest_hit = roots[1];
+			*intersection = add_vec3(ray.origin, mul_vec3_and_const(ray.dir, closest_hit));
+		}
+		if (get_norm_vec3(sub_vec3(*intersection, *obj->origin)) > obj->height)
+		{
+			return (FALSE);
+		}
+		return (TRUE);
+	}
+	return (FALSE);
+}
 
 _Bool	trace_shadow_ray(t_ray *shadow_ray, t_obj *obj)
 {
@@ -61,7 +115,16 @@ _Bool	trace_shadow_ray(t_ray *shadow_ray, t_obj *obj)
 				normal_min = normal;
 			}
 		}
-		obj = obj->next;
+		else if (obj->type == CYLINDER && hit_cylinder(*shadow_ray, obj, &intersection, &normal)) {
+			hit_obj = TRUE;
+			if (dist_min > shadow_ray->closest_hit) {
+				dist_min = shadow_ray->closest_hit;
+				intersection_min = intersection;
+				normal_min = normal;
+			}
+		}
+
+			obj = obj->next;
 	}
 	/*
 	if (hit_obj)
@@ -112,6 +175,16 @@ _Bool	detect_intersection(t_ray *ray, t_obj *obj, int *color, t_data *data)
 				normal_min = normal;
 			}
 		}
+		else if (tmp->type == CYLINDER && hit_cylinder(*ray, tmp, &intersection, &normal))
+		{
+			hit_obj = TRUE;
+			if (dist_min > ray->closest_hit)
+			{
+				dist_min = ray->closest_hit;
+				intersection_min = intersection;
+				normal_min = normal;
+			}
+		}
 		else if (tmp->type == PLAN && hit_plan(ray, tmp, &intersection, &normal))
 		{
 			hit_obj = TRUE;
@@ -120,7 +193,7 @@ _Bool	detect_intersection(t_ray *ray, t_obj *obj, int *color, t_data *data)
 		tmp = tmp->next;
 	}
 	if (in_shadow(obj, intersection_min, data->scene->diffuse_light) == TRUE)
-		pixel_shadow = 0.5;
+		pixel_shadow = 0.3;
 	//normalize_vec3(data->scene->diffuse_light->coord);
 	get_color_pixel(data->scene, intersection_min, normal_min, color, pixel_shadow);
 	return (hit_obj);
