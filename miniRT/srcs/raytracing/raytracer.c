@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-void	init_hit_object(t_op *hit_object[2])
+void	init_hit_object(t_op *hit_object[3])
 {
 	hit_object[SPHERE] = hit_sphere;
 	hit_object[PLAN] = hit_plan;
@@ -96,8 +96,8 @@ _Bool	detect_intersection(t_ray ray, t_obj *obj, int *color, t_data *data)
 			hit_obj = TRUE;
 		tmp = tmp->next;
 	}
-	if (in_shadow(tmp, hit_min.intersection, data->scene->diffuse_light) == TRUE)
-		pixel_shadow = 0.3;
+	// if (in_shadow(tmp, hit_min.intersection, data->scene->diffuse_light) == TRUE)
+	// 	pixel_shadow = 0.3;
 	//normalize_vec3(data->scene->diffuse_light->coord);
 	get_color_pixel(data->scene, hit_min, color, pixel_shadow);
 	return (hit_obj);
