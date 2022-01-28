@@ -39,6 +39,7 @@ t_vec4		convert_vec3_to_vec4(t_vec3 vector);
 
 t_vec3		add_vec3(t_vec3 vector_1, t_vec3 vector_2);
 t_vec3		sub_vec3(t_vec3 vector_1, t_vec3 vector_2);
+t_vec3		inverse_vec3(t_vec3 vector);
 double		dot_product_vec3(t_vec3 vector_1, t_vec3 vector_2);
 t_vec3		cross_product_vec3(t_vec3 vector_1, t_vec3 vector_2);
 
