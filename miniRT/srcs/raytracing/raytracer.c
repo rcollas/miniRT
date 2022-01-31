@@ -12,6 +12,7 @@ _Bool	check_hit_object(t_ray *ray, t_obj *obj, t_hit *hit_min)
 	t_hit	hit;
 	t_op	*hit_object[3];
 
+	(void)hit_min;
 	init_hit_object(hit_object);
 	if (hit_object[obj->type](ray, obj, &hit))
 	{
@@ -24,7 +25,6 @@ _Bool	check_hit_object(t_ray *ray, t_obj *obj, t_hit *hit_min)
 		}
 		return (TRUE);
 	}
-	// *color = create_trgb(80, 255, 0, 0);
 	return (FALSE);
 }
 
@@ -82,23 +82,25 @@ _Bool	detect_intersection(t_ray ray, t_obj *obj, int *color, t_data *data)
 {
 	_Bool	hit_obj;
 	t_hit	hit_min;
-	t_obj	*tmp;
+	t_obj	*current_obj;
 	double	pixel_shadow;
 
 	pixel_shadow = 1;
-	tmp = obj;
+	current_obj = obj;
 	hit_obj = FALSE;
 	hit_min.dist = 1E99;
 	update_camera_ray(&ray, data);
-	while (tmp)
+	while (current_obj)
 	{
-		if (check_hit_object(&ray, tmp, &hit_min))
+		if (check_hit_object(&ray, current_obj, &hit_min))
+		{
 			hit_obj = TRUE;
-		tmp = tmp->next;
+			// *color = create_trgb(80, 255, 0, 0);
+		}
+		current_obj = current_obj->next;
 	}
-	// if (in_shadow(tmp, hit_min.intersection, data->scene->diffuse_light) == TRUE)
-	// 	pixel_shadow = 0.3;
-	//normalize_vec3(data->scene->diffuse_light->coord);
+	if (in_shadow(current_obj, hit_min.intersection, data->scene->diffuse_light) == TRUE)
+		pixel_shadow = 0.3;
 	get_color_pixel(data->scene, hit_min, color, pixel_shadow);
 	return (hit_obj);
 }
@@ -120,7 +122,7 @@ void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
 		{
 			if (!detect_intersection(cam_ray, data->obj, &pixel_color, data))
 				pixel_color = create_trgb(10, 0, 0, 0);
-			draw_pixel(mlx->image, data->pixel_x, data->pixel_y, pixel_color);
+			draw_pixel(mlx->image, pixel_color, data);
 		}
 	}
 	printf("Render complete\n");

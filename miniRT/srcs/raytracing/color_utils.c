@@ -1,9 +1,14 @@
 #include "miniRT.h"
 
-void	draw_pixel(t_image *image, int x, int y, int color)
+void	draw_pixel(t_image *image, int color, t_data *data)
 {
-	char			*dest;
+	char	*dest;
+	int		y;
+	int		x;
 
+	y = HEIGHT - data->pixel_y - 1;
+	x = WIDTH - data->pixel_x - 1;
+	// printf("y = %d | x = %d\n", x, y);
 	dest = image->addr + (y * image->line_len + x * image->bpp / 8);
 	*(unsigned int *)dest = color;
 }
