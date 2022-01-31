@@ -88,15 +88,6 @@ _Bool	detect_intersection(t_ray ray, t_obj *obj, int *color, t_data *data)
 	return (hit_obj);
 }
 
-unsigned short lfsr = 0xACE1u;
-unsigned bit;
-
-unsigned ft_rand()
-{
-	bit  = ((lfsr >> 0) ^ (lfsr >> 2) ^ (lfsr >> 3) ^ (lfsr >> 5) ) & 1;
-	return lfsr =  (lfsr >> 1) | (bit << 15);
-}
-
 void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
 {
 	int		pixel_color;
