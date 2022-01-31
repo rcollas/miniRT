@@ -35,8 +35,9 @@ _Bool	trace_shadow_ray(t_ray *shadow_ray, t_obj *obj, t_diffuse_light *light, t_
 	double	light_distance;
 
 	hit_obj = FALSE;
+	(void)no_check;
 	light_distance = get_norm_vec3(sub_vec3(shadow_ray->origin, *light->coord));
-	while (obj)
+	while (obj && hit_obj == FALSE)
 	{
 		if (obj != no_check && check_hit_object(shadow_ray, obj, &hit) && hit.dist < light_distance)
 			hit_obj = TRUE;
@@ -87,6 +88,14 @@ _Bool	detect_intersection(t_ray ray, t_obj *obj, int *color, t_data *data)
 	return (hit_obj);
 }
 
+unsigned short lfsr = 0xACE1u;
+unsigned bit;
+
+unsigned ft_rand()
+{
+	bit  = ((lfsr >> 0) ^ (lfsr >> 2) ^ (lfsr >> 3) ^ (lfsr >> 5) ) & 1;
+	return lfsr =  (lfsr >> 1) | (bit << 15);
+}
 
 void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
 {
@@ -99,11 +108,12 @@ void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
 	data->pixel_y = -1;
 	while (++data->pixel_y < HEIGHT)
 	{
+		printf("%d\n", ft_rand());
 		data->pixel_x = -1;
 		while (++data->pixel_x < WIDTH)
 		{
 			if (!detect_intersection(cam_ray, data->obj, &pixel_color, data))
-				pixel_color = create_trgb(10, 0, 0, 0);
+				pixel_color = create_trgb(10, 30, 70, 20);
 			draw_pixel(mlx->image, data->pixel_x, data->pixel_y, pixel_color);
 		}
 	}
