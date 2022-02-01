@@ -1,20 +1,10 @@
 #include "miniRT.h"
 
-void	init_hit_object(t_op *hit_object[3])
-{
-	hit_object[SPHERE] = hit_sphere;
-	hit_object[PLAN] = hit_plan;
-	hit_object[CYLINDER] = hit_cylinder;
-}
-
 _Bool	check_hit_object(t_ray *ray, t_obj *obj, t_hit *hit_min)
 {
 	t_hit	hit;
-	t_op	*hit_object[3];
 
-	(void)hit_min;
-	init_hit_object(hit_object);
-	if (hit_object[obj->type](ray, obj, &hit))
+	if (obj->hit_object(ray, obj, &hit))
 	{
 		if (hit_min->dist > ray->closest_hit)
 		{
@@ -93,18 +83,14 @@ _Bool	detect_intersection(t_ray ray, t_obj *obj, int *color, t_data *data)
 	while (current_obj)
 	{
 		if (check_hit_object(&ray, current_obj, &hit_min))
-		{
 			hit_obj = TRUE;
-			// *color = create_trgb(80, 255, 0, 0);
-		}
 		current_obj = current_obj->next;
 	}
-	if (in_shadow(current_obj, hit_min.intersection, data->scene->diffuse_light) == TRUE)
-		pixel_shadow = 0.3;
+	// if (in_shadow(current_obj, hit_min.intersection, data->scene->diffuse_light) == TRUE)
+	// 	pixel_shadow = 0.3;
 	get_color_pixel(data->scene, hit_min, color, pixel_shadow);
 	return (hit_obj);
 }
-
 
 void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
 {
@@ -112,8 +98,8 @@ void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
 	t_ray	cam_ray;
 
 	init_image(mlx, data);
-	init_camera_ray(&cam_ray, scene);
-	data->cam_to_world_matrix = built_cam_to_word_matrix(data->scene->camera);
+	init_camera_ray(&cam_ray, data);
+	data->cam_to_world_matrix = built_cam_to_word_matrix(scene->camera);
 	data->pixel_y = -1;
 	while (++data->pixel_y < HEIGHT)
 	{

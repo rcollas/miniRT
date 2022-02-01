@@ -67,14 +67,20 @@ _Bool		hit_cylinder(t_ray *ray, t_obj *obj, t_hit *hit);
 
 t_matrix4	built_cam_to_word_matrix(t_camera *camera);
 void		update_camera_ray(t_ray *cam_ray, t_data *data);
-void		init_camera_ray(t_ray *cam_ray, t_scene *scene);
+void		init_camera_ray(t_ray *cam_ray, t_data *data);
 
 /************************************************** COLOR **********************************************************/
 
 void		get_color_pixel(t_scene *scene, t_hit hit, int *color, double pixel_shadow);
 void		draw_pixel(t_image *image, int color, t_data *data);
+int			create_trgb_struct(int transparency, t_rgb *color);
 int			create_trgb(int transparency, int red, int green, int blue);
 void		check_limit_color(t_rgb *color);
 void		clamp_intensity(double *intensity);
+void		clamp_color(int *color);
+t_rgb		init_color(double red, double green, double blue);
+t_rgb		mul_rgb_and_const(t_rgb color, double k);
+t_rgb		mul_rgb(t_rgb color_1, t_rgb color_2);
+t_rgb		add_rgb(t_rgb color_1, t_rgb color_2);
 
 #endif

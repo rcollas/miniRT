@@ -21,6 +21,7 @@ void	fill_sphere(t_parsing *var, char *line)
 		error(SPHERE_FORMAT_ERROR, line);
 		ft_exit_parsing(SPHERE_FORMAT_ERROR, var);
 	}
+	obj->hit_object = &hit_sphere;
 	obj_add_back(&var->objs, obj);
 }
 
@@ -46,6 +47,7 @@ void	fill_plan(t_parsing *var, char *line)
 		error(PLAN_FORMAT_ERROR, line);
 		ft_exit_parsing(PLAN_FORMAT_ERROR, var);
 	}
+	obj->hit_object = &hit_plan;
 	obj_add_back(&var->objs, obj);
 }
 
@@ -72,6 +74,7 @@ void	fill_cylinder(t_parsing *var, char *line)
 		error(CYLINDER_FORMAT_ERROR, line);
 		ft_exit_parsing(CYLINDER_FORMAT_ERROR, var);
 	}
+	obj->hit_object = &hit_cylinder;
 	obj_add_back(&var->objs, obj);
 }
 

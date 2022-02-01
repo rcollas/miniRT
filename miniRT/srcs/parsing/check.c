@@ -16,6 +16,9 @@ int	is_valid_rgb(t_rgb *rgb)
 		return (FALSE);
 	if (!is_in_range((double)0, (double)255, (double)rgb->b))
 		return (FALSE);
+	rgb->r /= 255.0;
+	rgb->g /= 255.0;
+	rgb->b /= 255.0;
 	return (TRUE);
 }
 

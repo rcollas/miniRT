@@ -60,5 +60,6 @@ t_vec3		get_normalized_vec3(t_vec3 vector);
 /************************************************** MATRIX *********************************************************/
 
 t_vec3		mul_vec3_and_matrix4(t_vec3 vector, t_matrix4 matrix);
+t_vec3		mul_dir_and_matrix4(t_vec3 vector, t_matrix4 matrix);
 
 #endif

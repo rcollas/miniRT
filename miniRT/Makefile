@@ -7,6 +7,12 @@ SRC_FILES	= main.c \
 			events.c \
 			cleanup.c \
 			utils.c \
+			$(PARSING) \
+			$(RAYTRACING) \
+			$(COLOR) \
+			$(LIB_MATH)
+
+PARSING = \
 			parsing/parsing.c \
 			parsing/parsing_error.c \
 			parsing/fill_objs.c \
@@ -14,13 +20,21 @@ SRC_FILES	= main.c \
 			parsing/check.c \
 			parsing/obj_list.c \
 			parsing/fill_utils.c \
+
+RAYTRACING = \
 			raytracing/raytracer.c \
-			raytracing/color.c \
-			raytracing/color_utils.c \
 			raytracing/sphere.c \
 			raytracing/plan.c \
 			raytracing/cylinder.c \
 			raytracing/camera.c \
+
+COLOR = \
+			color/color_pixel.c \
+			color/utils.c \
+			color/rgb_op.c \
+			color/rgb_check.c \
+
+LIB_MATH = \
 			lib_math/vec3_init.c \
 			lib_math/vec4_init.c \
 			lib_math/vec3_op.c \
