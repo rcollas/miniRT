@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-_Bool	detect_intersection_with_sphere(t_ray *ray, double *coeff, t_hit *hit)
+_Bool	detect_intersection_with_sphere(t_ray *ray, double *coeff, t_ray *hit)
 {
 	double	delta;
 	double	solution[2];
@@ -17,11 +17,11 @@ _Bool	detect_intersection_with_sphere(t_ray *ray, double *coeff, t_hit *hit)
 		ray->closest_hit = solution[0];
 	else
 		ray->closest_hit = solution[1];
-	hit->intersection = add_vec3(ray->origin, mul_vec3_and_const(ray->dir, ray->closest_hit));
+	hit->origin = add_vec3(ray->origin, mul_vec3_and_const(ray->dir, ray->closest_hit));
 	return (TRUE);
 }
 
-_Bool	hit_sphere(t_ray *ray, t_obj *obj, t_hit *hit)
+_Bool	hit_sphere(t_ray *ray, t_obj *obj, t_ray *hit)
 {
 	double	coeff[3];
 	double	radius;
@@ -32,7 +32,7 @@ _Bool	hit_sphere(t_ray *ray, t_obj *obj, t_hit *hit)
 	coeff[C] = get_norm2_vec3(sub_vec3(ray->origin, *obj->origin)) - radius * radius;
 	if (detect_intersection_with_sphere(ray, coeff, hit))
 	{
-		hit->normal = get_normalized_vec3(sub_vec3(hit->intersection, *obj->origin));
+		hit->dir = get_normalized_vec3(sub_vec3(hit->origin, *obj->origin));
 		return (TRUE);
 	}
 	return (FALSE);

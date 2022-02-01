@@ -59,9 +59,9 @@ void		ft_free(void *to_free);
 /*********************************************** RAYTRACING ********************************************************/
 
 void		run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data);
-_Bool		hit_sphere(t_ray *ray, t_obj *obj, t_hit *hit);
-_Bool		hit_plan(t_ray *ray, t_obj *obj, t_hit *hit);
-_Bool		hit_cylinder(t_ray *ray, t_obj *obj, t_hit *hit);
+_Bool		hit_sphere(t_ray *ray, t_obj *obj, t_ray *hit);
+_Bool		hit_plan(t_ray *ray, t_obj *obj, t_ray *hit);
+_Bool		hit_cylinder(t_ray *ray, t_obj *obj, t_ray *hit);
 
 /************************************************* CAMERA **********************************************************/
 
@@ -71,10 +71,11 @@ void		init_camera_ray(t_ray *cam_ray, t_scene *scene);
 
 /************************************************** COLOR **********************************************************/
 
-void		get_color_pixel(t_scene *scene, t_hit hit, int *color, double pixel_shadow);
+void		get_color_pixel(t_scene *scene, t_ray hit, int *color, double pixel_shadow);
 void		draw_pixel(t_image *image, int x, int y, int color);
 int			create_trgb(int transparency, int red, int green, int blue);
 void		check_limit_color(t_rgb *color);
 void		clamp_intensity(double *intensity);
+float		frand();
 
 #endif

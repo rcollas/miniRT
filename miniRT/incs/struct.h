@@ -15,6 +15,7 @@ typedef struct s_ray
 	t_vec3	origin;
 	t_vec3	dir;
 	double	closest_hit;
+	t_rgb	color;
 }	t_ray;
 
 typedef struct s_hit
@@ -102,6 +103,6 @@ typedef struct s_data
 	t_matrix4	cam_to_world_matrix;
 }	t_data;
 
-typedef _Bool	t_op(t_ray *ray, t_obj *obj, t_hit *hit);
+typedef _Bool	t_op(t_ray *ray, t_obj *obj, t_ray *hit);
 
 #endif

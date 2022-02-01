@@ -18,7 +18,7 @@ _Bool	solve_quadratic(double *coeff, double *roots, double *closest_hit)
 	return (TRUE);
 }
 
-_Bool	hit_cylinder(t_ray *ray, t_obj *obj, t_hit *hit)
+_Bool	hit_cylinder(t_ray *ray, t_obj *obj, t_ray *hit)
 {
 	double	radius;
 	double	coeff[3];
@@ -36,14 +36,14 @@ _Bool	hit_cylinder(t_ray *ray, t_obj *obj, t_hit *hit)
 	coeff[C] = dot_vec3(cross_vec3(cylinder_to_origin, normalized_dir), cross_vec3(cylinder_to_origin, normalized_dir)) - radius * radius;
 	if (solve_quadratic(coeff, roots, &ray->closest_hit))
 	{
-		hit->intersection = add_vec3(ray->origin, mul_vec3_and_const(ray->dir, ray->closest_hit));
-		hit->normal = get_normalized_vec3(sub_vec3(hit->intersection, *obj->origin));
-		if (get_norm_vec3(sub_vec3(hit->intersection, *obj->origin)) > obj->height)
+		hit->origin = add_vec3(ray->origin, mul_vec3_and_const(ray->dir, ray->closest_hit));
+		hit->dir = get_normalized_vec3(sub_vec3(hit->origin, *obj->origin));
+		if (get_norm_vec3(sub_vec3(hit->origin, *obj->origin)) > obj->height)
 		{
 			ray->closest_hit = roots[1];
-			hit->intersection = add_vec3(ray->origin, mul_vec3_and_const(ray->dir, ray->closest_hit));
+			hit->origin = add_vec3(ray->origin, mul_vec3_and_const(ray->dir, ray->closest_hit));
 		}
-		if (get_norm_vec3(sub_vec3(hit->intersection, *obj->origin)) > obj->height)
+		if (get_norm_vec3(sub_vec3(hit->origin, *obj->origin)) > obj->height)
 		{
 			return (FALSE);
 		}
