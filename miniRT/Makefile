@@ -24,8 +24,9 @@ PARSING = \
 RAYTRACING = \
 			raytracing/raytracer.c \
 			raytracing/sphere.c \
-			raytracing/plan.c \
+			raytracing/plane.c \
 			raytracing/cylinder.c \
+			raytracing/disk.c \
 			raytracing/camera.c \
 
 COLOR = \

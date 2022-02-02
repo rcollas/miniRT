@@ -29,7 +29,7 @@ typedef enum s_error {
 	CAMERA_FORMAT_ERROR			= 242,
 	DIFFUSE_LIGHT_FORMAT_ERROR	= 241,
 	SPHERE_FORMAT_ERROR			= 240,
-	PLAN_FORMAT_ERROR			= 239,
+	PLANE_FORMAT_ERROR			= 239,
 	CYLINDER_FORMAT_ERROR		= 238,
 	INCOMPLETE_FILE_ERROR		= 237,
 }	t_error;
@@ -61,7 +61,7 @@ typedef enum s_key
 typedef enum s_types
 {
 	SPHERE			= 0,
-	PLAN			= 1,
+	PLANE			= 1,
 	CYLINDER		= 2,
 	CAMERA			= 3,
 	AMBIENT_LIGHT	= 4,

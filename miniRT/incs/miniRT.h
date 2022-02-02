@@ -60,8 +60,9 @@ void		ft_free(void *to_free);
 
 void		run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data);
 _Bool		hit_sphere(t_ray *ray, t_obj *obj, t_hit *hit);
-_Bool		hit_plan(t_ray *ray, t_obj *obj, t_hit *hit);
+_Bool		hit_plane(t_ray *ray, t_obj *obj, t_hit *hit);
 _Bool		hit_cylinder(t_ray *ray, t_obj *obj, t_hit *hit);
+_Bool		hit_disk(t_ray *ray, t_obj *obj, t_hit *hit);
 
 /************************************************* CAMERA **********************************************************/
 

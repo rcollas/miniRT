@@ -20,8 +20,8 @@ void	print_list(t_obj *obj)
 			printf("TYPE = SPHERE\n");
 		if (obj->type == CYLINDER)
 			printf("TYPE = CYLINDER\n");
-		if (obj->type == PLAN)
-			printf("TYPE = PLAN\n");
+		if (obj->type == PLANE)
+			printf("TYPE = PLANE\n");
 		printf("RGB VALUE: R = %f\n", obj->color->r);
 		printf("           G = %f\n", obj->color->g);
 		printf("           B = %f\n", obj->color->b);
@@ -153,6 +153,6 @@ int is_valid_type(char *type)
 	if (ft_strcmp(type, "cy") == EQUAL)
 		return (CYLINDER);
 	if (ft_strcmp(type, "pl") == EQUAL)
-		return (PLAN);
+		return (PLANE);
 	return (INVALID_TYPE_ERROR);
 }

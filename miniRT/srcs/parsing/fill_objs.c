@@ -25,7 +25,7 @@ void	fill_sphere(t_parsing *var, char *line)
 	obj_add_back(&var->objs, obj);
 }
 
-void	fill_plan(t_parsing *var, char *line)
+void	fill_plane(t_parsing *var, char *line)
 {
 	int		i;
 	t_obj	*obj;
@@ -35,19 +35,19 @@ void	fill_plan(t_parsing *var, char *line)
 		i++;
 	if (i != 4)
 	{
-		error(PLAN_FORMAT_ERROR, line);
-		ft_exit_parsing(PLAN_FORMAT_ERROR, var);
+		error(PLANE_FORMAT_ERROR, line);
+		ft_exit_parsing(PLANE_FORMAT_ERROR, var);
 	}
-	obj = new_obj(PLAN, -1, -1);
+	obj = new_obj(PLANE, -1, -1);
 	fill_vertex(var->obj_info[2], obj->dir);
 	fill_rgb(var->obj_info[3], obj->color);
 	fill_coordinates(var->obj_info[1], obj->origin);
-	if (check(obj, PLAN) == FAIL)
+	if (check(obj, PLANE) == FAIL)
 	{
-		error(PLAN_FORMAT_ERROR, line);
-		ft_exit_parsing(PLAN_FORMAT_ERROR, var);
+		error(PLANE_FORMAT_ERROR, line);
+		ft_exit_parsing(PLANE_FORMAT_ERROR, var);
 	}
-	obj->hit_object = &hit_plan;
+	obj->hit_object = &hit_plane;
 	obj_add_back(&var->objs, obj);
 }
 
@@ -82,8 +82,8 @@ void	fill_obj(int type, t_parsing *var, char *line)
 {
 	if (type == SPHERE)
 		fill_sphere(var, line);
-	if (type == PLAN)
-		fill_plan(var, line);
+	if (type == PLANE)
+		fill_plane(var, line);
 	if (type == CYLINDER)
 		fill_cylinder(var, line);
 }

@@ -70,11 +70,11 @@ int	sphere_check(t_obj *sphere)
 	return (SUCCESS);
 }
 
-int	plan_check(t_obj *plan)
+int	plane_check(t_obj *plane)
 {
-	if (!is_valid_vertex(plan->dir))
+	if (!is_valid_vertex(plane->dir))
 		return (FAIL);
-	if (!is_valid_rgb(plan->color))
+	if (!is_valid_rgb(plane->color))
 		return (FAIL);
 	return (SUCCESS);
 }
@@ -102,8 +102,8 @@ int	check(void *obj, int type)
 		return (diffuse_light_check((t_diffuse_light *)obj));
 	if (type == SPHERE)
 		return (sphere_check((t_obj *)obj));
-	if (type == PLAN)
-		return (plan_check((t_obj *)obj));
+	if (type == PLANE)
+		return (plane_check((t_obj *)obj));
 	if (type == CYLINDER)
 		return (cylinder_check((t_obj *)obj));
 	return (FAIL);
