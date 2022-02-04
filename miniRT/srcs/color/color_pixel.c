@@ -62,15 +62,15 @@ t_vec3	sum_total_light(t_scene *scene, t_hit hit, t_ray ray, t_vec3 light_dir)
 	return (total_light);
 }
 
-void	get_color_pixel(t_scene *scene, t_hit hit, t_ray ray, int *color)
-{
-	t_vec3	light_dir;
-	t_vec3	total_light;
+// void	get_color_pixel(t_scene *scene, t_hit hit, t_ray ray, int *color)
+// {
+// 	t_vec3	light_dir;
+// 	t_vec3	total_light;
 	
-	// printf("shadow = %f\n", hit.pixel_shadow);
-	light_dir = sub_vec3(*scene->diffuse_light->coord, hit.intersection);
-	normalize_vec3(&light_dir);
-	total_light = sum_total_light(scene, hit, ray, light_dir);
-	total_light = mul_vec3_and_const(total_light, hit.pixel_shadow);
-	*color = create_trgb_struct(98, &total_light);
-}
+// 	// printf("shadow = %f\n", hit.pixel_shadow);
+// 	light_dir = sub_vec3(*scene->diffuse_light->coord, hit.intersection);
+// 	normalize_vec3(&light_dir);
+// 	total_light = sum_total_light(scene, hit, ray, light_dir);
+// 	total_light = mul_vec3_and_const(total_light, hit.pixel_shadow);
+// 	*color = create_trgb_struct(98, &total_light);
+// }

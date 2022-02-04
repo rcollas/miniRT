@@ -63,6 +63,7 @@ _Bool		hit_sphere(t_ray *ray, t_obj *obj, t_hit *hit);
 _Bool		hit_plane(t_ray *ray, t_obj *obj, t_hit *hit);
 _Bool		hit_cylinder(t_ray *ray, t_obj *obj, t_hit *hit);
 _Bool		hit_disk(t_ray *ray, t_obj *obj, t_hit *hit);
+_Bool		is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light);
 
 /************************************************* CAMERA **********************************************************/
 
@@ -72,7 +73,8 @@ void		init_camera_ray(t_ray *cam_ray, t_data *data);
 
 /************************************************** COLOR **********************************************************/
 
-void		get_color_pixel(t_scene *scene, t_hit hit, t_ray ray, int *color);
+// void		get_color_pixel(t_scene *scene, t_hit hit, t_ray ray, int *color);
+int			get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, long unsigned int *color, double pixel_shadow, int rebound);
 void		draw_pixel(t_image *image, int color, t_data *data);
 int			create_trgb_struct(int transparency, t_vec3 *color);
 int			create_trgb(int transparency, int red, int green, int blue);
