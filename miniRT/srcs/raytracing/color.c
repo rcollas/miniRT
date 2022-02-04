@@ -37,7 +37,7 @@ float	frand()
 	return (float_rand);
 }
 
-int get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, unsigned int *color, double pixel_shadow, int rebound)
+int get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, long unsigned int *color, double pixel_shadow, int rebound)
 {
 
 	_Bool	hit_obj;
