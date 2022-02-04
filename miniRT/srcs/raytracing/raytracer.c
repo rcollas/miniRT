@@ -89,8 +89,11 @@ _Bool	in_shadow(t_obj *obj, t_vec3 intersection, t_diffuse_light *light, t_vec3 
 	return (FALSE);
 }
 
-_Bool	detect_intersection(t_ray *ray, t_obj *obj, int *color, t_data *data)
+_Bool	detect_intersection(t_ray *ray, t_obj *obj, unsigned int *color, t_data *data)
 {
+	int i;
+
+	i = 0;
 	/*
 	_Bool	hit_obj;
 	t_vec3	intersection_min;
@@ -139,7 +142,9 @@ _Bool	detect_intersection(t_ray *ray, t_obj *obj, int *color, t_data *data)
 		pixel_shadow = 0.3;
 	 */
 	//normalize_vec3(data->scene->diffuse_light->coord);
-	get_color_pixel(obj, data->scene, ray,  color, 1, 2);
+	//while (i++ < 3)
+	*color = get_color_pixel(obj, data->scene, ray,  color, 1, 2);
+	//*color /= 3;
 	return (*color);
 }
 
@@ -148,7 +153,7 @@ void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
 {
 	int			x;
 	int			y;
-	int			color;
+	unsigned int			color;
 	t_ray		cam_ray;
 	t_matrix4	cam_to_world_matrix;
 

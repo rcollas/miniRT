@@ -37,7 +37,7 @@ float	frand()
 	return (float_rand);
 }
 
-int get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, int *color, double pixel_shadow, int rebound)
+int get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, unsigned int *color, double pixel_shadow, int rebound)
 {
 
 	_Bool	hit_obj;
@@ -62,27 +62,27 @@ int get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, int *color, double p
 				result.dir = temp.dir;
 			}
 		}
-		/*
-		else if (tmp->type == CYLINDER && hit_cylinder(*ray, tmp, &intersection, &normal))
+		else if (tmp->type == CYLINDER && hit_cylinder(*ray, tmp, &temp.origin, &temp.dir))
 		{
 			hit_obj = TRUE;
 			if (dist_min > ray->closest_hit)
 			{
 				dist_min = ray->closest_hit;
-				intersection_min = intersection;
-				normal_min = normal;
+				result.origin = temp.origin;
+				result.dir = temp.dir;
 			}
 		}
-		else if (tmp->type == PLAN && hit_plan(ray, tmp, &intersection, &normal))
+		else if (tmp->type == PLAN && hit_plan(ray, tmp, &temp.origin, &temp.dir))
 		{
 			hit_obj = TRUE;
 			// *color = create_trgb(80, 255, 0, 0);
 		}
-		 */
 		tmp = tmp->next;
 	}
 
 
+	if (in_shadow(obj, result.origin, scene->diffuse_light, result.dir) == TRUE)
+		pixel_shadow = 0.3;
 	t_vec3		light_vector;
 	t_vec3		normalized_light_vector;
 	double		intensity;
@@ -95,8 +95,9 @@ int get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, int *color, double p
 	t_vec3		random;
 	t_vec3		tangent1;
 	t_vec3		tangent2;
-	t_ray		random_ray;
+	t_ray		*random_ray;
 	(void)color;
+	random_ray = malloc(sizeof(t_ray));
 	if (rebound == 0)
 		return (0);
 	if (hit_obj == TRUE) {
@@ -110,7 +111,7 @@ int get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, int *color, double p
 		random.y = frand();
 		random.z = frand();
 
-		tangent1 = cross_product_vec3(result.origin, random);
+		tangent1 = cross_product_vec3(result.dir, random);
 		normalize_vec3(&tangent1);
 		tangent2 = cross_product_vec3(tangent1, result.dir);
 
@@ -123,19 +124,20 @@ int get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, int *color, double p
 									   mul_vec3_and_const(tangent2, random_dir_local.y)));
 
 		//random_ray.origin = add_vec3(intersection, mul_vec3_and_const(normal, 0.001));
-		random_ray.origin = result.origin;
-		random_ray.dir = random_dir;
+		random_ray->origin = add_vec3(result.origin, mul_vec3_and_const(result.dir, 0.001));
+		random_ray->dir = random_dir;
 		//printf("random_ray.dir x = %f\n", random_ray.dir.x);
 
 		light_vector = sub_vec3(*scene->diffuse_light->coord, result.origin);
 		normalized_light_vector = get_normalized_vec3(light_vector);
-		intensity = 1000 * dot_product_vec3(normalized_light_vector, result.dir);
+		intensity = 500 * dot_product_vec3(normalized_light_vector, result.dir);
 		intensity /= get_norm2_vec3(light_vector);
-		intensity += get_color_pixel(obj, scene, &random_ray, color, 1, --rebound);
-		clamp_intensity(&intensity);
-		//printf("intensity = %f\n", intensity);
+		//intensity += get_color_pixel(obj, scene, random_ray, color, 1, --rebound);
 		final_color = create_trgb(98, 255 * intensity * pixel_shadow, 255 * intensity * pixel_shadow,
 								  255 * intensity * pixel_shadow);
+		final_color += get_color_pixel(obj, scene, random_ray, color, 1, --rebound);
+		clamp_intensity(&intensity);
+		//printf("intensity = %f\n", intensity);
 	}
 	else
 		final_color = create_trgb(98, 0, 0, 0);

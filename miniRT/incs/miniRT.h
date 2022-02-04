@@ -71,10 +71,11 @@ void		init_camera_ray(t_ray *cam_ray, t_scene *scene);
 
 /************************************************** COLOR **********************************************************/
 
-int			get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, int *color, double pixel_shadow, int rebound);
+int			get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, unsigned int *color, double pixel_shadow, int rebound);
 void		draw_pixel(t_image *image, int x, int y, int color);
 int			create_trgb(int transparency, int red, int green, int blue);
 void		check_limit_color(t_rgb *color);
 void		clamp_intensity(double *intensity);
+_Bool		in_shadow(t_obj *obj, t_vec3 intersection, t_diffuse_light *light, t_vec3 normal);
 
 #endif
