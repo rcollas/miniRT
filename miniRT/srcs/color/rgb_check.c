@@ -18,7 +18,7 @@ void	clamp_color(int *color)
 
 void	check_limit_color(t_vec3 *color)
 {
-	clamp_intensity(&color->r);
-	clamp_intensity(&color->g);
-	clamp_intensity(&color->b);
+	clamp_intensity(&color->coord[R]);
+	clamp_intensity(&color->coord[G]);
+	clamp_intensity(&color->coord[B]);
 }

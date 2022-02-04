@@ -11,7 +11,7 @@ _Bool	check_hit_object(t_ray *ray, t_obj *obj, t_hit *hit_min)
 			hit_min->dist = ray->closest_hit;
 			copy_vec3(&hit_min->intersection, hit.intersection);
 			copy_vec3(&hit_min->normal, hit.normal);
-			copy_rgb(&hit_min->color, *obj->color);
+			copy_vec3(&hit_min->color, *obj->color);
 		}
 		return (TRUE);
 	}

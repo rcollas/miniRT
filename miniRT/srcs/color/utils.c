@@ -17,13 +17,13 @@ void	draw_pixel(t_image *image, int color, t_data *data)
 
 int	create_trgb_struct(int transparency, t_vec3 *color)
 {
-	clamp_intensity(&color->r);
-	clamp_intensity(&color->g);
-	clamp_intensity(&color->b);
-	color->r *= 255;
-	color->g *= 255;
-	color->b *= 255;
-	return (transparency << 24 | (int)color->r << 16 | (int)color->g << 8 | (int)color->b);
+	clamp_intensity(&color->coord[R]);
+	clamp_intensity(&color->coord[G]);
+	clamp_intensity(&color->coord[B]);
+	color->coord[R] *= 255;
+	color->coord[G] *= 255;
+	color->coord[B] *= 255;
+	return (transparency << 24 | (int)color->coord[R] << 16 | (int)color->coord[G] << 8 | (int)color->coord[B]);
 }
 
 int	create_trgb(int transparency, int red, int green, int blue)

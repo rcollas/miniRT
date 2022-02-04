@@ -24,12 +24,12 @@ void	print_list(t_obj *obj)
 			printf("TYPE = PLANE\n");
 		if (obj->type == DISK)
 			printf("TYPE = DISK\n");
-		printf("RGB VALUE: R = %f\n", obj->color->r);
-		printf("           G = %f\n", obj->color->g);
-		printf("           B = %f\n", obj->color->b);
-		printf("COORDINATES: X = %f\n", obj->origin->x);
-		printf("             Y = %f\n", obj->origin->y);
-		printf("             Z = %f\n", obj->origin->z);
+		printf("RGB VALUE: R = %f\n", obj->color->coord[R]);
+		printf("           G = %f\n", obj->color->coord[G]);
+		printf("           B = %f\n", obj->color->coord[B]);
+		printf("COORDINATES: X = %f\n", obj->origin->coord[X]);
+		printf("             Y = %f\n", obj->origin->coord[Y]);
+		printf("             Z = %f\n", obj->origin->coord[Z]);
 		printf("DIAMETER VALUE = %f\n", obj->diameter);
 		printf("HEIGHT VALUE = %f\n\n", obj->height);
 		i++;

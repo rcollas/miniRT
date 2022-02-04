@@ -32,7 +32,6 @@ RAYTRACING = \
 COLOR = \
 			color/color_pixel.c \
 			color/utils.c \
-			color/rgb_op.c \
 			color/rgb_check.c \
 
 LIB_MATH = \

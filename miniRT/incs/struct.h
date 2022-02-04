@@ -3,13 +3,6 @@
 
 #include "lib_math.h"
 
-//typedef struct s_rgb
-//{
-//	double	r;
-//	double	g;
-//	double	b;
-//}	t_rgb;
-
 typedef struct s_ray
 {
 	t_vec3	origin;
@@ -22,7 +15,7 @@ typedef struct s_hit
 	double		dist;
 	t_vec3		intersection;
 	t_vec3		normal;
-	t_rgb		color;
+	t_vec3		color;
 	double		pixel_shadow;
 }	t_hit;
 
@@ -30,7 +23,7 @@ typedef struct s_ambient_light
 {
 	int			type;
 	double		intensity;
-	t_rgb		color[1];
+	t_vec3		color[1];
 }	t_ambient_light;
 
 typedef struct s_camera
@@ -64,7 +57,7 @@ typedef struct s_obj
 	int				type;
 	t_vec3			origin[1];
 	t_vec3			dir[1];
-	t_rgb			color[1];
+	t_vec3			color[1];
 	double			diameter;
 	double			height;
 	t_op			*hit_object;

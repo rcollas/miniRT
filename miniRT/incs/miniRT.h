@@ -79,10 +79,5 @@ int			create_trgb(int transparency, int red, int green, int blue);
 void		check_limit_color(t_vec3 *color);
 void		clamp_intensity(double *intensity);
 void		clamp_color(int *color);
-t_vec3		init_color(double red, double green, double blue);
-void		copy_rgb(t_vec3 *dest, t_vec3 src);
-t_vec3		mul_rgb_and_const(t_vec3 color, double k);
-t_vec3		mul_rgb(t_vec3 color_1, t_vec3 color_2);
-t_vec3		add_rgb(t_vec3 color_1, t_vec3 color_2);
 
 #endif
