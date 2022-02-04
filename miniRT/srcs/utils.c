@@ -22,6 +22,8 @@ void	print_list(t_obj *obj)
 			printf("TYPE = CYLINDER\n");
 		if (obj->type == PLANE)
 			printf("TYPE = PLANE\n");
+		if (obj->type == DISK)
+			printf("TYPE = DISK\n");
 		printf("RGB VALUE: R = %f\n", obj->color->r);
 		printf("           G = %f\n", obj->color->g);
 		printf("           B = %f\n", obj->color->b);
@@ -154,5 +156,7 @@ int is_valid_type(char *type)
 		return (CYLINDER);
 	if (ft_strcmp(type, "pl") == EQUAL)
 		return (PLANE);
+	if (ft_strcmp(type, "di") == EQUAL)
+		return (DISK);
 	return (INVALID_TYPE_ERROR);
 }

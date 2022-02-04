@@ -78,6 +78,32 @@ void	fill_cylinder(t_parsing *var, char *line)
 	obj_add_back(&var->objs, obj);
 }
 
+void	fill_disk(t_parsing *var, char *line)
+{
+	int		i;
+	t_obj	*obj;
+
+	i = 0;
+	while (var->obj_info[i])
+		i++;
+	if (i != 5)
+	{
+		error(DISK_FORMAT_ERROR, line);
+		ft_exit_parsing(DISK_FORMAT_ERROR, var);
+	}
+	obj = new_obj(DISK, ft_atof(var->obj_info[3]), -1);
+	fill_coordinates(var->obj_info[1], obj->origin);
+	fill_vertex(var->obj_info[2], obj->dir);
+	fill_rgb(var->obj_info[4], obj->color);
+	if (check(obj,DISK) == FAIL)
+	{
+		error(DISK_FORMAT_ERROR, line);
+		ft_exit_parsing(DISK_FORMAT_ERROR, var);
+	}
+	obj->hit_object = &hit_disk;
+	obj_add_back(&var->objs, obj);
+}
+
 void	fill_obj(int type, t_parsing *var, char *line)
 {
 	if (type == SPHERE)
@@ -86,4 +112,6 @@ void	fill_obj(int type, t_parsing *var, char *line)
 		fill_plane(var, line);
 	if (type == CYLINDER)
 		fill_cylinder(var, line);
+	if (type == DISK)
+		fill_disk(var, line);
 }

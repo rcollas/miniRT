@@ -72,8 +72,8 @@ void	update_camera_ray(t_ray *cam_ray, t_data *data)
 	cam_ray->dir.z = -1.0;
 	// printf("x = %f | y = %f | z = %f\n", cam_ray->dir.x, cam_ray->dir.y, cam_ray->dir.z);
 	cam_ray->dir = mul_dir_and_matrix4(cam_ray->dir, data->cam_to_world_matrix);
-	copy_vec3(&cam_ray->origin, data->scene->camera->origin);
+	copy_vec3(&cam_ray->origin, *data->scene->camera->origin);
 	cam_ray->dir = sub_vec3(cam_ray->dir, cam_ray->origin);
 	get_normalized_vec3(cam_ray->dir);
-	// printf("x = %f | y = %f | z = %f\n", cam_ray->origin.x, cam_ray->origin.y, cam_ray->origin.z);
 }
+

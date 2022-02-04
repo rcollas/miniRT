@@ -10,7 +10,6 @@ _Bool	detect_intersection_with_sphere(t_ray *ray, double *coeff, t_hit *hit)
 		return (0);
 	solution[0] = (-coeff[B] - (sqrt(delta))) / (2 * coeff[A]);
 	solution[1] = (-coeff[B] + (sqrt(delta))) / (2 * coeff[A]);
-	// printf("ret = %f\n", ret[1]);
 	if (solution[1] < 0)
 		return (FALSE);
 	if (solution[0] > 0)
@@ -26,7 +25,7 @@ _Bool	hit_sphere(t_ray *ray, t_obj *obj, t_hit *hit)
 	double	coeff[3];
 	double	radius;
 
-	radius = obj->diameter / 2;
+	radius = obj->diameter * 0.5;
 	// coeff[A] = 1;
 	coeff[A] = dot_vec3(ray->dir, ray->dir);
 	coeff[B] = 2 * dot_vec3(ray->dir, sub_vec3(ray->origin, *obj->origin));
@@ -34,6 +33,8 @@ _Bool	hit_sphere(t_ray *ray, t_obj *obj, t_hit *hit)
 	if (detect_intersection_with_sphere(ray, coeff, hit))
 	{
 		hit->normal = get_normalized_vec3(sub_vec3(hit->intersection, *obj->origin));
+		if (dot_vec3(ray->dir, hit->normal) > 0)
+			hit->normal = mul_vec3_and_const(hit->normal, -1);
 		return (TRUE);
 	}
 	return (FALSE);

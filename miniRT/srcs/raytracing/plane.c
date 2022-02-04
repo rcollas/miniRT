@@ -13,7 +13,7 @@ _Bool	hit_plane(t_ray *ray, t_obj *obj, t_hit *hit)
 	// printf("x = %f | y = %f | z = %f\n", tmp.x, tmp.y, tmp.z);
 	hit->dist = dot_vec3(tmp, hit->normal) / denominator;
 	// printf("hit_point = %f\n", hit_point);
-	if (hit->dist >= 0)
+	if (hit->dist >= 1e-6)
 	{
 		ray->closest_hit = hit->dist;
 		hit->intersection = add_vec3(ray->origin, mul_vec3_and_const(ray->dir, hit->dist));

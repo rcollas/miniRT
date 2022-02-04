@@ -28,7 +28,7 @@ typedef struct s_matrix4
 
 t_vec3		create_vec3(double x, double y, double z);
 t_vec3		convert_vec4_to_vec3(t_vec4 vector);
-void		copy_vec3(t_vec3 *dest, t_vec3 *src);
+void		copy_vec3(t_vec3 *dest, t_vec3 src);
 
 /*********************************************** VEC4 INIT *********************************************************/
 

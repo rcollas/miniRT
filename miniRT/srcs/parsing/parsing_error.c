@@ -160,6 +160,18 @@ int	cylinder_format_error(char *str)
 	return (CYLINDER_FORMAT_ERROR);
 }
 
+int	disk_format_error(char *str)
+{
+	ft_putstr_fd("File format error: \n", 2);
+	ft_putstr_fd("Yours: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("Expected: [ID]:di [COORDINATES]:0.0,0.0,0.0 ", 2);
+	ft_putstr_fd("[VERTEX]:0.0,0.0,0.0 [DIAMETER]:0.0", 2);
+	ft_putstr_fd("[RGB]:0-255,0-255,0-255 \n", 2);
+	return (DISK_FORMAT_ERROR);
+}
+
 int	invalid_type_error(char *str)
 {
 	ft_putstr_fd("File format error: \n", 2);
@@ -190,6 +202,8 @@ int	error(int errnum, char *str)
 		return (plane_format_error(str));
 	if (errnum == CYLINDER_FORMAT_ERROR)
 		return (cylinder_format_error(str));
+	if (errnum == DISK_FORMAT_ERROR)
+		return (disk_format_error(str));
 	if (errnum == INVALID_TYPE_ERROR)
 		return (invalid_type_error(str));
 	return (0);

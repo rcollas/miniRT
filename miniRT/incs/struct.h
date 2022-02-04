@@ -3,7 +3,6 @@
 
 #include "lib_math.h"
 
-
 typedef struct s_rgb
 {
 	double	r;
@@ -24,6 +23,7 @@ typedef struct s_hit
 	t_vec3		intersection;
 	t_vec3		normal;
 	t_rgb		color;
+	double		pixel_shadow;
 }	t_hit;
 
 typedef struct s_ambient_light

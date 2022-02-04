@@ -2,21 +2,18 @@
 
 _Bool	hit_disk(t_ray *ray, t_obj *obj, t_hit *hit)
 {
-	double	denominator;
-	t_vec3	tmp;
+	double	radius2;
+	t_vec3	v;
+	double	dist;
 
-	hit->normal = get_normalized_vec3(*obj->dir);
-	denominator = dot_vec3(hit->normal, ray->dir);
-	// if (denominator < 1e-6)
-	// 	return (FALSE);
-	tmp = sub_vec3(*obj->origin, ray->origin);
-	// printf("x = %f | y = %f | z = %f\n", tmp.x, tmp.y, tmp.z);
-	hit->dist = dot_vec3(tmp, hit->normal) / denominator;
-	// printf("hit_point = %f\n", hit_point);
-	if (hit->dist >= 0)
+	if (!hit_plane(ray, obj, hit))
+		return (FALSE);
+	radius2 = (obj->diameter * 0.5) * (obj->diameter * 0.5);
+	v = sub_vec3(*obj->origin, hit->intersection);
+	dist = dot_vec3(v, v);
+	if (dist <= radius2)
 	{
-		ray->closest_hit = hit->dist;
-		hit->intersection = add_vec3(ray->origin, mul_vec3_and_const(ray->dir, hit->dist));
+		// printf("radius2 = %f\n", radius2);
 		return (TRUE);
 	}
 	return (FALSE);

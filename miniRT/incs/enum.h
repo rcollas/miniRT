@@ -31,7 +31,8 @@ typedef enum s_error {
 	SPHERE_FORMAT_ERROR			= 240,
 	PLANE_FORMAT_ERROR			= 239,
 	CYLINDER_FORMAT_ERROR		= 238,
-	INCOMPLETE_FILE_ERROR		= 237,
+	DISK_FORMAT_ERROR			= 237,
+	INCOMPLETE_FILE_ERROR		= 236,
 }	t_error;
 
 # ifdef __linux__
@@ -63,9 +64,10 @@ typedef enum s_types
 	SPHERE			= 0,
 	PLANE			= 1,
 	CYLINDER		= 2,
-	CAMERA			= 3,
-	AMBIENT_LIGHT	= 4,
-	DIFFUSE_LIGHT	= 5,
+	DISK			= 3,
+	CAMERA			= 4,
+	AMBIENT_LIGHT	= 5,
+	DIFFUSE_LIGHT	= 6,
 }	t_types;
 
 #endif

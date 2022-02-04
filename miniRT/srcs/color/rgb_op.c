@@ -10,6 +10,13 @@ t_rgb	init_color(double red, double green, double blue)
 	return (new_color);
 }
 
+void	copy_rgb(t_rgb *dest, t_rgb src)
+{
+	dest->r = src.r;
+	dest->g = src.g;
+	dest->b = src.b;
+}
+
 t_rgb	add_rgb(t_rgb color_1, t_rgb color_2)
 {
 	t_rgb	new_color;

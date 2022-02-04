@@ -92,6 +92,17 @@ int	cylinder_check(t_obj *cylinder)
 	return (SUCCESS);
 }
 
+int	disk_check(t_obj *disk)
+{
+	if (!is_valid_vertex(disk->dir))
+		return (FAIL);
+	if (disk->diameter <= 0)
+		return (FAIL);
+	if (!is_valid_rgb(disk->color))
+		return (FAIL);
+	return (SUCCESS);
+}
+
 int	check(void *obj, int type)
 {
 	if (type == AMBIENT_LIGHT)
@@ -106,5 +117,7 @@ int	check(void *obj, int type)
 		return (plane_check((t_obj *)obj));
 	if (type == CYLINDER)
 		return (cylinder_check((t_obj *)obj));
+	if (type == DISK)
+		return (disk_check((t_obj *)obj));
 	return (FAIL);
 }
