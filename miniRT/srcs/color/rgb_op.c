@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-t_rgb	init_color(double red, double green, double blue)
+t_vec3 init_color(double red, double green, double blue)
 {
 	t_rgb	new_color;
 
@@ -10,14 +10,14 @@ t_rgb	init_color(double red, double green, double blue)
 	return (new_color);
 }
 
-void	copy_rgb(t_rgb *dest, t_rgb src)
+void	copy_rgb(t_vec3 *dest, t_vec3 src)
 {
 	dest->r = src.r;
 	dest->g = src.g;
 	dest->b = src.b;
 }
 
-t_rgb	add_rgb(t_rgb color_1, t_rgb color_2)
+t_vec3 add_rgb(t_vec3 color_1, t_vec3 color_2)
 {
 	t_rgb	new_color;
 
@@ -28,7 +28,7 @@ t_rgb	add_rgb(t_rgb color_1, t_rgb color_2)
 	return (new_color);
 }
 
-t_rgb	mul_rgb(t_rgb color_1, t_rgb color_2)
+t_vec3 mul_rgb(t_vec3 color_1, t_vec3 color_2)
 {
 	t_rgb	new_color;
 
@@ -39,7 +39,7 @@ t_rgb	mul_rgb(t_rgb color_1, t_rgb color_2)
 	return (new_color);
 }
 
-t_rgb	mul_rgb_and_const(t_rgb color, double k)
+t_vec3 mul_rgb_and_const(t_vec3 color, double k)
 {
 	t_rgb	new_color;
 

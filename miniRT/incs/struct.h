@@ -3,12 +3,12 @@
 
 #include "lib_math.h"
 
-typedef struct s_rgb
-{
-	double	r;
-	double	g;
-	double	b;
-}	t_rgb;
+//typedef struct s_rgb
+//{
+//	double	r;
+//	double	g;
+//	double	b;
+//}	t_rgb;
 
 typedef struct s_ray
 {

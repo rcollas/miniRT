@@ -2,7 +2,7 @@
 
 _Bool	cam_is_vertical_looking(t_vec3 z_axis)
 {
-	return (z_axis.x == 0 && (z_axis.y == -1 || z_axis.y == 1) && z_axis.z == 0);
+	return (z_axis.coord[X] == 0 && (z_axis.coord[Y] == -1 || z_axis.coord[Y] == 1) && z_axis.coord[Z] == 0);
 }
 
 void	compute_the_axis(t_camera camera, t_vec3 *x_axis, t_vec3 *y_axis, t_vec3 *z_axis)
@@ -20,10 +20,10 @@ void	compute_the_axis(t_camera camera, t_vec3 *x_axis, t_vec3 *y_axis, t_vec3 *z
 
 void	print_matrix(t_matrix4 matrix)
 {
-	printf("row_1[x] = %f    row_1[y] = %f    row_1[z] = %f\n", matrix.row_1.x, matrix.row_1.y, matrix.row_1.z);
-	printf("row_2[x] = %f    row_2[y] = %f    row_2[z] = %f\n", matrix.row_2.x, matrix.row_2.y, matrix.row_2.z);
-	printf("row_3[x] = %f    row_3[y] = %f    row_3[z] = %f\n", matrix.row_3.x, matrix.row_3.y, matrix.row_3.z);
-	printf("row_4[x] = %f    row_4[y] = %f    row_4[z] = %f\n", matrix.row_4.x, matrix.row_4.y, matrix.row_4.z);
+	printf("row_1[x] = %f    row_1[y] = %f    row_1[z] = %f\n", matrix.row_1.coord[X], matrix.row_1.coord[Y], matrix.row_1.coord[Z]);
+	printf("row_2[x] = %f    row_2[y] = %f    row_2[z] = %f\n", matrix.row_2.coord[X], matrix.row_2.coord[Y], matrix.row_2.coord[Z]);
+	printf("row_3[x] = %f    row_3[y] = %f    row_3[z] = %f\n", matrix.row_3.coord[X], matrix.row_3.coord[Y], matrix.row_3.coord[Z]);
+	printf("row_4[x] = %f    row_4[y] = %f    row_4[z] = %f\n", matrix.row_4.coord[X], matrix.row_4.coord[Y], matrix.row_4.coord[Z]);
 }
 
 t_matrix4	built_cam_to_word_matrix(t_camera *camera)
@@ -34,10 +34,10 @@ t_matrix4	built_cam_to_word_matrix(t_camera *camera)
 	t_matrix4	matrix;
 
 	compute_the_axis(*camera, &x_axis, &y_axis, &z_axis);
-	matrix.row_1 = create_vec4(x_axis.x, x_axis.y, x_axis.z, 0);
-	matrix.row_2 = create_vec4(y_axis.x, y_axis.y, y_axis.z, 0);
-	matrix.row_3 = create_vec4(z_axis.x, z_axis.y, z_axis.z, 0);
-	matrix.row_4 = create_vec4(camera->origin->x, camera->origin->y, camera->origin->z, 1);
+	matrix.row_1 = create_vec4(x_axis.coord[X], x_axis.coord[Y], x_axis.coord[Z], 0);
+	matrix.row_2 = create_vec4(y_axis.coord[X], y_axis.coord[Y], y_axis.coord[Z], 0);
+	matrix.row_3 = create_vec4(z_axis.coord[X], z_axis.coord[Y], z_axis.coord[Z], 0);
+	matrix.row_4 = create_vec4(camera->origin->coord[X], camera->origin->coord[Y], camera->origin->coord[Z], 1);
 	return (matrix);
 }
 
@@ -45,9 +45,9 @@ void	init_camera_ray(t_ray *cam_ray, t_data *data)
 {
 	(void)data;
 	cam_ray->origin = create_vec3(0, 0, 0);
-	cam_ray->dir.x = 0;
-	cam_ray->dir.y = 0;
-	cam_ray->dir.z = 0;
+	cam_ray->dir.coord[X] = 0;
+	cam_ray->dir.coord[Y] = 0;
+	cam_ray->dir.coord[Z] = 0;
 }
 
 // void	update_camera_ray(t_ray *cam_ray, t_data *data)

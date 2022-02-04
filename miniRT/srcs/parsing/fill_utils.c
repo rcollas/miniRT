@@ -1,6 +1,6 @@
 #include "../../incs/miniRT.h"
 
-int	fill_rgb(char *rgb_values, t_rgb *rgb)
+int	fill_rgb(char *rgb_values, t_vec3 *rgb)
 {
 	char	**split_rgb;
 	int 	i;

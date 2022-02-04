@@ -39,7 +39,7 @@ void 		init_image(t_mlx *mlx, t_data *data);
 /************************************************ PARSING **********************************************************/
 
 void		fill_structure(t_parsing *parsing_var);
-int			fill_rgb(char *rgb_values, t_rgb *rgb);
+int			fill_rgb(char *rgb_values, t_vec3 *rgb);
 int			fill_coordinates(char *coordinates_values, t_vec3 *coordinates);
 int			fill_vertex(char *vertex_values, t_vec3 *vertex);
 void		fill_ambient_light(t_parsing *parsing, t_ambient_light *ambient_light, char *line);
@@ -74,15 +74,15 @@ void		init_camera_ray(t_ray *cam_ray, t_data *data);
 
 void		get_color_pixel(t_scene *scene, t_hit hit, t_ray ray, int *color);
 void		draw_pixel(t_image *image, int color, t_data *data);
-int			create_trgb_struct(int transparency, t_rgb *color);
+int			create_trgb_struct(int transparency, t_vec3 *color);
 int			create_trgb(int transparency, int red, int green, int blue);
-void		check_limit_color(t_rgb *color);
+void		check_limit_color(t_vec3 *color);
 void		clamp_intensity(double *intensity);
 void		clamp_color(int *color);
-t_rgb		init_color(double red, double green, double blue);
-void		copy_rgb(t_rgb *dest, t_rgb src);
-t_rgb		mul_rgb_and_const(t_rgb color, double k);
-t_rgb		mul_rgb(t_rgb color_1, t_rgb color_2);
-t_rgb		add_rgb(t_rgb color_1, t_rgb color_2);
+t_vec3		init_color(double red, double green, double blue);
+void		copy_rgb(t_vec3 *dest, t_vec3 src);
+t_vec3		mul_rgb_and_const(t_vec3 color, double k);
+t_vec3		mul_rgb(t_vec3 color_1, t_vec3 color_2);
+t_vec3		add_rgb(t_vec3 color_1, t_vec3 color_2);
 
 #endif

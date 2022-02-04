@@ -9,8 +9,14 @@ typedef enum s_define {
 	EQUAL		= 1,
 	DIFFERENT	= 0,
 	A			= 0,
-	B			= 1,
-	C			= 2,
+	C			= 1,
+	X			= 0,
+	Y			= 1,
+	Z			= 2,
+	R			= 0,
+	G			= 1,
+	B			= 2,
+	T			= 3,
 }	t_define;
 
 typedef enum s_error {

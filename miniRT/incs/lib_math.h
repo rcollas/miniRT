@@ -3,17 +3,12 @@
 
 typedef struct s_vec3
 {
-	double	x;
-	double	y;
-	double	z;
+	double	coord[3];
 }	t_vec3;
 
 typedef struct s_vec4
 {
-	double	x;
-	double	y;
-	double	z;
-	double	t;
+	double	coord[4];
 }	t_vec4;
 
 typedef struct s_matrix4

@@ -15,7 +15,7 @@ void	draw_pixel(t_image *image, int color, t_data *data)
 	*(unsigned int *)dest = color;
 }
 
-int	create_trgb_struct(int transparency, t_rgb *color)
+int	create_trgb_struct(int transparency, t_vec3 *color)
 {
 	clamp_intensity(&color->r);
 	clamp_intensity(&color->g);
