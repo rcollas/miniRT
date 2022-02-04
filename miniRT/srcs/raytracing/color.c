@@ -34,6 +34,7 @@ float	frand()
 	//	float_rand = (float)ft_rand();
 	while (float_rand > 1)
 		float_rand /= 10;
+	printf("float_rand = %f\n", float_rand);
 	return (float_rand);
 }
 
