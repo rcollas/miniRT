@@ -8,6 +8,13 @@ typedef struct s_vec3
 	double	z;
 }	t_vec3;
 
+typedef struct s_rgb
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_rgb;
+
 typedef struct s_coord
 {
 	double	x;
@@ -20,6 +27,7 @@ typedef struct s_ray
 	t_vec3	origin;
 	t_vec3	dir;
 	double	closest_hit;
+	t_rgb	*rgb;
 }	t_ray;
 
 typedef struct s_intersection
@@ -27,13 +35,6 @@ typedef struct s_intersection
 	t_vec3	intersection;
 	t_vec3	normal;
 }	t_intersection;
-
-typedef struct s_rgb
-{
-	int	r;
-	int	g;
-	int	b;
-}	t_rgb;
 
 typedef struct s_ambient_light
 {
