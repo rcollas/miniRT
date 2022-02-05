@@ -8,6 +8,7 @@ typedef struct s_ray
 	t_vec3	origin;
 	t_vec3	dir;
 	double	closest_hit;
+	t_vec3	color;
 }	t_ray;
 
 typedef struct s_hit

@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-t_vec3	get_ambient_light(t_scene *scene, t_hit hit)
+t_vec3	get_ambient_light(t_scene *scene, t_ray hit)
 {
 	t_vec3	ambient_light;
 	double	intensity;
@@ -11,13 +11,13 @@ t_vec3	get_ambient_light(t_scene *scene, t_hit hit)
 	return (ambient_light);
 }
 
-t_vec3	get_diffuse_light(t_scene *scene, t_hit hit, t_vec3	light_dir)
+t_vec3	get_diffuse_light(t_scene *scene, t_ray hit, t_vec3	light_dir)
 {
 	double	cos_theta;
 	double	intensity;
 	t_vec3	diffuse_light;
 
-	cos_theta = fmax(0, dot_vec3(light_dir, hit.normal));
+	cos_theta = fmax(0, dot_vec3(light_dir, hit.dir));
 	intensity = scene->diffuse_light->intensity * cos_theta;
 	clamp_intensity(&intensity);
 	diffuse_light = mul_vec3_and_const(hit.color, intensity);
@@ -33,7 +33,7 @@ t_vec3	get_reflected_ray(t_vec3 normal, t_vec3 light_dir)
 	return (reflected_ray);
 }
 
-t_vec3	get_specular_light(t_scene *scene, t_hit hit, t_ray ray, t_vec3	light_dir)
+t_vec3	get_specular_light(t_scene *scene, t_ray hit, t_ray ray, t_vec3	light_dir)
 {
 	t_vec3	specular_light;
 	double	intensity;
@@ -41,8 +41,8 @@ t_vec3	get_specular_light(t_scene *scene, t_hit hit, t_ray ray, t_vec3	light_dir
 	t_vec3	view_ray;
 	double	cos_theta;
 
-	view_ray = sub_vec3(ray.origin, hit.intersection);
-	reflected_ray = get_reflected_ray(hit.normal, light_dir);
+	view_ray = sub_vec3(ray.origin, hit.origin);
+	reflected_ray = get_reflected_ray(hit.dir, light_dir);
 	cos_theta = dot_vec3(reflected_ray, view_ray);
 	cos_theta /= (get_norm_vec3(reflected_ray) * get_norm_vec3(view_ray));
 	intensity = scene->diffuse_light->intensity * pow(cos_theta, 100);
@@ -51,7 +51,7 @@ t_vec3	get_specular_light(t_scene *scene, t_hit hit, t_ray ray, t_vec3	light_dir
 	return (specular_light);
 }
 
-t_vec3	sum_total_light(t_scene *scene, t_hit hit, t_ray ray, t_vec3 light_dir)
+t_vec3	sum_total_light(t_scene *scene, t_ray hit, t_ray ray, t_vec3 light_dir)
 {
 	t_vec3	total_light;
 
@@ -62,15 +62,14 @@ t_vec3	sum_total_light(t_scene *scene, t_hit hit, t_ray ray, t_vec3 light_dir)
 	return (total_light);
 }
 
-// void	get_color_pixel(t_scene *scene, t_hit hit, t_ray ray, int *color)
-// {
-// 	t_vec3	light_dir;
-// 	t_vec3	total_light;
+void	get_light(t_scene *scene, t_ray hit, t_ray ray, int *color, double pixel_shadow)
+{
+	t_vec3	light_dir;
+	t_vec3	total_light;
 	
-// 	// printf("shadow = %f\n", hit.pixel_shadow);
-// 	light_dir = sub_vec3(*scene->diffuse_light->coord, hit.intersection);
-// 	normalize_vec3(&light_dir);
-// 	total_light = sum_total_light(scene, hit, ray, light_dir);
-// 	total_light = mul_vec3_and_const(total_light, hit.pixel_shadow);
-// 	*color = create_trgb_struct(98, &total_light);
-// }
+	light_dir = sub_vec3(*scene->diffuse_light->coord, hit.origin);
+	normalize_vec3(&light_dir);
+	total_light = sum_total_light(scene, hit, ray, light_dir);
+	total_light = mul_vec3_and_const(total_light, pixel_shadow);
+	*color = create_trgb_struct(98, &total_light);
+}

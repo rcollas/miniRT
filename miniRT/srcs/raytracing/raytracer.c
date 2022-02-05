@@ -90,7 +90,7 @@ _Bool	detect_intersection(t_ray *cam_ray, t_obj *obj, long unsigned int *color, 
 
 	i = 0;
 	update_camera_ray(cam_ray, data);
-	*color = get_color_pixel(obj, data->scene, cam_ray,  color, 1, 4);
+	*color = get_color_pixel(obj, data->scene, cam_ray, 1, 4);
 	return (*color);
 }
 
