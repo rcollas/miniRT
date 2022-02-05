@@ -102,7 +102,7 @@ int get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, long unsigned int *c
 
 		light_vector = sub_vec3(*scene->diffuse_light->coord, result.origin);
 		normalized_light_vector = get_normalized_vec3(light_vector);
-		intensity = 500 * dot_vec3(normalized_light_vector, result.dir);
+		intensity = 1000 * dot_vec3(normalized_light_vector, result.dir);
 		intensity /= get_norm2_vec3(light_vector);
 		//intensity += get_color_pixel(obj, scene, random_ray, color, 1, --rebound);
 		final_color = create_trgb(98, 255 * intensity * pixel_shadow, 255 * intensity * pixel_shadow,
