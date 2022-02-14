@@ -38,15 +38,15 @@ _Bool	hit_cylinder(t_ray *ray, t_obj *obj, t_hit *hit)
 	{
 		hit->intersection = add_vec3(ray->origin, mul_vec3_and_const(ray->dir, ray->closest_hit));
 		hit->normal = get_normalized_vec3(sub_vec3(hit->intersection, *obj->origin));
+		if (dot_vec3(hit->normal, ray->dir) > 0)
+			hit->normal = mul_vec3_and_const(hit->normal, -1);
 		if (get_norm_vec3(sub_vec3(hit->intersection, *obj->origin)) > obj->height)
 		{
 			ray->closest_hit = roots[1];
 			hit->intersection = add_vec3(ray->origin, mul_vec3_and_const(ray->dir, ray->closest_hit));
 		}
 		if (get_norm_vec3(sub_vec3(hit->intersection, *obj->origin)) > obj->height)
-		{
 			return (FALSE);
-		}
 		return (TRUE);
 	}
 	return (FALSE);

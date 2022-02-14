@@ -6,6 +6,8 @@ _Bool	hit_plane(t_ray *ray, t_obj *obj, t_hit *hit)
 	t_vec3	tmp;
 
 	hit->normal = get_normalized_vec3(*obj->dir);
+	if (dot_vec3(hit->normal, ray->dir) > 0)
+		hit->normal = mul_vec3_and_const(hit->normal, -1);
 	denominator = dot_vec3(hit->normal, ray->dir);
 	// if (denominator < 1e-6)
 	// 	return (FALSE);

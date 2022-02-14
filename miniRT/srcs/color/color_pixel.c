@@ -41,12 +41,17 @@ t_vec3	get_specular_light(t_scene *scene, t_ray hit, t_ray ray, t_vec3	light_dir
 	t_vec3	view_ray;
 	double	cos_theta;
 
+	intensity = 0;
 	view_ray = sub_vec3(ray.origin, hit.origin);
 	reflected_ray = get_reflected_ray(hit.dir, light_dir);
 	cos_theta = dot_vec3(reflected_ray, view_ray);
-	cos_theta /= (get_norm_vec3(reflected_ray) * get_norm_vec3(view_ray));
-	intensity = scene->diffuse_light->intensity * pow(cos_theta, 100);
-	clamp_intensity(&intensity);
+	// printf("cos_theta = %f\n", cos_theta);
+	if (cos_theta > 0)
+	{
+		cos_theta /= (get_norm_vec3(reflected_ray) * get_norm_vec3(view_ray));
+		intensity = scene->diffuse_light->intensity * pow(cos_theta, 80);
+		clamp_intensity(&intensity);
+	}
 	specular_light = mul_vec3_and_const(hit.color, intensity);
 	return (specular_light);
 }
@@ -55,6 +60,7 @@ t_vec3	sum_total_light(t_scene *scene, t_ray hit, t_ray ray, t_vec3 light_dir)
 {
 	t_vec3	total_light;
 
+	(void)ray;
 	total_light = create_vec3(0, 0, 0);
 	total_light = add_vec3(total_light, get_ambient_light(scene, hit));
 	total_light = add_vec3(total_light, get_diffuse_light(scene, hit, light_dir));
@@ -62,7 +68,7 @@ t_vec3	sum_total_light(t_scene *scene, t_ray hit, t_ray ray, t_vec3 light_dir)
 	return (total_light);
 }
 
-void	get_light(t_scene *scene, t_ray hit, t_ray ray, int *color, double pixel_shadow)
+void	get_light(t_scene *scene, t_ray hit, t_ray ray, unsigned long *color, double pixel_shadow)
 {
 	t_vec3	light_dir;
 	t_vec3	total_light;

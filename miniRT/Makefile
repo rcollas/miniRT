@@ -24,6 +24,7 @@ PARSING = \
 RAYTRACING = \
 			raytracing/raytracer.c \
 			raytracing/path_tracing.c \
+			raytracing/prev_raytracer.c \
 			raytracing/sphere.c \
 			raytracing/plane.c \
 			raytracing/cylinder.c \
