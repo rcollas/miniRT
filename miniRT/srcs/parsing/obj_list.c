@@ -32,7 +32,7 @@ t_obj	*new_obj(int type, double diameter, double height)
 {
 	t_obj	*obj;
 
-	obj = (t_obj *)malloc(sizeof(t_obj));
+	obj = (t_obj *)ft_calloc(1, sizeof(t_obj));
 	obj->type = type;
 	obj->diameter = diameter;
 	obj->height = height;
