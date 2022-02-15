@@ -38,11 +38,17 @@ _Bool	is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light)
 
 _Bool	detect_intersection(t_ray *cam_ray, t_obj *obj, unsigned long *color, t_data *data)
 {
-	int i;
+	int	i;
+	int	nb_of_rays;
 
-	i = 0;
+	*color = 0;
+	nb_of_rays = 4;
+	i = nb_of_rays;
 	update_camera_ray(cam_ray, data);
 	*color = get_color_pixel(obj, data->scene, cam_ray, 1, 4);
+	// while (i--)
+	// 	*color += get_color_pixel(obj, data->scene, cam_ray, 1, 4);
+	// *color /= nb_of_rays;
 	return (*color);
 }
 

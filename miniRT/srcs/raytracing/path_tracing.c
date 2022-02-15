@@ -42,27 +42,17 @@ t_ray	*get_random_ray(t_ray result)
 	random_dir_local.coord[X] = cos(2 * M_PI * r1) * sqrt(1 - r2);
 	random_dir_local.coord[Y] = sin(2 * M_PI * r1) * sqrt(1 - r2);
 	random_dir_local.coord[Z] = sqrt(r2);
-
 	random.coord[X] = frand();
 	random.coord[Y] = frand();
 	random.coord[Z] = frand();
-
 	tangent1 = cross_vec3(result.dir, random);
 	normalize_vec3(&tangent1);
 	tangent2 = cross_vec3(tangent1, result.dir);
-
-	//random_dir = mul_vec3_and_const(normal, random_dir_local.z);
-	//random_dir = add_vec3(random_dir, mul_vec3_and_const(tangent1, random_dir_local.x));
-	//random_dir = add_vec3(random_dir, mul_vec3_and_const(tangent2, random_dir_local.y));
-
 	random_dir = add_vec3(mul_vec3_and_const(result.dir, random_dir_local.coord[Z]),
 						  add_vec3(mul_vec3_and_const(tangent1, random_dir_local.coord[X]),
 								   mul_vec3_and_const(tangent2, random_dir_local.coord[Y])));
-
-	//random_ray.origin = add_vec3(intersection, mul_vec3_and_const(normal, 0.001));
 	random_ray->origin = add_vec3(result.origin, mul_vec3_and_const(result.dir, 0.001));
 	random_ray->dir = random_dir;
-	//printf("random_ray.dir x = %f\n", random_ray.dir.x);
 	return (random_ray);
 }
 
