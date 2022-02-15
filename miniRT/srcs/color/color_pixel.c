@@ -76,5 +76,6 @@ void	get_light(t_scene *scene, t_ray hit, t_ray ray, unsigned long *color, doubl
 	normalize_vec3(&light_dir);
 	total_light = sum_total_light(scene, hit, ray, light_dir);
 	total_light = mul_vec3_and_const(total_light, pixel_shadow);
-	*color = create_trgb_struct(98, &total_light);
+	// printf("r = %d | g = %d | b = %d\n", (int)(total_light.coord[R] * 255), (int)(total_light.coord[G] * 255), (int)(total_light.coord[B] * 255));
+	*color = create_trgb_struct(&total_light);
 }

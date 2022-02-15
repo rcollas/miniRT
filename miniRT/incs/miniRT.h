@@ -74,11 +74,11 @@ void		init_camera_ray(t_ray *cam_ray, t_data *data);
 /************************************************** COLOR **********************************************************/
 
 // void			get_color_pixel(t_scene *scene, t_hit hit, t_ray ray, int *color);
-unsigned long	get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, double pixel_shadow, int rebound);
+unsigned long	get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, int rebound);
 void			get_light(t_scene *scene, t_ray hit, t_ray ray, unsigned long *color, double pixel_shadow);
 void			draw_pixel(t_image *image, unsigned long color, t_data *data);
-unsigned long	create_trgb_struct(int transparency, t_vec3 *color);
-unsigned long	create_trgb(int transparency, int red, int green, int blue);
+unsigned long	create_trgb_struct(t_vec3 *color);
+unsigned long	create_trgb(int red, int green, int blue);
 void			check_limit_color(t_vec3 *color);
 void			clamp_intensity(double *intensity);
 void			clamp_color(int *color);

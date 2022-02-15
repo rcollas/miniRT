@@ -2,26 +2,20 @@
 
 _Bool	trace_shadow_ray(t_ray *shadow_ray, t_obj *obj, t_diffuse_light *light)
 {
-	_Bool	hit_obj;
 	t_hit	hit;
 	double	light_dist;
 	double	dist_min;
 
-	hit_obj = FALSE;
 	hit.dist = 1E99;
 	dist_min = 1E99;
 	light_dist = get_norm_vec3(sub_vec3(*light->coord, shadow_ray->origin));
 	while (obj)
 	{
 		if (obj->hit_object(shadow_ray, obj, &hit) && hit.dist < light_dist)
-		{
-			hit_obj = TRUE;
-			if (dist_min > shadow_ray->closest_hit)
-				dist_min = shadow_ray->closest_hit;
-		}
+			return (TRUE);
 		obj = obj->next;
 	}
-	return (hit_obj);
+	return (FALSE);
 }
 
 _Bool	is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light)
@@ -42,13 +36,13 @@ void	detect_intersection(t_ray *cam_ray, t_obj *obj, unsigned long *color, t_dat
 	unsigned long	nb_of_rays;
 
 	*color = 0;
-	nb_of_rays = 1;
+	nb_of_rays = 3;
 	i = nb_of_rays;
 	update_camera_ray(cam_ray, data);
 	// *color = get_color_pixel(obj, data->scene, cam_ray, 1, 4);
 	while (i--)
-		*color += get_color_pixel(obj, data->scene, cam_ray, 1, 4);
-	*color /= nb_of_rays;
+		*color += (get_color_pixel(obj, data->scene, cam_ray, 4) / nb_of_rays);
+	// *color /= nb_of_rays;
 	// printf("color = %lu\n", *color);
 }
 
@@ -66,9 +60,9 @@ void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
 		data->pixel_x = -1;
 		while (++data->pixel_x < WIDTH)
 		{
-			detect_intersection(&cam_ray, data->obj, &pixel_color, data);
-			// if (!prev_detect_intersection(cam_ray, data->obj, &pixel_color, data))
-			// 	pixel_color = create_trgb(10, 0, 0, 0);
+			// detect_intersection(&cam_ray, data->obj, &pixel_color, data);
+			if (!prev_detect_intersection(cam_ray, data->obj, &pixel_color, data))
+				pixel_color = create_trgb(0, 0, 0);
 			draw_pixel(mlx->image, pixel_color, data);
 		}
 	}

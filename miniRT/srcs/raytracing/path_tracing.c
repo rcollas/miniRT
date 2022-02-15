@@ -83,7 +83,8 @@ _Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *result)
 	return (hit_obj);
 }
 
-void	prev_get_light(t_obj *obj, t_scene *scene, t_ray result, unsigned long *final_color, double pixel_shadow)
+void	prev_get_light(
+	t_obj *obj, t_scene *scene, t_ray result, unsigned long *final_color, double pixel_shadow)
 {
 	t_vec3	light_vector;
 	t_vec3	normalized_light_vector;
@@ -95,19 +96,22 @@ void	prev_get_light(t_obj *obj, t_scene *scene, t_ray result, unsigned long *fin
 	intensity = 1000 * dot_vec3(normalized_light_vector, result.dir);
 	intensity /= get_norm2_vec3(light_vector);
 	clamp_intensity(&intensity);
+	(void)obj;
 	color.coord[R] = obj->color->coord[R] * intensity * pixel_shadow;
 	color.coord[G] = obj->color->coord[G] * intensity * pixel_shadow;
 	color.coord[B] = obj->color->coord[B] * intensity * pixel_shadow;
-	*final_color = create_trgb_struct(98, &color);
+	*final_color = create_trgb_struct(&color);
+	// *final_color = create_trgb(255 * intensity * pixel_shadow, 255 * intensity * pixel_shadow,
+	// 	255 * intensity * pixel_shadow);
 }
 
-unsigned long	get_color_pixel(
-	t_obj *obj, t_scene *scene, t_ray *ray, double pixel_shadow, int rebound)
+unsigned long	get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, int rebound)
 {
 	t_ray			result;
 	unsigned long	final_color;
 	t_ray			*random_ray;
 	_Bool			hit_obj;
+	double			pixel_shadow;
 
 	pixel_shadow = 1;
 	final_color = 0;
@@ -121,10 +125,10 @@ unsigned long	get_color_pixel(
 		random_ray = get_random_ray(result);
 		// prev_get_light(obj, scene, result, &final_color, pixel_shadow);
 		get_light(scene, result, *ray, &final_color, pixel_shadow);
-		final_color += get_color_pixel(obj, scene, random_ray, 1, --rebound);
+		final_color += get_color_pixel(obj, scene, random_ray, --rebound);
 	}
 	else
-		final_color = create_trgb(98, 0, 0, 0);
+		final_color = create_trgb(0, 0, 0);
 	return (final_color);
 }
 
