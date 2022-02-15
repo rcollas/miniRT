@@ -15,7 +15,7 @@ void	draw_pixel(t_image *image, unsigned long color, t_data *data)
 	*(unsigned int *)dest = color;
 }
 
-int	create_trgb_struct(int transparency, t_vec3 *color)
+unsigned long	create_trgb_struct(int transparency, t_vec3 *color)
 {
 	clamp_intensity(&color->coord[R]);
 	clamp_intensity(&color->coord[G]);
@@ -26,7 +26,7 @@ int	create_trgb_struct(int transparency, t_vec3 *color)
 	return (transparency << 24 | (int)color->coord[R] << 16 | (int)color->coord[G] << 8 | (int)color->coord[B]);
 }
 
-int	create_trgb(int transparency, int red, int green, int blue)
+unsigned long	create_trgb(int transparency, int red, int green, int blue)
 {
 	clamp_color(&red);
 	clamp_color(&green);

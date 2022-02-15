@@ -45,7 +45,6 @@ t_vec3	get_specular_light(t_scene *scene, t_ray hit, t_ray ray, t_vec3	light_dir
 	view_ray = sub_vec3(ray.origin, hit.origin);
 	reflected_ray = get_reflected_ray(hit.dir, light_dir);
 	cos_theta = dot_vec3(reflected_ray, view_ray);
-	// printf("cos_theta = %f\n", cos_theta);
 	if (cos_theta > 0)
 	{
 		cos_theta /= (get_norm_vec3(reflected_ray) * get_norm_vec3(view_ray));

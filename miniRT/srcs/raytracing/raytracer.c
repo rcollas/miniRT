@@ -36,14 +36,20 @@ _Bool	is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light)
 	return (FALSE);
 }
 
-_Bool	detect_intersection(t_ray *cam_ray, t_obj *obj, unsigned long *color, t_data *data)
+void	detect_intersection(t_ray *cam_ray, t_obj *obj, unsigned long *color, t_data *data)
 {
-	int i;
+	int				i;
+	unsigned long	nb_of_rays;
 
-	i = 0;
+	*color = 0;
+	nb_of_rays = 1;
+	i = nb_of_rays;
 	update_camera_ray(cam_ray, data);
-	*color = get_color_pixel(obj, data->scene, cam_ray, 1, 4);
-	return (*color);
+	// *color = get_color_pixel(obj, data->scene, cam_ray, 1, 4);
+	while (i--)
+		*color += get_color_pixel(obj, data->scene, cam_ray, 1, 4);
+	*color /= nb_of_rays;
+	// printf("color = %lu\n", *color);
 }
 
 void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
@@ -60,9 +66,9 @@ void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
 		data->pixel_x = -1;
 		while (++data->pixel_x < WIDTH)
 		{
-			if (!detect_intersection(&cam_ray, data->obj, &pixel_color, data))
+			detect_intersection(&cam_ray, data->obj, &pixel_color, data);
 			// if (!prev_detect_intersection(cam_ray, data->obj, &pixel_color, data))
-				pixel_color = create_trgb(10, 0, 0, 0);
+			// 	pixel_color = create_trgb(10, 0, 0, 0);
 			draw_pixel(mlx->image, pixel_color, data);
 		}
 	}
