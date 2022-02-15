@@ -24,7 +24,6 @@ PARSING = \
 RAYTRACING = \
 			raytracing/raytracer.c \
 			raytracing/path_tracing.c \
-			raytracing/prev_raytracer.c \
 			raytracing/sphere.c \
 			raytracing/plane.c \
 			raytracing/cylinder.c \
@@ -68,7 +67,7 @@ LIBFT_LIB	=	libft/libft.a
 
 LIBFT_MAKE	=	$(MAKE) --no-print-directory -C $(LIBFT_PATH)
 
-INCLUDE		= ./incs
+INCLUDE_DIR	= ./incs
 
 INC_FILES	= miniRT.h \
 			  libft.h \
@@ -79,7 +78,7 @@ INC_FILES	= miniRT.h \
 
 OBJS		= $(addprefix $(OBJS_DIR)/, $(SRC_FILES:.c=.o))
 
-INCS		= $(addprefix $(INCLUDE)/, $(INC_FILES))
+INCLUDE		= $(addprefix $(INCLUDE_DIR)/, $(INC_FILES))
 
 CC			= clang
 
@@ -100,9 +99,9 @@ ORANGE		= \033[1;38;5;208m
 UP			= \033[A
 CUT			= \033[K
 
-$(OBJS_DIR)/%.o: $(SRC_DIR)/%.c $(INCS) $(LIBFT_PATH)/*.c
+$(OBJS_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDE) $(LIBFT_PATH)/*.c
 			@mkdir -p $(@D)
-			@$(CC) $(CFLAGS) -I$(INCLUDE) -I$(MLX_INC) -c $< -o $@
+			@$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -I$(MLX_INC) -c $< -o $@
 			@echo "$(CUT)$(BLUE)clang $(RESET)$(notdir $@)"
 			@printf "$(UP)"
 

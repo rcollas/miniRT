@@ -17,6 +17,7 @@ _Bool	detect_intersection_with_sphere(t_ray *ray, double *coeff, t_hit *hit)
 	else
 		ray->closest_hit = solution[1];
 	hit->intersection = add_vec3(ray->origin, mul_vec3_and_const(ray->dir, ray->closest_hit));
+	hit->dist = ray->closest_hit;
 	return (TRUE);
 }
 

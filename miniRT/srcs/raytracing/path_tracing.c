@@ -51,12 +51,14 @@ t_ray	*get_random_ray(t_ray result)
 	random_dir = add_vec3(mul_vec3_and_const(result.dir, random_dir_local.coord[Z]),
 						  add_vec3(mul_vec3_and_const(tangent1, random_dir_local.coord[X]),
 								   mul_vec3_and_const(tangent2, random_dir_local.coord[Y])));
-	random_ray->origin = add_vec3(result.origin, mul_vec3_and_const(result.dir, 0.001));
 	random_ray->dir = random_dir;
+	random_ray->origin = add_vec3(result.origin, mul_vec3_and_const(result.dir, 0.1));
+	normalize_vec3(&random_ray->origin);
+	//random_ray->origin = add_vec3(result.origin, result.dir);
 	return (random_ray);
 }
 
-_Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *result)
+_Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *result, t_obj **hit_obj_ref)
 {
 	t_hit	hit;
 	_Bool	hit_obj;
@@ -76,6 +78,7 @@ _Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *result)
 				result->origin = hit.intersection;
 				result->dir = hit.normal;
 				result->color = *obj->color;
+				*hit_obj_ref = obj;
 			}
 		}
 		obj = obj->next;
@@ -89,6 +92,7 @@ void	prev_get_light(t_obj *obj, t_scene *scene, t_ray result, unsigned long *fin
 	t_vec3	normalized_light_vector;
 	double	intensity;
 	t_vec3	color;
+	(void)obj;
 
 	light_vector = sub_vec3(*scene->diffuse_light->coord, result.origin);
 	normalized_light_vector = get_normalized_vec3(light_vector);
@@ -101,30 +105,33 @@ void	prev_get_light(t_obj *obj, t_scene *scene, t_ray result, unsigned long *fin
 	*final_color = create_trgb_struct(98, &color);
 }
 
-unsigned long	get_color_pixel(
+t_vec3	*get_color_pixel(
 	t_obj *obj, t_scene *scene, t_ray *ray, double pixel_shadow, int rebound)
 {
 	t_ray			result;
-	unsigned long	final_color;
+	t_vec3			*final_color;
 	t_ray			*random_ray;
 	_Bool			hit_obj;
+	t_obj			*hit_obj_ref;
 
+	hit_obj_ref = NULL;
 	pixel_shadow = 1;
-	final_color = 0;
-	hit_obj = check_all_objects(obj, ray, &result);
-	if (hit_obj && is_in_shadow(obj, result, scene->diffuse_light))
+	final_color = ft_calloc(1, sizeof(t_vec3));
+	final_color->coord[R] = 0;
+	final_color->coord[G] = 0;
+	final_color->coord[B] = 0;
+	hit_obj = check_all_objects(obj, ray, &result, &hit_obj_ref);
+	if (hit_obj && is_in_shadow(obj, result, scene->diffuse_light, hit_obj_ref))
 		pixel_shadow = 0.3;
 	if (!rebound)
-		return (0);
+		return ((t_vec3 *)NULL);
 	if (hit_obj)
 	{
 		random_ray = get_random_ray(result);
 		// prev_get_light(obj, scene, result, &final_color, pixel_shadow);
-		get_light(scene, result, *ray, &final_color, pixel_shadow);
-		final_color += get_color_pixel(obj, scene, random_ray, 1, --rebound);
+		final_color = get_light(scene, result, *ray, NULL, pixel_shadow);
+		*final_color = add_vec3(*final_color, *get_color_pixel(obj, scene, random_ray, 1, --rebound));
 	}
-	else
-		final_color = create_trgb(98, 0, 0, 0);
 	return (final_color);
 }
 
