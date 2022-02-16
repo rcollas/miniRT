@@ -36,6 +36,8 @@ typedef struct s_camera
 	t_vec3		forward;
 	t_vec3		up;
 	t_vec3		right;
+	double		yaw_angle;
+	double		pitch_angle;
 }	t_camera;
 
 typedef struct s_diffuse_light

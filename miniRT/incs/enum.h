@@ -2,21 +2,23 @@
 # define ENUM_H
 
 typedef enum s_define {
-	TRUE		= 1,
-	FALSE		= 0,
-	SUCCESS		= 0,
-	FAIL		= 1,
-	EQUAL		= 1,
-	DIFFERENT	= 0,
-	A			= 0,
-	C			= 1,
-	X			= 0,
-	Y			= 1,
-	Z			= 2,
-	R			= 0,
-	G			= 1,
-	B			= 2,
-	T			= 3,
+	TRUE			= 1,
+	FALSE			= 0,
+	SUCCESS			= 0,
+	FAIL			= 1,
+	EQUAL			= 1,
+	DIFFERENT		= 0,
+	A				= 0,
+	C				= 1,
+	X				= 0,
+	Y				= 1,
+	Z				= 2,
+	R				= 0,
+	G				= 1,
+	B				= 2,
+	T				= 3,
+	NO_PATH_TRACING	= 0,
+	PATH_TRACING	= 1,
 }	t_define;
 
 typedef enum s_error {
@@ -54,8 +56,10 @@ typedef enum s_key
 	KEY_J		= 106,
 	KEY_K		= 107,
 	KEY_L		= 108,
-	KEY_N		= 110,
-	KEY_M		= 109,
+	KEY_P		= 112,
+	KEY_SPACE	= 32,
+	KEY_MAJ		= 65505,
+	KEY_ENTER	= 65293,
 }	t_key;
 #  define IS_LINUX 1
 # else
@@ -71,11 +75,10 @@ typedef enum s_key
 	KEY_J		= 38,
 	KEY_K		= 40,
 	KEY_L		= 37,
-	KEY_N		= 45,
-	KEY_M		= 46,
-	KEY_ENTER	= 36,
+	KEY_P		= 35,
 	KEY_MAJ		= 257,
 	KEY_TAB		= 48,
+	KEY_SPACE	= 49,
 }	t_key;
 #  define IS_LINUX 0
 # endif

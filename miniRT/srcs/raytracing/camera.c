@@ -5,11 +5,54 @@ _Bool	cam_is_vertical_looking(t_vec3 z_axis)
 	return (z_axis.coord[X] == 0 && (z_axis.coord[Y] == -1 || z_axis.coord[Y] == 1) && z_axis.coord[Z] == 0);
 }
 
+double	convert_deg_to_rad(double angle)
+{
+	return (angle * M_PI / 180);
+}
+
+
+double	convert_rad_to_deg(double angle)
+{
+	return (angle * 180 / M_PI);
+}
+
+void	check_limit_angle(double *angle)
+{
+	if (*angle > 89.0f)
+		*angle = 89.0f;
+	if (*angle < -89.0f)
+		*angle = -89.0f;
+}
+
+void	init_euler_angles(t_camera *camera)
+{
+	camera->pitch_angle = asin(camera->dir->coord[Y]);
+	camera->yaw_angle = acos(camera->dir->coord[X] / cos(camera->pitch_angle));
+	camera->pitch_angle = convert_rad_to_deg(camera->pitch_angle);
+	camera->yaw_angle = convert_rad_to_deg(camera->yaw_angle);
+	check_limit_angle(&camera->yaw_angle);
+	check_limit_angle(&camera->pitch_angle);
+}
+
+void	compute_cam_dir(t_camera *camera)
+{
+	double	yaw;
+	double	pitch;
+
+	yaw = convert_deg_to_rad(camera->yaw_angle);
+	pitch = convert_deg_to_rad(camera->pitch_angle);
+	camera->dir->coord[X] = cos(yaw) * cos(pitch);
+	camera->dir->coord[Y] = sin(pitch);
+	camera->dir->coord[Z]= sin(yaw) * cos(pitch);
+	// printf("x = %f | y = %f | z = %f\n", camera->dir->coord[X], camera->dir->coord[Y], camera->dir->coord[Z]);
+}
+
 void	compute_the_axis(t_camera *camera)
 {
 	t_vec3	tmp;
 
-	camera->forward = get_normalized_vec3(inverse_vec3(*camera->dir));
+	// camera->forward = get_normalized_vec3(inverse_vec3(*camera->dir));
+	camera->forward = get_normalized_vec3(*camera->dir);
 	if (cam_is_vertical_looking(camera->forward)) // Special case to handle : when z_axis ( = cam->dir ) == (0, -1, 0) ou (0, 1, 0)
 		tmp = create_vec3(1, 0, 0);
 	else
@@ -30,6 +73,7 @@ t_matrix4	built_cam_to_word_matrix(t_camera *camera)
 {
 	t_matrix4	matrix;
 
+	compute_cam_dir(camera);
 	compute_the_axis(camera);
 	matrix.row_1 = create_vec4(camera->right.coord[X], camera->right.coord[Y], camera->right.coord[Z], 0);
 	matrix.row_2 = create_vec4(camera->up.coord[X], camera->up.coord[Y], camera->up.coord[Z], 0);

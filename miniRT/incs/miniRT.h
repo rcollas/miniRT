@@ -58,7 +58,8 @@ void		ft_free(void *to_free);
 
 /*********************************************** RAYTRACING ********************************************************/
 
-void		run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data);
+void		run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data, _Bool path_tracing);
+_Bool		prev_detect_intersection(t_ray ray, t_obj *obj, long unsigned int *color, t_data *data);
 _Bool		hit_sphere(t_ray *ray, t_obj *obj, t_hit *hit);
 _Bool		hit_plane(t_ray *ray, t_obj *obj, t_hit *hit);
 _Bool		hit_cylinder(t_ray *ray, t_obj *obj, t_hit *hit);
@@ -70,10 +71,10 @@ _Bool		is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light, t_obj *hit_ob
 t_matrix4	built_cam_to_word_matrix(t_camera *camera);
 void		update_camera_ray(t_ray *cam_ray, t_data *data);
 void		init_camera_ray(t_ray *cam_ray, t_data *data);
+void		init_euler_angles(t_camera *camera);
 
 /************************************************** COLOR **********************************************************/
 
-// void			get_color_pixel(t_scene *scene, t_hit hit, t_ray ray, int *color);
 unsigned long	get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, int rebound);
 void			get_light(t_scene *scene, t_ray hit, t_ray ray, unsigned long *color, double pixel_shadow);
 void			draw_pixel(t_image *image, unsigned long color, t_data *data);
@@ -82,7 +83,5 @@ unsigned long	create_trgb(int red, int green, int blue);
 void			check_limit_color(t_vec3 *color);
 void			clamp_intensity(double *intensity);
 void			clamp_color(int *color);
-
-_Bool			prev_detect_intersection(t_ray ray, t_obj *obj, long unsigned int *color, t_data *data);
 
 #endif

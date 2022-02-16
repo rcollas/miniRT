@@ -39,14 +39,11 @@ void	detect_intersection(t_ray *cam_ray, t_obj *obj, unsigned long *color, t_dat
 	nb_of_rays = 3;
 	i = nb_of_rays;
 	update_camera_ray(cam_ray, data);
-	// *color = get_color_pixel(obj, data->scene, cam_ray, 1, 4);
 	while (i--)
 		*color += (get_color_pixel(obj, data->scene, cam_ray, 4) / nb_of_rays);
-	// *color /= nb_of_rays;
-	// printf("color = %lu\n", *color);
 }
 
-void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
+void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data, _Bool path_tracing)
 {
 	unsigned long	pixel_color;
 	t_ray			cam_ray;
@@ -60,8 +57,9 @@ void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data)
 		data->pixel_x = -1;
 		while (++data->pixel_x < WIDTH)
 		{
-			// detect_intersection(&cam_ray, data->obj, &pixel_color, data);
-			if (!prev_detect_intersection(cam_ray, data->obj, &pixel_color, data))
+			if (path_tracing)
+			detect_intersection(&cam_ray, data->obj, &pixel_color, data);
+			else if (!prev_detect_intersection(cam_ray, data->obj, &pixel_color, data))
 				pixel_color = create_trgb(0, 0, 0);
 			draw_pixel(mlx->image, pixel_color, data);
 		}
