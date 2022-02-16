@@ -33,6 +33,9 @@ typedef struct s_camera
 	t_vec3		origin[1];
 	t_vec3		dir[1];
 	double		fov;
+	t_vec3		forward;
+	t_vec3		up;
+	t_vec3		right;
 }	t_camera;
 
 typedef struct s_diffuse_light

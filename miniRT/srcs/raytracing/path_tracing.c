@@ -56,7 +56,7 @@ t_ray	*get_random_ray(t_ray result)
 	return (random_ray);
 }
 
-_Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *result)
+_Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *result, t_obj **hit_obj_ref)
 {
 	t_hit	hit;
 	_Bool	hit_obj;
@@ -76,6 +76,7 @@ _Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *result)
 				result->origin = hit.intersection;
 				result->dir = hit.normal;
 				result->color = *obj->color;
+				*hit_obj_ref = obj;
 			}
 		}
 		obj = obj->next;
@@ -112,11 +113,13 @@ unsigned long	get_color_pixel(t_obj *obj, t_scene *scene, t_ray *ray, int reboun
 	t_ray			*random_ray;
 	_Bool			hit_obj;
 	double			pixel_shadow;
+	t_obj			*hit_obj_ref;
 
+	hit_obj_ref = NULL;
 	pixel_shadow = 1;
 	final_color = 0;
-	hit_obj = check_all_objects(obj, ray, &result);
-	if (hit_obj && is_in_shadow(obj, result, scene->diffuse_light))
+	hit_obj = check_all_objects(obj, ray, &result, &hit_obj_ref);
+	if (hit_obj && is_in_shadow(obj, result, scene->diffuse_light, hit_obj_ref))
 		pixel_shadow = 0.3;
 	if (!rebound)
 		return (0);

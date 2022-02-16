@@ -5,17 +5,17 @@ _Bool	cam_is_vertical_looking(t_vec3 z_axis)
 	return (z_axis.coord[X] == 0 && (z_axis.coord[Y] == -1 || z_axis.coord[Y] == 1) && z_axis.coord[Z] == 0);
 }
 
-void	compute_the_axis(t_camera camera, t_vec3 *x_axis, t_vec3 *y_axis, t_vec3 *z_axis)
+void	compute_the_axis(t_camera *camera)
 {
 	t_vec3	tmp;
 
-	*z_axis = get_normalized_vec3(inverse_vec3(*camera.dir));
-	if (cam_is_vertical_looking(*z_axis)) // Special case to handle : when z_axis ( = cam->dir ) == (0, -1, 0) ou (0, 1, 0)
+	camera->forward = get_normalized_vec3(inverse_vec3(*camera->dir));
+	if (cam_is_vertical_looking(camera->forward)) // Special case to handle : when z_axis ( = cam->dir ) == (0, -1, 0) ou (0, 1, 0)
 		tmp = create_vec3(1, 0, 0);
 	else
 		tmp = create_vec3(0, 1, 0);
-	*x_axis = cross_vec3(get_normalized_vec3(tmp), *z_axis);
-	*y_axis = cross_vec3(*z_axis, *x_axis);
+	camera->right = cross_vec3(get_normalized_vec3(tmp), camera->forward);
+	camera->up = cross_vec3(camera->forward, camera->right);
 }
 
 void	print_matrix(t_matrix4 matrix)
@@ -28,15 +28,12 @@ void	print_matrix(t_matrix4 matrix)
 
 t_matrix4	built_cam_to_word_matrix(t_camera *camera)
 {
-	t_vec3		x_axis;
-	t_vec3		y_axis;
-	t_vec3		z_axis;
 	t_matrix4	matrix;
 
-	compute_the_axis(*camera, &x_axis, &y_axis, &z_axis);
-	matrix.row_1 = create_vec4(x_axis.coord[X], x_axis.coord[Y], x_axis.coord[Z], 0);
-	matrix.row_2 = create_vec4(y_axis.coord[X], y_axis.coord[Y], y_axis.coord[Z], 0);
-	matrix.row_3 = create_vec4(z_axis.coord[X], z_axis.coord[Y], z_axis.coord[Z], 0);
+	compute_the_axis(camera);
+	matrix.row_1 = create_vec4(camera->right.coord[X], camera->right.coord[Y], camera->right.coord[Z], 0);
+	matrix.row_2 = create_vec4(camera->up.coord[X], camera->up.coord[Y], camera->up.coord[Z], 0);
+	matrix.row_3 = create_vec4(camera->forward.coord[X], camera->forward.coord[Y], camera->forward.coord[Z], 0);
 	matrix.row_4 = create_vec4(camera->origin->coord[X], camera->origin->coord[Y], camera->origin->coord[Z], 1);
 	return (matrix);
 }

@@ -50,6 +50,12 @@ typedef enum s_key
 	KEY_RIGHT	= 65363,
 	KEY_DOWN	= 65364,
 	KEY_UP		= 65362,
+	KEY_H		= 104,
+	KEY_J		= 106,
+	KEY_K		= 107,
+	KEY_L		= 108,
+	KEY_N		= 110,
+	KEY_M		= 109,
 }	t_key;
 #  define IS_LINUX 1
 # else
@@ -61,6 +67,15 @@ typedef enum s_key
 	KEY_RIGHT	= 124,
 	KEY_DOWN	= 125,
 	KEY_UP		= 126,
+	KEY_H		= 4,
+	KEY_J		= 38,
+	KEY_K		= 40,
+	KEY_L		= 37,
+	KEY_N		= 45,
+	KEY_M		= 46,
+	KEY_ENTER	= 36,
+	KEY_MAJ		= 257,
+	KEY_TAB		= 48,
 }	t_key;
 #  define IS_LINUX 0
 # endif

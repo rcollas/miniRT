@@ -63,7 +63,7 @@ _Bool		hit_sphere(t_ray *ray, t_obj *obj, t_hit *hit);
 _Bool		hit_plane(t_ray *ray, t_obj *obj, t_hit *hit);
 _Bool		hit_cylinder(t_ray *ray, t_obj *obj, t_hit *hit);
 _Bool		hit_disk(t_ray *ray, t_obj *obj, t_hit *hit);
-_Bool		is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light);
+_Bool		is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light, t_obj *hit_obj);
 
 /************************************************* CAMERA **********************************************************/
 
