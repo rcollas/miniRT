@@ -4,10 +4,10 @@ t_vec4	create_vec4(double x, double y, double z, double t)
 {
 	t_vec4	new_vector;
 
-	new_vector.x = x;
-	new_vector.y = y;
-	new_vector.z = z;
-	new_vector.t = t;
+	new_vector.coord[X] = x;
+	new_vector.coord[Y] = y;
+	new_vector.coord[Z] = z;
+	new_vector.coord[T] = t;
 	return (new_vector);
 }
 
@@ -15,9 +15,9 @@ t_vec4	convert_vec3_to_vec4(t_vec3 vector)
 {
 	t_vec4	new_vector;
 
-	new_vector.x = vector.x;
-	new_vector.y = vector.y;
-	new_vector.z = vector.z;
-	new_vector.t = 1;
+	new_vector.coord[X] = vector.coord[X];
+	new_vector.coord[Y] = vector.coord[Y];
+	new_vector.coord[Z] = vector.coord[Z];
+	new_vector.coord[T] = 1;
 	return (new_vector);
 }

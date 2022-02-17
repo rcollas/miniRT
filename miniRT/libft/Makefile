@@ -65,20 +65,24 @@ GREEN		= \033[1;32m
 YELLOW		= \033[1;33m
 BLUE		= \033[1;34m
 WHITE		= \033[1;37m
+UP			= \033[A
+CUT			= \033[K
 
 all:		$(NAME)
 
 %.o : %.c $(INCS)
 	@${CC} -c ${CFLAGS} $< -o $@
+	@echo "$(CUT)$(BLUE)clang $(RESET)$(notdir $@)"
+	@printf "$(UP)"
 
 $(NAME):	$(OBJS)
 				@ar rc $(NAME) $^
-				@echo "$(YELLOW)$(NAME) created$(RESET)"
+				@echo "$(CUT)$(YELLOW)✔ $(NAME) created$(RESET)"
 				@ranlib $(NAME)
 
 bonus:		$(OBJS) $(OBJS_BONUS)
 				@ar rc $(NAME) $^ 
-				@echo "$(YELLOW)$(NAME) bonus created$(RESET)"
+				@echo "$(CUT)$(YELLOW)✔ $(NAME) bonus created$(RESET)"
 				@ranlib $(NAME)
 
 clean:

@@ -1,4 +1,4 @@
-#include "../../incs/miniRT.h"
+#include "miniRT.h"
 
 void	fill_sphere(t_parsing *var, char *line)
 {
@@ -21,10 +21,11 @@ void	fill_sphere(t_parsing *var, char *line)
 		error(SPHERE_FORMAT_ERROR, line);
 		ft_exit_parsing(SPHERE_FORMAT_ERROR, var);
 	}
+	obj->hit_object = &hit_sphere;
 	obj_add_back(&var->objs, obj);
 }
 
-void	fill_plan(t_parsing *var, char *line)
+void	fill_plane(t_parsing *var, char *line)
 {
 	int		i;
 	t_obj	*obj;
@@ -34,18 +35,19 @@ void	fill_plan(t_parsing *var, char *line)
 		i++;
 	if (i != 4)
 	{
-		error(PLAN_FORMAT_ERROR, line);
-		ft_exit_parsing(PLAN_FORMAT_ERROR, var);
+		error(PLANE_FORMAT_ERROR, line);
+		ft_exit_parsing(PLANE_FORMAT_ERROR, var);
 	}
-	obj = new_obj(PLAN, -1, -1);
+	obj = new_obj(PLANE, -1, -1);
 	fill_vertex(var->obj_info[2], obj->dir);
 	fill_rgb(var->obj_info[3], obj->color);
 	fill_coordinates(var->obj_info[1], obj->origin);
-	if (check(obj, PLAN) == FAIL)
+	if (check(obj, PLANE) == FAIL)
 	{
-		error(PLAN_FORMAT_ERROR, line);
-		ft_exit_parsing(PLAN_FORMAT_ERROR, var);
+		error(PLANE_FORMAT_ERROR, line);
+		ft_exit_parsing(PLANE_FORMAT_ERROR, var);
 	}
+	obj->hit_object = &hit_plane;
 	obj_add_back(&var->objs, obj);
 }
 
@@ -72,6 +74,33 @@ void	fill_cylinder(t_parsing *var, char *line)
 		error(CYLINDER_FORMAT_ERROR, line);
 		ft_exit_parsing(CYLINDER_FORMAT_ERROR, var);
 	}
+	obj->hit_object = &hit_cylinder;
+	obj_add_back(&var->objs, obj);
+}
+
+void	fill_disk(t_parsing *var, char *line)
+{
+	int		i;
+	t_obj	*obj;
+
+	i = 0;
+	while (var->obj_info[i])
+		i++;
+	if (i != 5)
+	{
+		error(DISK_FORMAT_ERROR, line);
+		ft_exit_parsing(DISK_FORMAT_ERROR, var);
+	}
+	obj = new_obj(DISK, ft_atof(var->obj_info[3]), -1);
+	fill_coordinates(var->obj_info[1], obj->origin);
+	fill_vertex(var->obj_info[2], obj->dir);
+	fill_rgb(var->obj_info[4], obj->color);
+	if (check(obj,DISK) == FAIL)
+	{
+		error(DISK_FORMAT_ERROR, line);
+		ft_exit_parsing(DISK_FORMAT_ERROR, var);
+	}
+	obj->hit_object = &hit_disk;
 	obj_add_back(&var->objs, obj);
 }
 
@@ -79,8 +108,10 @@ void	fill_obj(int type, t_parsing *var, char *line)
 {
 	if (type == SPHERE)
 		fill_sphere(var, line);
-	if (type == PLAN)
-		fill_plan(var, line);
+	if (type == PLANE)
+		fill_plane(var, line);
 	if (type == CYLINDER)
 		fill_cylinder(var, line);
+	if (type == DISK)
+		fill_disk(var, line);
 }
