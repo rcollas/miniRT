@@ -20,7 +20,7 @@ void	init_image(t_mlx *mlx, t_data *data)
 {
 	t_image	*image;
 
-	image = (t_image *)malloc(sizeof(t_image));
+	image = (t_image *)ft_calloc(1, sizeof(t_image));
 	image->img_ptr = mlx_new_image(mlx->ptr, WIDTH, HEIGHT);
 	if (!image->img_ptr)
 		exit_error(data);

@@ -7,6 +7,14 @@ SRC_FILES	= main.c \
 			events.c \
 			cleanup.c \
 			utils.c \
+			display.c \
+			$(PARSING) \
+			$(RAYTRACING) \
+			$(OBJECTS) \
+			$(COLOR) \
+			$(LIB_MATH)
+
+PARSING = \
 			parsing/parsing.c \
 			parsing/parsing_error.c \
 			parsing/fill_objs.c \
@@ -14,19 +22,35 @@ SRC_FILES	= main.c \
 			parsing/check.c \
 			parsing/obj_list.c \
 			parsing/fill_utils.c \
+
+RAYTRACING = \
 			raytracing/raytracer.c \
-			raytracing/color.c \
-			raytracing/color_utils.c \
-			raytracing/sphere.c \
-			raytracing/plan.c \
-			raytracing/cylinder.c \
-			raytracing/camera.c \
+			raytracing/path_tracing.c \
+			raytracing/camera_init.c \
+			raytracing/camera_move.c \
+			raytracing/shadow.c \
+			raytracing/light.c \
+
+OBJECTS = \
+			objects/sphere.c \
+			objects/plane.c \
+			objects/cylinder.c \
+			objects/disk.c \
+
+COLOR = \
+			color/utils.c \
+			color/rgb_check.c \
+
+LIB_MATH = \
 			lib_math/vec3_init.c \
 			lib_math/vec4_init.c \
 			lib_math/vec3_op.c \
 			lib_math/vec3_and_const_op.c \
 			lib_math/vec3_norm.c \
-			lib_math/matrix.c
+			lib_math/matrix.c \
+			lib_math/trigo.c \
+			lib_math/frand.c \
+			lib_math/algebra.c
 
 UNAME		=	$(shell uname)
 
@@ -40,8 +64,10 @@ MLX_DIR		= mlx
 
 ifeq ($(UNAME), Darwin)
 	MLX_INC		= mlx_osx
+	MLX_FLAG		= $(MLX_DIR)/libmlx_osx.a -framework OpenGL -framework Appkit
 else
 	MLX_INC		= mlx
+	MLX_FLAG	= $(MLX_DIR)/libmlx.a -lXext -lX11 -lm
 endif
 
 LIBFT_PATH	=	libft
@@ -50,7 +76,7 @@ LIBFT_LIB	=	libft/libft.a
 
 LIBFT_MAKE	=	$(MAKE) --no-print-directory -C $(LIBFT_PATH)
 
-INCLUDE		= ./incs
+INCLUDE_DIR	= ./incs
 
 INC_FILES	= miniRT.h \
 			  libft.h \
@@ -61,7 +87,7 @@ INC_FILES	= miniRT.h \
 
 OBJS		= $(addprefix $(OBJS_DIR)/, $(SRC_FILES:.c=.o))
 
-INCS		= $(addprefix $(INCLUDE)/, $(INC_FILES))
+INCLUDE		= $(addprefix $(INCLUDE_DIR)/, $(INC_FILES))
 
 CC			= clang
 
@@ -79,25 +105,24 @@ YELLOW		= \033[1;33m
 BLUE		= \033[1;34m
 WHITE		= \033[1;37m
 ORANGE		= \033[1;38;5;208m
+UP			= \033[A
+CUT			= \033[K
 
-$(OBJS_DIR)/%.o: $(SRC_DIR)/%.c $(INCS) $(LIBFT_PATH)/*.c
+$(OBJS_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDE) $(LIBFT_PATH)/*.c
 			@mkdir -p $(@D)
-			@$(CC) $(CFLAGS) -I$(INCLUDE) -I$(MLX_INC) -c $< -o $@
-			@echo "$(BLUE)clang $(RESET)$(notdir $@)"
+			@$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -I$(MLX_INC) -c $< -o $@
+			@echo "$(CUT)$(BLUE)clang $(RESET)$(notdir $@)"
+			@printf "$(UP)"
 
-all:		$(NAME)
+all:	$(NAME)
 
-ifeq ($(UNAME), Darwin)
 $(NAME):	$(OBJS)
 				@$(LIBFT_MAKE)
-				@$(CC) $(CFLAGS) $^ -o $@ $(LIBFT_LIB) $(MLX_DIR)/libmlx_osx.a -framework OpenGL -framework Appkit
-				@echo "$(GREEN)$(NAME) created$(RESET)"
-else
-$(NAME):	$(OBJS)
-				@$(LIBFT_MAKE)
-				@$(CC) $(CFLAGS) $^ -o $@ $(LIBFT_LIB) $(MLX_DIR)/libmlx.a -lXext -lX11 -lm
-				@echo "$(GREEN)$(NAME) created$(RESET)"
-endif
+				@$(CC) $(CFLAGS) $^ -o $@ $(LIBFT_LIB) $(MLX_FLAG)
+				@echo "$(CUT)$(GREEN)✔ $(NAME) created$(RESET)"
+
+libft:
+		@$(LIBFT_MAKE)
 
 debug:	 $(NAME_DEBUG)	
 
@@ -108,12 +133,12 @@ $(NAME_DEBUG):	$(OBJS)
 clean:
 			@make --no-print-directory -C $(LIBFT_PATH) clean
 			@$(RM) $(OBJS) $(OBJS_DIR)
-			@echo "$(RED)clean$(RESET)"
+			@echo "$(RED)✘ clean$(RESET)"
 
 fclean:		clean
 				@$(RM) $(NAME) $(LIBFT_LIB)
 				@$(RM) $(NAME) $(DEBUG)
-				@echo "$(RED)fclean$(RESET)"
+				@echo "$(RED)✘ fclean$(RESET)"
 
 re:			fclean all
 

@@ -2,15 +2,23 @@
 # define ENUM_H
 
 typedef enum s_define {
-	TRUE		= 1,
-	FALSE		= 0,
-	SUCCESS		= 0,
-	FAIL		= 1,
-	EQUAL		= 1,
-	DIFFERENT	= 0,
-	A			= 0,
-	B			= 1,
-	C			= 2,
+	TRUE			= 1,
+	FALSE			= 0,
+	SUCCESS			= 0,
+	FAIL			= 1,
+	EQUAL			= 1,
+	DIFFERENT		= 0,
+	A				= 0,
+	C				= 1,
+	X				= 0,
+	Y				= 1,
+	Z				= 2,
+	R				= 0,
+	G				= 1,
+	B				= 2,
+	T				= 3,
+	NO_PATH_TRACING	= 0,
+	PATH_TRACING	= 1,
 }	t_define;
 
 typedef enum s_error {
@@ -29,9 +37,10 @@ typedef enum s_error {
 	CAMERA_FORMAT_ERROR			= 242,
 	DIFFUSE_LIGHT_FORMAT_ERROR	= 241,
 	SPHERE_FORMAT_ERROR			= 240,
-	PLAN_FORMAT_ERROR			= 239,
+	PLANE_FORMAT_ERROR			= 239,
 	CYLINDER_FORMAT_ERROR		= 238,
-	INCOMPLETE_FILE_ERROR		= 237,
+	DISK_FORMAT_ERROR			= 237,
+	INCOMPLETE_FILE_ERROR		= 236,
 }	t_error;
 
 # ifdef __linux__
@@ -43,6 +52,14 @@ typedef enum s_key
 	KEY_RIGHT	= 65363,
 	KEY_DOWN	= 65364,
 	KEY_UP		= 65362,
+	KEY_W		= 119,
+	KEY_A		= 97,
+	KEY_S		= 115,
+	KEY_D		= 100,
+	KEY_P		= 112,
+	KEY_SPACE	= 32,
+	KEY_MAJ		= 65505,
+	KEY_ENTER	= 65293,
 }	t_key;
 #  define IS_LINUX 1
 # else
@@ -54,6 +71,14 @@ typedef enum s_key
 	KEY_RIGHT	= 124,
 	KEY_DOWN	= 125,
 	KEY_UP		= 126,
+	KEY_W		= 13,
+	KEY_A		= 0,
+	KEY_S		= 1,
+	KEY_D		= 2,
+	KEY_P		= 35,
+	KEY_MAJ		= 257,
+	KEY_TAB		= 48,
+	KEY_SPACE	= 49,
 }	t_key;
 #  define IS_LINUX 0
 # endif
@@ -61,11 +86,12 @@ typedef enum s_key
 typedef enum s_types
 {
 	SPHERE			= 0,
-	PLAN			= 1,
+	PLANE			= 1,
 	CYLINDER		= 2,
-	CAMERA			= 3,
-	AMBIENT_LIGHT	= 4,
-	DIFFUSE_LIGHT	= 5,
+	DISK			= 3,
+	CAMERA			= 4,
+	AMBIENT_LIGHT	= 5,
+	DIFFUSE_LIGHT	= 6,
 }	t_types;
 
 #endif

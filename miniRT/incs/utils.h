@@ -15,5 +15,7 @@ int		safe_ft_strjoin(char **input, char *buff, int fd);
 int		safe_ft_strdup(char **dest, char *to_copy, int fd);
 void	ft_exit_parsing(int errnum, t_parsing *parsing_var);
 void	free_str_tab(char **tab);
+void	display_info_move_cam(void);
+void	display_cam_param(t_camera *camera);
 
 #endif

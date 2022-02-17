@@ -3,17 +3,12 @@
 
 typedef struct s_vec3
 {
-	double	x;
-	double	y;
-	double	z;
+	double	coord[3];
 }	t_vec3;
 
 typedef struct s_vec4
 {
-	double	x;
-	double	y;
-	double	z;
-	double	t;
+	double	coord[4];
 }	t_vec4;
 
 typedef struct s_matrix4
@@ -28,7 +23,7 @@ typedef struct s_matrix4
 
 t_vec3		create_vec3(double x, double y, double z);
 t_vec3		convert_vec4_to_vec3(t_vec4 vector);
-void		copy_vec3(t_vec3 *dest, t_vec3 *src);
+void		copy_vec3(t_vec3 *dest, t_vec3 src);
 
 /*********************************************** VEC4 INIT *********************************************************/
 
@@ -39,6 +34,7 @@ t_vec4		convert_vec3_to_vec4(t_vec3 vector);
 
 t_vec3		add_vec3(t_vec3 vector_1, t_vec3 vector_2);
 t_vec3		sub_vec3(t_vec3 vector_1, t_vec3 vector_2);
+t_vec3		mul_vec3(t_vec3 vector_1, t_vec3 vector_2);
 t_vec3		inverse_vec3(t_vec3 vector);
 double		dot_vec3(t_vec3 vector_1, t_vec3 vector_2);
 t_vec3		cross_vec3(t_vec3 vector_1, t_vec3 vector_2);
@@ -60,5 +56,20 @@ t_vec3		get_normalized_vec3(t_vec3 vector);
 /************************************************** MATRIX *********************************************************/
 
 t_vec3		mul_vec3_and_matrix4(t_vec3 vector, t_matrix4 matrix);
+t_vec3		mul_dir_and_matrix4(t_vec3 vector, t_matrix4 matrix);
+
+/*************************************************** TRIGO *********************************************************/
+
+double		convert_deg_to_rad(double angle);
+double		convert_rad_to_deg(double angle);
+
+/*************************************************** FRAND *********************************************************/
+
+float			frand(void);
+unsigned int	ft_rand(void);
+
+/************************************************** ALGEBRA *********************************************************/
+
+_Bool		solve_quadratic_equation(double *coeff, double *roots, double *closest_hit);
 
 #endif

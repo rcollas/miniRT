@@ -2,12 +2,27 @@
 
 t_vec3	mul_vec3_and_matrix4(t_vec3 vector, t_matrix4 matrix)
 {
-	t_vec4	new_vector;
+	t_vec4	tmp;
+	t_vec3	new_vector;
 
-	new_vector.x = vector.x * matrix.row_1.x + vector.y * matrix.row_2.x + vector.z * matrix.row_3.x + matrix.row_4.x;
-	new_vector.y = vector.x * matrix.row_1.y + vector.y * matrix.row_2.y + vector.z * matrix.row_3.y + matrix.row_4.y;
-	new_vector.z = vector.x * matrix.row_1.z + vector.y * matrix.row_2.z + vector.z * matrix.row_3.z + matrix.row_4.z;
-	new_vector.t = vector.x * matrix.row_1.t + vector.y * matrix.row_2.t + vector.z * matrix.row_3.t + matrix.row_4.t;
+	tmp.coord[X] = vector.coord[X] * matrix.row_1.coord[X] + vector.coord[Y] * matrix.row_2.coord[X] + vector.coord[Z] * matrix.row_3.coord[X] + matrix.row_4.coord[X];
+	tmp.coord[Y] = vector.coord[X] * matrix.row_1.coord[Y] + vector.coord[Y] * matrix.row_2.coord[Y] + vector.coord[Z] * matrix.row_3.coord[Y] + matrix.row_4.coord[Y];
+	tmp.coord[Z] = vector.coord[X] * matrix.row_1.coord[Z] + vector.coord[Y] * matrix.row_2.coord[Z] + vector.coord[Z] * matrix.row_3.coord[Z] + matrix.row_4.coord[Z];
+	tmp.coord[T] = vector.coord[X] * matrix.row_1.coord[T] + vector.coord[Y] * matrix.row_2.coord[T] + vector.coord[Z] * matrix.row_3.coord[T] + matrix.row_4.coord[T];
+	new_vector.coord[X] = tmp.coord[X] / tmp.coord[T];
+	new_vector.coord[Y] = tmp.coord[Y] / tmp.coord[T];
+	new_vector.coord[Z] = tmp.coord[Z] / tmp.coord[T];
 	// printf("x = %f | y = %f | z = %f | t = %f\n", new_vector.x, new_vector.y, new_vector.z, new_vector.t);
-	return (convert_vec4_to_vec3(new_vector));
+	return (new_vector);
+}
+
+t_vec3	mul_dir_and_matrix4(t_vec3 vector, t_matrix4 matrix)
+{
+	t_vec3	new_vector;
+
+	new_vector.coord[X] = vector.coord[X] * matrix.row_1.coord[X] + vector.coord[Y] * matrix.row_2.coord[X] + vector.coord[Z] * matrix.row_3.coord[X] + matrix.row_4.coord[X];
+	new_vector.coord[Y] = vector.coord[X] * matrix.row_1.coord[Y] + vector.coord[Y] * matrix.row_2.coord[Y] + vector.coord[Z] * matrix.row_3.coord[Y] + matrix.row_4.coord[Y];
+	new_vector.coord[Z] = vector.coord[X] * matrix.row_1.coord[Z] + vector.coord[Y] * matrix.row_2.coord[Z] + vector.coord[Z] * matrix.row_3.coord[Z] + matrix.row_4.coord[Z];
+	// printf("x = %f | y = %f | z = %f | t = %f\n", new_vector.x, new_vector.y, new_vector.z, new_vector.t);
+	return (new_vector);
 }
