@@ -1,4 +1,4 @@
-#include "../../incs/miniRT.h"
+#include "miniRT.h"
 
 void	fill_sphere(t_parsing *var, char *line)
 {

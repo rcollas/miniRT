@@ -1,4 +1,4 @@
-#include "../../incs/miniRT.h"
+#include "miniRT.h"
 
 void	fill_ambient_light(t_parsing *parsing, t_ambient_light *ambient_light, char *line)
 {

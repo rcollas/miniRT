@@ -1,4 +1,4 @@
-#include "../../incs/miniRT.h"
+#include "miniRT.h"
 
 int	is_in_range(double min, double max, double value)
 {

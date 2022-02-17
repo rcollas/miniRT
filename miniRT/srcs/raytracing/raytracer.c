@@ -1,46 +1,58 @@
 #include "miniRT.h"
 
-_Bool	trace_shadow_ray(t_ray *shadow_ray, t_obj *obj, t_diffuse_light *light, t_obj *hit_obj_ref)
+_Bool	check_hit_object(t_ray *ray, t_obj *obj, t_hit *hit_min, t_obj **hit_obj_ref)
 {
 	t_hit	hit;
-	double	light_dist;
-	double	dist_min;
 
-	hit.dist = 1E99;
-	dist_min = 1E99;
-	light_dist = get_norm_vec3(sub_vec3(*light->coord, shadow_ray->origin));
-	while (obj)
+	if (obj->hit_object(ray, obj, &hit))
 	{
-		if (obj != hit_obj_ref && obj->hit_object(shadow_ray, obj, &hit) && hit.dist < light_dist)
-			return (TRUE);
-		obj = obj->next;
+		if (hit_min->dist > ray->closest_hit)
+		{
+			hit_min->dist = ray->closest_hit;
+			copy_vec3(&hit_min->intersection, hit.intersection);
+			copy_vec3(&hit_min->normal, hit.normal);
+			copy_vec3(&hit_min->color, *obj->color);
+			*hit_obj_ref = obj;
+		}
+		return (TRUE);
 	}
 	return (FALSE);
 }
 
-_Bool	is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light, t_obj *hit_obj)
+_Bool	detect_intersection(t_ray ray, t_obj *obj, unsigned long *color, t_data *data)
 {
-	t_ray	shadow_ray;
+	_Bool	hit_obj;
+	t_hit	hit_min;
+	t_obj	*current_obj;
+	t_obj 	*no_check;
+	t_ray	result;
+	t_obj	*hit_obj_ref;
 
-	shadow_ray.origin = add_vec3(ray.origin, mul_vec3_and_const(ray.dir, 1e-4));
-	shadow_ray.dir = sub_vec3(*light->coord, shadow_ray.origin);
-	normalize_vec3(&shadow_ray.dir);
-	if (trace_shadow_ray(&shadow_ray, obj, light, hit_obj))
-		return (TRUE);
-	return (FALSE);
-}
-
-void	detect_intersection(t_ray *cam_ray, t_obj *obj, unsigned long *color, t_data *data)
-{
-	int				i;
-	unsigned long	nb_of_rays;
-
-	*color = 0;
-	nb_of_rays = 3;
-	i = nb_of_rays;
-	update_camera_ray(cam_ray, data);
-	while (i--)
-		*color += (get_color_pixel(obj, data->scene, cam_ray, 4) / nb_of_rays);
+	hit_min.pixel_shadow = 1;
+	hit_obj = FALSE;
+	hit_min.dist = 1E99;
+	update_camera_ray(&ray, data);
+	current_obj = obj;
+	hit_obj_ref = NULL;
+	while (current_obj)
+	{
+		if (check_hit_object(&ray, current_obj, &hit_min, &hit_obj_ref))
+		{
+			no_check = current_obj;
+			hit_obj = TRUE;
+		}
+		current_obj = current_obj->next;
+	}
+	if (hit_obj)
+	{
+		result.origin = hit_min.intersection;
+		result.dir = hit_min.normal;
+		result.color = hit_min.color;
+		if (is_in_shadow(obj, result, data->scene->diffuse_light, hit_obj_ref))
+			hit_min.pixel_shadow = 0.3;
+		get_light(data->scene, result, ray, color, hit_min.pixel_shadow);
+	}
+	return (hit_obj);
 }
 
 void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data, _Bool path_tracing)
@@ -50,7 +62,7 @@ void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data, _Bool path_tracing
 
 	init_image(mlx, data);
 	init_camera_ray(&cam_ray, data);
-	data->cam_to_world_matrix = built_cam_to_word_matrix(scene->camera);
+	data->cam_to_world_matrix = built_cam_to_world_matrix(scene->camera);
 	data->pixel_y = -1;
 	while (++data->pixel_y < HEIGHT)
 	{
@@ -58,12 +70,12 @@ void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data, _Bool path_tracing
 		while (++data->pixel_x < WIDTH)
 		{
 			if (path_tracing)
-			detect_intersection(&cam_ray, data->obj, &pixel_color, data);
-			else if (!prev_detect_intersection(cam_ray, data->obj, &pixel_color, data))
+				run_path_tracing(&cam_ray, data->obj, &pixel_color, data);
+			else if (!detect_intersection(cam_ray, data->obj, &pixel_color, data))
 				pixel_color = create_trgb(0, 0, 0);
 			draw_pixel(mlx->image, pixel_color, data);
 		}
 	}
-	printf("Render complete\n");
+	display_cam_param(data->scene->camera);
 	mlx_put_image_to_window(mlx->ptr, mlx->window, mlx->image->img_ptr, 0, 0);
 }

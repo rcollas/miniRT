@@ -1,4 +1,4 @@
-#include "../../incs/miniRT.h"
+#include "miniRT.h"
 
 int	fill_rgb(char *rgb_values, t_vec3 *rgb)
 {

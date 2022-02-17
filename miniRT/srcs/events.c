@@ -7,57 +7,41 @@ int	exit_hook(t_data *data)
 	return (0);
 }
 
+_Bool	handle_path_tracing(int key, t_data *data)
+{
+	if (key == KEY_P)
+	{
+		ft_putstr_fd("\n\033[38;5;123mRendering with path_tracing...\n\n\033[0m", 1);
+		run_raytracing(data->mlx, data->scene, data, PATH_TRACING);
+	}
+	return (0);
+}
+
 _Bool	handle_arrow_keys(int key, t_data *data, t_camera *camera)
 {
 	// printf("keycode = %d\n", key);
-	if (key == KEY_UP)
-	{
-		*camera->origin = add_vec3(*camera->origin, create_vec3(0, 2, 0));
-		// *camera->origin = add_vec3(*camera->origin, add_vec3(camera->up, create_vec3(0, 2, 0)));
-		// printf("up : x = %f | y = %f | z = %f\n", camera->up.coord[X], camera->up.coord[Y], camera->up.coord[Z]);
-		// printf("origin : x = %f | y = %f | z = %f\n", camera->origin->coord[X], camera->origin->coord[Y], camera->origin->coord[Z]);
-	}
-	else if (key == KEY_DOWN)
-	{
-		*camera->origin = add_vec3(*camera->origin, create_vec3(0, -2, 0));
-		// *camera->origin = add_vec3(*camera->origin, add_vec3(camera->up, create_vec3(0, -2, 0)));
-		// printf("up : x = %f | y = %f | z = %f\n", camera->up.coord[X], camera->up.coord[Y], camera->up.coord[Z]);
-		// printf("origin : x = %f | y = %f | z = %f\n", camera->origin->coord[X], camera->origin->coord[Y], camera->origin->coord[Z]);
-	}
-	else if (key == KEY_RIGHT)
-	{
-		*camera->origin = add_vec3(*camera->origin, create_vec3(2, 0, 0));
-		// *camera->origin = add_vec3(*camera->origin, add_vec3(camera->right, create_vec3(2, 0, 0)));
-	}
-	else if (key == KEY_LEFT)
-	{
-		// printf("right : x = %f | y = %f | z = %f\n", camera->right.coord[X], camera->right.coord[Y], camera->right.coord[Z]);
-		*camera->origin = add_vec3(*camera->origin, create_vec3(-2, 0, 0));
-		// *camera->origin = add_vec3(*camera->origin, add_vec3(camera->right, create_vec3(-2, 0, 0)));
-	}
-	else if (key == KEY_SPACE)
-		*camera->origin = add_vec3(*camera->origin, create_vec3(0, 0, -2));
-		// *camera->origin = add_vec3(*camera->origin, add_vec3(camera->forward, create_vec3(0, 0, -2)));
+	if (key == KEY_SPACE)
+		*camera->origin = add_vec3(*camera->origin, mul_vec3_and_const(camera->up, 2));
 	else if (key == KEY_MAJ)
-		*camera->origin = add_vec3(*camera->origin, create_vec3(0, 0, 2));
-		// *camera->origin = add_vec3(*camera->origin, add_vec3(camera->forward, create_vec3(0, 0, 2)));
-	else if (key == KEY_J)
-		camera->yaw_angle += 5.0;
-	else if (key == KEY_H)
-		camera->yaw_angle -= 5.0;
-	else if (key == KEY_L)
-		camera->pitch_angle += 5.0;
-	else if (key == KEY_K)
-		camera->pitch_angle -= 5.0;
-	else 
-	{
-		if (key == KEY_P)
-		{
-			ft_putstr_fd("\033[38;5;123mRendering with path_tracing...\n\033[0m", 1);
-			run_raytracing(data->mlx, data->scene, data, PATH_TRACING);
-		}
-		return (0);
-	}
+		*camera->origin = add_vec3(*camera->origin, mul_vec3_and_const(camera->up, -2));
+	else if (key == KEY_D)
+		*camera->origin = add_vec3(*camera->origin, mul_vec3_and_const(camera->right, 2));
+	else if (key == KEY_A)
+		*camera->origin = add_vec3(*camera->origin, mul_vec3_and_const(camera->right, -2));
+	else if (key == KEY_W)
+		*camera->origin = add_vec3(*camera->origin, mul_vec3_and_const(camera->forward, -4));
+	else if (key == KEY_S)
+		*camera->origin = add_vec3(*camera->origin, mul_vec3_and_const(camera->forward, 4));
+	else if (key == KEY_RIGHT)
+		camera->yaw_angle += 6.0;
+	else if (key == KEY_LEFT)
+		camera->yaw_angle -= 6.0;
+	else if (key == KEY_DOWN)
+		camera->pitch_angle += 6.0;
+	else if (key == KEY_UP)
+		camera->pitch_angle -= 6.0;
+	else
+		return (handle_path_tracing(key, data));
 	return (1);
 }
 

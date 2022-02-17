@@ -6,8 +6,7 @@ _Bool	hit_plane(t_ray *ray, t_obj *obj, t_hit *hit)
 	t_vec3	tmp;
 
 	hit->normal = get_normalized_vec3(*obj->dir);
-	if (dot_vec3(hit->normal, ray->dir) > 0)
-		hit->normal = mul_vec3_and_const(hit->normal, -1);
+	check_direction_normal(ray, hit);
 	denominator = dot_vec3(hit->normal, ray->dir);
 	tmp = sub_vec3(*obj->origin, ray->origin);
 	// printf("x = %f | y = %f | z = %f\n", tmp.x, tmp.y, tmp.z);

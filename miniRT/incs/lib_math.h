@@ -58,4 +58,17 @@ t_vec3		get_normalized_vec3(t_vec3 vector);
 t_vec3		mul_vec3_and_matrix4(t_vec3 vector, t_matrix4 matrix);
 t_vec3		mul_dir_and_matrix4(t_vec3 vector, t_matrix4 matrix);
 
+/*************************************************** TRIGO *********************************************************/
+
+double		convert_deg_to_rad(double angle);
+double		convert_rad_to_deg(double angle);
+
+/*************************************************** FRAND *********************************************************/
+
+float		frand(void);
+
+/************************************************** ALGEBRA *********************************************************/
+
+_Bool		solve_quadratic_equation(double *coeff, double *roots, double *closest_hit);
+
 #endif

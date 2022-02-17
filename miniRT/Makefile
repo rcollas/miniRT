@@ -7,8 +7,10 @@ SRC_FILES	= main.c \
 			events.c \
 			cleanup.c \
 			utils.c \
+			display.c \
 			$(PARSING) \
 			$(RAYTRACING) \
+			$(OBJECTS) \
 			$(COLOR) \
 			$(LIB_MATH)
 
@@ -24,15 +26,18 @@ PARSING = \
 RAYTRACING = \
 			raytracing/raytracer.c \
 			raytracing/path_tracing.c \
-			raytracing/prev_raytracer.c \
-			raytracing/sphere.c \
-			raytracing/plane.c \
-			raytracing/cylinder.c \
-			raytracing/disk.c \
-			raytracing/camera.c \
+			raytracing/camera_init.c \
+			raytracing/camera_move.c \
+			raytracing/shadow.c \
+			raytracing/light.c \
+
+OBJECTS = \
+			objects/sphere.c \
+			objects/plane.c \
+			objects/cylinder.c \
+			objects/disk.c \
 
 COLOR = \
-			color/color_pixel.c \
 			color/utils.c \
 			color/rgb_check.c \
 
@@ -42,7 +47,10 @@ LIB_MATH = \
 			lib_math/vec3_op.c \
 			lib_math/vec3_and_const_op.c \
 			lib_math/vec3_norm.c \
-			lib_math/matrix.c
+			lib_math/matrix.c \
+			lib_math/trigo.c \
+			lib_math/frand.c \
+			lib_math/algebra.c
 
 UNAME		=	$(shell uname)
 

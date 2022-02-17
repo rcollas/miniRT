@@ -1,4 +1,4 @@
-#include "../../incs/miniRT.h"
+#include "miniRT.h"
 
 t_obj	*last_obj(t_obj *obj_list)
 {
