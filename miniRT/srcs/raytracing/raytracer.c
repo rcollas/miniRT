@@ -52,7 +52,7 @@ _Bool	detect_intersection(t_ray ray, t_obj *obj, unsigned long *color, t_data *d
 		result.color = hit_min.color;
 		if (is_in_shadow(obj, result, data->scene->diffuse_light, hit_obj_ref))
 			hit_min.pixel_shadow = 0.3;
-		rgb = get_light(data->scene, result, ray, color, hit_min.pixel_shadow);
+		rgb = get_light(data, result, ray, hit_min.pixel_shadow);
 	}
 	*color = create_trgb_struct(&rgb);
 	return (hit_obj);

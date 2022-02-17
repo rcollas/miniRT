@@ -86,7 +86,7 @@ void	prev_get_light(
 }
 
 t_vec3	*get_color_pixel(
-	t_obj *obj, t_scene *scene, t_ray *ray, double pixel_shadow, int rebound)
+	t_obj *obj, t_data *data, t_ray *ray, double pixel_shadow, int rebound)
 {
 	t_ray			result;
 	t_vec3			*final_color;
@@ -100,7 +100,7 @@ t_vec3	*get_color_pixel(
 	final_color->coord[G] = 0;
 	final_color->coord[B] = 0;
 	hit_obj = check_all_objects(obj, ray, &result, &hit_obj_ref);
-	if (hit_obj && is_in_shadow(obj, result, scene->diffuse_light, hit_obj_ref))
+	if (hit_obj && is_in_shadow(obj, result, data->scene->diffuse_light, hit_obj_ref))
 		pixel_shadow = 0.3;
 	if (!rebound)
 		return ((t_vec3 *)NULL);
@@ -108,8 +108,8 @@ t_vec3	*get_color_pixel(
 	{
 		random_ray = get_random_ray(result);
 		// prev_get_light(obj, scene, result, &final_color, pixel_shadow);
-		*final_color = get_light(scene, result, *ray, NULL, pixel_shadow);
-		*final_color = add_vec3(*final_color, *get_color_pixel(obj, scene, random_ray, 1, --rebound));
+		*final_color = get_light(data, result, *ray, pixel_shadow);
+		*final_color = add_vec3(*final_color, *get_color_pixel(obj, data, random_ray, 1, --rebound));
 	}
 	return (final_color);
 }
@@ -127,7 +127,7 @@ void	run_path_tracing(t_ray *cam_ray, t_obj *obj, unsigned long *color, t_data *
 	rgb.coord[G] = 0;
 	rgb.coord[B] = 0;
 	while (i--)
-		rgb = add_vec3(rgb, *get_color_pixel(obj, data->scene, cam_ray, 1, 4));
+		rgb = add_vec3(rgb, *get_color_pixel(obj, data, cam_ray, 1, 4));
 	rgb = div_vec3_and_const(rgb, (double)PASSES);
 	*color = create_trgb_struct(&rgb);
 }

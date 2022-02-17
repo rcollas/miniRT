@@ -67,6 +67,7 @@ typedef struct s_obj
 	double			diameter;
 	double			height;
 	t_op			*hit_object;
+	double			shine_factor;
 	struct s_obj	*next;
 }	t_obj;
 
