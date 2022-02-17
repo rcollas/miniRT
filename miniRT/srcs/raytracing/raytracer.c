@@ -27,6 +27,7 @@ _Bool	detect_intersection(t_ray ray, t_obj *obj, unsigned long *color, t_data *d
 	t_obj 	*no_check;
 	t_ray	result;
 	t_obj	*hit_obj_ref;
+	t_vec3 	rgb;
 
 	hit_min.pixel_shadow = 1;
 	hit_obj = FALSE;
@@ -34,6 +35,7 @@ _Bool	detect_intersection(t_ray ray, t_obj *obj, unsigned long *color, t_data *d
 	update_camera_ray(&ray, data);
 	current_obj = obj;
 	hit_obj_ref = NULL;
+	rgb = create_vec3(0, 0, 0);
 	while (current_obj)
 	{
 		if (check_hit_object(&ray, current_obj, &hit_min, &hit_obj_ref))
@@ -50,8 +52,9 @@ _Bool	detect_intersection(t_ray ray, t_obj *obj, unsigned long *color, t_data *d
 		result.color = hit_min.color;
 		if (is_in_shadow(obj, result, data->scene->diffuse_light, hit_obj_ref))
 			hit_min.pixel_shadow = 0.3;
-		get_light(data->scene, result, ray, color, hit_min.pixel_shadow);
+		rgb = get_light(data->scene, result, ray, color, hit_min.pixel_shadow);
 	}
+	*color = create_trgb_struct(&rgb);
 	return (hit_obj);
 }
 

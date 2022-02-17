@@ -12,6 +12,7 @@ t_ray	*get_random_ray(t_ray result)
 	t_vec3		tangent2;
 
 	random_ray = ft_calloc(1, sizeof(t_ray));
+	srand(ft_rand());
 	r1 = frand();
 	r2 = frand();
 	random_dir_local.coord[X] = cos(2 * M_PI * r1) * sqrt(1 - r2);
@@ -107,7 +108,7 @@ t_vec3	*get_color_pixel(
 	{
 		random_ray = get_random_ray(result);
 		// prev_get_light(obj, scene, result, &final_color, pixel_shadow);
-		final_color = get_light(scene, result, *ray, NULL, pixel_shadow);
+		*final_color = get_light(scene, result, *ray, NULL, pixel_shadow);
 		*final_color = add_vec3(*final_color, *get_color_pixel(obj, scene, random_ray, 1, --rebound));
 	}
 	return (final_color);
@@ -116,19 +117,17 @@ t_vec3	*get_color_pixel(
 void	run_path_tracing(t_ray *cam_ray, t_obj *obj, unsigned long *color, t_data *data)
 {
 	int				i;
-	unsigned long	nb_of_rays;
 	t_vec3 			rgb;
 
 	*color = 0;
-	nb_of_rays = 18;
-	i = nb_of_rays;
+	i = PASSES;
 	update_camera_ray(cam_ray, data);
 	// *color = get_color_pixel(obj, data->scene, cam_ray, 1, 4);
 	rgb.coord[R] = 0;
 	rgb.coord[G] = 0;
 	rgb.coord[B] = 0;
 	while (i--)
-		rgb = add_vec3(rgb, *get_color_pixel(obj, data->scene, cam_ray, 1, 14));
-	rgb = div_vec3_and_const(rgb, (double)nb_of_rays);
+		rgb = add_vec3(rgb, *get_color_pixel(obj, data->scene, cam_ray, 1, 4));
+	rgb = div_vec3_and_const(rgb, (double)PASSES);
 	*color = create_trgb_struct(&rgb);
 }

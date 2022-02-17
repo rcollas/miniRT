@@ -17,7 +17,7 @@ float	frand(void)
 {
 	float	float_rand;
 
-	float_rand = (float)ft_rand();
+	float_rand = (float)rand();
 	while (float_rand > 1)
 		float_rand /= 10;
 	return (float_rand);
