@@ -1,4 +1,4 @@
-# include "utils.h"
+#include "miniRT.h"
 
 void	ft_free(void *to_free)
 {
@@ -11,10 +11,11 @@ void	ft_free(void *to_free)
 
 void	print_list(t_obj *obj)
 {
-	int i;
+	int	i;
 
 	i = 1;
-	while (obj) {
+	while (obj)
+	{
 		printf("-------OBJ %d--------\n", i);
 		if (obj->type == SPHERE)
 			printf("TYPE = SPHERE\n");
@@ -39,10 +40,14 @@ void	print_list(t_obj *obj)
 
 void	print_matrix(t_matrix4 matrix)
 {
-	printf("row_1[x] = %f    row_1[y] = %f    row_1[z] = %f\n", matrix.row_1.coord[X], matrix.row_1.coord[Y], matrix.row_1.coord[Z]);
-	printf("row_2[x] = %f    row_2[y] = %f    row_2[z] = %f\n", matrix.row_2.coord[X], matrix.row_2.coord[Y], matrix.row_2.coord[Z]);
-	printf("row_3[x] = %f    row_3[y] = %f    row_3[z] = %f\n", matrix.row_3.coord[X], matrix.row_3.coord[Y], matrix.row_3.coord[Z]);
-	printf("row_4[x] = %f    row_4[y] = %f    row_4[z] = %f\n", matrix.row_4.coord[X], matrix.row_4.coord[Y], matrix.row_4.coord[Z]);
+	printf("row_1[x] = %f    row_1[y] = %f    row_1[z] = %f\n",
+		matrix.row_1.coord[X], matrix.row_1.coord[Y], matrix.row_1.coord[Z]);
+	printf("row_2[x] = %f    row_2[y] = %f    row_2[z] = %f\n",
+		matrix.row_2.coord[X], matrix.row_2.coord[Y], matrix.row_2.coord[Z]);
+	printf("row_3[x] = %f    row_3[y] = %f    row_3[z] = %f\n",
+		matrix.row_3.coord[X], matrix.row_3.coord[Y], matrix.row_3.coord[Z]);
+	printf("row_4[x] = %f    row_4[y] = %f    row_4[z] = %f\n",
+		matrix.row_4.coord[X], matrix.row_4.coord[Y], matrix.row_4.coord[Z]);
 }
 
 void	free_list(t_obj *obj)
@@ -78,9 +83,11 @@ void	ft_exit_parsing(int errnum, t_parsing *parsing_var)
 
 int	ft_open(char *file, int *fd)
 {
-	if ((*fd = open(file, O_DIRECTORY)) >= 0)
+	*fd = open(file, O_DIRECTORY);
+	if (*fd >= 0)
 		return (parsing_error(IS_DIR_ERROR, file));
-	if ((*fd = open(file, O_RDONLY | O_NOFOLLOW)) < 0)
+	*fd = open(file, O_RDONLY | O_NOFOLLOW);
+	if (*fd < 0)
 		return (parsing_error(FILE_ERROR, file));
 	return (SUCCESS);
 }
@@ -114,7 +121,7 @@ int	safe_read(int fd, char *buff, int buff_size, char *input)
 
 int	safe_ft_strjoin(char **input, char *buff, int fd)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = *input;
 	*input = ft_strjoin(*input, buff);
@@ -142,7 +149,7 @@ int	safe_ft_strdup(char **dest, char *to_copy, int fd)
 
 _Bool	is_valid_extension(char *arg)
 {
-	char *extension;
+	char	*extension;
 
 	extension = ft_strnstr(arg, ".rt", ft_strlen(arg));
 	if (!extension || ft_strcmp(extension, ".rt") == DIFFERENT)
@@ -150,7 +157,7 @@ _Bool	is_valid_extension(char *arg)
 	return (TRUE);
 }
 
-int is_valid_type(char *type)
+int	is_valid_type(char *type)
 {
 	if (ft_strcmp(type, "A") == EQUAL)
 		return (AMBIENT_LIGHT);

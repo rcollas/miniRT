@@ -1,5 +1,5 @@
-#ifndef MINI_RT_ERROR_H
-#define MINI_RT_ERROR_H
+#ifndef ERROR_H
+# define ERROR_H
 
 # include <fcntl.h>
 # include <unistd.h>

@@ -22,6 +22,7 @@ void	fill_sphere(t_parsing *var, char *line)
 		ft_exit_parsing(SPHERE_FORMAT_ERROR, var);
 	}
 	obj->hit_object = &hit_sphere;
+	obj->shine_factor = 0.3;
 	obj_add_back(&var->objs, obj);
 }
 
@@ -48,6 +49,7 @@ void	fill_plane(t_parsing *var, char *line)
 		ft_exit_parsing(PLANE_FORMAT_ERROR, var);
 	}
 	obj->hit_object = &hit_plane;
+	obj->shine_factor = 0.2;
 	obj_add_back(&var->objs, obj);
 }
 
@@ -75,6 +77,7 @@ void	fill_cylinder(t_parsing *var, char *line)
 		ft_exit_parsing(CYLINDER_FORMAT_ERROR, var);
 	}
 	obj->hit_object = &hit_cylinder;
+	obj->shine_factor = 0.3;
 	obj_add_back(&var->objs, obj);
 }
 
@@ -101,6 +104,7 @@ void	fill_disk(t_parsing *var, char *line)
 		ft_exit_parsing(DISK_FORMAT_ERROR, var);
 	}
 	obj->hit_object = &hit_disk;
+	obj->shine_factor = 0.2;
 	obj_add_back(&var->objs, obj);
 }
 

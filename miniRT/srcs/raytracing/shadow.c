@@ -1,6 +1,7 @@
 #include "miniRT.h"
 
-_Bool	trace_shadow_ray(t_ray *shadow_ray, t_obj *obj, t_diffuse_light *light, t_obj *hit_obj_ref)
+_Bool	trace_shadow_ray(
+	t_ray *shadow_ray, t_obj *obj, t_diffuse_light *light, t_obj *hit_obj_ref)
 {
 	t_hit	hit;
 	double	light_dist;
@@ -11,14 +12,16 @@ _Bool	trace_shadow_ray(t_ray *shadow_ray, t_obj *obj, t_diffuse_light *light, t_
 	light_dist = get_norm_vec3(sub_vec3(*light->coord, shadow_ray->origin));
 	while (obj)
 	{
-		if (obj != hit_obj_ref && obj->hit_object(shadow_ray, obj, &hit) && hit.dist < light_dist)
+		if (obj != hit_obj_ref && obj->hit_object(shadow_ray, obj, &hit)
+			&& hit.dist < light_dist)
 			return (TRUE);
 		obj = obj->next;
 	}
 	return (FALSE);
 }
 
-_Bool	is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light, t_obj *hit_obj)
+_Bool	is_in_shadow(
+	t_obj *obj, t_ray ray, t_diffuse_light *light, t_obj *hit_obj)
 {
 	t_ray	shadow_ray;
 

@@ -1,7 +1,7 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-#include "lib_math.h"
+# include "lib_math.h"
 
 typedef struct s_ray
 {
@@ -54,7 +54,7 @@ typedef struct s_scene
 	t_ambient_light	ambient_light[1];
 }	t_scene;
 
-struct s_obj;
+struct			s_obj;
 
 typedef _Bool	t_op(t_ray *ray, struct s_obj *obj, t_hit *hit);
 
@@ -107,6 +107,5 @@ typedef struct s_data
 	int			pixel_y;
 	t_matrix4	cam_to_world_matrix;
 }	t_data;
-
 
 #endif

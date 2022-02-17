@@ -1,6 +1,7 @@
 #include "miniRT.h"
 
-_Bool	check_hit_object(t_ray *ray, t_obj *obj, t_hit *hit_min, t_obj **hit_obj_ref)
+_Bool	check_hit_object(
+	t_ray *ray, t_obj *obj, t_hit *hit_min, t_obj **hit_obj_ref)
 {
 	t_hit	hit;
 
@@ -19,15 +20,15 @@ _Bool	check_hit_object(t_ray *ray, t_obj *obj, t_hit *hit_min, t_obj **hit_obj_r
 	return (FALSE);
 }
 
-_Bool	detect_intersection(t_ray ray, t_obj *obj, unsigned long *color, t_data *data)
+void	detect_intersection(
+	t_ray ray, t_obj *obj, unsigned long *color, t_data *data)
 {
 	_Bool	hit_obj;
 	t_hit	hit_min;
 	t_obj	*current_obj;
-	t_obj 	*no_check;
 	t_ray	result;
 	t_obj	*hit_obj_ref;
-	t_vec3 	rgb;
+	t_vec3	rgb;
 
 	hit_min.pixel_shadow = 1;
 	hit_obj = FALSE;
@@ -39,10 +40,7 @@ _Bool	detect_intersection(t_ray ray, t_obj *obj, unsigned long *color, t_data *d
 	while (current_obj)
 	{
 		if (check_hit_object(&ray, current_obj, &hit_min, &hit_obj_ref))
-		{
-			no_check = current_obj;
 			hit_obj = TRUE;
-		}
 		current_obj = current_obj->next;
 	}
 	if (hit_obj)
@@ -55,10 +53,10 @@ _Bool	detect_intersection(t_ray ray, t_obj *obj, unsigned long *color, t_data *d
 		rgb = get_light(data, result, ray, hit_min.pixel_shadow);
 	}
 	*color = create_trgb_struct(&rgb);
-	return (hit_obj);
 }
 
-void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data, _Bool path_tracing)
+void	run_raytracing(
+	t_mlx *mlx, t_scene *scene, t_data *data, _Bool path_tracing)
 {
 	unsigned long	pixel_color;
 	t_ray			cam_ray;
@@ -74,8 +72,8 @@ void	run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data, _Bool path_tracing
 		{
 			if (path_tracing)
 				run_path_tracing(&cam_ray, data->obj, &pixel_color, data);
-			else if (!detect_intersection(cam_ray, data->obj, &pixel_color, data))
-				pixel_color = create_trgb(0, 0, 0);
+			else
+				detect_intersection(cam_ray, data->obj, &pixel_color, data);
 			draw_pixel(mlx->image, pixel_color, data);
 		}
 	}
