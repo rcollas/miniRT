@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-_Bool	check_hit_object(t_ray *ray, t_obj *obj, t_hit *hit_min, t_obj **hit_obj_ref)
+_Bool	check_hit_object(t_ray *ray, t_obj *obj, t_hit *hit_min)
 {
 	t_hit	hit;
 
@@ -12,9 +12,8 @@ _Bool	check_hit_object(t_ray *ray, t_obj *obj, t_hit *hit_min, t_obj **hit_obj_r
 			copy_vec3(&hit_min->intersection, hit.intersection);
 			copy_vec3(&hit_min->normal, hit.normal);
 			copy_vec3(&hit_min->color, *obj->color);
-			*hit_obj_ref = obj;
+			return (TRUE);
 		}
-		return (TRUE);
 	}
 	return (FALSE);
 }
@@ -23,27 +22,26 @@ _Bool	detect_intersection(t_ray ray, t_obj *obj, unsigned long *color, t_data *d
 {
 	_Bool	hit_obj;
 	t_hit	hit_min;
-	t_obj	*current_obj;
-	t_obj 	*no_check;
+	int 	i;
 	t_ray	result;
-	t_obj	*hit_obj_ref;
+	int		hit_obj_ref;
 	t_vec3 	rgb;
 
+	i = 0;
 	hit_min.pixel_shadow = 1;
 	hit_obj = FALSE;
 	hit_min.dist = 1E99;
 	update_camera_ray(&ray, data);
-	current_obj = obj;
-	hit_obj_ref = NULL;
+	hit_obj_ref = -1;
 	rgb = create_vec3(0, 0, 0);
-	while (current_obj)
+	while (i < data->obj_nb)
 	{
-		if (check_hit_object(&ray, current_obj, &hit_min, &hit_obj_ref))
+		if (check_hit_object(&ray, &obj[i], &hit_min))
 		{
-			no_check = current_obj;
+			hit_obj_ref = i;
 			hit_obj = TRUE;
 		}
-		current_obj = current_obj->next;
+		i++;
 	}
 	if (hit_obj)
 	{

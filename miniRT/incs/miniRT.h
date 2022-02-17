@@ -24,7 +24,7 @@
 
 # define HEIGHT 480
 # define WIDTH 720
-# define PASSES 80 
+# define PASSES 4
 
 /*********************************************** MLX_SETUP *********************************************************/
 
@@ -70,7 +70,7 @@ void			check_limit_angle(double *angle);
 void			run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data, _Bool path_tracing);
 _Bool			detect_intersection(t_ray ray, t_obj *obj, long unsigned int *color, t_data *data);
 void			run_path_tracing(t_ray *cam_ray, t_obj *obj, unsigned long *color, t_data *data);
-_Bool			is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light, t_obj *hit_obj);
+_Bool			is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light, int hit_obj);
 t_vec3			*get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, double pixel_shadow, int rebound);
 t_vec3			get_light(t_data *data, t_ray hit, t_ray ray, double pixel_shadow);
 

@@ -34,18 +34,20 @@ t_ray	*get_random_ray(t_ray result)
 	return (random_ray);
 }
 
-_Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *result, t_obj **hit_obj_ref)
+_Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *result, int *hit_obj_ref)
 {
 	t_hit	hit;
 	_Bool	hit_obj;
 	double	dist_min;
+	int		i;
 
 	dist_min = 1E99;
 	hit_obj = FALSE;
+	i = 0;
 	result->color = create_vec3(0, 0, 0);
-	while (obj)
+	while (i < obj->obj_nb)
 	{
-		if (obj->hit_object(ray, obj, &hit))
+		if (obj->hit_object(ray, &obj[i], &hit))
 		{
 			hit_obj = TRUE;
 			if (dist_min > ray->closest_hit)
@@ -53,11 +55,11 @@ _Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *result, t_obj **hit_obj_r
 				dist_min = ray->closest_hit;
 				result->origin = hit.intersection;
 				result->dir = hit.normal;
-				result->color = *obj->color;
-				*hit_obj_ref = obj;
+				copy_vec3(&result->color, *obj[i].color);
+				*hit_obj_ref = i;
 			}
 		}
-		obj = obj->next;
+		i++;
 	}
 	return (hit_obj);
 }
@@ -76,7 +78,6 @@ void	prev_get_light(
 	intensity = 1000 * dot_vec3(normalized_light_vector, result.dir);
 	intensity /= get_norm2_vec3(light_vector);
 	clamp_intensity(&intensity);
-	(void)obj;
 	color.coord[R] = obj->color->coord[R] * intensity * pixel_shadow;
 	color.coord[G] = obj->color->coord[G] * intensity * pixel_shadow;
 	color.coord[B] = obj->color->coord[B] * intensity * pixel_shadow;
@@ -92,9 +93,9 @@ t_vec3	*get_color_pixel(
 	t_vec3			*final_color;
 	t_ray			*random_ray;
 	_Bool			hit_obj;
-	t_obj			*hit_obj_ref;
+	int				hit_obj_ref;
 
-	hit_obj_ref = NULL;
+	hit_obj_ref = -1;
 	final_color = ft_calloc(1, sizeof(t_vec3));
 	final_color->coord[R] = 0;
 	final_color->coord[G] = 0;
@@ -109,7 +110,8 @@ t_vec3	*get_color_pixel(
 		random_ray = get_random_ray(result);
 		// prev_get_light(obj, scene, result, &final_color, pixel_shadow);
 		*final_color = get_light(data, result, *ray, pixel_shadow);
-		*final_color = add_vec3(*final_color, *get_color_pixel(obj, data, random_ray, 1, --rebound));
+		if (rebound > 1)
+			*final_color = add_vec3(*final_color, *get_color_pixel(obj, data, random_ray, 1, --rebound));
 	}
 	return (final_color);
 }

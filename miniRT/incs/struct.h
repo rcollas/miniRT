@@ -68,6 +68,7 @@ typedef struct s_obj
 	double			height;
 	t_op			*hit_object;
 	double			shine_factor;
+	int				obj_nb;
 	struct s_obj	*next;
 }	t_obj;
 
@@ -96,6 +97,7 @@ typedef struct s_parsing
 	_Bool		camera;
 	_Bool		ambient_light;
 	_Bool		diffuse_light;
+	int 		obj_nb;
 }	t_parsing;
 
 typedef struct s_data
@@ -103,6 +105,7 @@ typedef struct s_data
 	t_mlx		*mlx;
 	t_scene		*scene;
 	t_obj		*obj;
+	int			obj_nb;
 	int			pixel_x;
 	int			pixel_y;
 	t_matrix4	cam_to_world_matrix;
