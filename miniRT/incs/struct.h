@@ -11,6 +11,15 @@ typedef struct s_ray
 	t_vec3	color;
 }	t_ray;
 
+// typedef struct s_ray
+// {
+// 	t_vec3	origin;
+// 	t_vec3	dir;
+// 	double	dist;
+// 	t_vec3	color;
+// 	double	pixel_shadow;
+// }	t_ray;
+
 typedef struct s_hit
 {
 	double		dist;

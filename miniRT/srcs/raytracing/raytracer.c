@@ -51,6 +51,7 @@ void	detect_intersection(
 		if (is_in_shadow(obj, result, data->scene->diffuse_light, hit_obj_ref))
 			hit_min.pixel_shadow = 0.3;
 		rgb = get_light(data, obj, result, ray, hit_min.pixel_shadow, CLASSIC_LIGHTING);
+		// rgb = get_light(data, obj, result, ray, hit_min.pixel_shadow, PHONG_LIGHTING);
 	}
 	*color = create_rgb_struct(&rgb);
 }
