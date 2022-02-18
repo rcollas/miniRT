@@ -80,8 +80,11 @@ _Bool			is_in_shadow(t_obj *obj,
 					t_ray ray, t_diffuse_light *light, t_obj *hit_obj);
 t_vec3			*get_color_pixel(t_obj *obj, t_data *data,
 					t_ray *ray, int rebound);
-t_vec3			get_light(t_data *data,
-					t_ray hit, t_ray ray, double pixel_shadow);
+t_vec3			get_light(t_data *data, t_obj *obj, t_ray hit,
+					t_ray ray, double pixel_shadow, _Bool phong_lighting);
+t_vec3			sum_phong_lights(t_data *data, t_obj *obj,
+					t_ray hit, t_ray ray, t_vec3 light_dir);
+t_vec3			get_ambient_light(t_scene *scene);
 
 /******************************** OBJECTS *************************************/
 
@@ -94,8 +97,10 @@ void			check_direction_normal(t_ray *ray, t_hit *hit);
 /*********************************** COLOR ************************************/
 
 void			draw_pixel(t_image *image, unsigned long color, t_data *data);
-unsigned long	create_trgb_struct(t_vec3 *color);
-unsigned long	create_trgb(int red, int green, int blue);
+unsigned long	create_rgb_struct(t_vec3 *color);
+unsigned long	create_rgb(int red, int green, int blue);
+unsigned long	create_trgb_struct(int transparency, t_vec3 *color);
+unsigned long	create_trgb(int transparency, int red, int green, int blue);
 void			check_limit_color(t_vec3 *color);
 void			clamp_intensity(double *intensity);
 void			clamp_color(int *color);

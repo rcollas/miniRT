@@ -11,7 +11,7 @@ SRC_FILES	= main.c \
 			$(PARSING) \
 			$(RAYTRACING) \
 			$(OBJECTS) \
-			$(COLOR) \
+			$(LIGHTING) \
 			$(LIB_MATH)
 
 PARSING = \
@@ -28,8 +28,6 @@ RAYTRACING = \
 			raytracing/path_tracing.c \
 			raytracing/camera_init.c \
 			raytracing/camera_move.c \
-			raytracing/shadow.c \
-			raytracing/light.c \
 
 OBJECTS = \
 			objects/sphere.c \
@@ -37,15 +35,19 @@ OBJECTS = \
 			objects/cylinder.c \
 			objects/disk.c \
 
-COLOR = \
-			color/utils.c \
-			color/rgb_check.c \
+LIGHTING = \
+			lighting/shadow.c \
+			lighting/light.c \
+			lighting/phong_light.c \
+			lighting/color_create.c \
+			lighting/color_check.c \
 
 LIB_MATH = \
 			lib_math/vec3_init.c \
 			lib_math/vec4_init.c \
-			lib_math/vec3_op.c \
-			lib_math/vec3_and_const_op.c \
+			lib_math/vec3_op1.c \
+			lib_math/vec3_op2.c \
+			lib_math/vec3_op3.c \
 			lib_math/vec3_norm.c \
 			lib_math/matrix.c \
 			lib_math/trigo.c \

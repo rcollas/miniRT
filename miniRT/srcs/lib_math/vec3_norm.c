@@ -4,7 +4,9 @@ double	get_norm_vec3(t_vec3 vector)
 {
 	double	norm;
 
-	norm = sqrt(powf(vector.coord[X], 2) + powf(vector.coord[Y], 2) + powf(vector.coord[Z], 2));
+	norm = sqrt(powf(vector.coord[X], 2)
+			+ powf(vector.coord[Y], 2)
+			+ powf(vector.coord[Z], 2));
 	return (norm);
 }
 
@@ -12,7 +14,9 @@ double	get_norm2_vec3(t_vec3 vector)
 {
 	double	norm;
 
-	norm = powf(vector.coord[X], 2) + powf(vector.coord[Y], 2) + powf(vector.coord[Z], 2);
+	norm = powf(vector.coord[X], 2)
+		+ powf(vector.coord[Y], 2)
+		+ powf(vector.coord[Z], 2);
 	return (norm);
 }
 

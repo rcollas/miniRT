@@ -9,7 +9,6 @@ _Bool	hit_plane(t_ray *ray, t_obj *obj, t_hit *hit)
 	check_direction_normal(ray, hit);
 	denominator = dot_vec3(hit->normal, ray->dir);
 	tmp = sub_vec3(*obj->origin, ray->origin);
-	// printf("x = %f | y = %f | z = %f\n", tmp.x, tmp.y, tmp.z);
 	hit->dist = dot_vec3(tmp, hit->normal) / denominator;
 	if (hit->dist >= 1e-6)
 	{

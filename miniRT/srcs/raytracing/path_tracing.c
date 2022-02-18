@@ -1,33 +1,62 @@
 #include "miniRT.h"
 
+// t_ray	*get_random_ray(t_ray result)
+// {
+// 	t_ray	*random_ray;
+// 	double	r1;
+// 	double	r2;
+// 	t_vec3	random_dir_local;
+// 	t_vec3	random_dir;
+// 	t_vec3	random;
+// 	t_vec3	tangent1;
+// 	t_vec3	tangent2;
+
+// 	random_ray = ft_calloc(1, sizeof(t_ray));
+// 	srand(ft_rand());
+// 	r1 = frand();
+// 	r2 = frand();
+// 	random_dir_local.coord[X] = cos(2 * M_PI * r1) * sqrt(1 - r2);
+// 	random_dir_local.coord[Y] = sin(2 * M_PI * r1) * sqrt(1 - r2);
+// 	random_dir_local.coord[Z] = sqrt(r2);
+// 	random.coord[X] = frand();
+// 	random.coord[Y] = frand();
+// 	random.coord[Z] = frand();
+// 	tangent1 = cross_vec3(result.dir, random);
+// 	normalize_vec3(&tangent1);
+// 	tangent2 = cross_vec3(tangent1, result.dir);
+// 	random_dir = add_vec3(mul_vec3_and_const(result.dir, random_dir_local.coord[Z]),
+// 			add_vec3(mul_vec3_and_const(tangent1, random_dir_local.coord[X]),
+// 				mul_vec3_and_const(tangent2, random_dir_local.coord[Y])));
+// 	random_ray->dir = random_dir;
+// 	random_ray->origin = add_vec3(result.origin, mul_vec3_and_const(result.dir, 0.1));
+// 	normalize_vec3(&random_ray->origin);
+// 	return (random_ray);
+// }
+
 t_ray	*get_random_ray(t_ray result)
 {
 	t_ray	*random_ray;
 	double	r1;
 	double	r2;
-	t_vec3	random_dir_local;
-	t_vec3	random_dir;
-	t_vec3	random;
-	t_vec3	tangent1;
-	t_vec3	tangent2;
+	t_vec3	vec[5];
 
 	random_ray = ft_calloc(1, sizeof(t_ray));
 	srand(ft_rand());
 	r1 = frand();
 	r2 = frand();
-	random_dir_local.coord[X] = cos(2 * M_PI * r1) * sqrt(1 - r2);
-	random_dir_local.coord[Y] = sin(2 * M_PI * r1) * sqrt(1 - r2);
-	random_dir_local.coord[Z] = sqrt(r2);
-	random.coord[X] = frand();
-	random.coord[Y] = frand();
-	random.coord[Z] = frand();
-	tangent1 = cross_vec3(result.dir, random);
-	normalize_vec3(&tangent1);
-	tangent2 = cross_vec3(tangent1, result.dir);
-	random_dir = add_vec3(mul_vec3_and_const(result.dir, random_dir_local.coord[Z]),
-			add_vec3(mul_vec3_and_const(tangent1, random_dir_local.coord[X]),
-				mul_vec3_and_const(tangent2, random_dir_local.coord[Y])));
-	random_ray->dir = random_dir;
+	vec[RANDOM_DIR_LOCAL].coord[X] = cos(2 * M_PI * r1) * sqrt(1 - r2);
+	vec[RANDOM_DIR_LOCAL].coord[Y] = sin(2 * M_PI * r1) * sqrt(1 - r2);
+	vec[RANDOM_DIR_LOCAL].coord[Z] = sqrt(r2);
+	vec[RANDOM].coord[X] = frand();
+	vec[RANDOM].coord[Y] = frand();
+	vec[RANDOM].coord[Z] = frand();
+	vec[TANGENT_1] = cross_vec3(result.dir, vec[RANDOM]);
+	normalize_vec3(&vec[TANGENT_1]);
+	vec[TANGENT_2] = cross_vec3(vec[TANGENT_1], result.dir);
+	vec[RANDOM_DIR] = add_vec3(mul_vec3_and_const(result.dir, vec[RANDOM_DIR_LOCAL].coord[Z]),
+			add_vec3(mul_vec3_and_const(vec[TANGENT_1], vec[RANDOM_DIR_LOCAL].coord[X]),
+				mul_vec3_and_const(vec[TANGENT_2], vec[RANDOM_DIR_LOCAL].coord[Y])));
+	random_ray->dir = vec[RANDOM_DIR];
 	random_ray->origin = add_vec3(result.origin, mul_vec3_and_const(result.dir, 0.1));
 	normalize_vec3(&random_ray->origin);
 	return (random_ray);
@@ -62,26 +91,6 @@ _Bool	check_all_objects(
 	return (hit_obj);
 }
 
-void	prev_get_light(
-	t_obj *obj, t_scene *scene, t_ray result, unsigned long *final_color, double pixel_shadow)
-{
-	t_vec3	light_vector;
-	t_vec3	normalized_light_vector;
-	double	intensity;
-	t_vec3	color;
-
-	light_vector = sub_vec3(*scene->diffuse_light->coord, result.origin);
-	normalized_light_vector = get_normalized_vec3(light_vector);
-	intensity = 1000 * dot_vec3(normalized_light_vector, result.dir);
-	intensity /= get_norm2_vec3(light_vector);
-	clamp_intensity(&intensity);
-	(void)obj;
-	color.coord[R] = obj->color->coord[R] * intensity * pixel_shadow;
-	color.coord[G] = obj->color->coord[G] * intensity * pixel_shadow;
-	color.coord[B] = obj->color->coord[B] * intensity * pixel_shadow;
-	*final_color = create_trgb_struct(&color);
-}
-
 t_vec3	*get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 {
 	t_ray	result;
@@ -105,8 +114,7 @@ t_vec3	*get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 	if (hit_obj)
 	{
 		random_ray = get_random_ray(result);
-		// prev_get_light(obj, scene, result, &final_color, pixel_shadow);
-		*final_color = get_light(data, result, *ray, pixel_shadow);
+		*final_color = get_light(data, obj, result, *ray, pixel_shadow, CLASSIC_LIGHTING);
 		if (rebound > 1)
 			*final_color = add_vec3(*final_color, *get_color_pixel(
 						obj, data, random_ray, --rebound));
@@ -129,5 +137,5 @@ void	run_path_tracing(
 	while (i--)
 		rgb = add_vec3(rgb, *get_color_pixel(obj, data, cam_ray, 4));
 	rgb = div_vec3_and_const(rgb, (double)PASSES);
-	*color = create_trgb_struct(&rgb);
+	*color = create_rgb_struct(&rgb);
 }

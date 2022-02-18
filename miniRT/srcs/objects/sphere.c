@@ -13,7 +13,6 @@ _Bool	hit_sphere(t_ray *ray, t_obj *obj, t_hit *hit)
 	double	roots[2];
 
 	radius = obj->diameter * 0.5;
-	// coeff[A] = 1;
 	coeff[A] = dot_vec3(ray->dir, ray->dir);
 	coeff[B] = 2 * dot_vec3(ray->dir, sub_vec3(ray->origin, *obj->origin));
 	coeff[C] = get_norm2_vec3(sub_vec3(ray->origin, *obj->origin)) - radius * radius;

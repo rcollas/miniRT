@@ -2,9 +2,9 @@
 
 unsigned int	ft_rand(void)
 {
-	int	fd;
-	unsigned buff;
-	unsigned *bit;
+	int				fd;
+	unsigned int	buff;
+	unsigned int	*bit;
 
 	fd = open("/dev/urandom", O_RDONLY);
 	read(fd, &buff, sizeof(unsigned));

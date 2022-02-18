@@ -50,9 +50,9 @@ void	detect_intersection(
 		result.color = hit_min.color;
 		if (is_in_shadow(obj, result, data->scene->diffuse_light, hit_obj_ref))
 			hit_min.pixel_shadow = 0.3;
-		rgb = get_light(data, result, ray, hit_min.pixel_shadow);
+		rgb = get_light(data, obj, result, ray, hit_min.pixel_shadow, CLASSIC_LIGHTING);
 	}
-	*color = create_trgb_struct(&rgb);
+	*color = create_rgb_struct(&rgb);
 }
 
 void	run_raytracing(

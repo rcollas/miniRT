@@ -12,9 +12,6 @@ _Bool	hit_disk(t_ray *ray, t_obj *obj, t_hit *hit)
 	v = sub_vec3(*obj->origin, hit->intersection);
 	dist = dot_vec3(v, v);
 	if (dist <= radius2)
-	{
-		// printf("radius2 = %f\n", radius2);
 		return (TRUE);
-	}
 	return (FALSE);
 }
