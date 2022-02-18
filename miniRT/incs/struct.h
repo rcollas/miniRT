@@ -7,27 +7,10 @@ typedef struct s_ray
 {
 	t_vec3	origin;
 	t_vec3	dir;
-	double	closest_hit;
+	double	dist;
 	t_vec3	color;
+	double	pixel_shadow;
 }	t_ray;
-
-// typedef struct s_ray
-// {
-// 	t_vec3	origin;
-// 	t_vec3	dir;
-// 	double	dist;
-// 	t_vec3	color;
-// 	double	pixel_shadow;
-// }	t_ray;
-
-typedef struct s_hit
-{
-	double		dist;
-	t_vec3		intersection;
-	t_vec3		normal;
-	t_vec3		color;
-	double		pixel_shadow;
-}	t_hit;
 
 typedef struct s_ambient_light
 {
@@ -65,7 +48,7 @@ typedef struct s_scene
 
 struct			s_obj;
 
-typedef _Bool	t_op(t_ray *ray, struct s_obj *obj, t_hit *hit);
+typedef _Bool	t_op(t_ray *ray, struct s_obj *obj, t_ray *hit);
 
 typedef struct s_obj
 {

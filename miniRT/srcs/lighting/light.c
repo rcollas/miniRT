@@ -29,7 +29,7 @@ t_vec3	compute_light(t_scene *scene, t_ray hit, t_vec3 light_dir)
 }
 
 t_vec3	get_light(
-	t_data *data, t_obj *obj, t_ray hit, t_ray ray, double pixel_shadow, _Bool phong_lighting)
+	t_data *data, t_obj *obj, t_ray hit, t_ray ray, _Bool phong_lighting)
 {
 	t_vec3	light_dir;
 	t_vec3	total_light;
@@ -43,6 +43,6 @@ t_vec3	get_light(
 		total_light = sum_phong_lights(data, obj, hit, ray, light_dir);
 	}
 	if (dot_vec3(hit.dir, light_dir) > 0)
-		total_light = mul_vec3_and_const(total_light, pixel_shadow);
+		total_light = mul_vec3_and_const(total_light, hit.pixel_shadow);
 	return (total_light);
 }

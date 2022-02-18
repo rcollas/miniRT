@@ -24,7 +24,7 @@
 
 # define HEIGHT 480
 # define WIDTH 720
-# define PASSES 10 
+# define PASSES 5
 # define SPECULAR_COEFF 64
 
 /******************************** MLX_SETUP ***********************************/
@@ -80,22 +80,22 @@ _Bool			is_in_shadow(t_obj *obj,
 					t_ray ray, t_diffuse_light *light, t_obj *hit_obj);
 t_vec3			*get_color_pixel(t_obj *obj, t_data *data,
 					t_ray *ray, int rebound);
-t_vec3			get_light(t_data *data, t_obj *obj, t_ray hit,
-					t_ray ray, double pixel_shadow, _Bool phong_lighting);
-t_vec3			sum_phong_lights(t_data *data, t_obj *obj,
-					t_ray hit, t_ray ray, t_vec3 light_dir);
-t_vec3			get_ambient_light(t_scene *scene);
 
 /******************************** OBJECTS *************************************/
 
-_Bool			hit_sphere(t_ray *ray, t_obj *obj, t_hit *hit);
-_Bool			hit_plane(t_ray *ray, t_obj *obj, t_hit *hit);
-_Bool			hit_cylinder(t_ray *ray, t_obj *obj, t_hit *hit);
-_Bool			hit_disk(t_ray *ray, t_obj *obj, t_hit *hit);
-void			check_direction_normal(t_ray *ray, t_hit *hit);
+_Bool			hit_sphere(t_ray *ray, t_obj *obj, t_ray *hit);
+_Bool			hit_plane(t_ray *ray, t_obj *obj, t_ray *hit);
+_Bool			hit_cylinder(t_ray *ray, t_obj *obj, t_ray *hit);
+_Bool			hit_disk(t_ray *ray, t_obj *obj, t_ray *hit);
+void			check_direction_normal(t_ray *ray, t_ray *hit);
 
-/*********************************** COLOR ************************************/
+/********************************* LIGHTING ***********************************/
 
+t_vec3			get_light(t_data *data, t_obj *obj, t_ray hit,
+					t_ray ray, _Bool phong_lighting);
+t_vec3			sum_phong_lights(t_data *data, t_obj *obj,
+					t_ray hit, t_ray ray, t_vec3 light_dir);
+t_vec3			get_ambient_light(t_scene *scene);
 void			draw_pixel(t_image *image, unsigned long color, t_data *data);
 unsigned long	create_rgb_struct(t_vec3 *color);
 unsigned long	create_rgb(int red, int green, int blue);

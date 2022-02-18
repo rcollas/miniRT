@@ -3,7 +3,7 @@
 _Bool	trace_shadow_ray(
 	t_ray *shadow_ray, t_obj *obj, t_diffuse_light *light, t_obj *hit_obj_ref)
 {
-	t_hit	hit;
+	t_ray	hit;
 	double	light_dist;
 	double	dist_min;
 
