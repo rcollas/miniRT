@@ -33,7 +33,6 @@ void	detect_intersection(
 	t_ray ray, t_obj *obj, unsigned long *color, t_data *data)
 {
 	_Bool	hit_obj;
-	t_obj	*current_obj;
 	t_ray	hit;
 	t_vec3	rgb;
 	int		i;
@@ -43,7 +42,7 @@ void	detect_intersection(
 	update_camera_ray(&ray, data);
 	while (i < data->obj_nb)
 	{
-		if (check_hit_object(&ray, current_obj, &hit))
+		if (check_hit_object(&ray, &obj[i], &hit))
 		{
 			hit_obj = TRUE;
 			hit.obj_ref = i;
