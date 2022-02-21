@@ -24,7 +24,7 @@
 
 # define HEIGHT 480
 # define WIDTH 720
-# define PASSES 5
+# define PASSES 1
 # define SPECULAR_COEFF 64
 
 /******************************** MLX_SETUP ***********************************/
@@ -79,7 +79,7 @@ void			run_path_tracing(t_ray *cam_ray,
 					t_obj *obj, unsigned long *color, t_data *data);
 _Bool			is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light);
 t_vec3			get_color_pixel(t_obj *obj, t_data *data,
-					t_ray *ray, int rebound);
+					t_ray *ray, int rebound, double ratio);
 
 /******************************** OBJECTS *************************************/
 
@@ -92,6 +92,7 @@ void			check_direction_normal(t_ray *ray, t_ray *hit);
 /********************************* LIGHTING ***********************************/
 
 t_vec3			get_light(t_data *data, t_ray hit, t_ray ray);
+t_vec3			get_light_path_tracing(t_data *data, t_ray hit, t_ray ray);
 t_vec3			sum_phong_lights(t_data *data,
 					t_ray hit, t_ray ray, t_vec3 light_dir);
 t_vec3			get_ambient_light(t_scene *scene);

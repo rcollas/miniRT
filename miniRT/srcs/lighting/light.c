@@ -63,3 +63,25 @@ t_vec3	get_light(t_data *data, t_ray hit, t_ray ray)
 		total_light = mul_vec3_and_const(total_light, hit.pixel_shadow);
 	return (total_light);
 }
+
+t_vec3	get_light_path_tracing(t_data *data, t_ray hit, t_ray ray)
+{
+	t_vec3	light_dir;
+	t_vec3	total_light;
+	t_vec3	normalized_light_dir;
+	double	intensity;
+
+	(void)ray;
+	total_light = create_vec3(0, 0, 0);
+	light_dir = sub_vec3(*data->scene->diffuse_light->coord, hit.origin);
+	normalized_light_dir = get_normalized_vec3(light_dir);
+	intensity = 3 * dot_vec3(normalized_light_dir, hit.dir);
+	intensity *= (data->scene->diffuse_light->intensity / M_PI);
+	clamp_intensity(&intensity);
+	if (hit.pixel_shadow == 1)
+		total_light = mul_vec3_and_const(*data->scene->diffuse_light->color, intensity);
+	total_light = add_vec3(total_light, get_ambient_light(data->scene));
+	if (dot_vec3(hit.dir, light_dir) > 0)
+		total_light = mul_vec3_and_const(total_light, hit.pixel_shadow);
+	return (total_light);
+}
