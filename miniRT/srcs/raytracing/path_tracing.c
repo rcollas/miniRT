@@ -47,11 +47,9 @@ _Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *hit_min)
 	_Bool	hit_obj;
 	int		i;
 
-	hit_min->dist = 1E99;
-	hit_obj = FALSE;
-	hit_min->color = create_vec3(0, 0, 0);
-	i = 0;
-	while (i < obj->obj_nb)
+	init_var_hit(&hit_obj, hit_min, &hit_min->color);
+	i = -1;
+	while (++i < obj->obj_nb)
 	{
 		if (obj[i].hit_object(ray, &(obj[i]), &hit))
 		{
@@ -59,14 +57,13 @@ _Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *hit_min)
 			if (hit_min->dist > hit.dist)
 			{
 				hit_min->dist = hit.dist;
-				hit_min->shine_factor = obj->shine_factor;
+				hit_min->shine_factor = obj[i].shine_factor;
 				copy_vec3(&hit_min->origin, hit.origin);
 				copy_vec3(&hit_min->dir, hit.dir);
-				copy_vec3(&hit_min->color, *obj->color);
+				copy_vec3(&hit_min->color, *obj[i].color);
 				hit_min->obj_ref = i;
 			}
 		}
-		i++;
 	}
 	return (hit_obj);
 }
@@ -78,6 +75,7 @@ t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 	t_vec3	final_color;
 	t_ray	*random_ray;
 
+	hit.obj_ref = -1;
 	init_var_hit(&hit_obj, &hit, &final_color);
 	hit_obj = check_all_objects(obj, ray, &hit);
 	if (hit_obj
@@ -109,7 +107,7 @@ void	run_path_tracing(
 	update_camera_ray(cam_ray, data);
 	rgb = create_vec3(0, 0, 0);
 	while (i--)
-		rgb = add_vec3(rgb, get_color_pixel(obj, data, cam_ray, 4));
+		rgb = add_vec3(rgb, get_color_pixel(obj, data, cam_ray, 2));
 	rgb = div_vec3_and_const(rgb, (double)PASSES);
 	*color = create_rgb_struct(&rgb);
 }
