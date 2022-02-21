@@ -109,8 +109,8 @@ t_obj	*list_to_tab(t_obj *obj)
 
 	i = 0;
 	obj_nb = list_len(obj);
-	obj_tab = (t_obj *)ft_calloc(obj_nb + 1, sizeof(t_obj));
-	while (i < obj_nb)
+	obj_tab = (t_obj *)ft_calloc(obj_nb, sizeof(t_obj));
+	while (obj)
 	{
 		obj_tab[i].type = obj->type;
 		copy_vec3(obj_tab[i].origin, *obj->origin);

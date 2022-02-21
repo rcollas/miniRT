@@ -47,7 +47,7 @@ _Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *result, int *hit_obj_ref)
 	result->color = create_vec3(0, 0, 0);
 	while (i < obj->obj_nb)
 	{
-		if (obj->hit_object(ray, &obj[i], &hit))
+		if (obj[i].hit_object(ray, &(obj[i]), &hit))
 		{
 			hit_obj = TRUE;
 			if (dist_min > ray->closest_hit)
@@ -55,7 +55,7 @@ _Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *result, int *hit_obj_ref)
 				dist_min = ray->closest_hit;
 				result->origin = hit.intersection;
 				result->dir = hit.normal;
-				copy_vec3(&result->color, *obj[i].color);
+				copy_vec3(&result->color, *(obj[i].color));
 				*hit_obj_ref = i;
 			}
 		}
