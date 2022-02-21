@@ -7,9 +7,8 @@ int	is_in_range(double min, double max, double value)
 
 int	is_valid_rgb(t_vec3 *rgb)
 {
-	if (!rgb) {
+	if (!rgb)
 		return (FALSE);
-	}
 	if (!is_in_range((double)0, (double)255, (double)rgb->coord[R]))
 		return (FALSE);
 	if (!is_in_range((double)0, (double)255, (double)rgb->coord[G]))
@@ -26,11 +25,11 @@ int	is_valid_vertex(t_vec3 *vertex)
 {
 	if (!vertex)
 		return (FALSE);
-	if (!is_in_range((double)-1, (double)1, (double)vertex->coord[X]))
+	if (!is_in_range((double) -1, (double)1, (double)vertex->coord[X]))
 		return (FALSE);
-	if (!is_in_range((double)-1, (double)1, (double)vertex->coord[Y]))
+	if (!is_in_range((double) -1, (double)1, (double)vertex->coord[Y]))
 		return (FALSE);
-	if (!is_in_range((double)-1, (double)1, (double)vertex->coord[Z]))
+	if (!is_in_range((double) -1, (double)1, (double)vertex->coord[Z]))
 		return (FALSE);
 	return (TRUE);
 }
@@ -39,7 +38,6 @@ int	ambient_light_check(t_ambient_light *ambient_light)
 {
 	if (!is_in_range((double)0, (double)1, (double)ambient_light->intensity))
 		return (FAIL);
-
 	if (!is_valid_rgb(ambient_light->color))
 		return (FAIL);
 	return (SUCCESS);

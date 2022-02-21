@@ -14,10 +14,11 @@ _Bool	hit_plane(t_ray *ray, t_obj *obj, t_ray *hit)
 		tmp = sub_vec3(*obj->origin, ray->origin);
 		hit->dist = dot_vec3(tmp, hit->dir);
 		hit->dist /= denominator;
-		if (hit->dist >= 0)
+		if (hit->dist > 0)
 		{
 			ray->dist = hit->dist;
-			hit->origin = add_vec3(ray->origin, mul_vec3_and_const(ray->dir, hit->dist));
+			hit->origin = add_vec3(
+				ray->origin, mul_vec3_and_const(ray->dir, hit->dist));
 			return (TRUE);
 		}
 	}

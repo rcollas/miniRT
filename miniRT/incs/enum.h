@@ -22,10 +22,9 @@ typedef enum s_define {
 	CLASSIC_LIGHTING	= 0,
 	PHONG_LIGHTING		= 1,
 	RANDOM_DIR_LOCAL	= 0,
-	RANDOM_DIR			= 1,
-	RANDOM				= 2,
-	TANGENT_1			= 3,
-	TANGENT_2			= 4,
+	RANDOM				= 1,
+	TANGENT_1			= 2,
+	TANGENT_2			= 3,
 }	t_define;
 
 typedef enum s_error {

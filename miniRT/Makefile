@@ -3,16 +3,19 @@ NAME		= miniRT
 NAME_DEBUG	= miniRT_debug
 
 SRC_FILES	= main.c \
-			setup.c \
-			events.c \
-			cleanup.c \
-			utils.c \
-			display.c \
+			$(UTILS) \
 			$(PARSING) \
 			$(RAYTRACING) \
 			$(OBJECTS) \
 			$(LIGHTING) \
 			$(LIB_MATH)
+
+UTILS = \
+			utils/setup.c \
+			utils/events.c \
+			utils/cleanup.c \
+			utils/safe_functions.c \
+			utils/display.c \
 
 PARSING = \
 			parsing/parsing.c \
@@ -22,6 +25,7 @@ PARSING = \
 			parsing/check.c \
 			parsing/obj_list.c \
 			parsing/fill_utils.c \
+			parsing/utils.c \
 
 RAYTRACING = \
 			raytracing/raytracer.c \
@@ -34,6 +38,7 @@ OBJECTS = \
 			objects/plane.c \
 			objects/cylinder.c \
 			objects/disk.c \
+			objects/utils.c \
 
 LIGHTING = \
 			lighting/shadow.c \

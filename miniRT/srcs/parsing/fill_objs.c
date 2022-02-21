@@ -55,7 +55,7 @@ void	fill_plane(t_parsing *var, char *line)
 
 void	fill_cylinder(t_parsing *var, char *line)
 {
-	int	i;
+	int		i;
 	t_obj	*obj;
 
 	i = 0;
@@ -67,7 +67,7 @@ void	fill_cylinder(t_parsing *var, char *line)
 		ft_exit_parsing(CYLINDER_FORMAT_ERROR, var);
 	}
 	obj = new_obj(CYLINDER, ft_atof(var->obj_info[3]),
-				  ft_atof(var->obj_info[4]));
+			ft_atof(var->obj_info[4]));
 	fill_vertex(var->obj_info[2], obj->dir);
 	fill_rgb(var->obj_info[5], obj->color);
 	fill_coordinates(var->obj_info[1], obj->origin);
@@ -98,7 +98,7 @@ void	fill_disk(t_parsing *var, char *line)
 	fill_coordinates(var->obj_info[1], obj->origin);
 	fill_vertex(var->obj_info[2], obj->dir);
 	fill_rgb(var->obj_info[4], obj->color);
-	if (check(obj,DISK) == FAIL)
+	if (check(obj, DISK) == FAIL)
 	{
 		error(DISK_FORMAT_ERROR, line);
 		ft_exit_parsing(DISK_FORMAT_ERROR, var);

@@ -74,11 +74,11 @@ void			run_raytracing(t_mlx *mlx,
 					t_scene *scene, t_data *data, _Bool path_tracing);
 void			detect_intersection(t_ray ray,
 					t_obj *obj, long unsigned int *color, t_data *data);
+void			init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color);
 void			run_path_tracing(t_ray *cam_ray,
 					t_obj *obj, unsigned long *color, t_data *data);
-_Bool			is_in_shadow(t_obj *obj,
-					t_ray ray, t_diffuse_light *light, t_obj *hit_obj);
-t_vec3			*get_color_pixel(t_obj *obj, t_data *data,
+_Bool			is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light);
+t_vec3			get_color_pixel(t_obj *obj, t_data *data,
 					t_ray *ray, int rebound);
 
 /******************************** OBJECTS *************************************/
@@ -91,9 +91,8 @@ void			check_direction_normal(t_ray *ray, t_ray *hit);
 
 /********************************* LIGHTING ***********************************/
 
-t_vec3			get_light(t_data *data, t_obj *obj, t_ray hit,
-					t_ray ray, _Bool phong_lighting);
-t_vec3			sum_phong_lights(t_data *data, t_obj *obj,
+t_vec3			get_light(t_data *data, t_ray hit, t_ray ray);
+t_vec3			sum_phong_lights(t_data *data,
 					t_ray hit, t_ray ray, t_vec3 light_dir);
 t_vec3			get_ambient_light(t_scene *scene);
 void			draw_pixel(t_image *image, unsigned long color, t_data *data);

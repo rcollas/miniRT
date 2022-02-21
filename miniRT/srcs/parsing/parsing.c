@@ -2,7 +2,7 @@
 
 int	convert_file_to_string(int fd, char **input)
 {
-	int 	ret;
+	int		ret;
 	char	buff[2];
 
 	ret = 1;
@@ -49,7 +49,7 @@ void	parsing_var_init(t_parsing *var)
 {
 	var->camera = FALSE;
 	var->diffuse_light = FALSE;
-	var->ambient_light= FALSE;
+	var->ambient_light = FALSE;
 	var->objs = NULL;
 	var->obj_info = NULL;
 	var->objs = NULL;
@@ -94,7 +94,6 @@ int	parsing(char **argv, int argc, t_parsing *parsing_var)
 	char	*input;
 
 	input = NULL;
-
 	parsing_var_init(parsing_var);
 	if (load_file(argv, argc, &fd) == FAIL)
 		return (FAIL);

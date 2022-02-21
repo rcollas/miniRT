@@ -3,7 +3,7 @@
 int	fill_rgb(char *rgb_values, t_vec3 *rgb)
 {
 	char	**split_rgb;
-	int 	i;
+	int		i;
 
 	i = 0;
 	split_rgb = ft_split(rgb_values, ",");
@@ -20,8 +20,8 @@ int	fill_rgb(char *rgb_values, t_vec3 *rgb)
 
 int	fill_coordinates(char *coordinates_values, t_vec3 *coordinates)
 {
-	char **split_coordinates;
-	int i;
+	char	**split_coordinates;
+	int		i;
 
 	i = 0;
 	split_coordinates = ft_split(coordinates_values, ",");
@@ -39,7 +39,7 @@ int	fill_coordinates(char *coordinates_values, t_vec3 *coordinates)
 int	fill_vertex(char *vertex_values, t_vec3 *vertex)
 {
 	char	**split_vertex;
-	int 	i;
+	int		i;
 
 	i = 0;
 	split_vertex = ft_split(vertex_values, ",");

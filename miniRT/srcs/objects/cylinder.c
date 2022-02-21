@@ -12,9 +12,10 @@ void	get_coeff(double coeff[3], t_ray *ray, t_obj *obj)
 	cyl_to_origin = sub_vec3(ray->origin, *obj->origin);
 	new_ray_dir = cross_vec3(ray->dir, normalized_dir);
 	coeff[A] = dot_vec3(new_ray_dir, new_ray_dir);
-	coeff[B] = 2 * dot_vec3(new_ray_dir, cross_vec3(cyl_to_origin, normalized_dir));
+	coeff[B] = 2 * dot_vec3(
+			new_ray_dir, cross_vec3(cyl_to_origin, normalized_dir));
 	coeff[C] = dot_vec3(cross_vec3(cyl_to_origin, normalized_dir),
-		cross_vec3(cyl_to_origin, normalized_dir));
+			cross_vec3(cyl_to_origin, normalized_dir));
 	coeff[C] -= (radius * radius);
 }
 
@@ -26,7 +27,8 @@ _Bool	hit_cylinder(t_ray *ray, t_obj *obj, t_ray *hit)
 	get_coeff(coeff, ray, obj);
 	if (solve_quadratic_equation(coeff, roots, &ray->dist))
 	{
-		hit->origin = add_vec3(ray->origin, mul_vec3_and_const(ray->dir, ray->dist));
+		hit->origin = add_vec3(
+				ray->origin, mul_vec3_and_const(ray->dir, ray->dist));
 		hit->dist = ray->dist;
 		hit->dir = get_normalized_vec3(sub_vec3(hit->origin, *obj->origin));
 		check_direction_normal(ray, hit);
@@ -34,7 +36,8 @@ _Bool	hit_cylinder(t_ray *ray, t_obj *obj, t_ray *hit)
 		{
 			ray->dist = roots[1];
 			hit->dist = ray->dist;
-			hit->origin = add_vec3(ray->origin, mul_vec3_and_const(ray->dir, ray->dist));
+			hit->origin = add_vec3(
+					ray->origin, mul_vec3_and_const(ray->dir, ray->dist));
 		}
 		if (get_norm_vec3(sub_vec3(hit->origin, *obj->origin)) > obj->height)
 			return (FALSE);

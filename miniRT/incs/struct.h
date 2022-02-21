@@ -3,13 +3,17 @@
 
 # include "lib_math.h"
 
+struct			s_obj;
+
 typedef struct s_ray
 {
-	t_vec3	origin;
-	t_vec3	dir;
-	double	dist;
-	t_vec3	color;
-	double	pixel_shadow;
+	t_vec3			origin;
+	t_vec3			dir;
+	double			dist;
+	t_vec3			color;
+	double			pixel_shadow;
+	double			shine_factor;
+	struct s_obj	*obj_ref;
 }	t_ray;
 
 typedef struct s_ambient_light
@@ -37,6 +41,7 @@ typedef struct s_diffuse_light
 	int			type;
 	t_vec3		coord[1];
 	double		intensity;
+	t_vec3		color[1];
 }	t_diffuse_light;
 
 typedef struct s_scene
@@ -45,8 +50,6 @@ typedef struct s_scene
 	t_diffuse_light	diffuse_light[1];
 	t_ambient_light	ambient_light[1];
 }	t_scene;
-
-struct			s_obj;
 
 typedef _Bool	t_op(t_ray *ray, struct s_obj *obj, t_ray *hit);
 
@@ -98,6 +101,7 @@ typedef struct s_data
 	int			pixel_x;
 	int			pixel_y;
 	t_matrix4	cam_to_world_matrix;
+	int			lighting;
 }	t_data;
 
 #endif
