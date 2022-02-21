@@ -16,7 +16,7 @@
 # include "enum.h"
 # include "utils.h"
 # ifdef __linux__
-# include "mlx_int.h"
+#  include "mlx_int.h"
 #  define IS_LINUX 1
 # else
 #  define IS_LINUX 0
@@ -24,9 +24,10 @@
 
 # define HEIGHT 480
 # define WIDTH 720
-# define PASSES 80 
+# define PASSES 5
+# define SPECULAR_COEFF 64
 
-/*********************************************** MLX_SETUP *********************************************************/
+/******************************** MLX_SETUP ***********************************/
 
 t_mlx			*setup_mlx(void);
 void			events_loop(t_data *data);
@@ -35,17 +36,19 @@ void			clean_mlx(t_mlx *mlx);
 void			free_list(t_obj *obj);
 int				check(void *obj, int type);
 void			init_data(t_parsing *parsing_var, t_data *data);
-void 			init_image(t_mlx *mlx, t_data *data);
+void			init_image(t_mlx *mlx, t_data *data);
 
-/************************************************ PARSING **********************************************************/
+/********************************* PARSING ************************************/
 
 void			fill_structure(t_parsing *parsing_var);
 int				fill_rgb(char *rgb_values, t_vec3 *rgb);
 int				fill_coordinates(char *coordinates_values, t_vec3 *coordinates);
 int				fill_vertex(char *vertex_values, t_vec3 *vertex);
-void			fill_ambient_light(t_parsing *parsing, t_ambient_light *ambient_light, char *line);
+void			fill_ambient_light(t_parsing *parsing,
+					t_ambient_light *ambient_light, char *line);
 void			fill_camera(t_parsing *parsing, t_camera *camera, char *line);
-void			fill_diffuse_light(t_parsing *parsing, t_diffuse_light *diffuse_light, char *line);
+void			fill_diffuse_light(t_parsing *parsing,
+					t_diffuse_light *diffuse_light, char *line);
 void			fill_scene(int type, t_parsing *var, char *line);
 t_obj			*new_obj(int type, double diameter, double height);
 void			fill_obj(int type, t_parsing *var, char *line);
@@ -57,7 +60,7 @@ int				parsing(char **argv, int argc, t_parsing *parsing_var);
 int				is_valid_type(char *type);
 void			ft_free(void *to_free);
 
-/************************************************* CAMERA **********************************************************/
+/********************************** CAMERA ************************************/
 
 t_matrix4		built_cam_to_world_matrix(t_camera *camera);
 void			update_camera_ray(t_ray *cam_ray, t_data *data);
@@ -65,28 +68,38 @@ void			init_camera_ray(t_ray *cam_ray, t_data *data);
 void			init_euler_angles(t_camera *camera);
 void			check_limit_angle(double *angle);
 
-/*********************************************** RAYTRACING ********************************************************/
+/******************************** RAYTRACING **********************************/
 
-void			run_raytracing(t_mlx *mlx, t_scene *scene, t_data *data, _Bool path_tracing);
-_Bool			detect_intersection(t_ray ray, t_obj *obj, long unsigned int *color, t_data *data);
-void			run_path_tracing(t_ray *cam_ray, t_obj *obj, unsigned long *color, t_data *data);
-_Bool			is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light, t_obj *hit_obj);
-t_vec3			*get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, double pixel_shadow, int rebound);
-t_vec3			get_light(t_data *data, t_ray hit, t_ray ray, double pixel_shadow);
+void			run_raytracing(t_mlx *mlx,
+					t_scene *scene, t_data *data, _Bool path_tracing);
+void			detect_intersection(t_ray ray,
+					t_obj *obj, long unsigned int *color, t_data *data);
+void			init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color);
+void			run_path_tracing(t_ray *cam_ray,
+					t_obj *obj, unsigned long *color, t_data *data);
+_Bool			is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light);
+t_vec3			get_color_pixel(t_obj *obj, t_data *data,
+					t_ray *ray, int rebound);
 
-/*********************************************** OBJECTS ********************************************************/
+/******************************** OBJECTS *************************************/
 
-_Bool			hit_sphere(t_ray *ray, t_obj *obj, t_hit *hit);
-_Bool			hit_plane(t_ray *ray, t_obj *obj, t_hit *hit);
-_Bool			hit_cylinder(t_ray *ray, t_obj *obj, t_hit *hit);
-_Bool			hit_disk(t_ray *ray, t_obj *obj, t_hit *hit);
-void			check_direction_normal(t_ray *ray, t_hit *hit);
+_Bool			hit_sphere(t_ray *ray, t_obj *obj, t_ray *hit);
+_Bool			hit_plane(t_ray *ray, t_obj *obj, t_ray *hit);
+_Bool			hit_cylinder(t_ray *ray, t_obj *obj, t_ray *hit);
+_Bool			hit_disk(t_ray *ray, t_obj *obj, t_ray *hit);
+void			check_direction_normal(t_ray *ray, t_ray *hit);
 
-/************************************************** COLOR **********************************************************/
+/********************************* LIGHTING ***********************************/
 
+t_vec3			get_light(t_data *data, t_ray hit, t_ray ray);
+t_vec3			sum_phong_lights(t_data *data,
+					t_ray hit, t_ray ray, t_vec3 light_dir);
+t_vec3			get_ambient_light(t_scene *scene);
 void			draw_pixel(t_image *image, unsigned long color, t_data *data);
-unsigned long	create_trgb_struct(t_vec3 *color);
-unsigned long	create_trgb(int red, int green, int blue);
+unsigned long	create_rgb_struct(t_vec3 *color);
+unsigned long	create_rgb(int red, int green, int blue);
+unsigned long	create_trgb_struct(int transparency, t_vec3 *color);
+unsigned long	create_trgb(int transparency, int red, int green, int blue);
 void			check_limit_color(t_vec3 *color);
 void			clamp_intensity(double *intensity);
 void			clamp_color(int *color);

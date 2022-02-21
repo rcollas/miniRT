@@ -1,6 +1,7 @@
 #include "miniRT.h"
 
-void	fill_ambient_light(t_parsing *parsing, t_ambient_light *ambient_light, char *line)
+void	fill_ambient_light(
+	t_parsing *parsing, t_ambient_light *ambient_light, char *line)
 {
 	int				i;
 
@@ -47,7 +48,8 @@ void	fill_camera(t_parsing *parsing, t_camera *camera, char *line)
 	parsing->camera = TRUE;
 }
 
-void	fill_diffuse_light(t_parsing *parsing, t_diffuse_light *diffuse_light, char *line)
+void	fill_diffuse_light(
+	t_parsing *parsing, t_diffuse_light *diffuse_light, char *line)
 {
 	int	i;
 
@@ -67,7 +69,10 @@ void	fill_diffuse_light(t_parsing *parsing, t_diffuse_light *diffuse_light, char
 		error(DIFFUSE_LIGHT_FORMAT_ERROR, line);
 		ft_exit_parsing(DIFFUSE_LIGHT_FORMAT_ERROR, parsing);
 	}
-	parsing->diffuse_light= TRUE;
+	diffuse_light->color->coord[R] = 1;
+	diffuse_light->color->coord[G] = 1;
+	diffuse_light->color->coord[B] = 1;
+	parsing->diffuse_light = TRUE;
 }
 
 void	fill_scene(int type, t_parsing *var, char *line)

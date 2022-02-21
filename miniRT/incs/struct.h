@@ -1,24 +1,18 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-#include "lib_math.h"
+# include "lib_math.h"
 
 typedef struct s_ray
 {
-	t_vec3	origin;
-	t_vec3	dir;
-	double	closest_hit;
-	t_vec3	color;
+	t_vec3			origin;
+	t_vec3			dir;
+	double			dist;
+	t_vec3			color;
+	double			pixel_shadow;
+	double			shine_factor;
+	int				obj_ref;
 }	t_ray;
-
-typedef struct s_hit
-{
-	double		dist;
-	t_vec3		intersection;
-	t_vec3		normal;
-	t_vec3		color;
-	double		pixel_shadow;
-}	t_hit;
 
 typedef struct s_ambient_light
 {
@@ -45,6 +39,7 @@ typedef struct s_diffuse_light
 	int			type;
 	t_vec3		coord[1];
 	double		intensity;
+	t_vec3		color[1];
 }	t_diffuse_light;
 
 typedef struct s_scene
@@ -54,9 +49,9 @@ typedef struct s_scene
 	t_ambient_light	ambient_light[1];
 }	t_scene;
 
-struct s_obj;
+struct			s_obj;
 
-typedef _Bool	t_op(t_ray *ray, struct s_obj *obj, t_hit *hit);
+typedef _Bool	t_op(t_ray *ray, struct s_obj *obj, t_ray *hit);
 
 typedef struct s_obj
 {
@@ -68,6 +63,7 @@ typedef struct s_obj
 	double			height;
 	t_op			*hit_object;
 	double			shine_factor;
+	int				obj_nb;
 	struct s_obj	*next;
 }	t_obj;
 
@@ -96,6 +92,7 @@ typedef struct s_parsing
 	_Bool		camera;
 	_Bool		ambient_light;
 	_Bool		diffuse_light;
+	int 		obj_nb;
 }	t_parsing;
 
 typedef struct s_data
@@ -103,10 +100,11 @@ typedef struct s_data
 	t_mlx		*mlx;
 	t_scene		*scene;
 	t_obj		*obj;
+	int			obj_nb;
 	int			pixel_x;
 	int			pixel_y;
 	t_matrix4	cam_to_world_matrix;
+	int			lighting;
 }	t_data;
-
 
 #endif

@@ -1,6 +1,7 @@
 #include "miniRT.h"
 
-_Bool	solve_quadratic_equation(double *coeff, double *roots, double *closest_hit)
+_Bool	solve_quadratic_equation(
+	double *coeff, double *roots, double *closest_hit)
 {
 	double	delta;
 

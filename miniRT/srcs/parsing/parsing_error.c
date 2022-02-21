@@ -1,4 +1,4 @@
-# include "miniRT.h"
+#include "miniRT.h"
 
 int	extension_error(char *str)
 {
@@ -39,11 +39,11 @@ int	incomplete_file_error(char *str)
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": File is incomplete\n", 2);
 	ft_putstr_fd(".rt must contain at least one camera C,"
-				 " one diffuse light L and one ambient light A\n", 2);
+		" one diffuse light L and one ambient light A\n", 2);
 	return (INCOMPLETE_FILE_ERROR);
 }
 
-int parsing_error(int errnum, char *str)
+int	parsing_error(int errnum, char *str)
 {
 	ft_putstr_fd("Error\n", 2);
 	if (errnum == EXTENSION_ERROR)
@@ -87,7 +87,7 @@ int	strjoin_error(void)
 	return (STRJOIN_ERROR);
 }
 
-int strdup_error(void)
+int	strdup_error(void)
 {
 	ft_putstr_fd("Critical error: Strdup failed\n", 2);
 	return (STRDUP_ERROR);
