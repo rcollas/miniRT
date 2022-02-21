@@ -35,6 +35,7 @@ void	init_data(t_parsing *parsing_var, t_data *data)
 	// data->lighting = PHONG_LIGHTING;
 	data->obj = parsing_var->objs;
 	data->scene = parsing_var->scene;
+	data->obj_nb = parsing_var->obj_nb;
 	data->mlx = setup_mlx();
 	if (!data->mlx)
 		exit_error(data);

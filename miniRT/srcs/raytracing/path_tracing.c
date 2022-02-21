@@ -45,13 +45,15 @@ _Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *hit_min)
 {
 	t_ray	hit;
 	_Bool	hit_obj;
+	int		i;
 
 	hit_min->dist = 1E99;
 	hit_obj = FALSE;
 	hit_min->color = create_vec3(0, 0, 0);
-	while (obj)
+	i = 0;
+	while (i < obj->obj_nb)
 	{
-		if (obj->hit_object(ray, obj, &hit))
+		if (obj[i].hit_object(ray, &(obj[i]), &hit))
 		{
 			hit_obj = TRUE;
 			if (hit_min->dist > hit.dist)
@@ -61,10 +63,10 @@ _Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *hit_min)
 				copy_vec3(&hit_min->origin, hit.origin);
 				copy_vec3(&hit_min->dir, hit.dir);
 				copy_vec3(&hit_min->color, *obj->color);
-				hit_min->obj_ref = obj;
+				hit_min->obj_ref = i;
 			}
 		}
-		obj = obj->next;
+		i++;
 	}
 	return (hit_obj);
 }

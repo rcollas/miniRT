@@ -1,21 +1,23 @@
 #include "miniRT.h"
 
 _Bool	trace_shadow_ray(
-	t_ray *shadow_ray, t_obj *obj, t_diffuse_light *light, t_obj *hit_obj)
+	t_ray *shadow_ray, t_obj *obj, t_diffuse_light *light, int obj_ref)
 {
 	t_ray	hit;
 	double	light_dist;
 	double	dist_min;
+	int		i;
 
 	hit.dist = 1E99;
+	i = 0;
 	dist_min = 1E99;
 	light_dist = get_norm_vec3(sub_vec3(*light->coord, shadow_ray->origin));
-	while (obj)
+	while (i < obj->obj_nb)
 	{
-		if (obj != hit_obj && obj->hit_object(shadow_ray, obj, &hit)
+		if (i != obj_ref && obj->hit_object(shadow_ray, &obj[i], &hit)
 			&& hit.dist < light_dist)
 			return (TRUE);
-		obj = obj->next;
+		i++;
 	}
 	return (FALSE);
 }

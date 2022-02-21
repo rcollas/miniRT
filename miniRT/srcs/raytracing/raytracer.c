@@ -14,9 +14,8 @@ _Bool	check_hit_object(
 			copy_vec3(&hit_min->origin, hit.origin);
 			copy_vec3(&hit_min->dir, hit.dir);
 			copy_vec3(&hit_min->color, *obj->color);
-			hit_min->obj_ref = obj;
+			return (TRUE);
 		}
-		return (TRUE);
 	}
 	return (FALSE);
 }
@@ -26,7 +25,7 @@ void	init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color)
 	*hit_obj = FALSE;
 	hit->dist = 1E99;
 	hit->pixel_shadow = 1;
-	hit->obj_ref = NULL;
+	hit->obj_ref = -1;
 	*color = create_vec3(0, 0, 0);
 }
 
@@ -37,15 +36,19 @@ void	detect_intersection(
 	t_obj	*current_obj;
 	t_ray	hit;
 	t_vec3	rgb;
+	int		i;
 
+	i = 0;
 	init_var_hit(&hit_obj, &hit, &rgb);
 	update_camera_ray(&ray, data);
-	current_obj = obj;
-	while (current_obj)
+	while (i < data->obj_nb)
 	{
 		if (check_hit_object(&ray, current_obj, &hit))
+		{
 			hit_obj = TRUE;
-		current_obj = current_obj->next;
+			hit.obj_ref = i;
+		}
+		i++;
 	}
 	if (hit_obj)
 	{

@@ -88,10 +88,51 @@ _Bool	file_is_complete(t_parsing *var, char *file)
 	return (SUCCESS);
 }
 
+int	list_len(t_obj *obj)
+{
+	int	i;
+
+	i = 0;
+	while (obj)
+	{
+		i++;
+		obj = obj->next;
+	}
+	return (i);
+}
+
+t_obj	*list_to_tab(t_obj *obj)
+{
+	int	i;
+	int	obj_nb;
+	t_obj	*obj_tab;
+
+	i = 0;
+	obj_nb = list_len(obj);
+	obj_tab = (t_obj *)ft_calloc(obj_nb, sizeof(t_obj));
+	while (obj)
+	{
+		obj_tab[i].type = obj->type;
+		copy_vec3(obj_tab[i].origin, *obj->origin);
+		copy_vec3(obj_tab[i].dir, *obj->dir);
+		copy_vec3(obj_tab[i].color, *obj->color);
+		obj_tab[i].diameter = obj->diameter;
+		obj_tab[i].height = obj->height;
+		obj_tab[i].hit_object = obj->hit_object;
+		obj_tab[i].shine_factor = obj->shine_factor;
+		obj_tab[i].obj_nb = obj_nb;
+		i++;
+		obj = obj->next;
+	}
+	free_list(obj);
+	return (obj_tab);
+}
+
 int	parsing(char **argv, int argc, t_parsing *parsing_var)
 {
 	int		fd;
 	char	*input;
+	t_obj	*obj_tab;
 
 	input = NULL;
 	parsing_var_init(parsing_var);
@@ -101,6 +142,9 @@ int	parsing(char **argv, int argc, t_parsing *parsing_var)
 	parsing_var->input_list = ft_split(input, "\n");
 	ft_free(input);
 	fill_structure(parsing_var);
+	parsing_var->obj_nb = list_len(parsing_var->objs);
+	obj_tab = list_to_tab(parsing_var->objs);
+	parsing_var->objs = obj_tab;
 	if (file_is_complete(parsing_var, argv[1]) == FAIL)
 		ft_exit_parsing(INCOMPLETE_FILE_ERROR, parsing_var);
 	free_str_tab(parsing_var->input_list);
