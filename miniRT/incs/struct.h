@@ -105,6 +105,7 @@ typedef struct s_data
 	int			pixel_y;
 	t_matrix4	cam_to_world_matrix;
 	int			lighting;
+	pthread_t	threads[THREADS];
 }	t_data;
 
 #endif

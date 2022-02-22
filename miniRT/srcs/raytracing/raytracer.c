@@ -52,7 +52,7 @@ void	detect_intersection(
 	if (hit_obj)
 	{
 		if (is_in_shadow(obj, hit, data->scene->diffuse_light))
-			hit.pixel_shadow = 0.5;
+			hit.pixel_shadow = SHADOW_COEFF;
 		rgb = get_light(data, hit, ray);
 	}
 	*color = create_rgb_struct(&rgb);
@@ -82,4 +82,18 @@ void	run_raytracing(
 	}
 	display_cam_param(data->scene->camera);
 	mlx_put_image_to_window(mlx->ptr, mlx->window, mlx->image->img_ptr, 0, 0);
+}
+
+void	run_multithreading(t_data *data, _Bool path_tracing)
+{
+	int	i;
+
+	i = -1;
+	while (++i < THREADS)
+	{
+		pthread_create();
+	}
+	i = -1;
+	while (++i < THREADS)
+		pthread_join(data->threads[i], NULL);
 }

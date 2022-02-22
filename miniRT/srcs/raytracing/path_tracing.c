@@ -80,7 +80,7 @@ t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 	hit_obj = check_all_objects(obj, ray, &hit);
 	if (hit_obj
 		&& is_in_shadow(obj, hit, data->scene->diffuse_light))
-		hit.pixel_shadow = 0.3;
+		hit.pixel_shadow = SHADOW_COEFF;
 	if (!rebound)
 		return (final_color);
 	if (hit_obj)
