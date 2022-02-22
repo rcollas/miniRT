@@ -64,72 +64,117 @@ _Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *result, int *hit_obj_ref)
 	return (hit_obj);
 }
 
-void	prev_get_light(
-	t_obj *obj, t_scene *scene, t_ray result, unsigned long *final_color, double pixel_shadow)
+double prev_get_light(t_scene *scene, t_ray result, double pixel_shadow)
 {
 	t_vec3	light_vector;
 	t_vec3	normalized_light_vector;
 	double	intensity;
-	t_vec3	color;
-	(void)obj;
 
 	light_vector = sub_vec3(*scene->diffuse_light->coord, result.origin);
 	normalized_light_vector = get_normalized_vec3(light_vector);
 	intensity = 1000 * dot_vec3(normalized_light_vector, result.dir);
 	intensity /= get_norm2_vec3(light_vector);
+	intensity *= pixel_shadow;
 	clamp_intensity(&intensity);
-	color.coord[R] = obj->color->coord[R] * intensity * pixel_shadow;
-	color.coord[G] = obj->color->coord[G] * intensity * pixel_shadow;
-	color.coord[B] = obj->color->coord[B] * intensity * pixel_shadow;
-	*final_color = create_trgb_struct(&color);
-	// *final_color = create_trgb(255 * intensity * pixel_shadow, 255 * intensity * pixel_shadow,
-	// 	255 * intensity * pixel_shadow);
+	return (intensity);
 }
 
-t_vec3	*get_color_pixel(
-	t_obj *obj, t_data *data, t_ray *ray, double pixel_shadow, int rebound)
+double	get_color_pixel(
+	t_obj *obj, t_data *data, t_ray *ray, double pixel_shadow, int rebound, t_vec3 *color, double prev_intensity)
 {
 	t_ray			result;
-	t_vec3			*final_color;
+	double			intensity;
 	t_ray			*random_ray;
 	_Bool			hit_obj;
 	int				hit_obj_ref;
 
 	hit_obj_ref = -1;
-	final_color = ft_calloc(1, sizeof(t_vec3));
-	final_color->coord[R] = 0;
-	final_color->coord[G] = 0;
-	final_color->coord[B] = 0;
+	//intensity = 0;
 	hit_obj = check_all_objects(obj, ray, &result, &hit_obj_ref);
+	(void)color;
+	(void)prev_intensity;
+	intensity = 0;
 	if (hit_obj && is_in_shadow(obj, result, data->scene->diffuse_light, hit_obj_ref))
 		pixel_shadow = 0.3;
 	if (!rebound)
-		return ((t_vec3 *)NULL);
+		return (0);
 	if (hit_obj)
 	{
+		//if (rebound == 10)
+		//	copy_vec3(color, result.color);
 		random_ray = get_random_ray(result);
 		// prev_get_light(obj, scene, result, &final_color, pixel_shadow);
-		*final_color = get_light(data, result, *ray, pixel_shadow);
-		if (rebound > 1)
-			*final_color = add_vec3(*final_color, *get_color_pixel(obj, data, random_ray, 1, --rebound));
+		intensity = prev_get_light(data->scene, result, pixel_shadow);
+		intensity = intensity - prev_intensity;
+		//*final_color = sub_vec3(get_light(data, result, *ray, pixel_shadow), *previous_color);
+		//*final_color = add_vec3(*final_color, *get_color_pixel(obj, data, random_ray, 1, --rebound, final_color));
+		intensity += get_color_pixel(obj, data, random_ray, 1, --rebound, NULL, intensity);
 	}
-	return (final_color);
+	return (intensity);
+}
+
+_Bool	get_rgb(t_ray ray, t_obj *obj, t_vec3 *color, t_data *data)
+{
+	_Bool	hit_obj;
+	t_hit	hit_min;
+	int 	i;
+	t_ray	result;
+	int		hit_obj_ref;
+	t_vec3 	rgb;
+
+	i = 0;
+	hit_min.pixel_shadow = 1;
+	hit_obj = FALSE;
+	hit_min.dist = 1E99;
+	update_camera_ray(&ray, data);
+	hit_obj_ref = -1;
+	rgb = create_vec3(0, 0, 0);
+	while (i < data->obj_nb)
+	{
+		if (check_hit_object(&ray, &obj[i], &hit_min))
+		{
+			hit_obj_ref = i;
+			hit_obj = TRUE;
+		}
+		i++;
+	}
+	if (hit_obj)
+	{
+		result.origin = hit_min.intersection;
+		result.dir = hit_min.normal;
+		result.color = hit_min.color;
+		if (is_in_shadow(obj, result, data->scene->diffuse_light, hit_obj_ref))
+			hit_min.pixel_shadow = 0.3;
+		rgb = get_light(data, result, ray, hit_min.pixel_shadow);
+	}
+	*color = rgb;
+	return (hit_obj);
 }
 
 void	run_path_tracing(t_ray *cam_ray, t_obj *obj, unsigned long *color, t_data *data)
 {
 	int				i;
-	t_vec3 			rgb;
+	double			intensity;
+	t_vec3			rgb;
 
 	*color = 0;
+	rgb = create_vec3(0, 0, 0);
 	i = PASSES;
 	update_camera_ray(cam_ray, data);
+	intensity = 0;
 	// *color = get_color_pixel(obj, data->scene, cam_ray, 1, 4);
-	rgb.coord[R] = 0;
-	rgb.coord[G] = 0;
-	rgb.coord[B] = 0;
+	get_rgb(*cam_ray, data->obj, &rgb, data);
 	while (i--)
-		rgb = add_vec3(rgb, *get_color_pixel(obj, data, cam_ray, 1, 4));
-	rgb = div_vec3_and_const(rgb, (double)PASSES);
+		intensity += get_color_pixel(obj, data, cam_ray, 1, 4, &rgb, 0);
+	intensity /= PASSES;
+	//printf("rgb R = %f\n", rgb.coord[R]);
+	//printf("rgb G = %f\n", rgb.coord[G]);
+	//printf("rgb B = %f\n", rgb.coord[B]);
+	if (intensity)
+	{
+		rgb.coord[R] *=  1 + intensity;
+		rgb.coord[G] *= 1 + intensity;
+		rgb.coord[B] *= 1 + intensity;
+	}
 	*color = create_trgb_struct(&rgb);
 }

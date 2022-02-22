@@ -63,11 +63,12 @@ t_vec3	sum_total_light(t_data *data, t_ray hit, t_ray ray, t_vec3 light_dir)
 
 	(void)ray;
 	(void)light_dir;
+
 	total_light = create_vec3(0, 0, 0);
 	total_light = add_vec3(total_light, get_ambient_light(data->scene, hit));
 	total_light = add_vec3(total_light, get_diffuse_light(data->scene, hit, light_dir));
 	total_light = add_vec3(total_light, get_specular_light(data->obj, hit, ray, light_dir));
-	total_light = mul_vec3(hit.color, total_light);
+	//total_light = mul_vec3(hit.color, total_light);
 	return (total_light);
 }
 
