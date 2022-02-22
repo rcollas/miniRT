@@ -78,17 +78,17 @@ t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 	hit.obj_ref = -1;
 	init_var_hit(&hit_obj, &hit, &final_color);
 	hit_obj = check_all_objects(obj, ray, &hit);
+	hit.pixel_shadow = 1;
 	if (hit_obj
 		&& is_in_shadow(obj, hit, data->scene->diffuse_light))
 		hit.pixel_shadow = 0.3;
-	if (!rebound)
+	if (!rebound || (hit.pixel_shadow == 1 && rebound < 1))
 		return (final_color);
 	if (hit_obj)
 	{
 		random_ray = get_random_ray(hit);
 		final_color = get_light(data, hit, *ray);
-		if (rebound > 1)
-			final_color = add_vec3(final_color, get_color_pixel(
+		final_color = add_vec3(final_color, get_color_pixel(
 						obj, data, random_ray, --rebound));
 	}
 	return (final_color);

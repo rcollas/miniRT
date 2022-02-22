@@ -24,7 +24,7 @@
 
 # define HEIGHT 480
 # define WIDTH 720
-# define PASSES 5
+# define PASSES 1
 # define SPECULAR_COEFF 64
 
 /******************************** MLX_SETUP ***********************************/
