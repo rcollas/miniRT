@@ -30,6 +30,7 @@ PARSING = \
 RAYTRACING = \
 			raytracing/raytracer.c \
 			raytracing/path_tracing.c \
+			raytracing/multithreading.c \
 			raytracing/camera_init.c \
 			raytracing/camera_move.c \
 
@@ -98,7 +99,7 @@ INCLUDE		= $(addprefix $(INCLUDE_DIR)/, $(INC_FILES))
 
 CC			= clang
 
-CFLAGS		= -Wall -Wextra -Werror -g3
+CFLAGS		= -Wall -Wextra -Werror -pthread -g3
 ifeq ($(DEBUG), on)
 	CFLAGS += -fsanitize=address
 endif

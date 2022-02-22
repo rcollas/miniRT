@@ -8,6 +8,15 @@
 # include <string.h>
 # include <errno.h>
 # include <math.h>
+# include <pthread.h> // only for BONUS
+
+# define HEIGHT 480
+# define WIDTH 720
+# define THREADS 8
+# define PASSES 5
+# define SPECULAR_COEFF 64
+# define SHADOW_COEFF 0.5f
+
 # include "mlx.h"
 # include "libft.h"
 # include "lib_math.h"
@@ -21,14 +30,6 @@
 # else
 #  define IS_LINUX 0
 # endif
-# include <pthread.h> // only for BONUS
-
-# define HEIGHT 480
-# define WIDTH 720
-# define PASSES 5
-# define SPECULAR_COEFF 64
-# define SHADOW_COEFF 0.4f
-# define THREADS 4
 
 /******************************** MLX_SETUP ***********************************/
 
@@ -66,20 +67,20 @@ void			ft_free(void *to_free);
 /********************************** CAMERA ************************************/
 
 t_matrix4		built_cam_to_world_matrix(t_camera *camera);
-void			update_camera_ray(t_ray *cam_ray, t_data *data);
+void			update_camera_ray(t_ray *cam_ray,
+					t_data *data, t_thread *thread);
 void			init_camera_ray(t_ray *cam_ray, t_data *data);
 void			init_euler_angles(t_camera *camera);
 void			check_limit_angle(double *angle);
 
 /******************************** RAYTRACING **********************************/
 
-void			run_raytracing(t_mlx *mlx,
-					t_scene *scene, t_data *data, _Bool path_tracing);
-void			detect_intersection(t_ray ray,
-					t_obj *obj, long unsigned int *color, t_data *data);
+void			run_minirt(t_data *data);
+void			run_raytracing(t_mlx *mlx, t_data *data, t_thread *thread);
+void			run_multithreading(t_data *data);
 void			init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color);
-void			run_path_tracing(t_ray *cam_ray,
-					t_obj *obj, unsigned long *color, t_data *data);
+void			run_path_tracing(t_ray *cam_ray, unsigned long *color,
+					t_data *data, t_thread *thread);
 _Bool			is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light);
 t_vec3			get_color_pixel(t_obj *obj, t_data *data,
 					t_ray *ray, int rebound);
@@ -98,7 +99,8 @@ t_vec3			get_light(t_data *data, t_ray hit, t_ray ray);
 t_vec3			sum_phong_lights(t_data *data,
 					t_ray hit, t_ray ray, t_vec3 light_dir);
 t_vec3			get_ambient_light(t_scene *scene);
-void			draw_pixel(t_image *image, unsigned long color, t_data *data);
+void			draw_pixel(t_image *image, unsigned long color,
+					t_thread *thread);
 unsigned long	create_rgb_struct(t_vec3 *color);
 unsigned long	create_rgb(int red, int green, int blue);
 unsigned long	create_trgb_struct(int transparency, t_vec3 *color);

@@ -95,7 +95,7 @@ t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 }
 
 void	run_path_tracing(
-	t_ray *cam_ray, t_obj *obj, unsigned long *color, t_data *data)
+	t_ray *cam_ray, unsigned long *color, t_data *data, t_thread *thread)
 {
 	int		i;
 	t_vec3	rgb;
@@ -104,10 +104,10 @@ void	run_path_tracing(
 	i = PASSES;
 	// data->lighting = PHONG_LIGHTING;
 	data->lighting = CLASSIC_LIGHTING;
-	update_camera_ray(cam_ray, data);
+	update_camera_ray(cam_ray, data, thread);
 	rgb = create_vec3(0, 0, 0);
 	while (i--)
-		rgb = add_vec3(rgb, get_color_pixel(obj, data, cam_ray, 2));
+		rgb = add_vec3(rgb, get_color_pixel(data->obj, data, cam_ray, 2));
 	rgb = div_vec3_and_const(rgb, (double)PASSES);
 	*color = create_rgb_struct(&rgb);
 }

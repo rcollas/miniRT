@@ -51,11 +51,16 @@ int	key_hook(int key, t_data *data)
 		return (exit_hook(data));
 	if (move_camera(key, data->scene->camera)
 		|| tilt_camera(key, data->scene->camera))
-		run_raytracing(data->mlx, data->scene, data, NO_PATH_TRACING);
+	{
+		data->path_tracing = NO_PATH_TRACING;
+		run_minirt(data);
+	}
 	if (key == KEY_P)
 	{
 		ft_putstr_fd("\n\033[38;5;123mRendering with path_tracing...\n\n\033[0m", 1);
-		run_raytracing(data->mlx, data->scene, data, PATH_TRACING);
+		data->path_tracing = PATH_TRACING;
+		data->multithreading = MULTITHREADING;
+		run_minirt(data);
 	}
 	return (0);
 }
