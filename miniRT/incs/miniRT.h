@@ -104,4 +104,13 @@ void			check_limit_color(t_vec3 *color);
 void			clamp_intensity(double *intensity);
 void			clamp_color(int *color);
 
+/***************************** OPTIMIZATION UTILS *******************************/
+
+# include <sys/time.h>
+
+double	get_timestamp(double start);
+double	get_time(void);
+double	elapsed_time(double start, double end);
+
+
 #endif

@@ -8,7 +8,11 @@ SRC_FILES	= main.c \
 			$(RAYTRACING) \
 			$(OBJECTS) \
 			$(LIGHTING) \
-			$(LIB_MATH)
+			$(LIB_MATH) \
+			$(OPT_UTILS)
+
+OPT_UTILS = \
+			utils/timestamp.c \
 
 UTILS = \
 			utils/setup.c \
