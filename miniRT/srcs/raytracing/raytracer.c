@@ -14,8 +14,8 @@ _Bool	check_hit_object(
 			copy_vec3(&hit_min->origin, hit.origin);
 			copy_vec3(&hit_min->dir, hit.dir);
 			copy_vec3(&hit_min->color, *obj->color);
-			return (TRUE);
 		}
+		return (TRUE);
 	}
 	return (FALSE);
 }
