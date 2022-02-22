@@ -64,15 +64,12 @@ void	run_raytracing(
 	unsigned long	pixel_color;
 	t_ray			cam_ray;
 	double			start;
-	unsigned long	*test;
 
 	init_image(mlx, data);
 	init_camera_ray(&cam_ray, data);
 	data->cam_to_world_matrix = built_cam_to_world_matrix(scene->camera);
 	data->pixel_y = -1;
-	test = ft_calloc(HEIGHT * 2 * WIDTH * 2, sizeof(unsigned long));
 	start = get_time();
-	int	j = 0;
 	while (++data->pixel_y < HEIGHT)
 	{
 		data->pixel_x = -1;
@@ -82,19 +79,8 @@ void	run_raytracing(
 				run_path_tracing(&cam_ray, data->obj, &pixel_color, data);
 			else
 				detect_intersection(cam_ray, data->obj, &pixel_color, data);
-			test[j] = pixel_color;
-			j++;
-			//draw_pixel(mlx->image, pixel_color, data);
+			draw_pixel(mlx->image, pixel_color, data);
 		}
-	}
-	unsigned long long color;
-	while (j > 0)
-	{
-		if (j > 3)
-			color = test[j] + test[j - 1] + test[j - 2] + test[j - 3];
-		color /= 4;
-		draw_pixel(mlx->image, color, data);
-		j -= 4;
 	}
 	printf("Render time: %fs\n", (get_time() - start) / 1000);
 	display_cam_param(data->scene->camera);
