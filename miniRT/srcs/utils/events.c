@@ -3,6 +3,7 @@
 int	exit_hook(t_data *data)
 {
 	clean_data(data);
+	printf("\n");
 	exit(EXIT_SUCCESS);
 	return (0);
 }
@@ -47,10 +48,7 @@ _Bool	tilt_camera(int key, t_camera *camera)
 int	key_hook(int key, t_data *data)
 {
 	if (key == KEY_ESC)
-	{
-		clean_data(data);
-		exit(EXIT_SUCCESS);
-	}
+		return (exit_hook(data));
 	if (move_camera(key, data->scene->camera)
 		|| tilt_camera(key, data->scene->camera))
 		run_raytracing(data->mlx, data->scene, data, NO_PATH_TRACING);
