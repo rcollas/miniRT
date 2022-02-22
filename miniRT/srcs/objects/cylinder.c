@@ -1,11 +1,11 @@
 #include "miniRT.h"
 
-void	get_coeff(double coeff[3], t_ray *ray, t_obj *obj)
+void	get_coeff(float coeff[3], t_ray *ray, t_obj *obj)
 {
 	t_vec3	normalized_dir;
 	t_vec3	cyl_to_origin;
 	t_vec3	new_ray_dir;
-	double	radius;
+	float	radius;
 
 	radius = obj->diameter / 2;
 	normalized_dir = get_normalized_vec3(*obj->dir);
@@ -21,8 +21,8 @@ void	get_coeff(double coeff[3], t_ray *ray, t_obj *obj)
 
 _Bool	hit_cylinder(t_ray *ray, t_obj *obj, t_ray *hit)
 {
-	double	coeff[3];
-	double	roots[2];
+	float	coeff[3];
+	float	roots[2];
 
 	get_coeff(coeff, ray, obj);
 	if (solve_quadratic_equation(coeff, roots, &ray->dist))

@@ -2,8 +2,8 @@
 
 t_vec3	get_diffuse_light(t_scene *scene, t_ray hit, t_vec3	light_dir)
 {
-	double	cos_theta;
-	double	intensity;
+	float	cos_theta;
+	float	intensity;
 	t_vec3	diffuse_light;
 
 	normalize_vec3(&hit.dir);
@@ -18,10 +18,10 @@ t_vec3	get_specular_light(
 	t_scene *scene, t_ray hit, t_ray ray, t_vec3 light_dir)
 {
 	t_vec3	specular_light;
-	double	intensity;
+	float	intensity;
 	t_vec3	reflected_ray;
 	t_vec3	view_ray;
-	double	cos_theta;
+	float	cos_theta;
 
 	specular_light = create_vec3(0, 0, 0);
 	view_ray = sub_vec3(ray.origin, hit.origin);

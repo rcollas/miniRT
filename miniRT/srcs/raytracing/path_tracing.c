@@ -17,8 +17,8 @@ t_vec3	get_random_ray_dir(t_ray result, t_vec3 *vec)
 t_ray	*get_random_ray(t_ray result)
 {
 	t_ray	*random_ray;
-	double	r1;
-	double	r2;
+	float	r1;
+	float	r2;
 	t_vec3	vec[4];
 
 	random_ray = ft_calloc(1, sizeof(t_ray));
@@ -90,27 +90,35 @@ _Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *hit_min)
 // 	return (final_color);
 // }
 
-t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound, double ratio)
+t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 {
 	_Bool	hit_obj;
 	t_ray	hit;
 	t_vec3	final_color;
+	t_vec3	direct_light;
+	t_vec3	indirect_light;
 	t_ray	*random_ray;
+	double	proba;
+	double	cos_theta;
 
 	init_var_hit(&hit_obj, &hit, &final_color);
+	direct_light = create_vec3(0, 0, 0);
+	indirect_light = create_vec3(0, 0, 0);
 	if (!rebound)
 		return (final_color);
 	hit_obj = check_all_objects(obj, ray, &hit);
 	if (!hit_obj)
 		return (final_color);
 	if (is_in_shadow(obj, hit, data->scene->diffuse_light))
-		hit.pixel_shadow = 0.3;
+		hit.pixel_shadow = SHADOW_COEFF;
 	random_ray = get_random_ray(hit);
-	final_color = get_light_path_tracing(data, hit, *ray);
-	final_color = mul_vec3_and_const(final_color, ratio);
-	if (rebound > 1)
-		final_color = add_vec3(final_color, get_color_pixel(
-					obj, data, random_ray, --rebound, ratio - 0.2));
+	proba = 1 / (2 * M_PI);
+	cos_theta = dot_vec3(random_ray->dir, hit.dir);
+	direct_light = get_light_path_tracing(data, hit, *ray);
+	// if (rebound > 1)
+	indirect_light = get_color_pixel(obj, data, random_ray, --rebound);
+	indirect_light = mul_vec3_and_const(indirect_light, 2 * cos_theta);
+	final_color = add_vec3(direct_light, indirect_light);
 	final_color = mul_vec3(hit.color, final_color);
 	return (final_color);
 }
@@ -128,7 +136,7 @@ void	run_path_tracing(
 	update_camera_ray(cam_ray, data);
 	rgb = create_vec3(0, 0, 0);
 	while (i--)
-		rgb = add_vec3(rgb, get_color_pixel(obj, data, cam_ray, 5, 1));
-	rgb = div_vec3_and_const(rgb, (double)PASSES);
+		rgb = add_vec3(rgb, get_color_pixel(obj, data, cam_ray, 5));
+	rgb = div_vec3_and_const(rgb, (float)PASSES);
 	*color = create_rgb_struct(&rgb);
 }

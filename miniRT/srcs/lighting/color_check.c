@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-void	clamp_intensity(double *intensity)
+void	clamp_intensity(float *intensity)
 {
 	if (*intensity > 1)
 		*intensity = 1;

@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-int	is_in_range(double min, double max, double value)
+int	is_in_range(float min, float max, float value)
 {
 	return (value >= min && value <= max);
 }
@@ -9,11 +9,11 @@ int	is_valid_rgb(t_vec3 *rgb)
 {
 	if (!rgb)
 		return (FALSE);
-	if (!is_in_range((double)0, (double)255, (double)rgb->coord[R]))
+	if (!is_in_range((float)0, (float)255, (float)rgb->coord[R]))
 		return (FALSE);
-	if (!is_in_range((double)0, (double)255, (double)rgb->coord[G]))
+	if (!is_in_range((float)0, (float)255, (float)rgb->coord[G]))
 		return (FALSE);
-	if (!is_in_range((double)0, (double)255, (double)rgb->coord[B]))
+	if (!is_in_range((float)0, (float)255, (float)rgb->coord[B]))
 		return (FALSE);
 	rgb->coord[R] /= 255.0;
 	rgb->coord[G] /= 255.0;
@@ -25,18 +25,18 @@ int	is_valid_vertex(t_vec3 *vertex)
 {
 	if (!vertex)
 		return (FALSE);
-	if (!is_in_range((double) -1, (double)1, (double)vertex->coord[X]))
+	if (!is_in_range((float) -1, (float)1, (float)vertex->coord[X]))
 		return (FALSE);
-	if (!is_in_range((double) -1, (double)1, (double)vertex->coord[Y]))
+	if (!is_in_range((float) -1, (float)1, (float)vertex->coord[Y]))
 		return (FALSE);
-	if (!is_in_range((double) -1, (double)1, (double)vertex->coord[Z]))
+	if (!is_in_range((float) -1, (float)1, (float)vertex->coord[Z]))
 		return (FALSE);
 	return (TRUE);
 }
 
 int	ambient_light_check(t_ambient_light *ambient_light)
 {
-	if (!is_in_range((double)0, (double)1, (double)ambient_light->intensity))
+	if (!is_in_range((float)0, (float)1, (float)ambient_light->intensity))
 		return (FAIL);
 	if (!is_valid_rgb(ambient_light->color))
 		return (FAIL);
@@ -47,14 +47,14 @@ int	camera_check(t_camera *camera)
 {
 	if (!is_valid_vertex(camera->dir))
 		return (FAIL);
-	if (!is_in_range((double)0, (double)180, (float)camera->fov))
+	if (!is_in_range((float)0, (float)180, (float)camera->fov))
 		return (FAIL);
 	return (SUCCESS);
 }
 
 int	diffuse_light_check(t_diffuse_light *diffuse_light)
 {
-	if (!is_in_range((double)0, (double)1, diffuse_light->intensity))
+	if (!is_in_range((float)0, (float)1, diffuse_light->intensity))
 		return (FAIL);
 	return (SUCCESS);
 }

@@ -4,8 +4,8 @@ _Bool	trace_shadow_ray(
 	t_ray *shadow_ray, t_obj *obj, t_diffuse_light *light, int obj_ref)
 {
 	t_ray	hit;
-	double	light_dist;
-	double	dist_min;
+	float	light_dist;
+	float	dist_min;
 	int		i;
 
 	hit.dist = 1E99;

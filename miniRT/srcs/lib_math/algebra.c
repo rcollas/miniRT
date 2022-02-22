@@ -1,9 +1,9 @@
 #include "miniRT.h"
 
 _Bool	solve_quadratic_equation(
-	double *coeff, double *roots, double *closest_hit)
+	float *coeff, float *roots, float *closest_hit)
 {
-	double	delta;
+	float	delta;
 
 	delta = coeff[B] * coeff[B] - (4 * coeff[A] * coeff[C]);
 	if (delta < 0)

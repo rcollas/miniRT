@@ -22,11 +22,6 @@
 #  define IS_LINUX 0
 # endif
 
-# define HEIGHT 480
-# define WIDTH 720
-# define PASSES 1
-# define SPECULAR_COEFF 64
-
 /******************************** MLX_SETUP ***********************************/
 
 t_mlx			*setup_mlx(void);
@@ -50,7 +45,7 @@ void			fill_camera(t_parsing *parsing, t_camera *camera, char *line);
 void			fill_diffuse_light(t_parsing *parsing,
 					t_diffuse_light *diffuse_light, char *line);
 void			fill_scene(int type, t_parsing *var, char *line);
-t_obj			*new_obj(int type, double diameter, double height);
+t_obj			*new_obj(int type, float diameter, float height);
 void			fill_obj(int type, t_parsing *var, char *line);
 void			obj_add_back(t_obj **obj_list, t_obj *to_add);
 _Bool			is_valid_extension(char *arg);
@@ -66,7 +61,7 @@ t_matrix4		built_cam_to_world_matrix(t_camera *camera);
 void			update_camera_ray(t_ray *cam_ray, t_data *data);
 void			init_camera_ray(t_ray *cam_ray, t_data *data);
 void			init_euler_angles(t_camera *camera);
-void			check_limit_angle(double *angle);
+void			check_limit_angle(float *angle);
 
 /******************************** RAYTRACING **********************************/
 
@@ -79,7 +74,7 @@ void			run_path_tracing(t_ray *cam_ray,
 					t_obj *obj, unsigned long *color, t_data *data);
 _Bool			is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light);
 t_vec3			get_color_pixel(t_obj *obj, t_data *data,
-					t_ray *ray, int rebound, double ratio);
+					t_ray *ray, int rebound);
 
 /******************************** OBJECTS *************************************/
 
@@ -102,7 +97,7 @@ unsigned long	create_rgb(int red, int green, int blue);
 unsigned long	create_trgb_struct(int transparency, t_vec3 *color);
 unsigned long	create_trgb(int transparency, int red, int green, int blue);
 void			check_limit_color(t_vec3 *color);
-void			clamp_intensity(double *intensity);
+void			clamp_intensity(float *intensity);
 void			clamp_color(int *color);
 
 #endif

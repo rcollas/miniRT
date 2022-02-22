@@ -10,7 +10,7 @@ t_vec3	inverse_vec3(t_vec3 vector)
 	return (new_vector);
 }
 
-double	dot_vec3(t_vec3 vector_1, t_vec3 vector_2)
+float	dot_vec3(t_vec3 vector_1, t_vec3 vector_2)
 {
 	return (vector_1.coord[X] * vector_2.coord[X]
 		+ vector_1.coord[Y] * vector_2.coord[Y]

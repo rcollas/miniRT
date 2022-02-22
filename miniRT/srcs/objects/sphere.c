@@ -2,9 +2,9 @@
 
 _Bool	hit_sphere(t_ray *ray, t_obj *obj, t_ray *hit)
 {
-	double	coeff[3];
-	double	radius;
-	double	roots[2];
+	float	coeff[3];
+	float	radius;
+	float	roots[2];
 
 	radius = obj->diameter * 0.5;
 	coeff[A] = dot_vec3(ray->dir, ray->dir);

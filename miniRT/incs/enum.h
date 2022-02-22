@@ -1,6 +1,12 @@
 #ifndef ENUM_H
 # define ENUM_H
 
+# define HEIGHT 480
+# define WIDTH 720
+# define PASSES 1
+# define SPECULAR_COEFF 64
+# define SHADOW_COEFF 0.3f
+
 typedef enum s_define {
 	TRUE				= 1,
 	FALSE				= 0,

@@ -1,30 +1,46 @@
 #include "miniRT.h"
 
-double	get_norm_vec3(t_vec3 vector)
+float fast_inverse_sqrt( float number )
 {
-	double	norm;
+	long i;
+	float x2, y;
+	float threehalfs = 1.5F;
 
-	norm = sqrt(powf(vector.coord[X], 2)
-			+ powf(vector.coord[Y], 2)
-			+ powf(vector.coord[Z], 2));
+	x2 = number * 0.5F;
+	y  = number;
+	i  = * ( int * ) &y;
+	i  = 0x5f3759df - ( i >> 1 );
+	y  = * ( float * ) &i;
+	y  = y * ( threehalfs - ( x2 * y * y ) );
+	// y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed
+
+	return (y);
+}
+
+float	get_norm2_vec3(t_vec3 vector)
+{
+	float	norm;
+
+	norm = vector.coord[X] * vector.coord[X]
+		+ vector.coord[Y] * vector.coord[Y]
+		+ vector.coord[Z] * vector.coord[Z];
 	return (norm);
 }
 
-double	get_norm2_vec3(t_vec3 vector)
+float	get_norm_vec3(t_vec3 vector)
 {
-	double	norm;
+	float	norm;
 
-	norm = powf(vector.coord[X], 2)
-		+ powf(vector.coord[Y], 2)
-		+ powf(vector.coord[Z], 2);
+	norm = sqrt(get_norm2_vec3(vector));
 	return (norm);
 }
 
 void	normalize_vec3(t_vec3 *vector)
 {
-	double	norm_reciprocal;
+	float	norm_reciprocal;
 
-	norm_reciprocal = 1 / get_norm_vec3(*vector);
+	// norm_reciprocal = 1 / get_norm_vec3(*vector);
+	norm_reciprocal = fast_inverse_sqrt(get_norm2_vec3(*vector));
 	vector->coord[X] *= norm_reciprocal;
 	vector->coord[Y] *= norm_reciprocal;
 	vector->coord[Z] *= norm_reciprocal;

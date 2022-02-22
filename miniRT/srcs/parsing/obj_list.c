@@ -28,7 +28,7 @@ void	obj_add_back(t_obj **obj_list, t_obj *to_add)
 		*obj_list = to_add;
 }
 
-t_obj	*new_obj(int type, double diameter, double height)
+t_obj	*new_obj(int type, float diameter, float height)
 {
 	t_obj	*obj;
 

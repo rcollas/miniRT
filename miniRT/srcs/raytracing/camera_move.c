@@ -2,8 +2,8 @@
 
 void	compute_cam_dir(t_camera *camera)
 {
-	double	yaw;
-	double	pitch;
+	float	yaw;
+	float	pitch;
 
 	check_limit_angle(&camera->pitch_angle);
 	yaw = convert_deg_to_rad(camera->yaw_angle);

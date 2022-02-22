@@ -52,7 +52,8 @@ void	detect_intersection(
 	if (hit_obj)
 	{
 		if (is_in_shadow(obj, hit, data->scene->diffuse_light))
-			hit.pixel_shadow = 0.5;
+			hit.pixel_shadow = 0.3;
+		// printf("shadow = %f\n", hit.pixel_shadow);
 		rgb = get_light(data, hit, ray);
 	}
 	*color = create_rgb_struct(&rgb);

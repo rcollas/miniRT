@@ -3,7 +3,7 @@
 t_vec3	get_ambient_light(t_scene *scene)
 {
 	t_vec3	ambient_light;
-	double	intensity;
+	float	intensity;
 
 	intensity = scene->ambient_light->intensity;
 	ambient_light = mul_vec3_and_const(*scene->ambient_light->color, intensity);
@@ -31,7 +31,7 @@ t_vec3	get_ambient_light(t_scene *scene)
 t_vec3	compute_classic_light(t_scene *scene, t_ray hit, t_vec3 light_dir)
 {
 	t_vec3	normalized_light_dir;
-	double	intensity;
+	float	intensity;
 	t_vec3	total_light;
 
 	total_light = create_vec3(0, 0, 0);
@@ -69,7 +69,7 @@ t_vec3	get_light_path_tracing(t_data *data, t_ray hit, t_ray ray)
 	t_vec3	light_dir;
 	t_vec3	total_light;
 	t_vec3	normalized_light_dir;
-	double	intensity;
+	float	intensity;
 
 	(void)ray;
 	total_light = create_vec3(0, 0, 0);

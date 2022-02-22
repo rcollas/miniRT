@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-t_vec3	create_vec3(double x, double y, double z)
+t_vec3	create_vec3(float x, float y, float z)
 {
 	t_vec3	new_vector;
 

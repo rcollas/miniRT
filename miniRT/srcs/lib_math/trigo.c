@@ -1,11 +1,11 @@
 #include "miniRT.h"
 
-double	convert_deg_to_rad(double angle)
+float	convert_deg_to_rad(float angle)
 {
 	return (angle * M_PI / 180);
 }
 
-double	convert_rad_to_deg(double angle)
+float	convert_rad_to_deg(float angle)
 {
 	return (angle * 180 / M_PI);
 }

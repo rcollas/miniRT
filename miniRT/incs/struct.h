@@ -7,17 +7,17 @@ typedef struct s_ray
 {
 	t_vec3			origin;
 	t_vec3			dir;
-	double			dist;
+	float			dist;
 	t_vec3			color;
-	double			pixel_shadow;
-	double			shine_factor;
+	float			pixel_shadow;
+	float			shine_factor;
 	int				obj_ref;
 }	t_ray;
 
 typedef struct s_ambient_light
 {
 	int			type;
-	double		intensity;
+	float		intensity;
 	t_vec3		color[1];
 }	t_ambient_light;
 
@@ -26,19 +26,19 @@ typedef struct s_camera
 	int			type;
 	t_vec3		origin[1];
 	t_vec3		dir[1];
-	double		fov;
+	float		fov;
 	t_vec3		forward;
 	t_vec3		up;
 	t_vec3		right;
-	double		yaw_angle;
-	double		pitch_angle;
+	float		yaw_angle;
+	float		pitch_angle;
 }	t_camera;
 
 typedef struct s_diffuse_light
 {
 	int			type;
 	t_vec3		coord[1];
-	double		intensity;
+	float		intensity;
 	t_vec3		color[1];
 }	t_diffuse_light;
 
@@ -59,10 +59,10 @@ typedef struct s_obj
 	t_vec3			origin[1];
 	t_vec3			dir[1];
 	t_vec3			color[1];
-	double			diameter;
-	double			height;
+	float			diameter;
+	float			height;
 	t_op			*hit_object;
-	double			shine_factor;
+	float			shine_factor;
 	int				obj_nb;
 	struct s_obj	*next;
 }	t_obj;
