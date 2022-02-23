@@ -57,7 +57,6 @@ int	key_hook(int key, t_data *data)
 	}
 	if (key == KEY_P)
 	{
-		ft_putstr_fd("\n\033[38;5;123mRendering with path_tracing...\n\n\033[0m", 1);
 		data->path_tracing = PATH_TRACING;
 		data->multithreading = MULTITHREADING;
 		run_minirt(data);

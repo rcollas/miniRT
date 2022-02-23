@@ -8,13 +8,15 @@ _Bool	trace_shadow_ray(
 	double	dist_min;
 	int		i;
 
+	(void)obj_ref;
 	hit.dist = 1E99;
 	i = 0;
 	dist_min = 1E99;
 	light_dist = get_norm_vec3(sub_vec3(*light->coord, shadow_ray->origin));
 	while (i < obj->obj_nb)
 	{
-		if (i != obj_ref && obj[i].hit_object(shadow_ray, &obj[i], &hit)
+		// if (i != obj_ref && obj[i].hit_object(shadow_ray, &obj[i], &hit)
+		if (obj[i].hit_object(shadow_ray, &obj[i], &hit)
 			&& hit.dist < light_dist)
 			return (TRUE);
 		i++;

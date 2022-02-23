@@ -13,6 +13,16 @@ void	*init_multithreading(void *void_thread)
 	return (NULL);
 }
 
+void	*progress_bar(void *void_data)
+{
+	t_data		*data;
+
+	data = (t_data *)void_data;
+	while (data->multi_thread[0].pixel_y < data->multi_thread[0].max_height)
+		printf("%d\n", data->multi_thread[0].pixel_y);
+	return (NULL);
+}
+
 void	run_multithreading(t_data *data)
 {
 	int	i;
