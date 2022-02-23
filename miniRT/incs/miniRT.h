@@ -13,7 +13,7 @@
 # define HEIGHT 480
 # define WIDTH 720
 # define THREADS 8
-# define PASSES 5
+# define PASSES 4
 # define SPECULAR_COEFF 64
 # define SHADOW_COEFF 0.3f
 
