@@ -15,7 +15,7 @@
 # define THREADS 8
 # define PASSES 5
 # define SPECULAR_COEFF 64
-# define SHADOW_COEFF 0.5f
+# define SHADOW_COEFF 0.3f
 
 # include "mlx.h"
 # include "libft.h"
