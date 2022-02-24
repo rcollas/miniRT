@@ -26,6 +26,7 @@ SRCS		= ft_memset.c\
 			  ft_substr.c\
 			  ft_strcmp.c\
 			  ft_strjoin.c\
+			  ft_strjoin_and_free.c\
 			  ft_strtrim.c\
 			  ft_split.c\
 			  ft_itoa.c\
@@ -34,6 +35,7 @@ SRCS		= ft_memset.c\
 			  ft_putstr_fd.c\
 			  ft_putendl_fd.c\
 			  ft_putnbr_fd.c\
+			  clean_free.c\
 
 BONUS		= ft_lstnew.c\
 			  ft_lstadd_front.c\

@@ -17,16 +17,16 @@ void	init_euler_angles(t_camera *camera)
 	check_limit_angle(&camera->pitch_angle);
 }
 
-void	update_camera_ray(t_ray *cam_ray, t_data *data)
+void	update_camera_ray(t_ray *cam_ray, t_data *data, t_thread *thread)
 {
 	double	ratio;
 	double	scale;
 
 	ratio = (double)WIDTH / (double)HEIGHT;
 	scale = tan(data->scene->camera->fov * 0.5);
-	cam_ray->dir.coord[X] = (2.0 * ((data->pixel_x + 0.5)
+	cam_ray->dir.coord[X] = (2.0 * ((thread->pixel_x + 0.5)
 				/ (double)WIDTH) - 1.0) * ratio * scale;
-	cam_ray->dir.coord[Y] = (1 - 2 * ((data->pixel_y + 0.5)
+	cam_ray->dir.coord[Y] = (1 - 2 * ((thread->pixel_y + 0.5)
 				/ (double)HEIGHT)) * scale;
 	cam_ray->dir.coord[Z] = -1.0;
 	cam_ray->dir = mul_dir_and_matrix4(cam_ray->dir, data->cam_to_world_matrix);

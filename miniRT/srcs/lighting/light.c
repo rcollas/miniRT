@@ -10,24 +10,6 @@ t_vec3	get_ambient_light(t_scene *scene)
 	return (ambient_light);
 }
 
-// t_vec3	compute_classic_light(t_scene *scene, t_ray hit, t_vec3 light_dir)
-// {
-// 	t_vec3	normalized_light_dir;
-// 	double	intensity;
-// 	t_vec3	total_light;
-
-// 	total_light = create_vec3(0, 0, 0);
-// 	normalized_light_dir = get_normalized_vec3(light_dir);
-// 	intensity = 800 * dot_vec3(normalized_light_dir, hit.dir);
-// 	intensity /= get_norm2_vec3(light_dir);
-// 	clamp_intensity(&intensity);
-	// if (hit.pixel_shadow == 1)
-		// total_light = mul_vec3_and_const(*scene->diffuse_light->color, intensity);
-// 	total_light = add_vec3(total_light, get_ambient_light(scene));
-// 	total_light = mul_vec3(hit.color, total_light);
-// 	return (total_light);
-// }
-
 t_vec3	compute_classic_light(t_scene *scene, t_ray hit, t_vec3 light_dir)
 {
 	t_vec3	normalized_light_dir;
@@ -40,7 +22,8 @@ t_vec3	compute_classic_light(t_scene *scene, t_ray hit, t_vec3 light_dir)
 	intensity *= (scene->diffuse_light->intensity / M_PI);
 	clamp_intensity(&intensity);
 	if (hit.pixel_shadow == 1)
-		total_light = mul_vec3_and_const(*scene->diffuse_light->color, intensity);
+		total_light = mul_vec3_and_const(
+				*scene->diffuse_light->color, intensity);
 	total_light = add_vec3(total_light, get_ambient_light(scene));
 	total_light = mul_vec3(hit.color, total_light);
 	return (total_light);

@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 	init_data(parsing_var, data);
 	init_euler_angles(data->scene->camera);
 	display_info_move_cam();
-	run_raytracing(data->mlx, data->scene, data, NO_PATH_TRACING);
+	run_minirt(data);
 	events_loop(data);
 	print_list(data->obj);
 	clean_data(data);

@@ -3,6 +3,10 @@
 
 # include "lib_math.h"
 
+struct			s_data;
+
+struct			s_obj;
+
 typedef struct s_ray
 {
 	t_vec3			origin;
@@ -49,8 +53,6 @@ typedef struct s_scene
 	t_ambient_light	ambient_light[1];
 }	t_scene;
 
-struct			s_obj;
-
 typedef _Bool	t_op(t_ray *ray, struct s_obj *obj, t_ray *hit);
 
 typedef struct s_obj
@@ -92,8 +94,18 @@ typedef struct s_parsing
 	_Bool		camera;
 	_Bool		ambient_light;
 	_Bool		diffuse_light;
-	int 		obj_nb;
+	int			obj_nb;
 }	t_parsing;
+
+typedef struct thread
+{
+	int				id;
+	pthread_t		thread;
+	struct s_data	*data;
+	int				pixel_x;
+	int				pixel_y;
+	int				max_height;
+}	t_thread;
 
 typedef struct s_data
 {
@@ -101,10 +113,11 @@ typedef struct s_data
 	t_scene		*scene;
 	t_obj		*obj;
 	int			obj_nb;
-	int			pixel_x;
-	int			pixel_y;
 	t_matrix4	cam_to_world_matrix;
-	int			lighting;
+	_Bool		lighting;
+	_Bool		path_tracing;
+	_Bool		multithreading;
+	t_thread	multi_thread[THREADS];
 }	t_data;
 
 #endif

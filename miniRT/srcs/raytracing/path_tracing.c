@@ -28,9 +28,9 @@ t_ray	*get_random_ray(t_ray result)
 	vec[RANDOM_DIR_LOCAL].coord[X] = cos(2 * M_PI * r1) * sqrt(1 - r2);
 	vec[RANDOM_DIR_LOCAL].coord[Y] = sin(2 * M_PI * r1) * sqrt(1 - r2);
 	vec[RANDOM_DIR_LOCAL].coord[Z] = sqrt(r2);
-	vec[RANDOM].coord[X] = frand();
-	vec[RANDOM].coord[Y] = frand();
-	vec[RANDOM].coord[Z] = frand();
+	vec[RANDOM].coord[X] = frand() - 0.5;
+	vec[RANDOM].coord[Y] = frand() - 0.5;
+	vec[RANDOM].coord[Z] = frand() - 0.5;
 	vec[TANGENT_1] = cross_vec3(result.dir, vec[RANDOM]);
 	normalize_vec3(&vec[TANGENT_1]);
 	vec[TANGENT_2] = cross_vec3(vec[TANGENT_1], result.dir);
@@ -81,7 +81,7 @@ t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 	hit.pixel_shadow = 1;
 	if (hit_obj
 		&& is_in_shadow(obj, hit, data->scene->diffuse_light))
-		hit.pixel_shadow = 0.3;
+		hit.pixel_shadow = SHADOW_COEFF;
 	if (!rebound || (hit.pixel_shadow == 1 && rebound < 1))
 		return (final_color);
 	if (hit_obj)
@@ -89,13 +89,13 @@ t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 		random_ray = get_random_ray(hit);
 		final_color = get_light(data, hit, *ray);
 		final_color = add_vec3(final_color, get_color_pixel(
-						obj, data, random_ray, --rebound));
+					obj, data, random_ray, --rebound));
 	}
 	return (final_color);
 }
 
 void	run_path_tracing(
-	t_ray *cam_ray, t_obj *obj, unsigned long *color, t_data *data)
+	t_ray *cam_ray, unsigned long *color, t_data *data, t_thread *thread)
 {
 	int		i;
 	t_vec3	rgb;
@@ -104,10 +104,10 @@ void	run_path_tracing(
 	i = PASSES;
 	// data->lighting = PHONG_LIGHTING;
 	data->lighting = CLASSIC_LIGHTING;
-	update_camera_ray(cam_ray, data);
+	update_camera_ray(cam_ray, data, thread);
 	rgb = create_vec3(0, 0, 0);
 	while (i--)
-		rgb = add_vec3(rgb, get_color_pixel(obj, data, cam_ray, 2));
+		rgb = add_vec3(rgb, get_color_pixel(data->obj, data, cam_ray, 2));
 	rgb = div_vec3_and_const(rgb, (double)PASSES);
 	*color = create_rgb_struct(&rgb);
 }
