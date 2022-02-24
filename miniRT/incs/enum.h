@@ -1,7 +1,18 @@
 #ifndef ENUM_H
 # define ENUM_H
 
-typedef enum s_define {
+# define SPECULAR_COEFF 64
+# define NO_SHADOW 1.0f
+# define SHADOW_COEFF 0.3f
+# define RESET "\033[0m"
+# define ORANGE "\033[38;5;215m"
+# define YELLOW "\033[38;5;229m"
+# define GREEN "\033[38;5;121m"
+# define GREY "\033[38;5;243m"
+# define LIGHT_GREY "\033[38;5;249m"
+
+typedef enum s_define
+{
 	TRUE				= 1,
 	FALSE				= 0,
 	SUCCESS				= 0,
@@ -23,15 +34,14 @@ typedef enum s_define {
 	PHONG_LIGHTING		= 1,
 	NO_MULTITHREADING	= 0,
 	MULTITHREADING		= 1,
-	NO_END				= 0,
-	END					= 1,
 	RANDOM_DIR_LOCAL	= 0,
 	RANDOM				= 1,
 	TANGENT_1			= 2,
 	TANGENT_2			= 3,
 }	t_define;
 
-typedef enum s_error {
+typedef enum s_error
+{
 	OPEN_ERROR					= 255,
 	CLOSE_ERROR					= 254,
 	READ_ERROR					= 253,

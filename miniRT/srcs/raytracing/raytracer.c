@@ -22,11 +22,16 @@ _Bool	check_hit_object(
 
 void	init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color)
 {
-	*hit_obj = FALSE;
-	hit->dist = 1E99;
-	hit->pixel_shadow = 1;
-	hit->obj_ref = -1;
-	*color = create_vec3(0, 0, 0);
+	if (hit_obj)
+		*hit_obj = FALSE;
+	if (hit)
+	{
+		hit->dist = 1E99;
+		hit->pixel_shadow = NO_SHADOW;
+		hit->obj_ref = -1;
+	}
+	if (color)
+		*color = create_vec3(0, 0, 0);
 }
 
 void	detect_intersection(
@@ -78,10 +83,10 @@ void	run_raytracing(
 				detect_intersection(cam_ray, &pixel_color, data, thread);
 			draw_pixel(mlx->image, pixel_color, thread);
 		}
-		display_loading(data, thread, ratio, NO_END);
+		display_loading(data, thread, ratio);
 		thread->pixel_y++;
 	}
-	display_loading(data, thread, ratio, END);
+	display_end_loading(data, thread);
 }
 
 void	run_minirt(t_data *data)

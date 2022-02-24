@@ -13,9 +13,7 @@
 # define HEIGHT 480
 # define WIDTH 720
 # define THREADS 8
-# define PASSES 4
-# define SPECULAR_COEFF 64
-# define SHADOW_COEFF 0.3f
+# define PASSES 15
 
 # include "mlx.h"
 # include "libft.h"
@@ -59,7 +57,6 @@ void			fill_obj(int type, t_parsing *var, char *line);
 void			obj_add_back(t_obj **obj_list, t_obj *to_add);
 _Bool			is_valid_extension(char *arg);
 int				check(void *obj, int type);
-void			print_list(t_obj *obj);
 int				parsing(char **argv, int argc, t_parsing *parsing_var);
 int				is_valid_type(char *type);
 void			ft_free(void *to_free);

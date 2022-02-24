@@ -75,14 +75,12 @@ t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 	t_vec3	final_color;
 	t_ray	*random_ray;
 
-	hit.obj_ref = -1;
 	init_var_hit(&hit_obj, &hit, &final_color);
 	hit_obj = check_all_objects(obj, ray, &hit);
-	hit.pixel_shadow = 1;
 	if (hit_obj
 		&& is_in_shadow(obj, hit, data->scene->diffuse_light))
 		hit.pixel_shadow = SHADOW_COEFF;
-	if (!rebound || (hit.pixel_shadow == 1 && rebound < 1))
+	if (!rebound || (hit.pixel_shadow == NO_SHADOW && rebound < 1))
 		return (final_color);
 	if (hit_obj)
 	{
@@ -94,6 +92,30 @@ t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 	return (final_color);
 }
 
+// t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
+// {
+// 	t_ray	hit;
+// 	t_vec3	final_color;
+// 	t_ray	*random_ray;
+// 	t_vec3	indirect_light;
+
+// 	init_var_hit(NULL, &hit, &final_color);
+// 	if (!rebound)
+// 		return (final_color);
+// 	if (!check_all_objects(obj, ray, &hit))
+// 		return (final_color);
+// 	if (is_in_shadow(obj, hit, data->scene->diffuse_light))
+// 		hit.pixel_shadow = SHADOW_COEFF;
+// 	if (hit.pixel_shadow == NO_SHADOW && rebound < 1)
+// 		return (final_color);
+// 	random_ray = get_random_ray(hit);
+// 	final_color = get_light(data, hit, *ray);
+// 	indirect_light = get_color_pixel(obj, data, random_ray, --rebound);
+// 	indirect_light = mul_vec3_and_const(indirect_light, 1 / (2 * M_PI));
+// 	final_color = add_vec3(final_color, indirect_light);
+// 	return (final_color);
+// }
+
 void	run_path_tracing(
 	t_ray *cam_ray, unsigned long *color, t_data *data, t_thread *thread)
 {
@@ -102,12 +124,11 @@ void	run_path_tracing(
 
 	*color = 0;
 	i = PASSES;
-	// data->lighting = PHONG_LIGHTING;
 	data->lighting = CLASSIC_LIGHTING;
 	update_camera_ray(cam_ray, data, thread);
 	rgb = create_vec3(0, 0, 0);
 	while (i--)
-		rgb = add_vec3(rgb, get_color_pixel(data->obj, data, cam_ray, 2));
+		rgb = add_vec3(rgb, get_color_pixel(data->obj, data, cam_ray, 4));
 	rgb = div_vec3_and_const(rgb, (double)PASSES);
 	*color = create_rgb_struct(&rgb);
 }

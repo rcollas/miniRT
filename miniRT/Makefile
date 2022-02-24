@@ -20,6 +20,7 @@ UTILS = \
 			utils/cleanup.c \
 			utils/safe_functions.c \
 			utils/display.c \
+			utils/print.c \
 
 PARSING = \
 			parsing/parsing.c \
