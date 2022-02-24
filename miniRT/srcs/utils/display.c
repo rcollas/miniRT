@@ -27,12 +27,15 @@ void	display_loading(t_data *data, t_thread *thread, int ratio, _Bool end)
 	}
 }
 
-void	display_cam_param(t_camera *camera)
+void	display_cam_param(t_camera *camera, t_data *data)
 {
-	printf("   \033[38;5;229mCamera origin = {%.2f, %.2f, %.2f}\t", camera->origin->coord[X],
+	ft_putstr_fd("\033[38;5;229m", 1);
+	printf("   Render time: %.2fs\t", (get_time() - data->start_time) / 1000);
+	printf("Camera origin = {%.2f, %.2f, %.2f}\t", camera->origin->coord[X],
 		camera->origin->coord[Y], camera->origin->coord[Z]);
-	printf("  dir = {%.2f, %.2f, %.2f}\033[0m\n", camera->dir->coord[X],
+	printf("  dir = {%.2f, %.2f, %.2f}\n", camera->dir->coord[X],
 		camera->dir->coord[Y], camera->dir->coord[Z]);
+	ft_putstr_fd("\033[0m", 1);
 }
 
 void	display_info_move_cam(void)

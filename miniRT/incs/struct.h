@@ -118,6 +118,7 @@ typedef struct s_data
 	_Bool		path_tracing;
 	_Bool		multithreading;
 	t_thread	multi_thread[THREADS];
+	double		start_time;
 }	t_data;
 
 #endif

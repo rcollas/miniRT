@@ -88,12 +88,11 @@ void	run_minirt(t_data *data)
 {
 	t_mlx		*mlx;
 	t_thread	main_thread;
-	double		start;
 
 	mlx = data->mlx;
 	init_image(mlx, data);
 	data->cam_to_world_matrix = built_cam_to_world_matrix(data->scene->camera);
-	start = get_time();
+	data->start_time = get_time();
 	if (data->multithreading)
 		run_multithreading(data);
 	else
@@ -102,7 +101,6 @@ void	run_minirt(t_data *data)
 		main_thread.max_height = HEIGHT;
 		run_raytracing(mlx, data, &main_thread);
 	}
-	printf("Render time: %fs\n", (get_time() - start) / 1000);
-	display_cam_param(data->scene->camera);
+	display_cam_param(data->scene->camera, data);
 	mlx_put_image_to_window(mlx->ptr, mlx->window, mlx->image->img_ptr, 0, 0);
 }
