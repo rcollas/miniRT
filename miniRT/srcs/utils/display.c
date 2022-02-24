@@ -1,8 +1,35 @@
 #include "miniRT.h"
 
+void	display_loading(t_data *data, t_thread *thread, int ratio, _Bool end)
+{
+	char	*msg;
+
+	if (data->path_tracing && data->multithreading && thread->id == THREADS - 1)
+	{
+		if (!end)
+		{
+			msg = ft_strdup("\033[38;5;215m");
+			msg = ft_strjoin_and_free(
+					msg, "\r   Rendering scene with path_tracing... [");
+			msg = ft_strjoin_and_free(
+					msg, ft_itoa(100 * (thread->pixel_y % ratio) / ratio));
+			msg = ft_strjoin_and_free(msg, "%]");
+		}
+		else
+		{
+			msg = ft_strdup("\033[38;5;121m");
+			msg = ft_strjoin_and_free(
+				msg, "\r ✔ Rendering scene with path_tracing... [100%]\n\n");
+		}
+		msg = ft_strjoin_and_free(msg, "\033[0m");
+		ft_putstr_fd(msg, 1);
+		clean_free(&msg);
+	}
+}
+
 void	display_cam_param(t_camera *camera)
 {
-	printf("  \033[38;5;229mCamera origin = {%.2f, %.2f, %.2f}\t", camera->origin->coord[X],
+	printf("   \033[38;5;229mCamera origin = {%.2f, %.2f, %.2f}\t", camera->origin->coord[X],
 		camera->origin->coord[Y], camera->origin->coord[Z]);
 	printf("  dir = {%.2f, %.2f, %.2f}\033[0m\n", camera->dir->coord[X],
 		camera->dir->coord[Y], camera->dir->coord[Z]);

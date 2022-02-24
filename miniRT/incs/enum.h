@@ -23,6 +23,8 @@ typedef enum s_define {
 	PHONG_LIGHTING		= 1,
 	NO_MULTITHREADING	= 0,
 	MULTITHREADING		= 1,
+	NO_END				= 0,
+	END					= 1,
 	RANDOM_DIR_LOCAL	= 0,
 	RANDOM				= 1,
 	TANGENT_1			= 2,

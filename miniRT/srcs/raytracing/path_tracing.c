@@ -28,9 +28,9 @@ t_ray	*get_random_ray(t_ray result)
 	vec[RANDOM_DIR_LOCAL].coord[X] = cos(2 * M_PI * r1) * sqrt(1 - r2);
 	vec[RANDOM_DIR_LOCAL].coord[Y] = sin(2 * M_PI * r1) * sqrt(1 - r2);
 	vec[RANDOM_DIR_LOCAL].coord[Z] = sqrt(r2);
-	vec[RANDOM].coord[X] = frand();
-	vec[RANDOM].coord[Y] = frand();
-	vec[RANDOM].coord[Z] = frand();
+	vec[RANDOM].coord[X] = frand() - 0.5;
+	vec[RANDOM].coord[Y] = frand() - 0.5;
+	vec[RANDOM].coord[Z] = frand() - 0.5;
 	vec[TANGENT_1] = cross_vec3(result.dir, vec[RANDOM]);
 	normalize_vec3(&vec[TANGENT_1]);
 	vec[TANGENT_2] = cross_vec3(vec[TANGENT_1], result.dir);

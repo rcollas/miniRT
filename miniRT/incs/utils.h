@@ -17,5 +17,6 @@ void	ft_exit_parsing(int errnum, t_parsing *parsing_var);
 void	free_str_tab(char **tab);
 void	display_info_move_cam(void);
 void	display_cam_param(t_camera *camera);
+void	display_loading(t_data *data, t_thread *thread, int ratio, _Bool end);
 
 #endif

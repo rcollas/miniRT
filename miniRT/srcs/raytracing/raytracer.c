@@ -58,58 +58,6 @@ void	detect_intersection(
 	*color = create_rgb_struct(&rgb);
 }
 
-void	clean_free(char **str)
-{
-	if (*str)
-	{
-		free(*str);
-		*str = NULL;
-	}
-}
-
-char	*ft_strjoin_and_free(char *s1, char *s2)
-{
-	size_t	i;
-	size_t	length;
-	char	*dest;
-
-	if (!s1)
-		return (ft_strdup(s2));
-	length = ft_strlen(s1) + ft_strlen(s2);
-	dest = (char *)ft_calloc(1, sizeof(char) * (length + 1));
-	if (!dest)
-		return (NULL);
-	i = -1;
-	while (s1[++i])
-		dest[i] = s1[i];
-	while (*s2)
-		dest[i++] = *s2++;
-	dest[i] = '\0';
-	clean_free(&s1);
-	return (dest);
-}
-
-void	display_loading(t_data *data, t_thread *thread, int ratio, _Bool end)
-{
-	char	*msg;
-
-	// ft_putstr_fd("\n\033[38;5;123mRendering with path_tracing...\n\n\033[0m", 1);
-	if (data->path_tracing && data->multithreading && thread->id == THREADS - 1)
-	{
-		if (!end)
-		{
-			msg = ft_strdup("\r\033[38;5;123mRendering scene with path_tracing... [");
-			msg = ft_strjoin_and_free(
-					msg, ft_itoa(100 * (thread->pixel_y % ratio) / ratio));
-			msg = ft_strjoin_and_free(msg, "%]\033[0m");
-		}
-		else
-			msg = ft_strdup("\r\033[38;5;123mRendering scene with path_tracing... [100%]\033[0m\n\n");
-		ft_putstr_fd(msg, 1);
-		clean_free(&msg);
-	}
-}
-
 void	run_raytracing(
 	t_mlx *mlx, t_data *data, t_thread *thread)
 {
@@ -130,10 +78,10 @@ void	run_raytracing(
 				detect_intersection(cam_ray, &pixel_color, data, thread);
 			draw_pixel(mlx->image, pixel_color, thread);
 		}
-		display_loading(data, thread, ratio, 0);
+		display_loading(data, thread, ratio, NO_END);
 		thread->pixel_y++;
 	}
-	display_loading(data, thread, ratio, 1);
+	display_loading(data, thread, ratio, END);
 }
 
 void	run_minirt(t_data *data)
