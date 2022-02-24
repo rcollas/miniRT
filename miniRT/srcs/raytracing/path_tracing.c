@@ -17,17 +17,18 @@ t_vec3	get_random_ray_dir(t_ray result, t_vec3 *vec)
 t_ray	*get_random_ray(t_ray result)
 {
 	t_ray	*random_ray;
-	double	r1;
-	double	r2;
+	double	random_nb[2];
 	t_vec3	vec[4];
+	double	tmp;
 
 	random_ray = ft_calloc(1, sizeof(t_ray));
 	srand(ft_rand());
-	r1 = frand();
-	r2 = frand();
-	vec[RANDOM_DIR_LOCAL].coord[X] = cos(2 * M_PI * r1) * sqrt(1 - r2);
-	vec[RANDOM_DIR_LOCAL].coord[Y] = sin(2 * M_PI * r1) * sqrt(1 - r2);
-	vec[RANDOM_DIR_LOCAL].coord[Z] = sqrt(r2);
+	random_nb[0] = frand() * 2 * M_PI;
+	random_nb[1] = frand();
+	tmp = sqrt(1 - random_nb[1]);
+	vec[RANDOM_DIR_LOCAL].coord[X] = cos(random_nb[0]) * tmp;
+	vec[RANDOM_DIR_LOCAL].coord[Y] = sin(random_nb[0]) * tmp;
+	vec[RANDOM_DIR_LOCAL].coord[Z] = sqrt(random_nb[1]);
 	vec[RANDOM].coord[X] = frand() - 0.5;
 	vec[RANDOM].coord[Y] = frand() - 0.5;
 	vec[RANDOM].coord[Z] = frand() - 0.5;
@@ -68,29 +69,29 @@ _Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *hit_min)
 	return (hit_obj);
 }
 
-t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
-{
-	_Bool	hit_obj;
-	t_ray	hit;
-	t_vec3	final_color;
-	t_ray	*random_ray;
+// t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
+// {
+// 	_Bool	hit_obj;
+// 	t_ray	hit;
+// 	t_vec3	final_color;
+// 	t_ray	*random_ray;
 
-	init_var_hit(&hit_obj, &hit, &final_color);
-	hit_obj = check_all_objects(obj, ray, &hit);
-	if (hit_obj
-		&& is_in_shadow(obj, hit, data->scene->diffuse_light))
-		hit.pixel_shadow = SHADOW_COEFF;
-	if (!rebound || (hit.pixel_shadow == NO_SHADOW && rebound < 1))
-		return (final_color);
-	if (hit_obj)
-	{
-		random_ray = get_random_ray(hit);
-		final_color = get_light(data, hit, *ray);
-		final_color = add_vec3(final_color, get_color_pixel(
-					obj, data, random_ray, --rebound));
-	}
-	return (final_color);
-}
+// 	init_var_hit(&hit_obj, &hit, &final_color);
+// 	hit_obj = check_all_objects(obj, ray, &hit);
+// 	if (hit_obj
+// 		&& is_in_shadow(obj, hit, data->scene->diffuse_light))
+// 		hit.pixel_shadow = SHADOW_COEFF;
+// 	if (!rebound || (hit.pixel_shadow == NO_SHADOW && rebound < 1))
+// 		return (final_color);
+// 	if (hit_obj)
+// 	{
+// 		random_ray = get_random_ray(hit);
+// 		final_color = get_light(data, hit, *ray);
+// 		final_color = add_vec3(final_color, get_color_pixel(
+// 					obj, data, random_ray, --rebound));
+// 	}
+// 	return (final_color);
+// }
 
 // t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 // {
@@ -98,6 +99,8 @@ t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 // 	t_vec3	final_color;
 // 	t_ray	*random_ray;
 // 	t_vec3	indirect_light;
+// 	double	prob_random_ray;
+// 	double	cos_theta;
 
 // 	init_var_hit(NULL, &hit, &final_color);
 // 	if (!rebound)
@@ -108,13 +111,45 @@ t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 // 		hit.pixel_shadow = SHADOW_COEFF;
 // 	if (hit.pixel_shadow == NO_SHADOW && rebound < 1)
 // 		return (final_color);
+// 	prob_random_ray = 1 / (2 * M_PI);
 // 	random_ray = get_random_ray(hit);
+// 	cos_theta = dot_vec3(random_ray->dir, hit.dir);
 // 	final_color = get_light(data, hit, *ray);
 // 	indirect_light = get_color_pixel(obj, data, random_ray, --rebound);
-// 	indirect_light = mul_vec3_and_const(indirect_light, 1 / (2 * M_PI));
+// 	indirect_light = mul_vec3_and_const(indirect_light, cos_theta * prob_random_ray);
 // 	final_color = add_vec3(final_color, indirect_light);
 // 	return (final_color);
 // }
+
+t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
+{
+	t_ray	hit;
+	t_vec3	final_color;
+	t_ray	*random_ray;
+	t_vec3	direct_light;
+	t_vec3	indirect_light;
+	double	prob_random_ray;
+	double	cos_theta;
+
+	init_var_hit(NULL, &hit, &final_color);
+	if (!rebound)
+		return (final_color);
+	if (!check_all_objects(obj, ray, &hit))
+		return (final_color);
+	if (is_in_shadow(obj, hit, data->scene->diffuse_light))
+		hit.pixel_shadow = SHADOW_COEFF;
+	if (hit.pixel_shadow == NO_SHADOW && rebound < 1)
+		return (final_color);
+	prob_random_ray = 1 / (2 * M_PI);
+	random_ray = get_random_ray(hit);
+	cos_theta = dot_vec3(random_ray->dir, hit.dir);
+	direct_light = get_light(data, hit, *ray);
+	indirect_light = get_color_pixel(obj, data, random_ray, --rebound);
+	indirect_light = mul_vec3_and_const(indirect_light, prob_random_ray);
+	indirect_light = add_vec3(direct_light, indirect_light);
+	final_color = mul_vec3(hit.color, indirect_light);
+	return (final_color);
+}
 
 void	run_path_tracing(
 	t_ray *cam_ray, unsigned long *color, t_data *data, t_thread *thread)
