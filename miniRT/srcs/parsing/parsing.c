@@ -53,6 +53,7 @@ void	parsing_var_init(t_parsing *var)
 	var->objs = NULL;
 	var->obj_info = NULL;
 	var->objs = NULL;
+	var->light_nb = 0;
 }
 
 int	load_file(char **argv, int argc, int *fd)
