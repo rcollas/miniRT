@@ -13,7 +13,8 @@
 # define HEIGHT 480
 # define WIDTH 720
 # define THREADS 8
-# define PASSES 15
+# define PASSES 10
+# define REBOUND 8
 
 # include "mlx.h"
 # include "libft.h"
