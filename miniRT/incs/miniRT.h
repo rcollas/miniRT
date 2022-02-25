@@ -79,7 +79,7 @@ void			run_multithreading(t_data *data);
 void			init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color);
 void			run_path_tracing(t_ray *cam_ray, unsigned long *color,
 					t_data *data, t_thread *thread);
-_Bool			is_in_shadow(t_obj *obj, t_ray ray, t_diffuse_light *light);
+_Bool			is_in_shadow(t_obj *obj, t_ray ray, t_scene *scene);
 t_vec3			get_color_pixel(t_obj *obj, t_data *data,
 					t_ray *ray, int rebound);
 

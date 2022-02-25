@@ -32,8 +32,8 @@ _Bool	check_hit_object(
 			copy_vec3(&hit_min->origin, hit.origin);
 			copy_vec3(&hit_min->dir, hit.dir);
 			copy_vec3(&hit_min->color, *obj->color);
-			if (checkered_texture(hit_min->origin))
-				hit_min->color = create_vec3(1, 1, 1);
+			// if (checkered_texture(hit_min->origin))
+			// 	hit_min->color = create_vec3(1, 1, 1);
 		}
 		return (TRUE);
 	}
@@ -76,7 +76,7 @@ void	detect_intersection(
 	}
 	if (hit_obj)
 	{
-		if (is_in_shadow(data->obj, hit, data->scene->diffuse_light))
+		if (is_in_shadow(data->obj, hit, data->scene))
 			hit.pixel_shadow = SHADOW_COEFF;
 		rgb = mul_vec3(get_light(data, hit, ray), hit.color);
 	}

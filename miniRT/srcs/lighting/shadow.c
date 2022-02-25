@@ -15,7 +15,6 @@ _Bool	trace_shadow_ray(
 	light_dist = get_norm_vec3(sub_vec3(*light->coord, shadow_ray->origin));
 	while (i < obj->obj_nb)
 	{
-		// if (i != obj_ref && obj[i].hit_object(shadow_ray, &obj[i], &hit)
 		if (obj[i].hit_object(shadow_ray, &obj[i], &hit)
 			&& hit.dist < light_dist)
 			return (TRUE);
@@ -24,14 +23,31 @@ _Bool	trace_shadow_ray(
 	return (FALSE);
 }
 
-_Bool	is_in_shadow(t_obj *obj, t_ray hit, t_diffuse_light *light)
+_Bool	is_in_shadow(t_obj *obj, t_ray hit, t_scene *scene)
 {
 	t_ray	shadow_ray;
+	int		i;
 
+	i = -1;
 	shadow_ray.origin = add_vec3(hit.origin, mul_vec3_and_const(hit.dir, 1e-4));
-	shadow_ray.dir = sub_vec3(*light->coord, shadow_ray.origin);
-	normalize_vec3(&shadow_ray.dir);
-	if (trace_shadow_ray(&shadow_ray, obj, light, hit.obj_ref))
-		return (TRUE);
+	while (++i < scene->light_nb)
+	{
+		shadow_ray.dir = sub_vec3(*scene->diffuse_light[i].coord, shadow_ray.origin);
+		normalize_vec3(&shadow_ray.dir);
+		if (trace_shadow_ray(&shadow_ray, obj, &scene->diffuse_light[i], hit.obj_ref))
+			return (TRUE);
+	}
 	return (FALSE);
 }
+
+// _Bool	is_in_shadow(t_obj *obj, t_ray hit, t_diffuse_light *light)
+// {
+// 	t_ray	shadow_ray;
+
+// 	shadow_ray.origin = add_vec3(hit.origin, mul_vec3_and_const(hit.dir, 1e-4));
+// 	shadow_ray.dir = sub_vec3(*light->coord, shadow_ray.origin);
+// 	normalize_vec3(&shadow_ray.dir);
+// 	if (trace_shadow_ray(&shadow_ray, obj, light, hit.obj_ref))
+// 		return (TRUE);
+// 	return (FALSE);
+// }

@@ -146,6 +146,7 @@ int	parsing(char **argv, int argc, t_parsing *parsing_var)
 	parsing_var->obj_nb = list_len(parsing_var->objs);
 	obj_tab = list_to_tab(parsing_var->objs);
 	parsing_var->objs = obj_tab;
+	parsing_var->scene->light_nb = parsing_var->light_nb;
 	if (file_is_complete(parsing_var, argv[1]) == FAIL)
 		ft_exit_parsing(INCOMPLETE_FILE_ERROR, parsing_var);
 	free_str_tab(parsing_var->input_list);

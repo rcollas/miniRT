@@ -51,6 +51,7 @@ typedef struct s_scene
 	t_camera		camera[1];
 	t_diffuse_light	*diffuse_light;
 	t_ambient_light	ambient_light[1];
+	int				light_nb;
 }	t_scene;
 
 typedef _Bool	t_op(t_ray *ray, struct s_obj *obj, t_ray *hit);
