@@ -80,6 +80,7 @@ typedef struct s_mlx
 {
 	void		*ptr;
 	void		*window;
+	t_image		*tmp_image;
 	t_image		*image;
 }				t_mlx;
 

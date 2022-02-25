@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-float	get_norm2_vec3(t_vec3 vector)
+double	get_norm2_vec3(t_vec3 vector)
 {
 	float	norm;
 
@@ -11,7 +11,7 @@ float	get_norm2_vec3(t_vec3 vector)
 	return (norm);
 }
 
-float	get_norm_vec3(t_vec3 vector)
+double	get_norm_vec3(t_vec3 vector)
 {
 	float	norm;
 

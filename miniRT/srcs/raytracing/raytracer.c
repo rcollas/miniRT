@@ -30,7 +30,7 @@ void	init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color)
 }
 
 void	detect_intersection(
-	t_ray ray, t_obj *obj, unsigned long *color, t_data *data)
+	t_ray ray, t_obj *obj, t_vec3 *color, t_data *data)
 {
 	_Bool	hit_obj;
 	t_ray	hit;
@@ -55,31 +55,74 @@ void	detect_intersection(
 			hit.pixel_shadow = 0.5;
 		rgb = get_light(data, hit, ray);
 	}
-	*color = create_rgb_struct(&rgb);
+	*color = rgb;
 }
+
+/*
+t_vec3	get_color_components(unsigned long color)
+{
+	t_vec3	color_vec;
+
+	color_vec.coord[R] = (double)(color & 9);
+	color_vec.coord[G] = (double)(color & 6);
+	color_vec.coord[B] = (double)(color & 3);
+	if (color_vec.coord[R] || color_vec.coord[G] || color_vec.coord[B])
+	{
+		printf("color R = %f\n", color_vec.coord[R]);
+		printf("color G = %f\n", color_vec.coord[G]);
+		printf("color B = %f\n", color_vec.coord[B]);
+	}
+	return (color_vec);
+}
+ */
 
 void	run_raytracing(
 	t_mlx *mlx, t_scene *scene, t_data *data, _Bool path_tracing)
 {
-	unsigned long	pixel_color;
+	unsigned long 	pixel_color;
 	t_ray			cam_ray;
 	double			start;
+	t_vec3 			*color;
+	t_vec3 			tmp;
+	int 			j;
 
 	init_image(mlx, data);
 	init_camera_ray(&cam_ray, data);
 	data->cam_to_world_matrix = built_cam_to_world_matrix(scene->camera);
 	data->pixel_y = -1;
 	start = get_time();
+	color = malloc(sizeof(t_vec3) * HEIGHT * 2 * WIDTH * 2 + 1);
+	j = 0;
+	(void)path_tracing;
+	while (++data->pixel_y < HEIGHT * 4)
+	{
+		data->pixel_x = -1;
+		while (++data->pixel_x < WIDTH * 4)
+		{
+			//if (path_tracing)
+			//	run_path_tracing(&cam_ray, data->obj, &color[j], data);
+			//else
+				detect_intersection(cam_ray, data->obj, &color[j], data);
+			//draw_pixel(mlx->image, pixel_color, data);
+			j++;
+		}
+	}
+	data->pixel_y = -1;
+	j = 0;
 	while (++data->pixel_y < HEIGHT)
 	{
 		data->pixel_x = -1;
 		while (++data->pixel_x < WIDTH)
 		{
-			if (path_tracing)
-				run_path_tracing(&cam_ray, data->obj, &pixel_color, data);
-			else
-				detect_intersection(cam_ray, data->obj, &pixel_color, data);
-			draw_pixel(mlx->image, pixel_color, data);
+			//if (j < HEIGHT * WIDTH * 4 - 2)
+			//{
+				tmp = add_vec3(color[j], color[j + 1]);
+				tmp = add_vec3(color[j], color[j + 1]);
+				tmp = div_vec3_and_const(tmp, 2);
+				pixel_color = create_rgb_struct(&tmp);
+				draw_pixel(mlx->image, pixel_color, data);
+			//}
+			j += 2;
 		}
 	}
 	printf("Render time: %fs\n", (get_time() - start) / 1000);

@@ -26,6 +26,7 @@
 # define WIDTH 720
 # define PASSES 1
 # define SPECULAR_COEFF 64
+# define ANTI_ALIASING 40
 
 /******************************** MLX_SETUP ***********************************/
 
@@ -73,7 +74,7 @@ void			check_limit_angle(double *angle);
 void			run_raytracing(t_mlx *mlx,
 					t_scene *scene, t_data *data, _Bool path_tracing);
 void			detect_intersection(t_ray ray,
-					t_obj *obj, long unsigned int *color, t_data *data);
+					t_obj *obj, t_vec3 *color, t_data *data);
 void			init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color);
 void			run_path_tracing(t_ray *cam_ray,
 					t_obj *obj, unsigned long *color, t_data *data);
