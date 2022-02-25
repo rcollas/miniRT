@@ -48,31 +48,58 @@ void	fill_camera(t_parsing *parsing, t_camera *camera, char *line)
 	parsing->camera = TRUE;
 }
 
+t_diffuse_light	*ft_realloc(t_diffuse_light *ptr, int size)
+{
+	t_diffuse_light	*new_ptr;
+	int		i;
+
+	i = 0;
+	new_ptr = (t_diffuse_light *)ft_calloc(sizeof(t_diffuse_light), size);
+	while (ptr && i < size)
+	{
+		copy_vec3(new_ptr[i].color, *ptr[i].color);
+		copy_vec3(new_ptr[i].coord, *ptr[i].coord);
+		new_ptr[i].type = ptr[i].type;
+		new_ptr[i].intensity = ptr[i].intensity;
+		i++;
+	}
+	//ft_free(ptr);
+	return (new_ptr);
+}
+
 void	fill_diffuse_light(
 	t_parsing *parsing, t_diffuse_light *diffuse_light, char *line)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	j = parsing->light_nb;
+	if (j == 0)
+		diffuse_light = (t_diffuse_light *)ft_calloc(sizeof(t_diffuse_light), 1);
 	while (parsing->obj_info[i])
 		i++;
-	if (i != 3 || parsing->diffuse_light)
+	if (i != 3)
 	{
 		error(DIFFUSE_LIGHT_FORMAT_ERROR, line);
 		ft_exit_parsing(DIFFUSE_LIGHT_FORMAT_ERROR, parsing);
 	}
-	diffuse_light->type = DIFFUSE_LIGHT;
-	fill_coordinates(parsing->obj_info[1], diffuse_light->coord);
-	diffuse_light->intensity = ft_atof(parsing->obj_info[2]);
-	if (check(diffuse_light, DIFFUSE_LIGHT) == FAIL)
+	if (j != 0)
+		diffuse_light = ft_realloc(diffuse_light, parsing->light_nb + 1);
+	diffuse_light[j].type = DIFFUSE_LIGHT;
+	fill_coordinates(parsing->obj_info[1], diffuse_light[j].coord);
+	diffuse_light[j].intensity = ft_atof(parsing->obj_info[2]);
+	if (check(&diffuse_light[j], DIFFUSE_LIGHT) == FAIL)
 	{
 		error(DIFFUSE_LIGHT_FORMAT_ERROR, line);
 		ft_exit_parsing(DIFFUSE_LIGHT_FORMAT_ERROR, parsing);
 	}
-	diffuse_light->color->coord[R] = 1;
-	diffuse_light->color->coord[G] = 1;
-	diffuse_light->color->coord[B] = 1;
+	diffuse_light[j].color->coord[R] = 1;
+	diffuse_light[j].color->coord[G] = 1;
+	diffuse_light[j].color->coord[B] = 1;
 	parsing->diffuse_light = TRUE;
+	parsing->scene->diffuse_light = diffuse_light;
+	parsing->light_nb++;
 }
 
 void	fill_scene(int type, t_parsing *var, char *line)

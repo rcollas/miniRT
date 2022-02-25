@@ -49,7 +49,7 @@ typedef struct s_diffuse_light
 typedef struct s_scene
 {
 	t_camera		camera[1];
-	t_diffuse_light	diffuse_light[1];
+	t_diffuse_light	*diffuse_light;
 	t_ambient_light	ambient_light[1];
 }	t_scene;
 
@@ -95,6 +95,7 @@ typedef struct s_parsing
 	_Bool		ambient_light;
 	_Bool		diffuse_light;
 	int			obj_nb;
+	int			light_nb;
 }	t_parsing;
 
 typedef struct thread
