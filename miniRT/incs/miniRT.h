@@ -13,7 +13,7 @@
 # define HEIGHT 480
 # define WIDTH 720
 # define THREADS 8
-# define PASSES 10
+# define PASSES 3
 # define REBOUND 8
 
 # include "mlx.h"
@@ -79,7 +79,7 @@ void			run_multithreading(t_data *data);
 void			init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color);
 void			run_path_tracing(t_ray *cam_ray, unsigned long *color,
 					t_data *data, t_thread *thread);
-_Bool			is_in_shadow(t_obj *obj, t_ray ray, t_scene *scene);
+double			compute_shadow(t_obj *obj, t_ray *ray, t_diffuse_light *light);
 t_vec3			get_color_pixel(t_obj *obj, t_data *data,
 					t_ray *ray, int rebound);
 

@@ -76,8 +76,7 @@ void	detect_intersection(
 	}
 	if (hit_obj)
 	{
-		if (is_in_shadow(data->obj, hit, data->scene))
-			hit.pixel_shadow = SHADOW_COEFF;
+		//compute_shadow(data->obj, &hit, data->scene);
 		rgb = mul_vec3(get_light(data, hit, ray), hit.color);
 	}
 	*color = create_rgb_struct(&rgb);
