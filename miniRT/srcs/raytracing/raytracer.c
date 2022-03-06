@@ -68,17 +68,11 @@ void	detect_intersection(
 	while (i < data->obj_nb)
 	{
 		if (check_hit_object(&ray, &data->obj[i], &hit))
-		{
 			hit_obj = TRUE;
-			hit.obj_ref = i;
-		}
 		i++;
 	}
 	if (hit_obj)
-	{
-		//compute_shadow(data->obj, &hit, data->scene);
 		rgb = mul_vec3(get_light(data, hit, ray), hit.color);
-	}
 	*color = create_rgb_struct(&rgb);
 }
 
