@@ -31,6 +31,15 @@ void	free_str_tab(char **tab)
 	ft_free(tab);
 }
 
+void	free_tab(void **tab, int size)
+{
+	int	i;
+
+	i = -1;
+	while (++i < size)
+		ft_free(tab[i]);
+}
+
 void	ft_exit_parsing(int errnum, t_parsing *parsing_var)
 {
 	free_list(parsing_var->objs);

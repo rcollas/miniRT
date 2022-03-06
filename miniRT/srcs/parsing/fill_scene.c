@@ -63,7 +63,7 @@ t_diffuse_light	*ft_realloc(t_diffuse_light *ptr, int size)
 		new_ptr[i].intensity = ptr[i].intensity;
 		i++;
 	}
-	//ft_free(ptr);
+	free_tab((void **)&ptr, size - 1);
 	return (new_ptr);
 }
 
@@ -94,9 +94,7 @@ void	fill_diffuse_light(
 		error(DIFFUSE_LIGHT_FORMAT_ERROR, line);
 		ft_exit_parsing(DIFFUSE_LIGHT_FORMAT_ERROR, parsing);
 	}
-	diffuse_light[j].color->coord[R] = 1;
-	diffuse_light[j].color->coord[G] = 1;
-	diffuse_light[j].color->coord[B] = 1;
+	*diffuse_light[j].color = create_vec3(1, 1, 1);
 	parsing->diffuse_light = TRUE;
 	parsing->scene->diffuse_light = diffuse_light;
 	parsing->light_nb++;

@@ -102,6 +102,27 @@ int	list_len(t_obj *obj)
 	return (i);
 }
 
+void	copy_content(t_obj *dest, t_obj *src, int obj_nb)
+{
+	int	i;
+
+	i = 0;
+	while (src)
+	{
+		dest[i].type = src->type;
+		copy_vec3(dest[i].origin, *src->origin);
+		copy_vec3(dest[i].dir, *src->dir);
+		copy_vec3(dest[i].color, *src->color);
+		dest[i].diameter = src->diameter;
+		dest[i].height = src->height;
+		dest[i].hit_object = src->hit_object;
+		dest[i].shine_factor = src->shine_factor;
+		dest->obj_nb = obj_nb;
+		i++;
+		src = src->next;
+	}
+}
+
 t_obj	*list_to_tab(t_obj *obj)
 {
 	int	i;
@@ -111,20 +132,7 @@ t_obj	*list_to_tab(t_obj *obj)
 	i = 0;
 	obj_nb = list_len(obj);
 	obj_tab = (t_obj *)ft_calloc(obj_nb, sizeof(t_obj));
-	while (obj)
-	{
-		obj_tab[i].type = obj->type;
-		copy_vec3(obj_tab[i].origin, *obj->origin);
-		copy_vec3(obj_tab[i].dir, *obj->dir);
-		copy_vec3(obj_tab[i].color, *obj->color);
-		obj_tab[i].diameter = obj->diameter;
-		obj_tab[i].height = obj->height;
-		obj_tab[i].hit_object = obj->hit_object;
-		obj_tab[i].shine_factor = obj->shine_factor;
-		obj_tab[i].obj_nb = obj_nb;
-		i++;
-		obj = obj->next;
-	}
+	copy_content(obj_tab, obj, obj_nb);
 	free_list(obj);
 	return (obj_tab);
 }

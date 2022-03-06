@@ -61,6 +61,7 @@ int				check(void *obj, int type);
 int				parsing(char **argv, int argc, t_parsing *parsing_var);
 int				is_valid_type(char *type);
 void			ft_free(void *to_free);
+void			free_tab(void **tab, int size);
 
 /********************************** CAMERA ************************************/
 
