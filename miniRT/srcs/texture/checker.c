@@ -2,17 +2,17 @@
 
 void	get_checker_size(t_ray hit, double *checker_size)
 {
-	if (hit.type == SPHERE)
+	if (hit.obj->type == SPHERE)
 	{
 		checker_size[U] = 30;
 		checker_size[V] = 15;
 	}
-	if (hit.type == PLANE || hit.type == DISK)
+	if (hit.obj->type == PLANE || hit.obj->type == DISK)
 	{
 		checker_size[U] = 0.5;
 		checker_size[V] = 1;
 	}
-	if (hit.type == CYLINDER)
+	if (hit.obj->type == CYLINDER)
 	{
 		checker_size[U] = 15;
 		checker_size[V] = 1;

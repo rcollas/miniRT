@@ -7,6 +7,9 @@ void	create_texture(t_ray *hit)
 	double	coord_uv[2];
 	int		floor_uv[2];
 
+	// if (hit->obj->type == DISK)
+	// 	printf("width= %d | height = %d\n", hit->obj->texture->width, hit->obj->texture->height);
+
 	texture = hit->obj->texture;
 	hit->obj->get_uv_coord(*hit, coord_uv);
 	coord_uv[U] = 1 - coord_uv[U];

@@ -16,9 +16,7 @@ typedef struct s_ray
 	double			dist;
 	t_vec3			color;
 	double			pixel_shadow;
-	double			shine_factor;
 	int				obj_ref;
-	int				type;
 	struct s_obj	*obj;
 }	t_ray;
 

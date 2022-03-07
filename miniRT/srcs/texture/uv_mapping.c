@@ -50,7 +50,15 @@ void	get_plane_uv(t_ray hit, double *coord_uv)
 
 void	get_disk_uv(t_ray hit, double *coord_uv)
 {
-	coord_uv[U] = sqrt(hit.dir.coord[X] * hit.dir.coord[X]
-		+ hit.dir.coord[Z] * hit.origin.coord[Z]) * 2;
-	coord_uv[V] = (atan2(hit.dir.coord[Z], hit.dir.coord[X]) / -3.14) * 0.5 + 0.5;
+	double	theta;
+	double	raw_v;
+	t_vec3	origin_normed;
+
+	origin_normed = get_normalized_vec3(hit.origin);
+	theta = atan2(origin_normed.coord[Z], origin_normed.coord[X]);
+	raw_v = theta / (2 * M_PI);
+	coord_uv[U] = 1 - (raw_v + 0.5);
+	coord_uv[V] = sqrt(origin_normed.coord[X] * origin_normed.coord[X]
+		+ origin_normed.coord[Z] * origin_normed.coord[Z]);
+	// printf("u = %f | v = %f\n", coord_uv[U], coord_uv[V]);
 }
