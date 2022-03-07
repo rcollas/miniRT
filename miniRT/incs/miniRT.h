@@ -14,7 +14,7 @@
 # define HEIGHT 480
 # define WIDTH 720
 # define THREADS 8
-# define PASSES 10
+# define PASSES 3
 # define REBOUND 8
 
 # include "mlx.h"
@@ -53,7 +53,8 @@ void			fill_camera(t_parsing *parsing, t_camera *camera, char *line);
 void			fill_diffuse_light(t_parsing *parsing,
 					t_diffuse_light *diffuse_light, char *line);
 void			fill_scene(int type, t_parsing *var, char *line);
-t_obj			*new_obj(int type, double diameter, double height, t_parsing *var);
+t_obj			*new_obj(
+					int type, double diameter, double height, t_parsing *var);
 void			fill_obj(int type, t_parsing *var, char *line);
 void			obj_add_back(t_obj **obj_list, t_obj *to_add);
 _Bool			is_valid_extension(char *arg);
@@ -64,6 +65,7 @@ void			ft_free(void *to_free);
 void			free_str_tab(char **tab);
 void			free_list(t_obj *obj);
 void			clean_parsing_var(t_parsing *parsing_var);
+void			free_tab(void **tab, int size);
 
 /********************************** CAMERA ************************************/
 
@@ -82,7 +84,7 @@ void			run_multithreading(t_data *data);
 void			init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color);
 void			run_path_tracing(t_ray *cam_ray, unsigned long *color,
 					t_data *data, t_thread *thread);
-_Bool			is_in_shadow(t_obj *obj, t_ray ray, t_scene *scene);
+double			compute_shadow(t_obj *obj, t_ray *ray, t_diffuse_light *light);
 t_vec3			get_color_pixel(t_obj *obj, t_data *data,
 					t_ray *ray, int rebound);
 
@@ -112,7 +114,7 @@ void			clamp_color(int *color);
 
 /********************************** TEXTURE ***********************************/
 
-void			parse_checker(t_obj *obj, char *rgb);
+int				parse_checker(t_obj *obj, char *rgb);
 void			parse_texture(t_parsing *var, t_obj *obj, char *filename);
 _Bool			check_file_texture(char *filename);
 void			open_texture(t_image *texture, char *file, t_parsing *var);
@@ -124,13 +126,13 @@ void			get_cylinder_uv(t_ray hit, double *coord_uv);
 void			get_plane_uv(t_ray hit, double *coord_uv);
 void			get_disk_uv(t_ray hit, double *coord_uv);
 
-/***************************** OPTIMIZATION UTILS ******************************/
+/***************************** OPTIMIZATION UTILS *****************************/
 
 # include <sys/time.h>
 
-double	get_timestamp(double start);
-double	get_time(void);
-double	elapsed_time(double start, double end);
+double			get_timestamp(double start);
+double			get_time(void);
+double			elapsed_time(double start, double end);
 
 
 #endif

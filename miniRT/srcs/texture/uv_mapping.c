@@ -32,11 +32,11 @@ void	get_plane_uv(t_ray hit, double *coord_uv)
 	coord_uv[V] = hit.origin.coord[Z];
 }
 
-void	get_disk_uv(t_ray hit, double *coord_uv)
-{
-	coord_uv[U] = hit.origin.coord[X];
-	coord_uv[V] = hit.origin.coord[Z];
-}
+// void	get_disk_uv(t_ray hit, double *coord_uv)
+// {
+// 	coord_uv[U] = hit.origin.coord[X];
+// 	coord_uv[V] = hit.origin.coord[Z];
+// }
 
 // void	get_disk_uv(t_ray hit, double *coord_uv)
 // {
@@ -47,3 +47,14 @@ void	get_disk_uv(t_ray hit, double *coord_uv)
 // 	coord_uv[U] = r * cos(theta);
 // 	coord_uv[V] = r * sin(theta);
 // }
+
+void	get_disk_uv(t_ray hit, double *coord_uv)
+{
+	double	theta;
+	double	raw_u;
+
+	theta = atan2(hit.dir.coord[X], hit.dir.coord[Z]);
+	raw_u = theta / (2 * M_PI);
+	coord_uv[U] = 1 - (raw_u + 0.5);
+	coord_uv[V] = hit.origin.coord[Y];
+}

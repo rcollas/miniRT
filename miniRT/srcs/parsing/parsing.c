@@ -115,6 +115,31 @@ void	copy_texture(t_image *dest, t_image *src)
 	dest->line_len = src->line_len;
 }
 
+void	copy_content(t_obj *dest, t_obj *src, int obj_nb)
+{
+	int	i;
+
+	i = 0;
+	while (src)
+	{
+		dest[i].type = src->type;
+		copy_vec3(dest[i].origin, *src->origin);
+		copy_vec3(dest[i].dir, *src->dir);
+		copy_vec3(dest[i].color, *src->color);
+		copy_vec3(dest[i].color_checker, *src->color_checker);
+		dest[i].diameter = src->diameter;
+		dest[i].height = src->height;
+		dest[i].hit_object = src->hit_object;
+		dest[i].get_uv_coord = src->get_uv_coord;
+		dest[i].shine_factor = src->shine_factor;
+		dest->obj_nb = obj_nb;
+		copy_texture(dest[i].texture, src->texture);
+		dest[i].has_texture = src->has_texture;
+		i++;
+		src = src->next;
+	}
+}
+
 t_obj	*list_to_tab(t_obj *obj, t_parsing *parsing_var)
 {
 	int		i;
@@ -126,24 +151,7 @@ t_obj	*list_to_tab(t_obj *obj, t_parsing *parsing_var)
 	obj_tab = (t_obj *)ft_calloc(obj_nb, sizeof(t_obj));
 	if (!obj_tab)
 		exit_error_parsing(MALLOC_ERROR, "malloc failed()", parsing_var);
-	while (obj)
-	{
-		obj_tab[i].type = obj->type;
-		copy_vec3(obj_tab[i].origin, *obj->origin);
-		copy_vec3(obj_tab[i].dir, *obj->dir);
-		copy_vec3(obj_tab[i].color, *obj->color);
-		copy_vec3(obj_tab[i].color_checker, *obj->color_checker);
-		obj_tab[i].diameter = obj->diameter;
-		obj_tab[i].height = obj->height;
-		obj_tab[i].hit_object = obj->hit_object;
-		obj_tab[i].get_uv_coord = obj->get_uv_coord;
-		obj_tab[i].shine_factor = obj->shine_factor;
-		obj_tab[i].obj_nb = obj_nb;
-		copy_texture(obj_tab[i].texture, obj->texture);
-		obj_tab[i].has_texture = obj->has_texture;
-		i++;
-		obj = obj->next;
-	}
+	copy_content(obj_tab, obj, obj_nb);
 	free_list(obj);
 	return (obj_tab);
 }
@@ -157,7 +165,8 @@ void print_obj(t_parsing *parsing_var)
 	{
 		if (parsing_var->objs[i].type == SPHERE)
 			printf("-width = %d | height = %d\n",
-				parsing_var->objs->texture->width, parsing_var->objs->texture->height);
+				parsing_var->objs->texture->width,
+				parsing_var->objs->texture->height);
 		i++;
 	}
 }
@@ -181,7 +190,8 @@ int	parsing(char **argv, int argc, t_parsing *parsing_var)
 	parsing_var->objs = obj_tab;
 	parsing_var->scene->light_nb = parsing_var->light_nb;
 	if (file_is_complete(parsing_var, argv[1]) == FAIL)
-		exit_error_parsing(INCOMPLETE_FILE_ERROR, "incomplete file", parsing_var);
+		exit_error_parsing(
+			INCOMPLETE_FILE_ERROR, "incomplete file", parsing_var);
 	free_str_tab(parsing_var->input_list);
 	return (SUCCESS);
 }

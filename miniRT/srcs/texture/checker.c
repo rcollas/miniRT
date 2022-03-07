@@ -34,8 +34,11 @@ void	create_checker(t_ray *hit)
 	copy_vec3(&hit->color, *hit->obj->color_checker);
 }
 
-void	parse_checker(t_obj *obj, char *rgb)
+int	parse_checker(t_obj *obj, char *rgb)
 {
-	fill_rgb(rgb, obj->color_checker);
+	int	ret;
+
 	obj->has_texture = CHECKER;
+	ret = fill_rgb(rgb, obj->color_checker);
+	return (ret);
 }

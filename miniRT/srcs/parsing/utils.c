@@ -34,6 +34,15 @@ void	free_str_tab(char **tab)
 	}
 }
 
+void	free_tab(void **tab, int size)
+{
+	int	i;
+
+	i = -1;
+	while (++i < size)
+		ft_free(tab[i]);
+}
+
 int	ft_open(char *file, int *fd)
 {
 	*fd = open(file, O_DIRECTORY);

@@ -33,13 +33,13 @@ _Bool	move_camera(int key, t_camera *camera)
 _Bool	tilt_camera(int key, t_camera *camera)
 {
 	if (key == KEY_RIGHT)
-		camera->yaw_angle += 6.0;
+		camera->yaw_angle += 5.0;
 	else if (key == KEY_LEFT)
-		camera->yaw_angle -= 6.0;
+		camera->yaw_angle -= 5.0;
 	else if (key == KEY_DOWN)
-		camera->pitch_angle += 6.0;
+		camera->pitch_angle += 5.0;
 	else if (key == KEY_UP)
-		camera->pitch_angle -= 6.0;
+		camera->pitch_angle -= 5.0;
 	else
 		return (0);
 	return (1);

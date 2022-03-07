@@ -32,7 +32,7 @@ void	update_camera_ray(t_ray *cam_ray, t_data *data, t_thread *thread)
 	cam_ray->dir = mul_dir_and_matrix4(cam_ray->dir, data->cam_to_world_matrix);
 	copy_vec3(&cam_ray->origin, *data->scene->camera->origin);
 	cam_ray->dir = sub_vec3(cam_ray->dir, cam_ray->origin);
-	get_normalized_vec3(cam_ray->dir);
+	normalize_vec3(&cam_ray->dir);
 }
 
 void	init_camera_ray(t_ray *cam_ray, t_data *data)

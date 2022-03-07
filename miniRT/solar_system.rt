@@ -6,8 +6,8 @@ sp 	-30,0,-55  11  "image/jupiter.xpm"
 sp 	35,0,-55  6  "image/neptune.xpm"
 sp 	3,-11,-45  8 "image/earth.xpm"
 sp 	17,7,-65 9  "image/saturn.xpm"
-di 	17,7,-65  -0.08,1,0.3  17  250,111,0
-#di 	17,7,-65  -0.08,1,0.3  17 "image/saturn_ring.xpm"
+#di 	17,7,-65  -0.08,1,0.3  17  250,111,0
+di 	17,7,-65  -0.08,1,0.3  17 "image/saturn_ring.xpm"
 sp 	20,-7,-50  5  "image/mars.xpm"
 sp   -12,6,-60  5  "image/venus.xpm"
 sp 	-17,-7,-50  4  "image/mercury.xpm"
