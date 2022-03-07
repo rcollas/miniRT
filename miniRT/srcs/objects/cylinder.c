@@ -25,9 +25,12 @@ void	get_coeff(double coeff[3], t_ray *ray, t_obj *obj)
 
 void	set_origins(t_vec3 *cylinder, t_obj *obj)
 {
-	cylinder[O_CENTER] = *obj->origin;
-	cylinder[O_TOP] = mul_vec3_and_const(*obj->origin, obj->height / 2);
-	cylinder[O_BOTTOM] = mul_vec3_and_const(*obj->origin, -(obj->height / 2));
+	t_vec3	cyl_to_origin;
+
+	cyl_to_origin = *obj->origin;
+	cylinder[O_CENTER] = cyl_to_origin;
+	cylinder[O_TOP] = mul_vec3_and_const(cyl_to_origin, obj->height / 2);
+	cylinder[O_BOTTOM] = mul_vec3_and_const(cyl_to_origin, -(obj->height / 2));
 }
 
 void	get_normal(t_ray *hit, double radius, t_vec3 *o_cylinder, t_obj *obj)
@@ -54,8 +57,8 @@ _Bool	hit_cylinder(t_ray *ray, t_obj *obj, t_ray *hit)
 	double	radius;
 	t_vec3	cylinder[3];
 
-	get_coeff(coeff, ray, obj);
 	set_origins(cylinder, obj);
+	get_coeff(coeff, ray, obj);
 	radius = obj->diameter / 2;
 	if (solve_quadratic_equation(coeff, roots, &ray->dist))
 	{
