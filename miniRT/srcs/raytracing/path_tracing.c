@@ -14,7 +14,7 @@ t_vec3	get_random_ray_dir(t_ray result, t_vec3 *vec)
 	return (random_ray_dir);
 }
 
-t_ray	*get_random_ray(t_ray result)
+t_ray	*get_random_ray(t_ray result, t_data *data)
 {
 	t_ray	*random_ray;
 	double	random_nb[2];
@@ -22,6 +22,8 @@ t_ray	*get_random_ray(t_ray result)
 	double	tmp;
 
 	random_ray = ft_calloc(1, sizeof(t_ray));
+	if (!random_ray)
+		exit_error(MALLOC_ERROR, "malloc() failed", data);
 	srand(ft_rand());
 	random_nb[0] = frand() * 2 * M_PI;
 	random_nb[1] = frand();
@@ -85,7 +87,7 @@ t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 		return (final_color);
 	if (hit_obj)
 	{
-		random_ray = get_random_ray(hit);
+		random_ray = get_random_ray(hit, data);
 		final_color = get_light(data, hit, *ray);
 		final_color = add_vec3(final_color, get_color_pixel(
 					obj, data, random_ray, --rebound));

@@ -10,7 +10,8 @@
 
 int		parsing_error(int errnum, char *str);
 int		is_dir_error(char *str);
-void	exit_error(t_data *data);
+void	exit_error(int errnum, char *error_msg, t_data *data);
+void	exit_error_parsing(int errnum, char *error_msg, t_parsing *parsing_var);
 int		error(int errnum, char *str);
 
 #endif

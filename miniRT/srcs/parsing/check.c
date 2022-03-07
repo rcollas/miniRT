@@ -65,6 +65,8 @@ int	sphere_check(t_obj *sphere)
 		return (FAIL);
 	if (!is_valid_rgb(sphere->color))
 		return (FAIL);
+	if (BONUS && sphere->has_texture == CHECKER && !is_valid_rgb(sphere->color_checker))
+		return (FAIL);
 	return (SUCCESS);
 }
 
@@ -73,6 +75,8 @@ int	plane_check(t_obj *plane)
 	if (!is_valid_vertex(plane->dir))
 		return (FAIL);
 	if (!is_valid_rgb(plane->color))
+		return (FAIL);
+	if (BONUS && plane->has_texture == CHECKER && !is_valid_rgb(plane->color_checker))
 		return (FAIL);
 	return (SUCCESS);
 }
@@ -87,6 +91,8 @@ int	cylinder_check(t_obj *cylinder)
 		return (FAIL);
 	if (!is_valid_rgb(cylinder->color))
 		return (FAIL);
+	if (BONUS && cylinder->has_texture == CHECKER && !is_valid_rgb(cylinder->color_checker))
+		return (FAIL);
 	return (SUCCESS);
 }
 
@@ -97,6 +103,8 @@ int	disk_check(t_obj *disk)
 	if (disk->diameter <= 0)
 		return (FAIL);
 	if (!is_valid_rgb(disk->color))
+		return (FAIL);
+	if (BONUS && disk->has_texture == CHECKER && !is_valid_rgb(disk->color_checker))
 		return (FAIL);
 	return (SUCCESS);
 }

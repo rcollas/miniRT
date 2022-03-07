@@ -7,6 +7,8 @@ struct			s_data;
 
 struct			s_obj;
 
+struct			s_image;
+
 typedef struct s_ray
 {
 	t_vec3			origin;
@@ -16,6 +18,8 @@ typedef struct s_ray
 	double			pixel_shadow;
 	double			shine_factor;
 	int				obj_ref;
+	int				type;
+	struct s_obj	*obj;
 }	t_ray;
 
 typedef struct s_ambient_light
@@ -54,22 +58,6 @@ typedef struct s_scene
 	int				light_nb;
 }	t_scene;
 
-typedef _Bool	t_op(t_ray *ray, struct s_obj *obj, t_ray *hit);
-
-typedef struct s_obj
-{
-	int				type;
-	t_vec3			origin[1];
-	t_vec3			dir[1];
-	t_vec3			color[1];
-	double			diameter;
-	double			height;
-	t_op			*hit_object;
-	double			shine_factor;
-	int				obj_nb;
-	struct s_obj	*next;
-}	t_obj;
-
 typedef struct s_image
 {
 	void		*img_ptr;
@@ -77,6 +65,8 @@ typedef struct s_image
 	int			bpp;
 	int			line_len;
 	int			endian;
+	int			width;
+	int			height;
 }				t_image;
 
 typedef struct s_mlx
@@ -85,6 +75,28 @@ typedef struct s_mlx
 	void		*window;
 	t_image		*image;
 }				t_mlx;
+
+typedef _Bool	t_op(t_ray *ray, struct s_obj *obj, t_ray *hit);
+
+typedef void	t_uv(t_ray hit, double *coord_uv);
+
+typedef struct s_obj
+{
+	int				type;
+	t_vec3			origin[1];
+	t_vec3			dir[1];
+	t_vec3			color[1];
+	t_vec3			color_checker[1];
+	double			diameter;
+	double			height;
+	t_op			*hit_object;
+	double			shine_factor;
+	int				obj_nb;
+	t_image			texture[1];
+	int				has_texture;
+	t_uv			*get_uv_coord;
+	struct s_obj	*next;
+}	t_obj;
 
 typedef struct s_parsing
 {
@@ -97,6 +109,8 @@ typedef struct s_parsing
 	_Bool		diffuse_light;
 	int			obj_nb;
 	int			light_nb;
+	_Bool		has_texture;
+	t_mlx		*mlx;
 }	t_parsing;
 
 typedef struct thread
@@ -121,6 +135,7 @@ typedef struct s_data
 	_Bool		multithreading;
 	t_thread	multi_thread[THREADS];
 	double		start_time;
+	t_image		texture[1];
 }	t_data;
 
 #endif

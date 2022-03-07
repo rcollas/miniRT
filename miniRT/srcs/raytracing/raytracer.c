@@ -1,23 +1,5 @@
 #include "miniRT.h"
 
-_Bool	checkered_texture(t_vec3 point)
-{
-	_Bool	x;
-	_Bool	y;
-	_Bool	z;
-	double	scale;
-	double	point_offset;
-
-	scale = 2;
-	point_offset = 3893343;
-	x = (int)((point.coord[X] + point_offset) / scale) % 2 == 0;
-	y = (int)((point.coord[Y] + point_offset) / scale) % 2 == 0;
-	z = (int)((point.coord[Z] + point_offset) / scale) % 2 == 0;
-	if (x || y || z)
-		return (FALSE);
-	return (TRUE);
-}
-
 _Bool	check_hit_object(
 	t_ray *ray, t_obj *obj, t_ray *hit_min)
 {
@@ -32,8 +14,8 @@ _Bool	check_hit_object(
 			copy_vec3(&hit_min->origin, hit.origin);
 			copy_vec3(&hit_min->dir, hit.dir);
 			copy_vec3(&hit_min->color, *obj->color);
-			// if (checkered_texture(hit_min->origin))
-			// 	hit_min->color = create_vec3(1, 1, 1);
+			hit_min->type = obj->type;
+			hit_min->obj = obj;
 		}
 		return (TRUE);
 	}
@@ -76,6 +58,8 @@ void	detect_intersection(
 	}
 	if (hit_obj)
 	{
+		if (BONUS)
+			handle_texture(&hit);
 		if (is_in_shadow(data->obj, hit, data->scene))
 			hit.pixel_shadow = SHADOW_COEFF;
 		rgb = mul_vec3(get_light(data, hit, ray), hit.color);

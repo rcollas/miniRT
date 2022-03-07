@@ -1,6 +1,7 @@
 #include "miniRT.h"
 
-void	draw_pixel(t_image *image, unsigned long color, t_thread *thread)
+void	draw_pixel(
+	t_image *image, unsigned long color, t_thread *thread)
 {
 	char	*dest;
 	int		y;

@@ -1,11 +1,5 @@
 #include "miniRT.h"
 
-void	exit_error(t_data *data)
-{
-	clean_data(data);
-	exit(EXIT_FAILURE);
-}
-
 int	main(int argc, char **argv)
 {
 	t_parsing	parsing_var[1];

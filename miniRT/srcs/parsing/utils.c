@@ -26,18 +26,12 @@ void	free_str_tab(char **tab)
 	int	i;
 
 	i = -1;
-	while (tab[++i])
-		ft_free(tab[i]);
-	ft_free(tab);
-}
-
-void	ft_exit_parsing(int errnum, t_parsing *parsing_var)
-{
-	free_list(parsing_var->objs);
-	free_str_tab(parsing_var->input_list);
-	if (parsing_var->objs)
-		free_str_tab(parsing_var->obj_info);
-	exit(errnum);
+	if (tab)
+	{
+		while (tab[++i])
+			ft_free(tab[i]);
+		ft_free(tab);
+	}
 }
 
 int	ft_open(char *file, int *fd)

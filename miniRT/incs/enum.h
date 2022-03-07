@@ -28,6 +28,8 @@ typedef enum s_define
 	G					= 1,
 	B					= 2,
 	T					= 3,
+	U					= 0,
+	V					= 1,
 	NO_PATH_TRACING		= 0,
 	PATH_TRACING		= 1,
 	CLASSIC_LIGHTING	= 0,
@@ -38,6 +40,8 @@ typedef enum s_define
 	RANDOM				= 1,
 	TANGENT_1			= 2,
 	TANGENT_2			= 3,
+	CHECKER				= 1,
+	BUMP_MAP			= 2,
 }	t_define;
 
 typedef enum s_error
@@ -61,6 +65,8 @@ typedef enum s_error
 	CYLINDER_FORMAT_ERROR		= 238,
 	DISK_FORMAT_ERROR			= 237,
 	INCOMPLETE_FILE_ERROR		= 236,
+	MLX_ERROR					= 235,
+	INCORRECT_FILENAME			= 234,
 }	t_error;
 
 # ifdef __linux__

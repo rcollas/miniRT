@@ -10,6 +10,7 @@
 # include <math.h>
 # include <pthread.h> // only for BONUS
 
+# define BONUS 1
 # define HEIGHT 480
 # define WIDTH 720
 # define THREADS 8
@@ -32,11 +33,10 @@
 
 /******************************** MLX_SETUP ***********************************/
 
-t_mlx			*setup_mlx(void);
+t_mlx			*setup_mlx(t_parsing *var);
 void			events_loop(t_data *data);
 void			clean_data(t_data *data);
 void			clean_mlx(t_mlx *mlx);
-void			free_list(t_obj *obj);
 int				check(void *obj, int type);
 void			init_data(t_parsing *parsing_var, t_data *data);
 void			init_image(t_mlx *mlx, t_data *data);
@@ -53,7 +53,7 @@ void			fill_camera(t_parsing *parsing, t_camera *camera, char *line);
 void			fill_diffuse_light(t_parsing *parsing,
 					t_diffuse_light *diffuse_light, char *line);
 void			fill_scene(int type, t_parsing *var, char *line);
-t_obj			*new_obj(int type, double diameter, double height);
+t_obj			*new_obj(int type, double diameter, double height, t_parsing *var);
 void			fill_obj(int type, t_parsing *var, char *line);
 void			obj_add_back(t_obj **obj_list, t_obj *to_add);
 _Bool			is_valid_extension(char *arg);
@@ -61,6 +61,9 @@ int				check(void *obj, int type);
 int				parsing(char **argv, int argc, t_parsing *parsing_var);
 int				is_valid_type(char *type);
 void			ft_free(void *to_free);
+void			free_str_tab(char **tab);
+void			free_list(t_obj *obj);
+void			clean_parsing_var(t_parsing *parsing_var);
 
 /********************************** CAMERA ************************************/
 
@@ -107,7 +110,21 @@ void			check_limit_color(t_vec3 *color);
 void			clamp_intensity(double *intensity);
 void			clamp_color(int *color);
 
-/***************************** OPTIMIZATION UTILS *******************************/
+/********************************** TEXTURE ***********************************/
+
+void			parse_checker(t_obj *obj, char *rgb);
+void			parse_texture(t_parsing *var, t_obj *obj, char *filename);
+_Bool			check_file_texture(char *filename);
+void			open_texture(t_image *texture, char *file, t_parsing *var);
+void			create_texture(t_ray *hit);
+void			create_checker(t_ray *hit);
+void			handle_texture(t_ray *hit);
+void			get_sphere_uv(t_ray hit, double *coord_uv);
+void			get_cylinder_uv(t_ray hit, double *coord_uv);
+void			get_plane_uv(t_ray hit, double *coord_uv);
+void			get_disk_uv(t_ray hit, double *coord_uv);
+
+/***************************** OPTIMIZATION UTILS ******************************/
 
 # include <sys/time.h>
 

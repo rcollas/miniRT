@@ -6,6 +6,7 @@ SRC_FILES	= main.c \
 			$(UTILS) \
 			$(PARSING) \
 			$(RAYTRACING) \
+			$(TEXTURE) \
 			$(OBJECTS) \
 			$(LIGHTING) \
 			$(LIB_MATH) \
@@ -38,6 +39,11 @@ RAYTRACING = \
 			raytracing/multithreading.c \
 			raytracing/camera_init.c \
 			raytracing/camera_move.c \
+
+TEXTURE = \
+			texture/uv_mapping.c \
+			texture/checker.c \
+			texture/texture.c \
 
 OBJECTS = \
 			objects/sphere.c \
