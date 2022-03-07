@@ -23,7 +23,7 @@ void	get_cylinder_uv(t_ray hit, double *coord_uv)
 	theta = atan2(hit.dir.coord[X], hit.dir.coord[Z]);
 	raw_u = theta / (2 * M_PI);
 	coord_uv[U] = 1 - (raw_u + 0.5);
-	coord_uv[V] = hit.origin.coord[Y];
+	coord_uv[V] = hit.origin.coord[Z];
 }
 
 void	get_plane_uv(t_ray hit, double *coord_uv)
@@ -34,8 +34,8 @@ void	get_plane_uv(t_ray hit, double *coord_uv)
 
 // void	get_disk_uv(t_ray hit, double *coord_uv)
 // {
-// 	coord_uv[U] = hit.origin.coord[X];
-// 	coord_uv[V] = hit.origin.coord[Z];
+// 	coord_uv[U] = hit.origin.coord[X] * 0.5 + 0.5;
+// 	coord_uv[V] = hit.origin.coord[Z] * 0.5 + 0.5;
 // }
 
 // void	get_disk_uv(t_ray hit, double *coord_uv)
@@ -50,11 +50,7 @@ void	get_plane_uv(t_ray hit, double *coord_uv)
 
 void	get_disk_uv(t_ray hit, double *coord_uv)
 {
-	double	theta;
-	double	raw_u;
-
-	theta = atan2(hit.dir.coord[X], hit.dir.coord[Z]);
-	raw_u = theta / (2 * M_PI);
-	coord_uv[U] = 1 - (raw_u + 0.5);
-	coord_uv[V] = hit.origin.coord[Y];
+	coord_uv[U] = sqrt(hit.dir.coord[X] * hit.dir.coord[X]
+		+ hit.dir.coord[Z] * hit.origin.coord[Z]) * 2;
+	coord_uv[V] = (atan2(hit.dir.coord[Z], hit.dir.coord[X]) / -3.14) * 0.5 + 0.5;
 }
