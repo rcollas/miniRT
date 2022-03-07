@@ -37,7 +37,7 @@ void	fill_plane(t_parsing *var, char *line)
 	ret += fill_rgb(var->obj_info[3], obj->color);
 	ret += fill_coordinates(var->obj_info[1], obj->origin);
 	if (check(obj, PLANE) == FAIL || ret)
-		ft_exit_parsing(error(PLANE_FORMAT_ERROR,line), var);
+		ft_exit_parsing(error(PLANE_FORMAT_ERROR, line), var);
 	obj->hit_object = &hit_plane;
 	obj->shine_factor = 0.2;
 	obj_add_back(&var->objs, obj);
