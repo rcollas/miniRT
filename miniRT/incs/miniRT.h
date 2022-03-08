@@ -116,15 +116,17 @@ void			clamp_color(int *color);
 
 int				parse_checker(t_obj *obj, char *rgb);
 void			parse_texture(t_parsing *var, t_obj *obj, char *filename);
+void			parse_bump_map(t_parsing *var, t_obj *obj, char *filename);
 _Bool			check_file_texture(char *filename);
 void			open_texture(t_image *texture, char *file, t_parsing *var);
-void			create_texture(t_ray *hit);
+void			create_texture(t_ray *hit, t_image *texture, t_vec3 *color);
 void			create_checker(t_ray *hit);
 void			handle_texture(t_ray *hit);
 void			get_sphere_uv(t_ray hit, double *coord_uv);
 void			get_cylinder_uv(t_ray hit, double *coord_uv);
 void			get_plane_uv(t_ray hit, double *coord_uv);
 void			get_disk_uv(t_ray hit, double *coord_uv);
+void			apply_bump_map(t_ray *hit);
 
 /***************************** OPTIMIZATION UTILS *****************************/
 

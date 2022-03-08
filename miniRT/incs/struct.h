@@ -91,6 +91,7 @@ typedef struct s_obj
 	double			shine_factor;
 	int				obj_nb;
 	t_image			texture[1];
+	t_image			bump_map[1];
 	int				has_texture;
 	t_uv			*get_uv_coord;
 	struct s_obj	*next;

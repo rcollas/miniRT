@@ -134,6 +134,7 @@ void	copy_content(t_obj *dest, t_obj *src, int obj_nb)
 		dest[i].shine_factor = src->shine_factor;
 		dest->obj_nb = obj_nb;
 		copy_texture(dest[i].texture, src->texture);
+		copy_texture(dest[i].bump_map, src->bump_map);
 		dest[i].has_texture = src->has_texture;
 		i++;
 		src = src->next;

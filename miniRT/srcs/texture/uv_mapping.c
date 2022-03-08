@@ -55,10 +55,13 @@ void	get_disk_uv(t_ray hit, double *coord_uv)
 	t_vec3	origin_normed;
 
 	origin_normed = get_normalized_vec3(hit.origin);
+	// printf("x = %f | z = %f\n", origin_normed.coord[X], origin_normed.coord[Z]);
+	// origin_normed = hit.origin;
 	theta = atan2(origin_normed.coord[Z], origin_normed.coord[X]);
 	raw_v = theta / (2 * M_PI);
 	coord_uv[U] = 1 - (raw_v + 0.5);
 	coord_uv[V] = sqrt(origin_normed.coord[X] * origin_normed.coord[X]
-		+ origin_normed.coord[Z] * origin_normed.coord[Z]);
+			+ origin_normed.coord[Z] * origin_normed.coord[Z]);
+	// coord_uv[V] = get_norm_vec3(origin_normed) * 2;
 	// printf("u = %f | v = %f\n", coord_uv[U], coord_uv[V]);
 }

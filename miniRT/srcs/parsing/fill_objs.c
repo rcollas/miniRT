@@ -13,12 +13,17 @@ void	fill_sphere(t_parsing *var, char *line)
 		exit_error_parsing(error(SPHERE_FORMAT_ERROR, line), NULL, var);
 	obj = new_obj(SPHERE, ft_atof(var->obj_info[2]), -1, var);
 	ret = fill_coordinates(var->obj_info[1], obj->origin);
-	if (BONUS && i == 5)
-		ret += parse_checker(obj, var->obj_info[4]);
 	if (BONUS && var->obj_info[3] && var->obj_info[3][0] == '\"')
 		parse_texture(var, obj, var->obj_info[3]);
 	else
 		ret += fill_rgb(var->obj_info[3], obj->color);
+	if (BONUS && i == 5)
+	{
+		if (var->obj_info[4] && var->obj_info[4][0] == '\"')
+			parse_bump_map(var, obj, var->obj_info[4]);
+		else
+			ret += parse_checker(obj, var->obj_info[4]);
+	}
 	if (check(obj, SPHERE) == FAIL || ret)
 		exit_error_parsing(error(SPHERE_FORMAT_ERROR, line), NULL, var);
 	obj->hit_object = &hit_sphere;

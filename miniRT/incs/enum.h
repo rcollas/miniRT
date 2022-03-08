@@ -41,7 +41,8 @@ typedef enum s_define
 	TANGENT_1			= 2,
 	TANGENT_2			= 3,
 	CHECKER				= 1,
-	BUMP_MAP			= 2,
+	NORMAL				= 2,
+	BUMP_MAP			= 3,
 }	t_define;
 
 typedef enum s_error
