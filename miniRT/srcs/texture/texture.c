@@ -26,7 +26,6 @@ void	handle_texture(t_ray *hit)
 	else if (hit->obj->has_texture == BUMP_MAP)
 	{
 		create_texture(hit, hit->obj->texture, &hit->color);
-		// printf("BEFORE : %f %f %f\t\t", hit->dir.coord[X], hit->dir.coord[Y], hit->dir.coord[Z]);
 		apply_bump_map(hit);
 		// printf("AFTER : %f %f %f\n", hit->dir.coord[X], hit->dir.coord[Y], hit->dir.coord[Z]);
 	}

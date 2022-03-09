@@ -11,6 +11,13 @@ typedef struct s_vec4
 	double	coord[4];
 }	t_vec4;
 
+typedef struct s_matrix3
+{
+	t_vec3	row_1;
+	t_vec3	row_2;
+	t_vec3	row_3;
+}	t_matrix3;
+
 typedef struct s_matrix4
 {
 	t_vec4	row_1;
@@ -29,6 +36,7 @@ void			copy_vec3(t_vec3 *dest, t_vec3 src);
 
 t_vec4			create_vec4(double x, double y, double z, double t);
 t_vec4			convert_vec3_to_vec4(t_vec3 vector);
+t_vec4			get_normalized_vec4(t_vec4 vector);
 
 /******************************* VEC3 OP *************************************/
 
@@ -58,6 +66,7 @@ t_vec3			get_normalized_vec3(t_vec3 vector);
 
 t_vec3			mul_vec3_and_matrix4(t_vec3 vector, t_matrix4 matrix);
 t_vec3			mul_dir_and_matrix4(t_vec3 vector, t_matrix4 matrix);
+t_vec3			mul_dir_and_matrix3(t_vec3 vector, t_matrix3 matrix);
 
 /********************************** TRIGO ************************************/
 

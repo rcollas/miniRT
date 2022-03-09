@@ -124,18 +124,3 @@ void	apply_perlin_noise(t_ray *hit)
 	hit->dir.coord[Z] = (1.0 - 0.2) * hit->dir.coord[Z] + 0.2 * noise_coeff[Z];
 	normalize_vec3(&hit->dir);
 }
-
-void	apply_bump_map(t_ray *hit)
-{
-    t_vec3  bump_map;
-
-    create_texture(hit, hit->obj->bump_map, &bump_map);
-    // printf("%f  %f  %f\n", bump_map.coord[R], bump_map.coord[G], bump_map.coord[B]);
-	hit->dir.coord[X] = bump_map.coord[X] * 2.0 - 1.0;
-	hit->dir.coord[Y] = bump_map.coord[Y] * 2.0 - 1.0;
-	hit->dir.coord[Z] = bump_map.coord[Z] * 2.0 - 1.0;
-	normalize_vec3(&hit->dir);
-	// hit->dir.coord[X] = hit->dir.coord[X] * 2.0 - 1.0;
-	// hit->dir.coord[Y] = hit->dir.coord[Y] * 2.0 - 1.0;
-	// hit->dir.coord[Z] = hit->dir.coord[Z] * 2.0 - 1.0;
-}

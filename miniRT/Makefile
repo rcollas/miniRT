@@ -44,6 +44,7 @@ TEXTURE = \
 			texture/uv_mapping.c \
 			texture/checker.c \
 			texture/texture.c \
+			texture/bump_map.c \
 			texture/perlin_noise.c \
 
 OBJECTS = \
