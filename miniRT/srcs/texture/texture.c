@@ -27,7 +27,6 @@ void	handle_texture(t_ray *hit)
 	{
 		create_texture(hit, hit->obj->texture, &hit->color);
 		apply_bump_map(hit);
-		// printf("AFTER : %f %f %f\n", hit->dir.coord[X], hit->dir.coord[Y], hit->dir.coord[Z]);
 	}
 }
 
@@ -44,38 +43,4 @@ void	open_texture(t_image *texture, char *filename, t_parsing *var)
 			&texture->line_len, &texture->endian);
 	if (!texture->img_ptr)
 		exit_error_parsing(MLX_ERROR, "mlx_get_data_addr() failed", var);
-}
-
-_Bool	check_file_texture(char *filename)
-{
-	int	length;
-
-	length = ft_strlen(filename);
-	if (length < 6)
-		return (FALSE);
-	if (!(filename[0] && filename[0] == '\"'
-			&& filename[length - 1] && filename[length - 1] == '\"'))
-		return (FALSE);
-	if (!(filename[length - 5] && filename[length - 5] == '.'
-			&& filename[length - 4] && filename[length - 4] == 'x'
-			&& filename[length - 3] && filename[length - 3] == 'p'
-			&& filename[length - 2] && filename[length - 2] == 'm'))
-		return (FALSE);
-	return (TRUE);
-}
-
-void	parse_texture(t_parsing *var, t_obj *obj, char *filename)
-{
-	if (!check_file_texture(filename))
-		exit_error_parsing(INCORRECT_FILENAME, "incorrect filename", var);
-	open_texture(obj->texture, filename, var);
-	obj->has_texture = NORMAL;
-}
-
-void	parse_bump_map(t_parsing *var, t_obj *obj, char *filename)
-{
-	if (!check_file_texture(filename))
-		exit_error_parsing(INCORRECT_FILENAME, "incorrect filename", var);
-	open_texture(obj->bump_map, filename, var);
-	obj->has_texture = BUMP_MAP;
 }

@@ -41,6 +41,7 @@ RAYTRACING = \
 			raytracing/camera_move.c \
 
 TEXTURE = \
+			texture/parsing.c \
 			texture/uv_mapping.c \
 			texture/checker.c \
 			texture/texture.c \

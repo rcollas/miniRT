@@ -1,4 +1,5 @@
 A 	0.2 255,255,255
 C 	0,0,0 0,0,-1 50
-L   15,15,-20  0.8
-sp	0,0,-40  15 "image/earth.xpm" "image/earth_normal_map4.xpm"
+L   15,15,-10  0.9
+sp	0,0,-35  15 "image/earth.xpm" "image/earth_normal_map5.xpm"
+sp	7,-5,-25  4 "image/moon.xpm" "image/moon_normal_map.xpm"
