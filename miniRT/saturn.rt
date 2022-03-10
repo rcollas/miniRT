@@ -1,0 +1,7 @@
+A 	0.2 255,255,255
+C 	0,0,20 0,0,-1 50
+#L   0,0,-30  1.0
+L   15,15,-15  0.9
+sp 	0,0,-30 15 "image/saturn.xpm"
+di 	0,0,-30  -0.15,1,0.3  35 "image/saturn_ring.xpm"
+sp	0,0,-30  500 "image/stars.xpm"
