@@ -36,7 +36,7 @@ t_vec3	get_specular_light(
 			* pow(fmax(0.0, cos_theta), SPECULAR_COEFF);
 		clamp_intensity(&intensity);
 		specular_light = mul_vec3_and_const(
-			*scene->diffuse_light->color, intensity);
+				*scene->diffuse_light->color, intensity);
 	}
 	return (specular_light);
 }

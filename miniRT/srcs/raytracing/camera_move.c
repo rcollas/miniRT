@@ -24,7 +24,6 @@ void	compute_cam_axis(t_camera *camera)
 	t_vec3	tmp;
 
 	compute_cam_dir(camera);
-	// camera->forward = get_normalized_vec3(inverse_vec3(*camera->dir));
 	camera->forward = get_normalized_vec3(*camera->dir);
 	if (cam_is_vertical_looking(camera->forward))
 		tmp = create_vec3(1, 0, 0);

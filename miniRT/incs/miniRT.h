@@ -114,8 +114,10 @@ void			clamp_color(int *color);
 
 /********************************** TEXTURE ***********************************/
 
-int				parse_param_texture(t_parsing *var, t_obj *obj, int i, int nb_ref);
-void			check_error_param_texture(t_parsing *var, char *line, int i, int nb_ref);
+int				parse_param_texture(
+					t_parsing *var, t_obj *obj, int i, int nb_ref);
+void			check_error_param_texture(
+					t_parsing *var, char *line, int i, int nb_ref);
 int				parse_checker(t_obj *obj, char *rgb);
 void			parse_texture(t_parsing *var, t_obj *obj, char *filename);
 void			parse_bump_map(t_parsing *var, t_obj *obj, char *filename);
@@ -137,6 +139,5 @@ void			apply_bump_map(t_ray *hit);
 double			get_timestamp(double start);
 double			get_time(void);
 double			elapsed_time(double start, double end);
-
 
 #endif

@@ -84,45 +84,27 @@ void	get_plane_uv(t_ray hit, t_vec2 *uv)
 // 	printf("u = %f | v = %f\n", uv->coord[U], uv->coord[V]);
 // }
 
-double	get_norm_vec2(t_vec2 vector)
-{
-	double	norm;
+// void	get_init_disk_uv(t_ray hit, t_vec2 *uv)
+// {
+// 	t_vec3	centered_origin;
+// 	double	angle;
+// 	double	radius;
 
-	norm = vector.coord[X] * vector.coord[X] + vector.coord[Y] * vector.coord[Y];
-	norm = sqrt(norm);
-	return (norm);
-}
-
-void	normalize_vec2(t_vec2 *vector)
-{
-	double	norm;
-
-	norm = get_norm_vec2(*vector);
-	vector->coord[X] /= norm;
-	vector->coord[V] /= norm;
-}
-
-void	get_init_disk_uv(t_ray hit, t_vec2 *uv)
-{
-	t_vec3	centered_origin;
-	double	angle;
-	double	radius;
-
-	centered_origin = get_normalized_vec3(hit.origin);
-	// printf("x = %f | z = %f\n", centered_origin.coord[X], centered_origin.coord[Z]);
-	angle = atan2(centered_origin.coord[Z], centered_origin.coord[X]);
-	if (centered_origin.coord[X] < 0)
-		angle += M_PI;
-	else if (centered_origin.coord[X] > 0 && centered_origin.coord[Y] < 0)
-		angle = angle + 2 * M_PI;
-	radius =  sqrt(centered_origin.coord[X] * centered_origin.coord[X]
-			+ centered_origin.coord[Z] * centered_origin.coord[Z]);
-	// uv->coord[U] = radius * cos(angle) * 0.5 + 0.5;
-	// uv->coord[V] = radius * sin(angle) * 0.5 + 0.5;
-	uv->coord[U] = radius;
-	uv->coord[V] = angle * 0.5 / M_PI + 0.5;
-	normalize_vec2(uv);
-}
+// 	centered_origin = get_normalized_vec3(hit.origin);
+// 	// printf("x = %f | z = %f\n", centered_origin.coord[X], centered_origin.coord[Z]);
+// 	angle = atan2(centered_origin.coord[Z], centered_origin.coord[X]);
+// 	if (centered_origin.coord[X] < 0)
+// 		angle += M_PI;
+// 	else if (centered_origin.coord[X] > 0 && centered_origin.coord[Y] < 0)
+// 		angle = angle + 2 * M_PI;
+// 	radius =  sqrt(centered_origin.coord[X] * centered_origin.coord[X]
+// 			+ centered_origin.coord[Z] * centered_origin.coord[Z]);
+// 	// uv->coord[U] = radius * cos(angle) * 0.5 + 0.5;
+// 	// uv->coord[V] = radius * sin(angle) * 0.5 + 0.5;
+// 	uv->coord[U] = radius;
+// 	uv->coord[V] = angle * 0.5 / M_PI + 0.5;
+// 	normalize_vec2(uv);
+// }
 
 void	get_disk_uv(t_ray hit, t_vec2 *uv)
 {
@@ -130,14 +112,17 @@ void	get_disk_uv(t_ray hit, t_vec2 *uv)
 	double	radius;
 	t_vec2	center;
 	t_vec2	norm_uv;
+	t_vec2	point;
 
-	get_init_disk_uv(hit, uv);
+	point.coord[X] = hit.origin.coord[X];
+	point.coord[Y] = hit.origin.coord[Z];
+	normalize_vec2(&point);
 	center.coord[X] = hit.obj->texture->center.coord[X];
 	center.coord[Y] = hit.obj->texture->center.coord[Y];
 	normalize_vec2(&center);
 	// printf("x = %f | y = %f\n", center.coord[U],center.coord[V]);
-	norm_uv.coord[X] = 2.0 * uv->coord[X] - center.coord[X];
-	norm_uv.coord[Y] = 2.0 * uv->coord[Y] - center.coord[Y];
+	norm_uv.coord[X] = 2.0 * point.coord[X] - center.coord[X];
+	norm_uv.coord[Y] = 2.0 * point.coord[Y] - center.coord[Y];
 	radius = get_norm_vec2(norm_uv);
 	theta = atan2(norm_uv.coord[Y], norm_uv.coord[X]);
 
@@ -145,7 +130,6 @@ void	get_disk_uv(t_ray hit, t_vec2 *uv)
 	// 	radius = ceil(radius / 0.9) * 0.9;
 	// if (theta > 0.0 && theta < 6.0)
 	// 	theta = floor(theta / 0.8) * 0.8;
-	
 	radius = (radius < 0.0) ? radius : (radius > 0.0 + 2.0) ? radius : ceil(radius / 0.9) * 0.9;
     theta = (theta < 0.0) ? theta : (theta > 0.0 + 5.0) ? theta : floor(theta / 0.8) * 0.8;
 

@@ -46,7 +46,6 @@ TEXTURE = \
 			texture/checker.c \
 			texture/texture.c \
 			texture/bump_map.c \
-			texture/perlin_noise.c \
 
 OBJECTS = \
 			objects/sphere.c \
@@ -63,12 +62,14 @@ LIGHTING = \
 			lighting/color_check.c \
 
 LIB_MATH = \
+			lib_math/vec2_op.c \
 			lib_math/vec3_init.c \
-			lib_math/vec4_init.c \
 			lib_math/vec3_op1.c \
 			lib_math/vec3_op2.c \
 			lib_math/vec3_op3.c \
 			lib_math/vec3_norm.c \
+			lib_math/vec4_init.c \
+			lib_math/vec4_norm.c \
 			lib_math/matrix.c \
 			lib_math/trigo.c \
 			lib_math/frand.c \

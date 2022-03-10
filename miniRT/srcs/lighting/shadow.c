@@ -13,9 +13,8 @@ _Bool	trace_shadow_ray(
 	while (i < obj->obj_nb)
 	{
 		if (obj[i].hit_object(shadow_ray, &obj[i], &hit)
-			&& hit.dist < light_dist) {
+			&& hit.dist < light_dist)
 			return (TRUE);
-		}
 		i++;
 	}
 	return (FALSE);
@@ -26,7 +25,8 @@ double	compute_shadow(t_obj *obj, t_ray *hit, t_diffuse_light *light)
 	_Bool	in_shadow;
 	t_ray	shadow_ray;
 
-	shadow_ray.origin = add_vec3(hit->origin, mul_vec3_and_const(hit->dir, 1e-4));
+	shadow_ray.origin = add_vec3(
+			hit->origin, mul_vec3_and_const(hit->dir, 1e-4));
 	shadow_ray.dir = sub_vec3(*light->coord, shadow_ray.origin);
 	normalize_vec3(&shadow_ray.dir);
 	in_shadow = trace_shadow_ray(&shadow_ray, obj, light);
