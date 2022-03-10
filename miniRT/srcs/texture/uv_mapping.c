@@ -117,10 +117,10 @@ void	get_disk_uv(t_ray hit, t_vec2 *uv)
 	point.coord[X] = hit.origin.coord[X];
 	point.coord[Y] = hit.origin.coord[Z];
 	normalize_vec2(&point);
+	// printf("x = %f | z = %f\n", point.coord[X], point.coord[Y]);
 	center.coord[X] = hit.obj->texture->center.coord[X];
 	center.coord[Y] = hit.obj->texture->center.coord[Y];
 	normalize_vec2(&center);
-	// printf("x = %f | y = %f\n", center.coord[U],center.coord[V]);
 	norm_uv.coord[X] = 2.0 * point.coord[X] - center.coord[X];
 	norm_uv.coord[Y] = 2.0 * point.coord[Y] - center.coord[Y];
 	radius = get_norm_vec2(norm_uv);
