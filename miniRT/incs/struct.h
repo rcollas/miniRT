@@ -65,6 +65,7 @@ typedef struct s_image
 	int			endian;
 	int			width;
 	int			height;
+	t_vec2		center;
 }				t_image;
 
 typedef struct s_mlx
@@ -76,7 +77,7 @@ typedef struct s_mlx
 
 typedef _Bool	t_op(t_ray *ray, struct s_obj *obj, t_ray *hit);
 
-typedef void	t_uv(t_ray hit, double *coord_uv);
+typedef void	t_uv(t_ray hit, t_vec2 *uv);
 
 typedef struct s_obj
 {

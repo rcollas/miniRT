@@ -1,6 +1,11 @@
 #ifndef LIB_MATH_H
 # define LIB_MATH_H
 
+typedef struct s_vec2
+{
+	double	coord[2];
+}	t_vec2;
+
 typedef struct s_vec3
 {
 	double	coord[3];

@@ -2,15 +2,15 @@
 
 void	create_texture(t_ray *hit, t_image *texture, t_vec3 *color)
 {
-	double	coord_uv[2];
+	t_vec2	uv;
 	int		floor_uv[2];
 	int		i;
 
-	hit->obj->get_uv_coord(*hit, coord_uv);
-	coord_uv[U] = 1 - coord_uv[U];
-	coord_uv[V] = 1 - coord_uv[V];
-	floor_uv[U] = floor(coord_uv[U] * (texture->width - 1));
-	floor_uv[V] = floor(coord_uv[V] * (texture->height - 1));
+	hit->obj->get_uv_coord(*hit, &uv);
+	uv.coord[U] = 1 - uv.coord[U];
+	uv.coord[V] = 1 - uv.coord[V];
+	floor_uv[U] = floor(uv.coord[U] * (texture->width - 1));
+	floor_uv[V] = floor(uv.coord[V] * (texture->height - 1));
 	i = floor_uv[V] * texture->line_len + floor_uv[U] * texture->bpp / 8;
 	color->coord[R] = (double)(unsigned char)texture->addr[i + 2] / 255;
 	color->coord[G] = (double)(unsigned char)texture->addr[i + 1] / 255;
@@ -43,4 +43,6 @@ void	open_texture(t_image *texture, char *filename, t_parsing *var)
 			&texture->line_len, &texture->endian);
 	if (!texture->img_ptr)
 		exit_error_parsing(MLX_ERROR, "mlx_get_data_addr() failed", var);
+	texture->center.coord[X] = texture->width / 2.0;
+	texture->center.coord[Y] = texture->height / 2.0;
 }

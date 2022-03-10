@@ -113,6 +113,8 @@ void	copy_texture(t_image *dest, t_image *src)
 	dest->endian = src->endian;
 	dest->bpp = src->bpp;
 	dest->line_len = src->line_len;
+	dest->center.coord[X] = src->center.coord[X];
+	dest->center.coord[Y] = src->center.coord[Y];
 }
 
 void	copy_content(t_obj *dest, t_obj *src, int obj_nb)
