@@ -13,8 +13,10 @@ _Bool	trace_shadow_ray(
 	while (i < obj->obj_nb)
 	{
 		if (obj[i].hit_object(shadow_ray, &obj[i], &hit)
-			&& hit.dist < light_dist)
+			&& hit.dist < light_dist && !obj->inside_object)
+		{
 			return (TRUE);
+		}
 		i++;
 	}
 	return (FALSE);

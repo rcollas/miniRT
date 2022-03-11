@@ -17,7 +17,7 @@ _Bool	hit_sphere(t_ray *ray, t_obj *obj, t_ray *hit)
 				ray->origin, mul_vec3_and_const(ray->dir, ray->dist));
 		hit->dist = ray->dist;
 		hit->dir = get_normalized_vec3(sub_vec3(hit->origin, *obj->origin));
-		check_direction_normal(ray, hit);
+		check_direction_normal(ray, obj, hit);
 		return (TRUE);
 	}
 	return (FALSE);

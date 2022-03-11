@@ -38,6 +38,9 @@ t_obj	*new_obj(int type, double diameter, double height, t_parsing *var)
 	obj->type = type;
 	obj->diameter = diameter;
 	obj->height = height;
+	obj->inside_object = FALSE;
+	obj->has_texture = FALSE;
+	obj->inner_diameter = 0;
 	obj->next = NULL;
 	return (obj);
 }

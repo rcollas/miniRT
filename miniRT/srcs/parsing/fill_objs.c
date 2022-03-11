@@ -10,7 +10,10 @@ void	fill_sphere(t_parsing *var, char *line)
 	while (var->obj_info[i])
 		i++;
 	if (BONUS)
-		check_error_param_texture(var, line, i, 4);
+	{
+		if (!check_error_param_texture(i, 4))
+			exit_error_parsing(error(SPHERE_FORMAT_ERROR, line), NULL, var);
+	}
 	else if (i != 4)
 		exit_error_parsing(error(SPHERE_FORMAT_ERROR, line), NULL, var);
 	obj = new_obj(SPHERE, ft_atof(var->obj_info[2]), -1, var);
@@ -37,7 +40,10 @@ void	fill_plane(t_parsing *var, char *line)
 	while (var->obj_info[i])
 		i++;
 	if (BONUS)
-		check_error_param_texture(var, line, i, 4);
+	{
+		if (!check_error_param_texture(i, 4))
+			exit_error_parsing(error(PLANE_FORMAT_ERROR, line), NULL, var);
+	}
 	else if (i != 4)
 		exit_error_parsing(error(PLANE_FORMAT_ERROR, line), NULL, var);
 	obj = new_obj(PLANE, -1, -1, var);
@@ -65,7 +71,10 @@ void	fill_cylinder(t_parsing *var, char *line)
 	while (var->obj_info[i])
 		i++;
 	if (BONUS)
-		check_error_param_texture(var, line, i, 6);
+	{
+		if (!check_error_param_texture(i, 6))
+			exit_error_parsing(error(CYLINDER_FORMAT_ERROR, line), NULL, var);
+	}
 	else if (i != 6)
 		exit_error_parsing(error(CYLINDER_FORMAT_ERROR, line), NULL, var);
 	obj = new_obj(CYLINDER, ft_atof(var->obj_info[3]),
@@ -94,16 +103,20 @@ void	fill_disk(t_parsing *var, char *line)
 	while (var->obj_info[i])
 		i++;
 	if (BONUS)
-		check_error_param_texture(var, line, i, 5);
-	else if (i != 5)
+	{
+		if (!check_error_param_texture(i, 6))
+			exit_error_parsing(error(DISK_FORMAT_ERROR, line), NULL, var);
+	}
+	else if (i != 6)
 		exit_error_parsing(error(DISK_FORMAT_ERROR, line), NULL, var);
 	obj = new_obj(DISK, ft_atof(var->obj_info[3]), -1, var);
+	obj->inner_diameter = ft_atof(var->obj_info[4]);
 	ret = fill_coordinates(var->obj_info[1], obj->origin);
 	ret += fill_vertex(var->obj_info[2], obj->dir);
 	if (BONUS)
-		ret += parse_param_texture(var, obj, i, 5);
+		ret += parse_param_texture(var, obj, i, 6);
 	else
-		ret += fill_rgb(var->obj_info[4], obj->color);
+		ret += fill_rgb(var->obj_info[5], obj->color);
 	if (check(obj, DISK) == FAIL || ret)
 		exit_error_parsing(error(DISK_FORMAT_ERROR, line), NULL, var);
 	obj->hit_object = &hit_disk;

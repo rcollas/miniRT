@@ -19,7 +19,8 @@ void	create_texture(t_ray *hit, t_image *texture, t_vec3 *color)
 	// 	printf("%f  %f  %f\n", color->coord[R], color->coord[G], color->coord[B]);
 }
 
-void	mix_textures(t_ray *hit, t_image *texture_1, t_image *texture_2, t_vec3 *color)
+void	mix_textures(
+	t_ray *hit, t_image *texture_1, t_image *texture_2, t_vec3 *color)
 {
 	t_vec2	uv;
 	int		floor_uv_1[2];
@@ -73,6 +74,4 @@ void	open_texture(t_image *texture, char *filename, t_parsing *var)
 			&texture->line_len, &texture->endian);
 	if (!texture->img_ptr)
 		exit_error_parsing(MLX_ERROR, "mlx_get_data_addr() failed", var);
-	texture->center.coord[X] = texture->width / 2.0;
-	texture->center.coord[Y] = texture->height / 2.0;
 }

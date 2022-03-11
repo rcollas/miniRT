@@ -94,7 +94,7 @@ _Bool			hit_sphere(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			hit_plane(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			hit_cylinder(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			hit_disk(t_ray *ray, t_obj *obj, t_ray *hit);
-void			check_direction_normal(t_ray *ray, t_ray *hit);
+void			check_direction_normal(t_ray *ray, t_obj *obj, t_ray *hit);
 
 /********************************* LIGHTING ***********************************/
 
@@ -116,8 +116,7 @@ void			clamp_color(int *color);
 
 int				parse_param_texture(
 					t_parsing *var, t_obj *obj, int i, int nb_ref);
-void			check_error_param_texture(
-					t_parsing *var, char *line, int i, int nb_ref);
+_Bool			check_error_param_texture(int i, int nb_ref);
 int				parse_checker(t_obj *obj, char *rgb);
 void			parse_texture(t_parsing *var, t_obj *obj, char *filename);
 void			parse_bump_map(t_parsing *var, t_obj *obj, char *filename);

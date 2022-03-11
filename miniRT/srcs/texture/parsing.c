@@ -34,10 +34,9 @@ void	parse_bump_map(t_parsing *var, t_obj *obj, char *filename)
 	obj->has_texture = BUMP_MAP;
 }
 
-void	check_error_param_texture(t_parsing *var, char *line, int i, int nb_ref)
+_Bool	check_error_param_texture(int i, int nb_ref)
 {
-	if (!(i == nb_ref || i == nb_ref + 1))
-		exit_error_parsing(error(SPHERE_FORMAT_ERROR, line), NULL, var);
+	return (i == nb_ref || i == nb_ref + 1);
 }
 
 int	parse_param_texture(t_parsing *var, t_obj *obj, int i, int nb_ref)

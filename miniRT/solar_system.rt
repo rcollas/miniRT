@@ -2,13 +2,12 @@ A 	0.1 255,255,255
 C 	0,0,20 0,0,-1 50
 L   0,20,-30  0.9
 #L   15,15,-30  0.8
-sp 	0,0,-55  21  "image/sun.xpm" "image/sun_normal_map2.xpm"
-sp 	-30,0,-55  11  "image/jupiter.xpm"
+sp 	0,0,-55  19  "image/sun.xpm" "image/sun_normal_map2.xpm"
+sp 	-30,0,-55  9  "image/jupiter.xpm"
 sp 	35,0,-55  6  "image/neptune.xpm"
 sp 	3,-8,-35  6 "image/earth_with_clouds.xpm"
-sp 	20,7,-70 8  "image/saturn.xpm"
-#di 	17,7,-65  0,1,0  17 "image/saturn_ring.xpm"
-di 	20,7,-70  -0.02,1,0.3  18 "image/saturn_ring.xpm"
+sp 	20,7,-70 7  "image/saturn.xpm"
+di 	20,7,-70  -0.02,1,0.3  15 10 "image/saturn_ring.xpm"
 sp 	20,-7,-50  5  "image/mars.xpm"
 sp   -12,6,-60  5  "image/venus.xpm"
 sp 	-17,-7,-50  4  "image/mercury.xpm"

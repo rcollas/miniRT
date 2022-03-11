@@ -65,7 +65,6 @@ typedef struct s_image
 	int			endian;
 	int			width;
 	int			height;
-	t_vec2		center;
 }				t_image;
 
 typedef struct s_mlx
@@ -87,6 +86,7 @@ typedef struct s_obj
 	t_vec3			color[1];
 	t_vec3			color_checker[1];
 	double			diameter;
+	double			inner_diameter;
 	double			height;
 	t_op			*hit_object;
 	double			shine_factor;
@@ -96,6 +96,7 @@ typedef struct s_obj
 	int				has_texture;
 	t_uv			*get_uv_coord;
 	struct s_obj	*next;
+	_Bool			inside_object;
 }	t_obj;
 
 typedef struct s_parsing

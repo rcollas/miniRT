@@ -113,8 +113,6 @@ void	copy_texture(t_image *dest, t_image *src)
 	dest->endian = src->endian;
 	dest->bpp = src->bpp;
 	dest->line_len = src->line_len;
-	dest->center.coord[X] = src->center.coord[X];
-	dest->center.coord[Y] = src->center.coord[Y];
 }
 
 void	copy_content(t_obj *dest, t_obj *src, int obj_nb)
@@ -130,11 +128,13 @@ void	copy_content(t_obj *dest, t_obj *src, int obj_nb)
 		copy_vec3(dest[i].color, *src->color);
 		copy_vec3(dest[i].color_checker, *src->color_checker);
 		dest[i].diameter = src->diameter;
+		dest[i].inner_diameter = src->inner_diameter;
 		dest[i].height = src->height;
 		dest[i].hit_object = src->hit_object;
 		dest[i].get_uv_coord = src->get_uv_coord;
 		dest[i].shine_factor = src->shine_factor;
 		dest->obj_nb = obj_nb;
+		dest[i].inside_object = src->inside_object;
 		copy_texture(dest[i].texture, src->texture);
 		copy_texture(dest[i].bump_map, src->bump_map);
 		dest[i].has_texture = src->has_texture;
