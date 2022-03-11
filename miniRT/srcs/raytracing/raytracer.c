@@ -10,11 +10,9 @@ _Bool	check_hit_object(
 		if (hit_min->dist > hit.dist)
 		{
 			hit_min->dist = hit.dist;
-			hit_min->shine_factor = obj->shine_factor;
 			copy_vec3(&hit_min->origin, hit.origin);
 			copy_vec3(&hit_min->dir, hit.dir);
 			copy_vec3(&hit_min->color, *obj->color);
-			hit_min->type = obj->type;
 			hit_min->obj = obj;
 		}
 		return (TRUE);

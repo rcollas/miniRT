@@ -166,9 +166,9 @@ int	disk_format_error(char *str)
 	ft_putstr_fd("Yours: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("\n", 2);
-	ft_putstr_fd("Expected: [ID]:di [COORDINATES]:0.0,0.0,0.0 ", 2);
-	ft_putstr_fd("[VERTEX]:0.0,0.0,0.0 [DIAMETER]:0.0", 2);
-	ft_putstr_fd("[RGB]:0-255,0-255,0-255 \n", 2);
+	ft_putstr_fd("Expected: [ID]: di  [COORDINATES]: 0.0,0.0,0.0  ", 2);
+	ft_putstr_fd("[VERTEX]: 0.0,0.0,0.0  [DIAMETER]: 0.0  [INNER_DIAMETER]: 0.0  ", 2);
+	ft_putstr_fd("[RGB]: 0-255,0-255,0-255 \n", 2);
 	return (DISK_FORMAT_ERROR);
 }
 

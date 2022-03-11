@@ -1,2 +1,5 @@
 *.o
 *.idea
+/minirt/image/earth_normal_map.xpm
+/minirt/image/earth.xpm
+/minirt/image/earth_specular.xpm
