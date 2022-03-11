@@ -160,7 +160,8 @@ void	get_disk_uv(t_ray hit, t_vec2 *uv)
 	radius = get_norm_vec2(point);
 	// printf("radius = %f\n", radius);
 	theta = atan2(point.coord[Y], point.coord[X]);
-	uv->coord[U] = (radius - 0.25) / (0.5 - 0.25);
+	// uv->coord[U] = (radius - 0.25) / (0.5 - 0.25);
+	uv->coord[U] = radius * 0.5 + 0.2;
 	uv->coord[V] = theta * 0.5 / M_PI + 0.5;
 	// printf("u = %f | v = %f\n", uv->coord[U], uv->coord[V]);
 }
