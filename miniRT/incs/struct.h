@@ -16,9 +16,7 @@ typedef struct s_ray
 	double			dist;
 	t_vec3			color;
 	double			pixel_shadow;
-	double			shine_factor;
 	int				obj_ref;
-	int				type;
 	struct s_obj	*obj;
 }	t_ray;
 
@@ -78,7 +76,7 @@ typedef struct s_mlx
 
 typedef _Bool	t_op(t_ray *ray, struct s_obj *obj, t_ray *hit);
 
-typedef void	t_uv(t_ray hit, double *coord_uv);
+typedef void	t_uv(t_ray hit, t_vec2 *uv);
 
 typedef struct s_obj
 {
@@ -88,14 +86,17 @@ typedef struct s_obj
 	t_vec3			color[1];
 	t_vec3			color_checker[1];
 	double			diameter;
+	double			inner_diameter;
 	double			height;
 	t_op			*hit_object;
 	double			shine_factor;
 	int				obj_nb;
 	t_image			texture[1];
+	t_image			bump_map[1];
 	int				has_texture;
 	t_uv			*get_uv_coord;
 	struct s_obj	*next;
+	_Bool			inside_object;
 }	t_obj;
 
 typedef struct s_parsing

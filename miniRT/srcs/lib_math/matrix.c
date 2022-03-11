@@ -41,3 +41,35 @@ t_vec3	mul_dir_and_matrix4(t_vec3 vector, t_matrix4 matrix)
 		+ matrix.row_4.coord[Z];
 	return (new_vector);
 }
+
+t_vec3	mul_dir_and_matrix3(t_vec3 vector, t_matrix3 matrix)
+{
+	t_vec3	new_vector;
+
+	new_vector.coord[X] = vector.coord[X] * matrix.row_1.coord[X]
+		+ vector.coord[Y] * matrix.row_2.coord[X]
+		+ vector.coord[Z] * matrix.row_3.coord[X];
+	new_vector.coord[Y] = vector.coord[X] * matrix.row_1.coord[Y]
+		+ vector.coord[Y] * matrix.row_2.coord[Y]
+		+ vector.coord[Z] * matrix.row_3.coord[Y];
+	new_vector.coord[Z] = vector.coord[X] * matrix.row_1.coord[Z]
+		+ vector.coord[Y] * matrix.row_2.coord[Z]
+		+ vector.coord[Z] * matrix.row_3.coord[Z];
+	return (new_vector);
+}
+
+// t_vec3	mul_dir_and_matrix3(t_matrix3 matrix, t_vec3 vector)
+// {
+// 	t_vec3	new_vector;
+
+// 	new_vector.coord[X] = vector.coord[X] * matrix.row_1.coord[X]
+// 		+ vector.coord[Y] * matrix.row_2.coord[X]
+// 		+ vector.coord[Z] * matrix.row_3.coord[X];
+// 	new_vector.coord[Y] = vector.coord[X] * matrix.row_1.coord[Y]
+// 		+ vector.coord[Y] * matrix.row_2.coord[Y]
+// 		+ vector.coord[Z] * matrix.row_3.coord[Y];
+// 	new_vector.coord[Z] = vector.coord[X] * matrix.row_1.coord[Z]
+// 		+ vector.coord[Y] * matrix.row_2.coord[Z]
+// 		+ vector.coord[Z] * matrix.row_3.coord[Z];
+// 	return (new_vector);
+// }

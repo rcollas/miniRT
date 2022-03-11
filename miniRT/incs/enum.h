@@ -41,7 +41,8 @@ typedef enum s_define
 	TANGENT_1			= 2,
 	TANGENT_2			= 3,
 	CHECKER				= 1,
-	BUMP_MAP			= 2,
+	NORMAL				= 2,
+	BUMP_MAP			= 3,
 }	t_define;
 
 typedef enum s_error
@@ -111,13 +112,13 @@ typedef enum s_key
 
 typedef enum s_types
 {
-	SPHERE			= 0,
-	PLANE			= 1,
-	CYLINDER		= 2,
-	DISK			= 3,
-	CAMERA			= 4,
-	AMBIENT_LIGHT	= 5,
-	DIFFUSE_LIGHT	= 6,
+	CAMERA			= 1,
+	AMBIENT_LIGHT	= 2,
+	DIFFUSE_LIGHT	= 3,
+	SPHERE			= 4,
+	PLANE			= 5,
+	CYLINDER		= 6,
+	DISK			= 7,
 }	t_types;
 
 #endif

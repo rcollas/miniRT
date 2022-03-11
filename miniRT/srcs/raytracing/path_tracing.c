@@ -60,7 +60,6 @@ _Bool	check_all_objects(t_obj *obj, t_ray *ray, t_ray *hit_min)
 			if (hit_min->dist > hit.dist)
 			{
 				hit_min->dist = hit.dist;
-				hit_min->shine_factor = obj[i].shine_factor;
 				copy_vec3(&hit_min->origin, hit.origin);
 				copy_vec3(&hit_min->dir, hit.dir);
 				copy_vec3(&hit_min->color, *obj[i].color);

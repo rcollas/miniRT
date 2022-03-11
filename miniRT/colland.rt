@@ -1,0 +1,6 @@
+A 	0.2 255,255,255
+C 	0,0,0 0,0,-1 50
+L   15,15,-10  0.9
+sp	0,0,-35  20 "image/antoine2.xpm"
+#sp  9,0,-35  15 "image/robin.xpm"
+sp	0,0,-35  500 "image/stars.xpm"

@@ -4,10 +4,9 @@ double	get_norm2_vec3(t_vec3 vector)
 {
 	double	norm;
 
-
-	norm = vector.coord[X] * vector.coord[X]
-		+ vector.coord[Y] * vector.coord[Y]
-		+ vector.coord[Z] * vector.coord[Z];
+	norm = vector.coord[X] * vector.coord[X];
+	norm += vector.coord[Y] * vector.coord[Y];
+	norm += vector.coord[Z] * vector.coord[Z];
 	return (norm);
 }
 
