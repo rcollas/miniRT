@@ -53,6 +53,8 @@ OBJECTS = \
 			objects/cylinder.c \
 			objects/disk.c \
 			objects/utils.c \
+			objects/hyperboloid.c \
+			objects/cone.c \
 
 LIGHTING = \
 			lighting/shadow.c \

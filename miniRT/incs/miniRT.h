@@ -95,12 +95,13 @@ _Bool			hit_plane(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			hit_cylinder(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			hit_disk(t_ray *ray, t_obj *obj, t_ray *hit);
 void			check_direction_normal(t_ray *ray, t_obj *obj, t_ray *hit);
+_Bool			hit_hyperboloid(t_ray *ray, t_obj *obj, t_ray *hit);
+_Bool			hit_cone(t_ray *ray, t_obj *obj, t_ray *hit);
 
 /********************************* LIGHTING ***********************************/
 
 t_vec3			get_light(t_data *data, t_ray hit, t_ray ray);
-t_vec3			sum_phong_lights(t_data *data,
-					t_ray hit, t_ray ray, t_vec3 light_dir);
+t_vec3			sum_phong_lights(t_scene *scene, t_ray hit, t_ray ray, t_data *data);
 t_vec3			get_ambient_light(t_scene *scene);
 void			draw_pixel(t_image *image, unsigned long color,
 					t_thread *thread);

@@ -43,6 +43,8 @@ typedef enum s_define
 	CHECKER				= 1,
 	NORMAL				= 2,
 	BUMP_MAP			= 3,
+	DIFFUSE				= 0,
+	SPECULAR			= 1,
 }	t_define;
 
 typedef enum s_error
@@ -119,6 +121,7 @@ typedef enum s_types
 	PLANE			= 5,
 	CYLINDER		= 6,
 	DISK			= 7,
+	CONE			= 8,
 }	t_types;
 
 #endif

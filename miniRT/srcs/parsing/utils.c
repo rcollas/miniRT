@@ -80,5 +80,7 @@ int	is_valid_type(char *type)
 		return (PLANE);
 	if (ft_strcmp(type, "di") == EQUAL)
 		return (DISK);
+	if (ft_strcmp(type, "co") == EQUAL)
+		return (CONE);
 	return (INVALID_TYPE_ERROR);
 }

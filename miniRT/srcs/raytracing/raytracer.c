@@ -27,7 +27,7 @@ void	init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color)
 	if (hit)
 	{
 		hit->dist = 1E99;
-		hit->pixel_shadow = NO_SHADOW;
+		hit->shadowing = NO_SHADOW;
 		hit->obj_ref = -1;
 	}
 	if (color)

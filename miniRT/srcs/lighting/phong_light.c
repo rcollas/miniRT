@@ -9,6 +9,7 @@ t_vec3	get_diffuse_light(t_scene *scene, t_ray hit, t_vec3	light_dir)
 	normalize_vec3(&hit.dir);
 	cos_theta = fmax(0.0, dot_vec3(hit.dir, light_dir));
 	intensity = scene->diffuse_light->intensity * cos_theta;
+	intensity *= hit.shadowing;
 	clamp_intensity(&intensity);
 	diffuse_light = mul_vec3_and_const(*scene->diffuse_light->color, intensity);
 	return (diffuse_light);
@@ -34,6 +35,7 @@ t_vec3	get_specular_light(
 	{
 		intensity = hit.obj->shine_factor
 			* pow(fmax(0.0, cos_theta), SPECULAR_COEFF);
+		intensity *= hit.shadowing;
 		clamp_intensity(&intensity);
 		specular_light = mul_vec3_and_const(
 				*scene->diffuse_light->color, intensity);
@@ -41,19 +43,24 @@ t_vec3	get_specular_light(
 	return (specular_light);
 }
 
-t_vec3	sum_phong_lights(
-	t_data *data, t_ray hit, t_ray ray, t_vec3 light_dir)
+t_vec3	sum_phong_lights(t_scene *scene, t_ray hit, t_ray ray, t_data *data)
 {
+	t_vec3	light_dir;
 	t_vec3	total_light;
-	t_vec3	diffuse_light;
-	t_vec3	specular_light;
+	t_vec3	phong_light[2];
+	int		i;
 
 	total_light = create_vec3(0, 0, 0);
-	total_light = add_vec3(total_light, get_ambient_light(data->scene));
-	diffuse_light = get_diffuse_light(data->scene, hit, light_dir);
-	total_light = add_vec3(total_light, diffuse_light);
-	specular_light = get_specular_light(data->scene, hit, ray, light_dir);
-	total_light = add_vec3(total_light, specular_light);
-	total_light = mul_vec3(hit.color, total_light);
+	i = -1;
+	while (++i < scene->light_nb)
+	{
+		hit.shadowing = compute_shadow(data->obj, &hit, &scene->diffuse_light[i]);
+		light_dir = sub_vec3(*scene->diffuse_light[i].coord, hit.origin);
+		normalize_vec3(&light_dir);
+		phong_light[DIFFUSE] = get_diffuse_light(scene, hit, light_dir);
+		phong_light[SPECULAR] = get_specular_light(scene, hit, ray, light_dir);
+		total_light = add_vec3(total_light, phong_light[DIFFUSE]);
+		total_light = add_vec3(total_light, phong_light[SPECULAR]);
+	}
 	return (total_light);
 }
