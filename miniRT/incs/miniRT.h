@@ -95,6 +95,7 @@ _Bool			hit_plane(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			hit_cylinder(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			hit_disk(t_ray *ray, t_obj *obj, t_ray *hit);
 void			check_direction_normal(t_ray *ray, t_obj *obj, t_ray *hit);
+t_vec3			get_hit_point(t_ray ray);
 _Bool			hit_hyperboloid(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			hit_cone(t_ray *ray, t_obj *obj, t_ray *hit);
 

@@ -8,3 +8,11 @@ void	check_direction_normal(t_ray *ray, t_obj *obj, t_ray *hit)
 		obj->inside_object = TRUE;
 	}
 }
+
+t_vec3	get_hit_point(t_ray ray)
+{
+	t_vec3	hit_point;
+
+	hit_point = add_vec3(ray.origin, mul_vec3_and_const(ray.dir, ray.dist));
+	return (hit_point);
+}

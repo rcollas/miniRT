@@ -17,8 +17,7 @@ _Bool	hit_plane(t_ray *ray, t_obj *obj, t_ray *hit)
 		if (hit->dist > 0)
 		{
 			ray->dist = hit->dist;
-			hit->origin = add_vec3(
-					ray->origin, mul_vec3_and_const(ray->dir, hit->dist));
+			hit->origin = get_hit_point(*ray);
 			return (TRUE);
 		}
 	}
