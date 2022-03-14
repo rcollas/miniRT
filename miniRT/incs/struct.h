@@ -18,6 +18,7 @@ typedef struct s_ray
 	int				obj_ref;
 	double			shadowing;
 	struct s_obj	*obj;
+	t_vec3			cam_dir;
 }	t_ray;
 
 typedef struct s_ambient_light
