@@ -137,6 +137,7 @@ typedef struct s_data
 	_Bool		multithreading;
 	t_thread	multi_thread[THREADS];
 	double		start_time;
+	int			obj_ref;
 	t_image		texture[1];
 }	t_data;
 

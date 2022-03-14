@@ -1,19 +1,39 @@
 #include "miniRT.h"
 
-void	compute_normal_cone(t_ray *ray, t_obj *obj, t_ray *hit, double angle)
+void	check_normal_cone(t_ray *ray, t_obj *obj, t_ray *hit)
 {
-	double	m;
-	double	radius;
+	(void)obj;
+	(void)hit;
+	(void)ray;
+	// if (dot_vec3(hit->dir, ray->dir) > 0)
+	// {
+		// hit->dir = mul_vec3_and_const(hit->dir, -1);
+		// if (BONUS && obj->type == SPHERE)
+			obj->inside_object = FALSE;
+}
 
-	radius = obj->diameter / 2.0;
-	m = dot_vec3(ray->dir, *obj->dir) * hit->dist;
-	m += dot_vec3(sub_vec3(ray->origin, *obj->origin), *obj->dir);
-	hit->dir = sub_vec3(sub_vec3(hit->origin, *obj->origin), mul_vec3_and_const(*obj->dir, (1 + tan(angle) * tan(angle)) * m));
-	// hit->dir.coord[X] = (hit->origin.coord[X] - obj->origin->coord[X]) * (obj->height / radius);
-	// hit->dir.coord[X] = radius / obj->height;
-	// hit->dir.coord[Z] = (hit->origin.coord[Z] - obj->origin->coord[Z]) * (obj->height / radius);
+// void	compute_normal_cone(t_ray *ray, t_obj *obj, t_ray *hit, double angle)
+// {
+// 	double	m;
+// 	double	radius;
+
+// 	radius = obj->diameter / 2.0;
+// 	m = dot_vec3(ray->dir, *obj->dir) * hit->dist;
+// 	m += dot_vec3(sub_vec3(ray->origin, *obj->origin), *obj->dir);
+// 	hit->dir = sub_vec3(sub_vec3(hit->origin, *obj->origin), mul_vec3_and_const(*obj->dir, (1 + tan(angle) * tan(angle)) * m));
+// 	normalize_vec3(&hit->dir);
+// 	check_normal_cone(ray, obj, hit);
+// }
+
+void	compute_normal_cone(t_ray *ray, t_obj *obj, t_ray *hit)
+{
+	double	length;
+
+	(void)ray;
+	length = get_norm_vec3(sub_vec3(hit->origin, *obj->origin));
+	hit->dir = sub_vec3(hit->origin, add_vec3(*obj->origin, mul_vec3_and_const(*obj->dir, length)));
 	normalize_vec3(&hit->dir);
-	// check_direction_normal(ray, obj, hit);
+	// check_normal_cone(ray, obj, hit);
 }
 
 _Bool	check_height(t_ray *ray, t_obj *obj)
@@ -27,7 +47,8 @@ _Bool	check_height(t_ray *ray, t_obj *obj)
 	vec_2 = add_vec3(*obj->origin, mul_vec3_and_const(*obj->dir, obj->height));
 	dot_origin = dot_vec3(*obj->dir, sub_vec3(vec_1, *obj->origin));
 	dot_height = dot_vec3(*obj->dir, sub_vec3(vec_1, vec_2));
-	if (dot_origin < 0.0 || dot_height > 0.0)
+	// if (dot_origin < 0.01 || dot_height > 0.01)
+	if (dot_origin < 0 || dot_height > 0)
 		return (FALSE);
 	return (TRUE);
 }
@@ -65,12 +86,13 @@ _Bool	hit_cone(t_ray *ray, t_obj *obj, t_ray *hit)
 	coeff[A] = dot_vec3(ray->dir, ray->dir) - angle * s_d1 * s_d1 - s_d1 * s_d1;
 	coeff[B] = 2 * (dot_vec3(ray->dir, obj_to_origin) - angle * s_d1 * s_d2 - s_d1 * s_d2);
 	coeff[C] = dot_vec3(obj_to_origin, obj_to_origin) - angle * s_d2 * s_d2 - s_d2 * s_d2;
-	if (solve_quadratic_equation(coeff, roots, &ray->dist)
+	if (solve_quadratic_equation(coeff, roots, &ray->dist) && ray->dist > 0.05
 		&& check_height(ray, obj))
 	{
 		hit->origin = get_hit_point(*ray);
 		hit->dist = ray->dist;
-		compute_normal_cone(ray, obj, hit, angle);
+		compute_normal_cone(ray, obj, hit);
+		// compute_normal_cone(ray, obj, hit, angle);
 		return (TRUE);
 	}
 	if (hit_cone_caps(ray, obj, hit))

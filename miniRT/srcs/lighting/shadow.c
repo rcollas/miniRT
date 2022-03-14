@@ -22,7 +22,8 @@ _Bool	trace_shadow_ray(
 	return (FALSE);
 }
 
-double	compute_shadow(t_obj *obj, t_ray *hit, t_diffuse_light *light)
+double	compute_shadow(
+	t_obj *obj, t_ray *hit, t_diffuse_light *light)
 {
 	_Bool	in_shadow;
 	t_ray	shadow_ray;

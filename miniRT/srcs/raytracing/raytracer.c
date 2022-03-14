@@ -49,7 +49,10 @@ void	detect_intersection(
 	while (i < data->obj_nb)
 	{
 		if (check_hit_object(&ray, &data->obj[i], &hit, data->scene->camera))
+		{
 			hit_obj = TRUE;
+			data->obj_ref = i;
+		}
 		i++;
 	}
 	if (hit_obj)

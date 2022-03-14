@@ -84,7 +84,8 @@ void			run_multithreading(t_data *data);
 void			init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color);
 void			run_path_tracing(t_ray *cam_ray, unsigned long *color,
 					t_data *data, t_thread *thread);
-double			compute_shadow(t_obj *obj, t_ray *ray, t_diffuse_light *light);
+double			compute_shadow(
+					t_obj *obj, t_ray *ray, t_diffuse_light *light);
 t_vec3			get_color_pixel(t_obj *obj, t_data *data,
 					t_ray *ray, int rebound);
 
@@ -102,7 +103,8 @@ _Bool			hit_cone(t_ray *ray, t_obj *obj, t_ray *hit);
 /********************************* LIGHTING ***********************************/
 
 t_vec3			get_light(t_data *data, t_ray hit, t_ray ray);
-t_vec3			sum_phong_lights(t_scene *scene, t_ray hit, t_ray ray, t_data *data);
+t_vec3			sum_phong_lights(
+					t_scene *scene, t_ray hit, t_ray ray, t_data *data);
 t_vec3			get_ambient_light(t_scene *scene);
 void			draw_pixel(t_image *image, unsigned long color,
 					t_thread *thread);
