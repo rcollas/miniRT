@@ -7,7 +7,7 @@ _Bool	trace_shadow_ray(
 	double	light_dist;
 	int		i;
 
-	hit.dist = 1E99;
+	hit.dist = INFINITY;
 	i = 0;
 	light_dist = get_norm_vec3(sub_vec3(*light->coord, shadow_ray->origin));
 	while (i < obj->obj_nb)

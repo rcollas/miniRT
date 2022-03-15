@@ -1,11 +1,10 @@
 #include "miniRT.h"
 
 _Bool	check_hit_object(
-	t_ray *ray, t_obj *obj, t_ray *hit_min, t_camera *camera)
+	t_ray *ray, t_obj *obj, t_ray *hit_min)
 {
 	t_ray	hit;
 
-	copy_vec3(&hit.cam_dir, *camera->dir);
 	if (obj->hit_object(ray, obj, &hit))
 	{
 		if (hit_min->dist > hit.dist)
@@ -27,7 +26,7 @@ void	init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color)
 		*hit_obj = FALSE;
 	if (hit)
 	{
-		hit->dist = 1E99;
+		hit->dist = INFINITY;
 		hit->shadowing = NO_SHADOW;
 		hit->obj_ref = -1;
 	}
@@ -48,7 +47,7 @@ void	detect_intersection(
 	update_camera_ray(&ray, data, thread);
 	while (i < data->obj_nb)
 	{
-		if (check_hit_object(&ray, &data->obj[i], &hit, data->scene->camera))
+		if (check_hit_object(&ray, &data->obj[i], &hit))
 		{
 			hit_obj = TRUE;
 			data->obj_ref = i;
