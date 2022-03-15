@@ -2,7 +2,7 @@
 
 void	check_direction_normal(t_ray *ray, t_obj *obj, t_ray *hit)
 {
-	if (dot_vec3(hit->dir, ray->dir) > 0)
+	if (dot_vec3(hit->dir, ray->dir) > 0.001)
 	{
 		hit->dir = mul_vec3_and_const(hit->dir, -1);
 		if (BONUS && obj->type == SPHERE)

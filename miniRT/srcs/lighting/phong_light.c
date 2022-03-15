@@ -55,6 +55,7 @@ t_vec3	sum_phong_lights(t_scene *scene, t_ray hit, t_ray ray, t_data *data)
 	while (++i < scene->light_nb)
 	{
 		hit.shadowing = compute_shadow(data->obj, &hit, &scene->diffuse_light[i]);
+		// hit.shadowing = 1.0;
 		light_dir = sub_vec3(*scene->diffuse_light[i].coord, hit.origin);
 		normalize_vec3(&light_dir);
 		phong_light[DIFFUSE] = get_diffuse_light(scene, hit, light_dir);
