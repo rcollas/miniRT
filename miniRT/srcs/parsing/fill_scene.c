@@ -76,11 +76,13 @@ void	fill_diffuse_light(
 	int	j;
 
 	i = 0;
+	(void)diffuse_light;
 	j = parsing->light_nb;
+	parsing->light_nb++;
 	if (j == 0)
 	{
-		diffuse_light = (t_diffuse_light *)ft_calloc(sizeof(t_diffuse_light), 1);
-		if (!diffuse_light)
+		parsing->scene->diffuse_light = (t_diffuse_light *)ft_calloc(sizeof(t_diffuse_light), 1);
+		if (!parsing->scene->diffuse_light)
 			exit_error_parsing(MALLOC_ERROR, "malloc() failed", parsing);
 	}
 	while (parsing->obj_info[i])
@@ -91,19 +93,17 @@ void	fill_diffuse_light(
 		exit_error_parsing(DIFFUSE_LIGHT_FORMAT_ERROR, NULL, parsing);
 	}
 	if (j != 0)
-		diffuse_light = ft_realloc(parsing, diffuse_light, parsing->light_nb + 1);
-	diffuse_light[j].type = DIFFUSE_LIGHT;
-	fill_coordinates(parsing->obj_info[1], diffuse_light[j].coord);
-	diffuse_light[j].intensity = ft_atof(parsing->obj_info[2]);
-	if (check(&diffuse_light[j], DIFFUSE_LIGHT) == FAIL)
+		parsing->scene->diffuse_light = ft_realloc(parsing, parsing->scene->diffuse_light, parsing->light_nb + 1);
+	parsing->scene->diffuse_light[j].type = DIFFUSE_LIGHT;
+	fill_coordinates(parsing->obj_info[1], parsing->scene->diffuse_light[j].coord);
+	parsing->scene->diffuse_light[j].intensity = ft_atof(parsing->obj_info[2]);
+	if (check(&parsing->scene->diffuse_light[j], DIFFUSE_LIGHT) == FAIL)
 	{
 		error(DIFFUSE_LIGHT_FORMAT_ERROR, line);
 		exit_error_parsing(DIFFUSE_LIGHT_FORMAT_ERROR, NULL, parsing);
 	}
-	*diffuse_light[j].color = create_vec3(1, 1, 1);
+	*parsing->scene->diffuse_light[j].color = create_vec3(1, 1, 1);
 	parsing->diffuse_light = TRUE;
-	parsing->scene->diffuse_light = diffuse_light;
-	parsing->light_nb++;
 }
 
 void	fill_scene(int type, t_parsing *var, char *line)

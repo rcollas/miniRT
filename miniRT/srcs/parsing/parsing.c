@@ -55,7 +55,6 @@ void	parsing_var_init(t_parsing *var)
 	var->objs = NULL;
 	var->light_nb = 0;
 	var->has_texture = FALSE;
-	var->mlx = setup_mlx(var);
 }
 
 int	load_file(char **argv, int argc, int *fd)
@@ -157,21 +156,6 @@ t_obj	*list_to_tab(t_obj *obj, t_parsing *parsing_var)
 	copy_content(obj_tab, obj, obj_nb);
 	free_list(obj);
 	return (obj_tab);
-}
-
-void print_obj(t_parsing *parsing_var)
-{
-	int	i;
-
-	i = 0;
-	while (i < parsing_var->obj_nb)
-	{
-		if (parsing_var->objs[i].type == SPHERE)
-			printf("-width = %d | height = %d\n",
-				parsing_var->objs->texture->width,
-				parsing_var->objs->texture->height);
-		i++;
-	}
 }
 
 int	parsing(char **argv, int argc, t_parsing *parsing_var)

@@ -10,10 +10,10 @@
 # include <math.h>
 # include <pthread.h> // only for BONUS
 
-# define BONUS 1
+# define BONUS 0
 # define HEIGHT 480
 # define WIDTH 720
-# define THREADS 8
+# define THREADS 1
 # define PASSES 3
 # define REBOUND 8
 

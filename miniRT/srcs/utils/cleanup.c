@@ -25,6 +25,7 @@ void	clean_mlx(t_mlx *mlx)
 void	clean_data(t_data *data)
 {
 	free_list(data->obj);
+	free_tab((void **)&data->scene->diffuse_light, data->scene->light_nb);
 	clean_mlx(data->mlx);
 }
 
@@ -44,9 +45,9 @@ void	clean_parsing_var(t_parsing *parsing_var)
 {
 	free_list(parsing_var->objs);
 	free_str_tab(parsing_var->input_list);
-	if (parsing_var->objs)
-		free_str_tab(parsing_var->obj_info);
-	clean_mlx(parsing_var->mlx);
+	free_str_tab(parsing_var->obj_info);
+	free_tab((void **)&parsing_var->scene->diffuse_light, parsing_var->light_nb);
+	//clean_mlx(parsing_var->mlx);
 }
 
 void	exit_error_parsing(int errnum, char *error_msg, t_parsing *parsing_var)
