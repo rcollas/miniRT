@@ -65,7 +65,7 @@ t_diffuse_light	*ft_realloc(t_parsing *parsing, t_diffuse_light *ptr, int size)
 		new_ptr[i].intensity = ptr[i].intensity;
 		i++;
 	}
-	free_tab((void **)&ptr, size - 1);
+	//free_tab((void **)&ptr, size - 1);
 	return (new_ptr);
 }
 

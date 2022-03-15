@@ -34,6 +34,27 @@ void	init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color)
 		*color = create_vec3(0, 0, 0);
 }
 
+t_vec3	compute_light_obj_color(t_vec3 obj_color, t_diffuse_light *light, int light_nb)
+{
+	t_vec3	final_color;
+	int 	i;
+
+	i = -1;
+	final_color = div_vec3_and_const(obj_color, light_nb + 1);
+	*light[0].color = create_vec3(1, 0, 0);
+	*light[1].color = create_vec3(0, 1, 0);
+	while (++i < light_nb)
+	{
+		obj_color.coord[R] = obj_color.coord[R] + fabs(light[i].color->coord[R] - obj_color.coord[R]);
+		obj_color.coord[G] = obj_color.coord[G] + fabs(light[i].color->coord[G] - obj_color.coord[G]);
+		obj_color.coord[B] = obj_color.coord[B] + fabs(light[i].color->coord[B] - obj_color.coord[B]);
+	}
+	printf("final color R %f\n", final_color.coord[R]);
+	printf("final color G %f\n", final_color.coord[G]);
+	printf("final color B %f\n", final_color.coord[B]);
+	return (obj_color);
+}
+
 void	detect_intersection(
 	t_ray ray, unsigned long *color, t_data *data, t_thread *thread)
 {
@@ -55,7 +76,10 @@ void	detect_intersection(
 	{
 		if (BONUS)
 			handle_texture(&hit);
-		rgb = mul_vec3(get_light(data, hit, ray), hit.color);
+		rgb = mul_vec3(get_light(data, hit, ray),
+				compute_light_obj_color(hit.color,
+					data->scene->diffuse_light, data->scene->light_nb));
+//		rgb = mul_vec3(get_light(data, hit, ray), hit.color);
 	}
 	*color = create_rgb_struct(&rgb);
 }
@@ -69,10 +93,10 @@ void	run_raytracing(
 
 	ratio = HEIGHT / THREADS;
 	init_camera_ray(&cam_ray, data);
-	while (thread->pixel_y < thread->max_height - 1)
+	while (thread->pixel_y < thread->max_height)
 	{
 		thread->pixel_x = -1;
-		while (++thread->pixel_x < WIDTH - 1)
+		while (++thread->pixel_x < WIDTH)
 		{
 			if (data->path_tracing)
 				run_path_tracing(&cam_ray, &pixel_color, data, thread);
