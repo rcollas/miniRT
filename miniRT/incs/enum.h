@@ -43,6 +43,8 @@ typedef enum s_define
 	CHECKER				= 1,
 	NORMAL				= 2,
 	BUMP_MAP			= 3,
+	DIFFUSE				= 0,
+	SPECULAR			= 1,
 }	t_define;
 
 typedef enum s_error
@@ -65,9 +67,10 @@ typedef enum s_error
 	PLANE_FORMAT_ERROR			= 239,
 	CYLINDER_FORMAT_ERROR		= 238,
 	DISK_FORMAT_ERROR			= 237,
-	INCOMPLETE_FILE_ERROR		= 236,
-	MLX_ERROR					= 235,
-	INCORRECT_FILENAME			= 234,
+	SQUARE_FORMAT_ERROR			= 236,
+	INCOMPLETE_FILE_ERROR		= 235,
+	MLX_ERROR					= 234,
+	INCORRECT_FILENAME			= 233,
 }	t_error;
 
 # ifdef __linux__
@@ -119,6 +122,9 @@ typedef enum s_types
 	PLANE			= 5,
 	CYLINDER		= 6,
 	DISK			= 7,
+	CONE			= 8,
+	SKY				= 9,
+	SQUARE			= 10,
 }	t_types;
 
 #endif

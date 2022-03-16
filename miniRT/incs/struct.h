@@ -15,8 +15,9 @@ typedef struct s_ray
 	t_vec3			dir;
 	double			dist;
 	t_vec3			color;
-	double			pixel_shadow;
 	int				obj_ref;
+	double			shadowing;
+	_Bool			inside_object;
 	struct s_obj	*obj;
 }	t_ray;
 
@@ -86,6 +87,7 @@ typedef struct s_obj
 	t_vec3			color[1];
 	t_vec3			color_checker[1];
 	double			diameter;
+	double			radius;
 	double			inner_diameter;
 	double			height;
 	t_op			*hit_object;
@@ -136,6 +138,7 @@ typedef struct s_data
 	_Bool		multithreading;
 	t_thread	multi_thread[THREADS];
 	double		start_time;
+	int			obj_ref;
 	t_image		texture[1];
 }	t_data;
 

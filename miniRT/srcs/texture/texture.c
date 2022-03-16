@@ -15,36 +15,6 @@ void	create_texture(t_ray *hit, t_image *texture, t_vec3 *color)
 	color->coord[R] = (double)(unsigned char)texture->addr[i + 2] / 255;
 	color->coord[G] = (double)(unsigned char)texture->addr[i + 1] / 255;
 	color->coord[B] = (double)(unsigned char)texture->addr[i] / 255;
-	// if (color->coord[R] > 0.01 && color->coord[G] > 0.01 && color->coord[B] > 0.01)
-	// 	printf("%f  %f  %f\n", color->coord[R], color->coord[G], color->coord[B]);
-}
-
-void	mix_textures(
-	t_ray *hit, t_image *texture_1, t_image *texture_2, t_vec3 *color)
-{
-	t_vec2	uv;
-	int		floor_uv_1[2];
-	int		floor_uv_2[2];
-	int		i;
-	int		j;
-
-	hit->obj->get_uv_coord(*hit, &uv);
-	uv.coord[U] = 1 - uv.coord[U];
-	uv.coord[V] = 1 - uv.coord[V];
-	floor_uv_1[U] = floor(uv.coord[U] * (texture_1->width - 1));
-	floor_uv_1[V] = floor(uv.coord[V] * (texture_1->height - 1));
-	floor_uv_2[U] = floor(uv.coord[U] * (texture_2->width - 1));
-	floor_uv_2[V] = floor(uv.coord[V] * (texture_2->height - 1));
-
-	i = floor_uv_1[V] * texture_1->line_len + floor_uv_1[U] * texture_1->bpp / 8;
-	j = floor_uv_2[V] * texture_2->line_len + floor_uv_2[U] * texture_2->bpp / 8;
-
-	color->coord[R] = (double)(unsigned char)texture_1->addr[i + 2] / 255;
-	color->coord[G] = (double)(unsigned char)texture_1->addr[i + 1] / 255;
-	color->coord[B] = (double)(unsigned char)texture_1->addr[i] / 255;
-	color->coord[R] /= ((double)(unsigned char)texture_2->addr[i + 2] / 255 - 0.03);
-	color->coord[G] /= ((double)(unsigned char)texture_2->addr[i + 1] / 255 - 0.03);
-	color->coord[B] /= ((double)(unsigned char)texture_2->addr[i] / 255 - 0.03);
 }
 
 void	handle_texture(t_ray *hit)
@@ -57,7 +27,6 @@ void	handle_texture(t_ray *hit)
 	{
 		create_texture(hit, hit->obj->texture, &hit->color);
 		apply_bump_map(hit);
-		// mix_textures(hit, hit->obj->texture, hit->obj->bump_map, &hit->color);
 	}
 }
 
@@ -74,4 +43,33 @@ void	open_texture(t_image *texture, char *filename, t_parsing *var)
 			&texture->line_len, &texture->endian);
 	if (!texture->img_ptr)
 		exit_error_parsing(MLX_ERROR, "mlx_get_data_addr() failed", var);
+}
+
+t_vec2	transform_point_in_obj_space(
+	t_vec3 hit_point, t_vec3 obj_origin, double max_dimension, t_vec3 obj_dir)
+{
+	t_vec2	new_point;
+
+	if (obj_dir.coord[X] == 1 || obj_dir.coord[X] == -1)
+	{
+		new_point.coord[X] = hit_point.coord[Z] - obj_origin.coord[Z];
+		new_point.coord[X] /= max_dimension;
+		new_point.coord[Y] = hit_point.coord[Y] - obj_origin.coord[Y];
+		new_point.coord[Y] /= max_dimension;
+	}
+	else if (obj_dir.coord[Z] == 1 || obj_dir.coord[Z] == -1)
+	{
+		new_point.coord[X] = hit_point.coord[X] - obj_origin.coord[X];
+		new_point.coord[X] /= max_dimension;
+		new_point.coord[Y] = hit_point.coord[Y] - obj_origin.coord[Y];
+		new_point.coord[Y] /= max_dimension;
+	}
+	else
+	{
+		new_point.coord[X] = hit_point.coord[X] - obj_origin.coord[X];
+		new_point.coord[X] /= max_dimension;
+		new_point.coord[Y] = hit_point.coord[Z] - obj_origin.coord[Z];
+		new_point.coord[Y] /= max_dimension;
+	}
+	return (new_point);
 }

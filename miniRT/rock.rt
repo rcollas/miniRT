@@ -2,4 +2,4 @@ A 	0.3 255,255,255
 C 	0,0,0 0,0,-1 50
 L   7,10,-15  0.9
 sp	0,0,-35  15 "image/rock.xpm" "image/rock_normal_map.xpm"
-sp	0,0,-35  500 "image/sky2.xpm"
+sky	0,0,-35  500 "image/sky2.xpm"

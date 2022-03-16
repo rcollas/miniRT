@@ -1,10 +1,31 @@
 #include "miniRT.h"
 
+void	init_hit(t_ray *hit)
+{
+	if (hit)
+	{
+		hit->dist = INFINITY;
+		hit->shadowing = NO_SHADOW;
+		hit->obj_ref = -1;
+		hit->inside_object = FALSE;
+	}
+}
+
+void	init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color)
+{
+	if (hit_obj)
+		*hit_obj = FALSE;
+	init_hit(hit);
+	if (color)
+		*color = create_vec3(0, 0, 0);
+}
+
 _Bool	check_hit_object(
 	t_ray *ray, t_obj *obj, t_ray *hit_min)
 {
 	t_ray	hit;
 
+	init_hit(&hit);
 	if (obj->hit_object(ray, obj, &hit))
 	{
 		if (hit_min->dist > hit.dist)
@@ -14,24 +35,11 @@ _Bool	check_hit_object(
 			copy_vec3(&hit_min->dir, hit.dir);
 			copy_vec3(&hit_min->color, *obj->color);
 			hit_min->obj = obj;
+			hit_min->inside_object = hit.inside_object;
 		}
 		return (TRUE);
 	}
 	return (FALSE);
-}
-
-void	init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color)
-{
-	if (hit_obj)
-		*hit_obj = FALSE;
-	if (hit)
-	{
-		hit->dist = 1E99;
-		hit->pixel_shadow = NO_SHADOW;
-		hit->obj_ref = -1;
-	}
-	if (color)
-		*color = create_vec3(0, 0, 0);
 }
 
 void	detect_intersection(
@@ -48,7 +56,10 @@ void	detect_intersection(
 	while (i < data->obj_nb)
 	{
 		if (check_hit_object(&ray, &data->obj[i], &hit))
+		{
 			hit_obj = TRUE;
+			data->obj_ref = i;
+		}
 		i++;
 	}
 	if (hit_obj)

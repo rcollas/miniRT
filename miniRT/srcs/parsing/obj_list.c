@@ -37,6 +37,7 @@ t_obj	*new_obj(int type, double diameter, double height, t_parsing *var)
 		exit_error_parsing(MALLOC_ERROR, "malloc() failed", var);
 	obj->type = type;
 	obj->diameter = diameter;
+	obj->radius = diameter * 0.5;
 	obj->height = height;
 	obj->inside_object = FALSE;
 	obj->has_texture = FALSE;

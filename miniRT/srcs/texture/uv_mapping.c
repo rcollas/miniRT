@@ -32,16 +32,22 @@ void	get_plane_uv(t_ray hit, t_vec2 *uv)
 	uv->coord[V] = hit.origin.coord[Z];
 }
 
-t_vec2	transform_point_in_obj_space(
-	t_vec3 hit_point, t_vec3 obj_origin, double max_dimension)
+void	get_square_uv(t_ray hit, t_vec2 *uv)
 {
-	t_vec2	new_point;
+	t_vec2	point;
+	double	diagonal;
 
-	new_point.coord[X] = hit_point.coord[X] - obj_origin.coord[X];
-	new_point.coord[X] /= max_dimension;
-	new_point.coord[Y] = hit_point.coord[Z] - obj_origin.coord[Z];
-	new_point.coord[Y] /= max_dimension;
-	return (new_point);
+	diagonal = sqrt(hit.obj->height * hit.obj->height
+			+ hit.obj->height + hit.obj->height);
+	point = transform_point_in_obj_space(
+			hit.origin, *hit.obj->origin, diagonal * 0.5, *hit.obj->dir);
+	uv->coord[U] = point.coord[X] * 0.5 + 0.5;
+	uv->coord[V] = point.coord[Y] * 0.5 + 0.5;
+	if (hit.obj->dir->coord[Z] == 1 || hit.obj->dir->coord[X] == -1
+		|| hit.obj->dir->coord[Y] == 1 || hit.obj->dir->coord[Y] == -1)
+		uv->coord[U] = 1 - uv->coord[U];
+	if (hit.obj->dir->coord[Y] == 1)
+		uv->coord[V] = 1 - uv->coord[V];
 }
 
 void	get_disk_uv(t_ray hit, t_vec2 *uv)
@@ -50,12 +56,10 @@ void	get_disk_uv(t_ray hit, t_vec2 *uv)
 	double	radius;
 	t_vec2	point;
 
-	point = transform_point_in_obj_space(
-			hit.origin, *hit.obj->origin, hit.obj->diameter / 2.0);
+	point = transform_point_in_obj_space(hit.origin, *hit.obj->origin,
+			hit.obj->diameter / 2.0, *hit.obj->dir);
 	radius = get_norm_vec2(point);
 	theta = atan2(point.coord[Y], point.coord[X]);
-	// uv->coord[U] = (radius - 0.25) / (0.5 - 0.25);
 	uv->coord[U] = radius * 0.5 + 0.2;
 	uv->coord[V] = theta * 0.5 / M_PI + 0.5;
-	// printf("u = %f | v = %f\n", uv->coord[U], uv->coord[V]);
 }
