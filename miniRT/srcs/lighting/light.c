@@ -21,7 +21,8 @@ t_vec3	compute_classic_light(t_scene *scene, t_ray hit, t_data *data)
 	i = -1;
 	while (++i < scene->light_nb)
 	{
-		hit.shadowing = compute_shadow(data->obj, &hit, &scene->diffuse_light[i]);
+		hit.shadowing = compute_shadow(
+				data->obj, &hit, &scene->diffuse_light[i]);
 		light_dir = sub_vec3(*scene->diffuse_light[i].coord, hit.origin);
 		normalize_vec3(&light_dir);
 		intensity = 3 * dot_vec3(light_dir, hit.dir);
@@ -38,10 +39,14 @@ t_vec3	get_light(t_data *data, t_ray hit, t_ray ray)
 {
 	t_vec3	total_light;
 
-	if (data->lighting == PHONG_LIGHTING)
-		total_light = sum_phong_lights(data->scene, hit, ray, data);
-	else
-		total_light = compute_classic_light(data->scene, hit, data);
+	total_light = create_vec3(0, 0, 0);
+	if (!hit.inside_object || hit.obj->type == SKY)
+	{
+		if (data->lighting == PHONG_LIGHTING)
+			total_light = sum_phong_lights(data->scene, hit, ray, data);
+		else
+			total_light = compute_classic_light(data->scene, hit, data);
+	}
 	total_light = add_vec3(total_light, get_ambient_light(data->scene));
 	return (total_light);
 }

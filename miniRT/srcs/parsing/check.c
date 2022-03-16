@@ -96,6 +96,19 @@ int	cylinder_check(t_obj *cylinder)
 	return (SUCCESS);
 }
 
+int	square_check(t_obj *square)
+{
+	if (!is_valid_vertex(square->dir))
+		return (FAIL);
+	if (square->height <= 0)
+		return (FAIL);
+	if (!is_valid_rgb(square->color))
+		return (FAIL);
+	if (BONUS && square->has_texture == CHECKER && !is_valid_rgb(square->color_checker))
+		return (FAIL);
+	return (SUCCESS);
+}
+
 int	disk_check(t_obj *disk)
 {
 	if (!is_valid_vertex(disk->dir))
@@ -117,7 +130,7 @@ int	check(void *obj, int type)
 		return (camera_check((t_camera *)obj));
 	if (type == DIFFUSE_LIGHT)
 		return (diffuse_light_check((t_diffuse_light *)obj));
-	if (type == SPHERE)
+	if (type == SPHERE || type == SKY)
 		return (sphere_check((t_obj *)obj));
 	if (type == PLANE)
 		return (plane_check((t_obj *)obj));
@@ -125,5 +138,7 @@ int	check(void *obj, int type)
 		return (cylinder_check((t_obj *)obj));
 	if (type == DISK)
 		return (disk_check((t_obj *)obj));
+	if (type == SQUARE)
+		return (square_check((t_obj *)obj));
 	return (FAIL);
 }

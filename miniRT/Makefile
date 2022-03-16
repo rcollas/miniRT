@@ -27,6 +27,7 @@ PARSING = \
 			parsing/parsing.c \
 			parsing/parsing_error.c \
 			parsing/fill_objs.c \
+			parsing/fill_objs_bonus.c \
 			parsing/fill_scene.c \
 			parsing/check.c \
 			parsing/obj_list.c \
@@ -53,8 +54,9 @@ OBJECTS = \
 			objects/cylinder.c \
 			objects/disk.c \
 			objects/utils.c \
-			objects/hyperboloid.c \
 			objects/cone.c \
+			objects/cone_utils.c \
+			objects/square.c \
 
 LIGHTING = \
 			lighting/shadow.c \

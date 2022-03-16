@@ -128,6 +128,7 @@ void	copy_content(t_obj *dest, t_obj *src, int obj_nb)
 		copy_vec3(dest[i].color, *src->color);
 		copy_vec3(dest[i].color_checker, *src->color_checker);
 		dest[i].diameter = src->diameter;
+		dest[i].radius = src->radius;
 		dest[i].inner_diameter = src->inner_diameter;
 		dest[i].height = src->height;
 		dest[i].hit_object = src->hit_object;

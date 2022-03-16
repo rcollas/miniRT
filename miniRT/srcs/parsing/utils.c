@@ -82,5 +82,9 @@ int	is_valid_type(char *type)
 		return (DISK);
 	if (ft_strcmp(type, "co") == EQUAL)
 		return (CONE);
+	if (ft_strcmp(type, "sky") == EQUAL)
+		return (SKY);
+	if (ft_strcmp(type, "sq") == EQUAL)
+		return (SQUARE);
 	return (INVALID_TYPE_ERROR);
 }

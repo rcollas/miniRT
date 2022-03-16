@@ -47,6 +47,10 @@ void			fill_structure(t_parsing *parsing_var);
 int				fill_rgb(char *rgb_values, t_vec3 *rgb);
 int				fill_coordinates(char *coordinates_values, t_vec3 *coordinates);
 int				fill_vertex(char *vertex_values, t_vec3 *vertex);
+void			fill_sky(t_parsing *var, char *line);
+void			fill_disk(t_parsing *var, char *line);
+void			fill_cone(t_parsing *var, char *line);
+void			fill_square(t_parsing *var, char *line);
 void			fill_ambient_light(t_parsing *parsing,
 					t_ambient_light *ambient_light, char *line);
 void			fill_camera(t_parsing *parsing, t_camera *camera, char *line);
@@ -95,10 +99,14 @@ _Bool			hit_sphere(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			hit_plane(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			hit_cylinder(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			hit_disk(t_ray *ray, t_obj *obj, t_ray *hit);
+_Bool			hit_square(t_ray *ray, t_obj *obj, t_ray *hit);
 void			check_direction_normal(t_ray *ray, t_obj *obj, t_ray *hit);
 t_vec3			get_hit_point(t_ray ray);
+void			copy_ray(t_ray *dest, t_ray src);
 _Bool			hit_hyperboloid(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			hit_cone(t_ray *ray, t_obj *obj, t_ray *hit);
+_Bool			check_cone_height(t_ray *ray, t_obj *obj, double ray_dist);
+void			compute_normal_cone(t_ray *ray, t_obj *obj, t_ray *hit);
 
 /********************************* LIGHTING ***********************************/
 
@@ -133,7 +141,10 @@ void			get_sphere_uv(t_ray hit, t_vec2 *uv);
 void			get_cylinder_uv(t_ray hit, t_vec2 *uv);
 void			get_plane_uv(t_ray hit, t_vec2 *uv);
 void			get_disk_uv(t_ray hit, t_vec2 *uv);
+void			get_square_uv(t_ray hit, t_vec2 *uv);
 void			apply_bump_map(t_ray *hit);
+t_vec2			transform_point_in_obj_space(t_vec3 hit_point,
+					t_vec3 obj_origin, double max_dimension, t_vec3 obj_dir);
 
 /***************************** OPTIMIZATION UTILS *****************************/
 

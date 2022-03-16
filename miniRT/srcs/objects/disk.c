@@ -9,7 +9,7 @@ _Bool	hit_disk(t_ray *ray, t_obj *obj, t_ray *hit)
 
 	if (!hit_plane(ray, obj, hit))
 		return (FALSE);
-	radius2 = (obj->diameter * 0.5) * (obj->diameter * 0.5);
+	radius2 = obj->radius * obj->radius;
 	inner_radius2 = (obj->inner_diameter * 0.5) * (obj->inner_diameter * 0.5);
 	v = sub_vec3(*obj->origin, hit->origin);
 	dist = dot_vec3(v, v);
