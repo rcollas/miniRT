@@ -19,6 +19,7 @@ typedef enum s_define
 	FAIL				= 1,
 	EQUAL				= 1,
 	DIFFERENT			= 0,
+	INT_MIN				= -2147483648,
 	A					= 0,
 	C					= 1,
 	X					= 0,

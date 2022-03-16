@@ -46,6 +46,8 @@ int	ft_atoi(const char *nptr)
 		nb = nb * 10 + *nptr - 48;
 		nptr++;
 	}
+	if (*nptr != '\0')
+		return (-2147483648);
 	if (nb > 9223372036854775807 && sign == 1)
 		return (-1);
 	else if (nb > 9223372036854775807 && sign == -1)

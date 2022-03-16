@@ -46,8 +46,9 @@ void	clean_parsing_var(t_parsing *parsing_var)
 	free_list(parsing_var->objs);
 	free_str_tab(parsing_var->input_list);
 	free_str_tab(parsing_var->obj_info);
-	free_tab((void **)&parsing_var->scene->diffuse_light, parsing_var->light_nb);
-	//clean_mlx(parsing_var->mlx);
+	if (parsing_var->diffuse_light)
+		ft_free(parsing_var->scene->diffuse_light);
+	clean_mlx(parsing_var->mlx);
 }
 
 void	exit_error_parsing(int errnum, char *error_msg, t_parsing *parsing_var)

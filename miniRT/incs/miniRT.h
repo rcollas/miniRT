@@ -54,17 +54,21 @@ void			fill_square(t_parsing *var, char *line);
 void			fill_ambient_light(t_parsing *parsing,
 					t_ambient_light *ambient_light, char *line);
 void			fill_camera(t_parsing *parsing, t_camera *camera, char *line);
-void			fill_diffuse_light(t_parsing *parsing,
-					t_diffuse_light *diffuse_light, char *line);
+void			fill_diffuse_light(t_parsing *parsing, char *line);
 void			fill_scene(int type, t_parsing *var, char *line);
+t_obj			*list_to_tab(t_obj *obj, t_parsing *parsing_var);
 t_obj			*new_obj(
 					int type, double diameter, double height, t_parsing *var);
 void			fill_obj(int type, t_parsing *var, char *line);
 void			obj_add_back(t_obj **obj_list, t_obj *to_add);
 _Bool			is_valid_extension(char *arg);
+_Bool			file_is_complete(t_parsing *var, char *file);
 int				check(void *obj, int type);
 int				parsing(char **argv, int argc, t_parsing *parsing_var);
 int				is_valid_type(char *type);
+int				list_len(t_obj *obj);
+int				load_file(char **argv, int argc, int *fd);
+int				convert_file_to_string(int fd, char **input);
 void			ft_free(void *to_free);
 void			free_str_tab(char **tab);
 void			free_list(t_obj *obj);

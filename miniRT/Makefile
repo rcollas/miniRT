@@ -33,6 +33,8 @@ PARSING = \
 			parsing/obj_list.c \
 			parsing/fill_utils.c \
 			parsing/utils.c \
+			parsing/convert_list_to_tab.c \
+			parsing/load_file.c \
 
 RAYTRACING = \
 			raytracing/raytracer.c \
@@ -101,7 +103,7 @@ LIBFT_PATH	=	libft
 
 LIBFT_LIB	=	libft/libft.a
 
-LIBFT_MAKE	=	$(MAKE) --no-print-directory -C $(LIBFT_PATH)
+LIBFT_MAKE	=	$(MAKE) bonus --no-print-directory -C $(LIBFT_PATH)
 
 INCLUDE_DIR	= ./incs
 

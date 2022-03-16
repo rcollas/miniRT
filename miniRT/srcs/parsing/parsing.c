@@ -1,21 +1,16 @@
 #include "miniRT.h"
 
-int	convert_file_to_string(int fd, char **input)
+void	parsing_var_init(t_parsing *var)
 {
-	int		ret;
-	char	buff[2];
-
-	ret = 1;
-	safe_ft_strdup(input, "", fd);
-	while (ret > 0)
-	{
-		buff[1] = 0;
-		ret = safe_read(fd, buff, 1, *input);
-		if (ret > 0)
-			safe_ft_strjoin(input, buff, fd);
-	}
-	safe_close(fd);
-	return (SUCCESS);
+	var->camera = FALSE;
+	var->diffuse_light = FALSE;
+	var->ambient_light = FALSE;
+	var->objs = NULL;
+	var->obj_info = NULL;
+	var->objs = NULL;
+	var->light_nb = 0;
+	var->has_texture = FALSE;
+	var->mlx = setup_mlx(var);
 }
 
 void	fill_structure(t_parsing *parsing_var)
@@ -43,121 +38,6 @@ void	fill_structure(t_parsing *parsing_var)
 			i++;
 		}
 	}
-}
-
-void	parsing_var_init(t_parsing *var)
-{
-	var->camera = FALSE;
-	var->diffuse_light = FALSE;
-	var->ambient_light = FALSE;
-	var->objs = NULL;
-	var->obj_info = NULL;
-	var->objs = NULL;
-	var->light_nb = 0;
-	var->has_texture = FALSE;
-	var->mlx = setup_mlx(var);
-}
-
-int	load_file(char **argv, int argc, int *fd)
-{
-	if (argc != 2)
-	{
-		parsing_error(ARG_NUMBER_ERROR, NULL);
-		return (FAIL);
-	}
-	if (ft_open(argv[1], fd) != SUCCESS)
-	{
-		safe_close(*fd);
-		return (FAIL);
-	}
-	if (is_valid_extension(argv[1]) == FALSE)
-	{
-		parsing_error(EXTENSION_ERROR, argv[1]);
-		safe_close(*fd);
-	}
-	return (SUCCESS);
-}
-
-_Bool	file_is_complete(t_parsing *var, char *file)
-{
-	int	scene_objs;
-
-	scene_objs = var->diffuse_light + var->ambient_light + var->camera;
-	if (scene_objs != 3)
-	{
-		parsing_error(INCOMPLETE_FILE_ERROR, file);
-		return (FAIL);
-	}
-	return (SUCCESS);
-}
-
-int	list_len(t_obj *obj)
-{
-	int	i;
-
-	i = 0;
-	while (obj)
-	{
-		i++;
-		obj = obj->next;
-	}
-	return (i);
-}
-
-void	copy_texture(t_image *dest, t_image *src)
-{
-	dest->img_ptr = src->img_ptr;
-	dest->addr = src->addr;
-	dest->width = src->width;
-	dest->height = src->height;
-	dest->endian = src->endian;
-	dest->bpp = src->bpp;
-	dest->line_len = src->line_len;
-}
-
-void	copy_content(t_obj *dest, t_obj *src, int obj_nb)
-{
-	int	i;
-
-	i = 0;
-	while (src)
-	{
-		dest[i].type = src->type;
-		copy_vec3(dest[i].origin, *src->origin);
-		copy_vec3(dest[i].dir, *src->dir);
-		copy_vec3(dest[i].color, *src->color);
-		copy_vec3(dest[i].color_checker, *src->color_checker);
-		dest[i].diameter = src->diameter;
-		dest[i].radius = src->radius;
-		dest[i].inner_diameter = src->inner_diameter;
-		dest[i].height = src->height;
-		dest[i].hit_object = src->hit_object;
-		dest[i].get_uv_coord = src->get_uv_coord;
-		dest[i].shine_factor = src->shine_factor;
-		dest->obj_nb = obj_nb;
-		dest[i].inside_object = src->inside_object;
-		copy_texture(dest[i].texture, src->texture);
-		copy_texture(dest[i].bump_map, src->bump_map);
-		dest[i].has_texture = src->has_texture;
-		i++;
-		src = src->next;
-	}
-}
-
-t_obj	*list_to_tab(t_obj *obj, t_parsing *parsing_var)
-{
-	int		i;
-	int		obj_nb;
-	t_obj	*obj_tab;
-
-	i = 0;
-	obj_nb = list_len(obj);
-	obj_tab = (t_obj *)ft_calloc(obj_nb, sizeof(t_obj));
-	if (!obj_tab)
-		exit_error_parsing(MALLOC_ERROR, "malloc failed()", parsing_var);
-	copy_content(obj_tab, obj, obj_nb);
-	free_list(obj);
-	return (obj_tab);
 }
 
 int	parsing(char **argv, int argc, t_parsing *parsing_var)

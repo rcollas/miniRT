@@ -42,9 +42,11 @@ static double	convert_to_double(
 		else if (*nptr == '.')
 			is_in_fraction = 1;
 		else
-			return (3.5e+038);
+			return (-2147483648);
 		nptr++;
 	}
+	if (*nptr != '\0')
+		return (-2147483648);
 	return (sign * (int_part + float_part / divisor));
 }
 
