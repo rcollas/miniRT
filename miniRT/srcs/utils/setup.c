@@ -47,5 +47,5 @@ void	init_data(t_parsing *parsing_var, t_data *data)
 	data->obj = parsing_var->objs;
 	data->scene = parsing_var->scene;
 	data->obj_nb = parsing_var->obj_nb;
-	data->mlx = setup_mlx(parsing_var);
+	data->mlx = parsing_var->mlx;
 }

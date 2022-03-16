@@ -80,10 +80,10 @@ void	run_raytracing(
 
 	ratio = HEIGHT / THREADS;
 	init_camera_ray(&cam_ray, data);
-	while (thread->pixel_y < thread->max_height - 1)
+	while (thread->pixel_y < thread->max_height)
 	{
 		thread->pixel_x = -1;
-		while (++thread->pixel_x < WIDTH - 1)
+		while (++thread->pixel_x < WIDTH)
 		{
 			if (data->path_tracing)
 				run_path_tracing(&cam_ray, &pixel_color, data, thread);

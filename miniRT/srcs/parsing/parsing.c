@@ -55,6 +55,7 @@ void	parsing_var_init(t_parsing *var)
 	var->objs = NULL;
 	var->light_nb = 0;
 	var->has_texture = FALSE;
+	var->mlx = setup_mlx(var);
 }
 
 int	load_file(char **argv, int argc, int *fd)
