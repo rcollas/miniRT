@@ -25,7 +25,7 @@ void	clean_mlx(t_mlx *mlx)
 void	clean_data(t_data *data)
 {
 	free_list(data->obj);
-	free_tab((void **)&data->scene->diffuse_light, data->scene->light_nb);
+	free(data->scene->diffuse_light);
 	clean_mlx(data->mlx);
 }
 
