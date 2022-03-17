@@ -70,7 +70,7 @@ _Bool	hit_cone(t_ray *ray, t_obj *obj, t_ray *hit)
 	normalize_vec3(obj->dir);
 	normalize_vec3(&ray->dir);
 	compute_coeff_quation(coeff, ray, obj);
-	if (solve_quadratic_cone(coeff, &ray->dist, ray, obj) && ray->dist > 0.05)
+	if (solve_quadratic_cone(coeff, &ray->dist, ray, obj) && ray->dist > 0.01)
 	{
 		if (hit_cone_caps(ray, obj, hit))
 			return (TRUE);

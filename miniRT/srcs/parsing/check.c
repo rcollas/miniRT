@@ -134,7 +134,7 @@ int	check(void *obj, int type)
 		return (sphere_check((t_obj *)obj));
 	if (type == PLANE)
 		return (plane_check((t_obj *)obj));
-	if (type == CYLINDER)
+	if (type == CYLINDER || type == CONE)
 		return (cylinder_check((t_obj *)obj));
 	if (type == DISK)
 		return (disk_check((t_obj *)obj));

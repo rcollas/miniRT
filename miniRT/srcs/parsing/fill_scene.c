@@ -51,7 +51,7 @@ void	fill_camera(t_parsing *parsing, t_camera *camera, char *line)
 t_diffuse_light	*ft_realloc(t_parsing *parsing, t_diffuse_light *ptr)
 {
 	t_diffuse_light	*new_ptr;
-	int		i;
+	int				i;
 
 	i = -1;
 	if (parsing->light_nb == 1)
@@ -89,6 +89,7 @@ void	fill_diffuse_light(t_parsing *parsing, char *line)
 		i++;
 	if (i != 3)
 	{
+		ft_free(parsing->scene->diffuse_light);
 		error(DIFFUSE_LIGHT_FORMAT_ERROR, line);
 		exit_error_parsing(DIFFUSE_LIGHT_FORMAT_ERROR, NULL, parsing);
 	}
@@ -98,6 +99,7 @@ void	fill_diffuse_light(t_parsing *parsing, char *line)
 	parsing->scene->diffuse_light[j].intensity = ft_atof(parsing->obj_info[2]);
 	if (check(&parsing->scene->diffuse_light[j], DIFFUSE_LIGHT) == FAIL)
 	{
+		ft_free(parsing->scene->diffuse_light);
 		error(DIFFUSE_LIGHT_FORMAT_ERROR, line);
 		exit_error_parsing(DIFFUSE_LIGHT_FORMAT_ERROR, NULL, parsing);
 	}

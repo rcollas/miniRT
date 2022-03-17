@@ -59,6 +59,7 @@ typedef struct s_scene
 
 typedef struct s_image
 {
+	_Bool		has_texture;
 	void		*img_ptr;
 	char		*addr;
 	int			bpp;

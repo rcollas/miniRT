@@ -113,6 +113,7 @@ INC_FILES	= miniRT.h \
 			  error.h \
 			  utils.h \
 			  struct.h \
+			  lib_math.h \
 
 OBJS		= $(addprefix $(OBJS_DIR)/, $(SRC_FILES:.c=.o))
 

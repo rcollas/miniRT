@@ -9,8 +9,8 @@ void	get_checker_size(t_ray hit, double *checker_size)
 	}
 	if (hit.obj->type == PLANE)
 	{
-		checker_size[U] = 0.5;
-		checker_size[V] = 1;
+		checker_size[U] = 0.25;
+		checker_size[V] = 0.5;
 	}
 	if (hit.obj->type == CYLINDER)
 	{
