@@ -13,7 +13,7 @@
 # define BONUS 1
 # define HEIGHT 480
 # define WIDTH 720
-# define THREADS 8
+# define THREADS 1
 # define PASSES 3
 # define REBOUND 8
 
@@ -68,6 +68,7 @@ int				is_valid_type(char *type);
 void			ft_free(void *to_free);
 void			free_str_tab(char **tab);
 void			free_list(t_obj *obj);
+void			free_list_error(t_obj *obj, t_mlx *mlx);
 void			clean_parsing_var(t_parsing *parsing_var);
 void			free_tab(void **tab, int size);
 

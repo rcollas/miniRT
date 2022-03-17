@@ -53,8 +53,11 @@ void	parsing_var_init(t_parsing *var)
 	var->objs = NULL;
 	var->obj_info = NULL;
 	var->objs = NULL;
+	var->input_list = NULL;
 	var->light_nb = 0;
+	var->obj_nb = 0;
 	var->has_texture = FALSE;
+	var->mlx = NULL;
 	var->mlx = setup_mlx(var);
 }
 
@@ -113,6 +116,7 @@ void	copy_texture(t_image *dest, t_image *src)
 	dest->endian = src->endian;
 	dest->bpp = src->bpp;
 	dest->line_len = src->line_len;
+	dest->has_texture = src->has_texture;
 }
 
 void	copy_content(t_obj *dest, t_obj *src, int obj_nb)
@@ -154,7 +158,10 @@ t_obj	*list_to_tab(t_obj *obj, t_parsing *parsing_var)
 	obj_nb = list_len(obj);
 	obj_tab = (t_obj *)ft_calloc(obj_nb, sizeof(t_obj));
 	if (!obj_tab)
-		exit_error_parsing(MALLOC_ERROR, "malloc failed()", parsing_var);
+	{
+		exit_error_parsing_end(
+			MALLOC_ERROR, "malloc failed()", parsing_var, NO_DESTROY_TEXTURE);
+	}
 	copy_content(obj_tab, obj, obj_nb);
 	free_list(obj);
 	return (obj_tab);
@@ -179,8 +186,10 @@ int	parsing(char **argv, int argc, t_parsing *parsing_var)
 	parsing_var->objs = obj_tab;
 	parsing_var->scene->light_nb = parsing_var->light_nb;
 	if (file_is_complete(parsing_var, argv[1]) == FAIL)
-		exit_error_parsing(
-			INCOMPLETE_FILE_ERROR, "incomplete file", parsing_var);
+	{
+		exit_error_parsing_end(
+			INCOMPLETE_FILE_ERROR, NULL, parsing_var, DESTROY_TEXTURE);
+	}
 	free_str_tab(parsing_var->input_list);
 	return (SUCCESS);
 }

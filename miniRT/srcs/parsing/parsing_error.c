@@ -35,17 +35,16 @@ int	file_error(char *str)
 
 int	incomplete_file_error(char *str)
 {
-	ft_putstr_fd("File error: ", 2);
+	ft_putstr_fd("File is incomplete: ", 2);
 	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": File is incomplete\n", 2);
-	ft_putstr_fd(".rt must contain at least one camera C,"
-		" one diffuse light L and one ambient light A\n", 2);
+	ft_putstr_fd("\n\033[38;5;121m.rt must contain at least one camera C,"
+		" one diffuse light L and one ambient light A\033[0m\n", 2);
 	return (INCOMPLETE_FILE_ERROR);
 }
 
 int	parsing_error(int errnum, char *str)
 {
-	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd("Error: ", 2);
 	if (errnum == EXTENSION_ERROR)
 		return (extension_error(str));
 	if (errnum == ARG_NUMBER_ERROR)

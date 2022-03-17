@@ -27,6 +27,7 @@ void	run_multithreading(t_data *data)
 {
 	int	i;
 
+	ft_memset(data->multi_thread, 0, sizeof(t_thread) * THREADS);
 	i = 0;
 	while (i < THREADS)
 	{

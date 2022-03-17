@@ -34,13 +34,18 @@ t_obj	*new_obj(int type, double diameter, double height, t_parsing *var)
 
 	obj = (t_obj *)ft_calloc(1, sizeof(t_obj));
 	if (!obj)
+	{
+		free(obj);
 		exit_error_parsing(MALLOC_ERROR, "malloc() failed", var);
+	}
 	obj->type = type;
 	obj->diameter = diameter;
 	obj->radius = diameter * 0.5;
 	obj->height = height;
 	obj->inside_object = FALSE;
 	obj->has_texture = FALSE;
+	obj->texture->has_texture = FALSE;
+	obj->bump_map->has_texture = FALSE;
 	obj->inner_diameter = 0;
 	obj->next = NULL;
 	return (obj);

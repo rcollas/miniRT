@@ -21,6 +21,22 @@ void	free_list(t_obj *obj)
 	}
 }
 
+void	free_list_error(t_obj *obj, t_mlx *mlx)
+{
+	t_obj	*tmp;
+
+	while (obj)
+	{
+		tmp = obj->next;
+		if (obj->texture->has_texture)
+			mlx_destroy_image(mlx->ptr, obj->texture->img_ptr);
+		if (obj->bump_map->has_texture)
+			mlx_destroy_image(mlx->ptr, obj->bump_map->img_ptr);
+		ft_free(obj);
+		obj = tmp;
+	}
+}
+
 void	free_str_tab(char **tab)
 {
 	int	i;
@@ -45,10 +61,10 @@ void	free_tab(void **tab, int size)
 
 int	ft_open(char *file, int *fd)
 {
-	*fd = open(file, O_DIRECTORY);
+	*fd = open(file, __O_DIRECTORY);
 	if (*fd >= 0)
 		return (parsing_error(IS_DIR_ERROR, file));
-	*fd = open(file, O_RDONLY | O_NOFOLLOW);
+	*fd = open(file, O_RDONLY | __O_NOFOLLOW);
 	if (*fd < 0)
 		return (parsing_error(FILE_ERROR, file));
 	return (SUCCESS);

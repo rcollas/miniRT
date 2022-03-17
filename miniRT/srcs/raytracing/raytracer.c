@@ -78,6 +78,7 @@ void	run_raytracing(
 	t_ray			cam_ray;
 	int				ratio;
 
+	(void)mlx;
 	ratio = HEIGHT / THREADS;
 	init_camera_ray(&cam_ray, data);
 	while (thread->pixel_y < thread->max_height)
@@ -106,14 +107,12 @@ void	run_minirt(t_data *data)
 	init_image(mlx, data);
 	data->cam_to_world_matrix = built_cam_to_world_matrix(data->scene->camera);
 	data->start_time = get_time();
-	if (data->multithreading)
+	main_thread.pixel_y = 0;
+	main_thread.max_height = HEIGHT;
+	if (data->multithreading && THREADS > 0)
 		run_multithreading(data);
 	else
-	{
-		main_thread.pixel_y = 0;
-		main_thread.max_height = HEIGHT;
 		run_raytracing(mlx, data, &main_thread);
-	}
 	display_cam_param(data->scene->camera, data);
 	mlx_put_image_to_window(mlx->ptr, mlx->window, mlx->image->img_ptr, 0, 0);
 }

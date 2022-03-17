@@ -47,6 +47,8 @@ typedef enum s_define
 	SPECULAR			= 1,
 	NO_TEXTURE			= 0,
 	HAS_TEXTURE			= 1,
+	NO_DESTROY_TEXTURE	= 0,
+	DESTROY_TEXTURE		= 1,
 }	t_define;
 
 typedef enum s_error
