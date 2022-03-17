@@ -44,10 +44,10 @@ void	fill_cone(t_parsing *var, char *line)
 	if (BONUS)
 	{
 		if (!check_error_param_texture(i, 6))
-			exit_error_parsing(error(CYLINDER_FORMAT_ERROR, line), NULL, var);
+			exit_error_parsing(error(CONE_FORMAT_ERROR, line), NULL, var);
 	}
 	else if (i != 6)
-		exit_error_parsing(error(CYLINDER_FORMAT_ERROR, line), NULL, var);
+		exit_error_parsing(error(CONE_FORMAT_ERROR, line), NULL, var);
 	obj = new_obj(CONE, ft_atof(var->obj_info[3]),
 			ft_atof(var->obj_info[4]), var);
 	ret = fill_vertex(var->obj_info[2], obj->dir);
@@ -56,11 +56,11 @@ void	fill_cone(t_parsing *var, char *line)
 		ret += parse_param_texture(var, obj, i, 6);
 	else
 		ret += fill_rgb(var->obj_info[5], obj->color);
-	if (check(obj, CYLINDER) == FAIL || ret)
-		exit_error_parsing(error(CYLINDER_FORMAT_ERROR, line), NULL, var);
+	if (check(obj, CONE) == FAIL || ret)
+		exit_error_parsing(error(CONE_FORMAT_ERROR, line), NULL, var);
 	obj->hit_object = &hit_cone;
 	obj->get_uv_coord = &get_cylinder_uv;
-	obj->shine_factor = 0.3;
+	obj->shine_factor = 0.5;
 	obj_add_back(&var->objs, obj);
 }
 
