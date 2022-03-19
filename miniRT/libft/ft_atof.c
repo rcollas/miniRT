@@ -37,16 +37,14 @@ static double	convert_to_double(
 		}
 		else if (ft_isdigit(*nptr))
 			int_part = int_part * 10.0 + *nptr - 48;
-		else if (*nptr == '.' && is_in_fraction)
-			return (sign * (int_part + float_part / divisor));
-		else if (*nptr == '.')
+		else if (*nptr == '.' && !is_in_fraction)
 			is_in_fraction = 1;
 		else
-			return (-2147483648);
+			return (-2147483649);
 		nptr++;
 	}
 	if (*nptr != '\0')
-		return (-2147483648);
+		return (-2147483649);
 	return (sign * (int_part + float_part / divisor));
 }
 
@@ -71,6 +69,6 @@ double	ft_atof(const char *nptr)
 	else if (*nptr == '+')
 		nptr++;
 	if (!*nptr)
-		return (3.5e+038);
+		return (-2147483649);
 	return (convert_to_double(sign, int_part, float_part, nptr));
 }

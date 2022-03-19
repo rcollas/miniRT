@@ -25,7 +25,7 @@ static	int	ft_is_space(char c)
 	return (0);
 }
 
-int	ft_atoi(const char *nptr)
+long	ft_atoi(const char *nptr)
 {
 	int						sign;
 	unsigned long long int	nb;
@@ -47,10 +47,10 @@ int	ft_atoi(const char *nptr)
 		nptr++;
 	}
 	if (*nptr != '\0')
-		return (-2147483648);
-	if (nb > 9223372036854775807 && sign == 1)
-		return (-1);
-	else if (nb > 9223372036854775807 && sign == -1)
-		return (0);
+		return (-2147483649);
+	if (nb > 2147483647 && sign == 1)
+		return (-2147483649);
+	else if (nb > 2147483648 && sign == -1)
+		return (-2147483649);
 	return (nb * sign);
 }
