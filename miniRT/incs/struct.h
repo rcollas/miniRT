@@ -7,15 +7,12 @@ struct			s_data;
 
 struct			s_obj;
 
-struct			s_image;
-
 typedef struct s_ray
 {
 	t_vec3			origin;
 	t_vec3			dir;
 	double			dist;
 	t_vec3			color;
-	int				obj_ref;
 	double			shadowing;
 	_Bool			inside_object;
 	struct s_obj	*obj;
@@ -75,8 +72,6 @@ typedef struct s_mlx
 }				t_mlx;
 
 typedef _Bool	t_op(t_ray *ray, struct s_obj *obj, t_ray *hit);
-
-typedef void	t_uv(t_ray hit, t_vec2 *uv);
 
 typedef struct s_obj
 {

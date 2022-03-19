@@ -6,7 +6,6 @@ void	init_hit(t_ray *hit)
 	{
 		hit->dist = INFINITY;
 		hit->shadowing = NO_SHADOW;
-		hit->obj_ref = -1;
 		hit->inside_object = FALSE;
 	}
 }

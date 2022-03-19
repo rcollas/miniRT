@@ -13,7 +13,7 @@
 # define BONUS 1
 # define HEIGHT 480
 # define WIDTH 720
-# define THREADS 1
+# define THREADS 8
 # define PASSES 3
 # define REBOUND 8
 

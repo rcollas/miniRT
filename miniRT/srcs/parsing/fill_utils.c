@@ -14,8 +14,8 @@ int	fill_rgb(char *rgb_values, t_vec3 *rgb)
 	rgb->coord[R] = ft_atoi(split_rgb[0]);
 	rgb->coord[G] = ft_atoi(split_rgb[1]);
 	rgb->coord[B] = ft_atoi(split_rgb[2]);
-	if (rgb->coord[R] == INT_MIN || rgb->coord[G] == INT_MIN
-			|| rgb->coord[B] == INT_MIN)
+	if (rgb->coord[R] == INT_MIN - 1 || rgb->coord[G] == INT_MIN - 1
+			|| rgb->coord[B] == INT_MIN - 1)
 		return (FAIL);
 	free_str_tab(split_rgb);
 	return (SUCCESS);
@@ -35,8 +35,8 @@ int	fill_coordinates(char *coordinates_values, t_vec3 *coordinates)
 	coordinates->coord[X] = ft_atof(split_coordinates[0]);
 	coordinates->coord[Y] = ft_atof(split_coordinates[1]);
 	coordinates->coord[Z] = ft_atof(split_coordinates[2]);
-	if (coordinates->coord[X] == INT_MIN || coordinates->coord[Y] == INT_MIN
-		|| coordinates->coord[Z] == INT_MIN)
+	if (coordinates->coord[X] == INT_MIN - 1 || coordinates->coord[Y] == INT_MIN - 1
+		|| coordinates->coord[Z] == INT_MIN - 1)
 		return (FAIL);
 	free_str_tab(split_coordinates);
 	return (SUCCESS);
@@ -56,8 +56,8 @@ int	fill_vertex(char *vertex_values, t_vec3 *vertex)
 	vertex->coord[X] = ft_atof(split_vertex[0]);
 	vertex->coord[Y] = ft_atof(split_vertex[1]);
 	vertex->coord[Z] = ft_atof(split_vertex[2]);
-	if (vertex->coord[X] == INT_MIN || vertex->coord[Y] == INT_MIN
-		|| vertex->coord[Z] == INT_MIN)
+	if (vertex->coord[X] == INT_MIN - 1 || vertex->coord[Y] == INT_MIN - 1
+		|| vertex->coord[Z] == INT_MIN - 1)
 		return (FAIL);
 	free_str_tab(split_vertex);
 	return (SUCCESS);

@@ -11,6 +11,8 @@
 # define GREY "\033[38;5;243m"
 # define LIGHT_GREY "\033[38;5;249m"
 
+#define INT_MIN -2147483648
+
 typedef enum s_define
 {
 	TRUE				= 1,
@@ -19,7 +21,6 @@ typedef enum s_define
 	FAIL				= 1,
 	EQUAL				= 1,
 	DIFFERENT			= 0,
-	INT_MIN				= -2147483648,
 	A					= 0,
 	C					= 1,
 	X					= 0,

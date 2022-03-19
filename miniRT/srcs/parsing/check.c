@@ -47,7 +47,7 @@ int	camera_check(t_camera *camera)
 {
 	if (!is_valid_vertex(camera->dir))
 		return (FAIL);
-	if (!is_in_range((double)0, (double)180, (float)camera->fov))
+	if (!is_in_range((double)0, (double)180, (double)camera->fov))
 		return (FAIL);
 	return (SUCCESS);
 }
