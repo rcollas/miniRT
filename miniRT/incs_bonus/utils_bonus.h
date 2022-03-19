@@ -3,9 +3,9 @@
 
 # include <stdlib.h>
 # include <errno.h>
-# include "enum.h"
-# include "error.h"
-# include "libft.h"
+# include "enum_bonus.h"
+# include "error_bonus.h"
+# include "libft_bonus.h"
 
 void	ft_free(void *to_free);
 void	safe_close(int fd);

@@ -5,8 +5,8 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include "enum.h"
-# include "struct.h"
+# include "enum_bonus.h"
+# include "struct_bonus.h"
 
 int		parsing_error(int errnum, char *str);
 int		is_dir_error(char *str);

@@ -18,12 +18,12 @@
 # define REBOUND 8
 
 # include "mlx.h"
-# include "libft.h"
-# include "lib_math.h"
-# include "struct.h"
-# include "error.h"
-# include "enum.h"
-# include "utils.h"
+# include "libft_bonus.h"
+# include "lib_math_bonus.h"
+# include "struct_bonus.h"
+# include "error_bonus.h"
+# include "enum_bonus.h"
+# include "utils_bonus.h"
 # ifdef __linux__
 #  include "mlx_int.h"
 #  define IS_LINUX 1

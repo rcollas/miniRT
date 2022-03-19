@@ -1,4 +1,4 @@
-#include "miniRT.h"
+#include "miniRT_bonus.h"
 
 int	main(int argc, char **argv)
 {

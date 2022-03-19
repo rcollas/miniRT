@@ -1,7 +1,7 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# include "lib_math.h"
+# include "lib_math_bonus.h"
 
 struct			s_data;
 
