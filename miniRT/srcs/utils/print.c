@@ -1,5 +1,6 @@
 #include "miniRT.h"
 
+/*
 void	print_list(t_obj *obj)
 {
 	int	i;
@@ -28,6 +29,7 @@ void	print_list(t_obj *obj)
 		obj = obj->next;
 	}
 }
+ */
 
 void	print_matrix(t_matrix4 matrix)
 {

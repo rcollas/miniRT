@@ -5,7 +5,6 @@ int	exit_hook(t_data *data)
 	clean_data(data);
 	printf("\n");
 	exit(EXIT_SUCCESS);
-	return (0);
 }
 
 _Bool	move_camera(int key, t_camera *camera)
@@ -52,14 +51,12 @@ int	key_hook(int key, t_data *data)
 	if (move_camera(key, data->scene->camera)
 		|| tilt_camera(key, data->scene->camera))
 	{
-		data->path_tracing = NO_PATH_TRACING;
-		run_minirt(data);
-	}
-	if (key == KEY_P)
-	{
-		data->path_tracing = PATH_TRACING;
-		data->multithreading = MULTITHREADING;
-		ft_putchar_fd('\n', 1);
+
+		if (data->mlx->image)
+		{
+			mlx_destroy_image(data->mlx->ptr, data->mlx->image->img_ptr);
+			ft_free(data->mlx->image);
+		}
 		run_minirt(data);
 	}
 	return (0);

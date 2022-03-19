@@ -31,25 +31,16 @@ typedef enum s_define
 	T					= 3,
 	U					= 0,
 	V					= 1,
-	NO_PATH_TRACING		= 0,
-	PATH_TRACING		= 1,
 	CLASSIC_LIGHTING	= 0,
-	PHONG_LIGHTING		= 1,
 	NO_MULTITHREADING	= 0,
-	MULTITHREADING		= 1,
 	RANDOM_DIR_LOCAL	= 0,
 	RANDOM				= 1,
 	TANGENT_1			= 2,
 	TANGENT_2			= 3,
 	CHECKER				= 1,
 	NORMAL				= 2,
-	BUMP_MAP			= 3,
 	DIFFUSE				= 0,
 	SPECULAR			= 1,
-	NO_TEXTURE			= 0,
-	HAS_TEXTURE			= 1,
-	NO_DESTROY_TEXTURE	= 0,
-	DESTROY_TEXTURE		= 1,
 }	t_define;
 
 typedef enum s_error
@@ -71,10 +62,6 @@ typedef enum s_error
 	SPHERE_FORMAT_ERROR			= 240,
 	PLANE_FORMAT_ERROR			= 239,
 	CYLINDER_FORMAT_ERROR		= 238,
-	DISK_FORMAT_ERROR			= 237,
-	CONE_FORMAT_ERROR			= 236,
-	SQUARE_FORMAT_ERROR			= 235,
-	SKY_FORMAT_ERROR			= 234,
 	INCOMPLETE_FILE_ERROR		= 233,
 	MLX_ERROR					= 232,
 	INCORRECT_FILENAME			= 231,
@@ -128,10 +115,6 @@ typedef enum s_types
 	SPHERE			= 4,
 	PLANE			= 5,
 	CYLINDER		= 6,
-	DISK			= 7,
-	CONE			= 8,
-	SKY				= 9,
-	SQUARE			= 10,
 }	t_types;
 
 #endif

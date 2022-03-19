@@ -61,14 +61,6 @@ void	init_image(t_mlx *mlx, t_data *data)
 void	init_data(t_parsing *parsing_var, t_data *data)
 {
 	data->lighting = CLASSIC_LIGHTING;
-	data->path_tracing = NO_PATH_TRACING;
-	data->multithreading = NO_MULTITHREADING;
-	if (BONUS)
-	{
-		data->lighting = PHONG_LIGHTING;
-		data->path_tracing = NO_PATH_TRACING;
-		data->multithreading = MULTITHREADING;
-	}
 	data->obj = parsing_var->objs;
 	data->scene = parsing_var->scene;
 	data->obj_nb = parsing_var->obj_nb;

@@ -53,6 +53,11 @@ int	key_hook(int key, t_data *data)
 		|| tilt_camera(key, data->scene->camera))
 	{
 		data->path_tracing = NO_PATH_TRACING;
+		if (data->mlx->image)
+		{
+			mlx_destroy_image(data->mlx->ptr, data->mlx->image->img_ptr);
+			ft_free(data->mlx->image);
+		}
 		run_minirt(data);
 	}
 	if (key == KEY_P)

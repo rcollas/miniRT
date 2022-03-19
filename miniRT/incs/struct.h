@@ -46,15 +46,13 @@ typedef struct s_diffuse_light
 	int			type;
 	t_vec3		coord[1];
 	double		intensity;
-	t_vec3		color[1];
 }	t_diffuse_light;
 
 typedef struct s_scene
 {
 	t_camera		camera[1];
-	t_diffuse_light	*diffuse_light;
+	t_diffuse_light	diffuse_light[1];
 	t_ambient_light	ambient_light[1];
-	int				light_nb;
 }	t_scene;
 
 typedef struct s_image
@@ -94,10 +92,6 @@ typedef struct s_obj
 	t_op			*hit_object;
 	double			shine_factor;
 	int				obj_nb;
-	t_image			texture[1];
-	t_image			bump_map[1];
-	int				has_texture;
-	t_uv			*get_uv_coord;
 	struct s_obj	*next;
 	_Bool			inside_object;
 }	t_obj;
@@ -112,20 +106,8 @@ typedef struct s_parsing
 	_Bool		ambient_light;
 	_Bool		diffuse_light;
 	int			obj_nb;
-	int			light_nb;
-	_Bool		has_texture;
 	t_mlx		*mlx;
 }	t_parsing;
-
-typedef struct thread
-{
-	int				id;
-	pthread_t		thread;
-	struct s_data	*data;
-	int				pixel_x;
-	int				pixel_y;
-	int				max_height;
-}	t_thread;
 
 typedef struct s_data
 {
@@ -135,12 +117,8 @@ typedef struct s_data
 	int			obj_nb;
 	t_matrix4	cam_to_world_matrix;
 	_Bool		lighting;
-	_Bool		path_tracing;
-	_Bool		multithreading;
-	t_thread	multi_thread[THREADS];
-	double		start_time;
-	int			obj_ref;
-	t_image		texture[1];
+	int			pixel_x;
+	int			pixel_y;
 }	t_data;
 
 #endif

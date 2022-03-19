@@ -9,9 +9,7 @@ void	parsing_var_init(t_parsing *var)
 	var->obj_info = NULL;
 	var->objs = NULL;
 	var->input_list = NULL;
-	var->light_nb = 0;
 	var->obj_nb = 0;
-	var->has_texture = FALSE;
 	var->mlx = NULL;
 	var->mlx = setup_mlx(var);
 }
@@ -60,11 +58,10 @@ int	parsing(char **argv, int argc, t_parsing *parsing_var)
 	parsing_var->obj_nb = list_len(parsing_var->objs);
 	obj_tab = list_to_tab(parsing_var->objs, parsing_var);
 	parsing_var->objs = obj_tab;
-	parsing_var->scene->light_nb = parsing_var->light_nb;
 	if (file_is_complete(parsing_var, argv[1]) == FAIL)
 	{
 		exit_error_parsing_end(
-			INCOMPLETE_FILE_ERROR, NULL, parsing_var, DESTROY_TEXTURE);
+			INCOMPLETE_FILE_ERROR, NULL, parsing_var);
 	}
 	free_str_tab(parsing_var->input_list);
 	return (SUCCESS);

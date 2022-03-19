@@ -1,16 +1,5 @@
 #include "miniRT.h"
 
-void	copy_texture(t_image *dest, t_image *src)
-{
-	dest->img_ptr = src->img_ptr;
-	dest->addr = src->addr;
-	dest->width = src->width;
-	dest->height = src->height;
-	dest->endian = src->endian;
-	dest->bpp = src->bpp;
-	dest->line_len = src->line_len;
-	dest->has_texture = src->has_texture;
-}
 
 void	copy_content(t_obj *dest, t_obj *src, int obj_nb)
 {
@@ -29,13 +18,9 @@ void	copy_content(t_obj *dest, t_obj *src, int obj_nb)
 		dest[i].inner_diameter = src->inner_diameter;
 		dest[i].height = src->height;
 		dest[i].hit_object = src->hit_object;
-		dest[i].get_uv_coord = src->get_uv_coord;
 		dest[i].shine_factor = src->shine_factor;
 		dest->obj_nb = obj_nb;
 		dest[i].inside_object = src->inside_object;
-		copy_texture(dest[i].texture, src->texture);
-		copy_texture(dest[i].bump_map, src->bump_map);
-		dest[i].has_texture = src->has_texture;
 		i++;
 		src = src->next;
 	}
@@ -66,7 +51,7 @@ t_obj	*list_to_tab(t_obj *obj, t_parsing *parsing_var)
 	if (!obj_tab)
 	{
 		exit_error_parsing_end(
-			MALLOC_ERROR, "malloc failed()", parsing_var, NO_DESTROY_TEXTURE);
+			MALLOC_ERROR, "malloc failed()", parsing_var);
 	}
 	copy_content(obj_tab, obj, obj_nb);
 	free_list(obj);

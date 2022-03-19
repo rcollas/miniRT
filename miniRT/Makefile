@@ -8,14 +8,9 @@ SRC_FILES	= main.c \
 			$(UTILS) \
 			$(PARSING) \
 			$(RAYTRACING) \
-			$(TEXTURE) \
 			$(OBJECTS) \
 			$(LIGHTING) \
 			$(LIB_MATH) \
-			$(OPT_UTILS)
-
-OPT_UTILS = \
-			utils/timestamp.c \
 
 UTILS = \
 			utils/setup.c \
@@ -29,7 +24,6 @@ PARSING = \
 			parsing/parsing.c \
 			parsing/parsing_error.c \
 			parsing/fill_objs.c \
-			parsing/fill_objs_bonus.c \
 			parsing/fill_scene.c \
 			parsing/check.c \
 			parsing/obj_list.c \
@@ -40,32 +34,18 @@ PARSING = \
 
 RAYTRACING = \
 			raytracing/raytracer.c \
-			raytracing/path_tracing.c \
-			raytracing/multithreading.c \
 			raytracing/camera_init.c \
 			raytracing/camera_move.c \
-
-TEXTURE = \
-			texture/parsing.c \
-			texture/uv_mapping.c \
-			texture/checker.c \
-			texture/texture.c \
-			texture/bump_map.c \
 
 OBJECTS = \
 			objects/sphere.c \
 			objects/plane.c \
 			objects/cylinder.c \
-			objects/disk.c \
 			objects/utils.c \
-			objects/cone.c \
-			objects/cone_utils.c \
-			objects/square.c \
 
 LIGHTING = \
 			lighting/shadow.c \
 			lighting/light.c \
-			lighting/phong_light.c \
 			lighting/color_create.c \
 			lighting/color_check.c \
 

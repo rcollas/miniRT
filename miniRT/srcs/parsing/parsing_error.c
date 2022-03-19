@@ -174,8 +174,6 @@ int	diffuse_light_format_error(char *str)
 	ft_putstr_fd("\n\033[38;5;121m Expected:  [ID] L   ", 2);
 	error_coordinates();
 	error_intensity();
-	if (BONUS)
-		error_rgb();
 	ft_putstr_fd("\033[0m\n\n", 2);
 	return (DIFFUSE_LIGHT_FORMAT_ERROR);
 }
@@ -187,10 +185,7 @@ int	sphere_format_error(char *str)
 	ft_putstr_fd("\n\033[38;5;121m Expected:  [ID] sp   ", 2);
 	error_coordinates();
 	error_diameter();
-	if (BONUS)
-		format_bonus(HAS_TEXTURE);
-	else
-		error_rgb();
+	error_rgb();
 	ft_putstr_fd("\033[0m\n\n", 2);
 	return (SPHERE_FORMAT_ERROR);
 }
@@ -202,10 +197,7 @@ int	plane_format_error(char *str)
 	ft_putstr_fd("\n\033[38;5;121m Expected:  [ID] pl   ", 2);
 	error_coordinates();
 	error_vertex();
-	if (BONUS)
-		format_bonus(NO_TEXTURE);
-	else
-		error_rgb();
+	error_rgb();
 	ft_putstr_fd("\033[0m\n\n", 2);
 	return (PLANE_FORMAT_ERROR);
 }
@@ -219,77 +211,9 @@ int	cylinder_format_error(char *str)
 	error_vertex();
 	error_diameter();
 	error_height();
-	if (BONUS)
-		format_bonus(HAS_TEXTURE);
-	else
-		error_rgb();
+	error_rgb();
 	ft_putstr_fd("\033[0m\n\n", 2);
 	return (CYLINDER_FORMAT_ERROR);
-}
-
-int	cone_format_error(char *str)
-{
-	file_format_error();
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("\n\033[38;5;121m Expected:  [ID] co   ", 2);
-	error_coordinates();
-	error_vertex();
-	error_diameter();
-	error_height();
-	if (BONUS)
-		format_bonus(NO_TEXTURE);
-	else
-		error_rgb();
-	ft_putstr_fd("\033[0m\n\n", 2);
-	return (CONE_FORMAT_ERROR);
-}
-
-int	square_format_error(char *str)
-{
-	file_format_error();
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("\n\033[38;5;121m Expected:  [ID] sq   ", 2);
-	error_coordinates();
-	error_vertex();
-	error_height();
-	if (BONUS)
-		format_bonus(HAS_TEXTURE);
-	else
-		error_rgb();
-	ft_putstr_fd("\033[0m\n\n", 2);
-	return (SQUARE_FORMAT_ERROR);
-}
-
-int	disk_format_error(char *str)
-{
-	file_format_error();
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("\n\033[38;5;121m Expected:  [ID] di   ", 2);
-	error_coordinates();
-	error_vertex();
-	error_diameter();
-	ft_putstr_fd("[INNER_DIAMETER] 0.0   ", 2);
-	if (BONUS)
-		format_bonus(HAS_TEXTURE);
-	else
-		error_rgb();
-	ft_putstr_fd("\033[0m\n\n", 2);
-	return (DISK_FORMAT_ERROR);
-}
-
-int	sky_format_error(char *str)
-{
-	file_format_error();
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("\n\033[38;5;121m Expected:  [ID] sky   ", 2);
-	error_coordinates();
-	error_diameter();
-	if (BONUS)
-		format_bonus(HAS_TEXTURE);
-	else
-		error_rgb();
-	ft_putstr_fd("\033[0m\n\n", 2);
-	return (SPHERE_FORMAT_ERROR);
 }
 
 int	invalid_type_error(char *str)
@@ -322,14 +246,6 @@ int	error(int errnum, char *str)
 		return (plane_format_error(str));
 	if (errnum == CYLINDER_FORMAT_ERROR)
 		return (cylinder_format_error(str));
-	if (errnum == CONE_FORMAT_ERROR)
-		return (cone_format_error(str));
-	if (errnum == DISK_FORMAT_ERROR)
-		return (disk_format_error(str));
-	if (errnum == SQUARE_FORMAT_ERROR)
-		return (square_format_error(str));
-	if (errnum == SKY_FORMAT_ERROR)
-		return (sky_format_error(str));
 	if (errnum == INVALID_TYPE_ERROR)
 		return (invalid_type_error(str));
 	return (0);

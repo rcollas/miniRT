@@ -1,10 +1,8 @@
 #include "miniRT.h"
 
-void	check_dir_normal_sphere(t_ray *ray, t_obj *obj, t_ray *hit)
+void	check_dir_normal_sphere(t_ray *ray, t_ray *hit)
 {
-	if (obj->type == SKY)
-		check_direction_normal(ray, obj, hit);
-	else if (dot_vec3(hit->dir, ray->dir) > 0.001)
+	if (dot_vec3(hit->dir, ray->dir) > 0.001)
 	{
 		hit->dir = mul_vec3_and_const(hit->dir, -1);
 		hit->inside_object = TRUE;
@@ -27,7 +25,7 @@ _Bool	hit_sphere(t_ray *ray, t_obj *obj, t_ray *hit)
 		hit->origin = get_hit_point(*ray);
 		hit->dist = ray->dist;
 		hit->dir = get_normalized_vec3(sub_vec3(hit->origin, *obj->origin));
-		check_dir_normal_sphere(ray, obj, hit);
+		check_dir_normal_sphere(ray, hit);
 		return (TRUE);
 	}
 	return (FALSE);

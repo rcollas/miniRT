@@ -7,7 +7,7 @@ _Bool	hit_plane(t_ray *ray, t_obj *obj, t_ray *hit)
 
 	hit->dir = get_normalized_vec3(*obj->dir);
 	normalize_vec3(&ray->dir);
-	check_direction_normal(ray, obj, hit);
+	check_direction_normal(ray, hit);
 	denominator = dot_vec3(hit->dir, ray->dir);
 	if (fabs(denominator) > 1e-6)
 	{

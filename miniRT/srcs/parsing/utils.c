@@ -21,17 +21,13 @@ void	free_list(t_obj *obj)
 	}
 }
 
-void	free_list_error(t_obj *obj, t_mlx *mlx)
+void	free_list_error(t_obj *obj)
 {
 	t_obj	*tmp;
 
 	while (obj)
 	{
 		tmp = obj->next;
-		if (obj->texture->has_texture)
-			mlx_destroy_image(mlx->ptr, obj->texture->img_ptr);
-		if (obj->bump_map->has_texture)
-			mlx_destroy_image(mlx->ptr, obj->bump_map->img_ptr);
 		ft_free(obj);
 		obj = tmp;
 	}
@@ -94,13 +90,5 @@ int	is_valid_type(char *type)
 		return (CYLINDER);
 	if (ft_strcmp(type, "pl") == EQUAL)
 		return (PLANE);
-	if (ft_strcmp(type, "di") == EQUAL)
-		return (DISK);
-	if (ft_strcmp(type, "co") == EQUAL)
-		return (CONE);
-	if (ft_strcmp(type, "sky") == EQUAL)
-		return (SKY);
-	if (ft_strcmp(type, "sq") == EQUAL)
-		return (SQUARE);
 	return (INVALID_TYPE_ERROR);
 }

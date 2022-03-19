@@ -12,7 +12,7 @@ int	main(int argc, char **argv)
 	display_info_move_cam();
 	run_minirt(data);
 	events_loop(data);
-	print_list(data->obj);
+	//print_list(data->obj);
 	clean_data(data);
 	return (0);
 }

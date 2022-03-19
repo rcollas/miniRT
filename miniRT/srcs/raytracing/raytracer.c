@@ -43,7 +43,7 @@ _Bool	check_hit_object(
 }
 
 void	detect_intersection(
-	t_ray ray, unsigned long *color, t_data *data, t_thread *thread)
+	t_ray ray, unsigned long *color, t_data *data)
 {
 	_Bool	hit_obj;
 	t_ray	hit;
@@ -52,67 +52,45 @@ void	detect_intersection(
 
 	i = 0;
 	init_var_hit(&hit_obj, &hit, &rgb);
-	update_camera_ray(&ray, data, thread);
+	update_camera_ray(&ray, data);
 	while (i < data->obj_nb)
 	{
 		if (check_hit_object(&ray, &data->obj[i], &hit))
-		{
 			hit_obj = TRUE;
-			data->obj_ref = i;
-		}
 		i++;
 	}
 	if (hit_obj)
-	{
-		if (BONUS)
-			handle_texture(&hit);
-		rgb = mul_vec3(get_light(data, hit, ray), hit.color);
-	}
+		rgb = mul_vec3(get_light(data, hit), hit.color);
 	*color = create_rgb_struct(&rgb);
 }
 
 void	run_raytracing(
-	t_mlx *mlx, t_data *data, t_thread *thread)
+	t_mlx *mlx, t_data *data)
 {
 	unsigned long	pixel_color;
 	t_ray			cam_ray;
-	int				ratio;
 
-	(void)mlx;
-	ratio = HEIGHT / THREADS;
 	init_camera_ray(&cam_ray, data);
-	while (thread->pixel_y < thread->max_height)
+	while (++data->pixel_y < HEIGHT)
 	{
-		thread->pixel_x = -1;
-		while (++thread->pixel_x < WIDTH)
+		data->pixel_x = -1;
+		while (++data->pixel_x < WIDTH)
 		{
-			if (data->path_tracing)
-				run_path_tracing(&cam_ray, &pixel_color, data, thread);
-			else
-				detect_intersection(cam_ray, &pixel_color, data, thread);
-			draw_pixel(mlx->image, pixel_color, thread);
+			detect_intersection(cam_ray, &pixel_color, data);
+			draw_pixel(mlx->image, pixel_color, data);
 		}
-		display_loading(data, thread, ratio);
-		thread->pixel_y++;
 	}
-	display_end_loading(data, thread);
 }
 
 void	run_minirt(t_data *data)
 {
 	t_mlx		*mlx;
-	t_thread	main_thread;
 
 	mlx = data->mlx;
 	init_image(mlx, data);
 	data->cam_to_world_matrix = built_cam_to_world_matrix(data->scene->camera);
-	data->start_time = get_time();
-	main_thread.pixel_y = 0;
-	main_thread.max_height = HEIGHT;
-	if (data->multithreading && THREADS > 0)
-		run_multithreading(data);
-	else
-		run_raytracing(mlx, data, &main_thread);
-	display_cam_param(data->scene->camera, data);
+	data->pixel_y = -1;
+	run_raytracing(mlx, data);
+	display_cam_param(data->scene->camera);
 	mlx_put_image_to_window(mlx->ptr, mlx->window, mlx->image->img_ptr, 0, 0);
 }
