@@ -26,7 +26,7 @@ t_vec3	compute_classic_light(t_scene *scene, t_ray hit, t_data *data)
 	intensity *= hit.shadowing;
 	clamp_intensity(&intensity);
 	total_light = add_vec3(total_light, mul_vec3_and_const(
-			create_vec3(1, 1, 1), intensity));
+				create_vec3(1, 1, 1), intensity));
 	return (total_light);
 }
 

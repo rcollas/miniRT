@@ -51,7 +51,6 @@ int	key_hook(int key, t_data *data)
 	if (move_camera(key, data->scene->camera)
 		|| tilt_camera(key, data->scene->camera))
 	{
-
 		if (data->mlx->image)
 		{
 			mlx_destroy_image(data->mlx->ptr, data->mlx->image->img_ptr);

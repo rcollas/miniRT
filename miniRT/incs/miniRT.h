@@ -60,12 +60,43 @@ int				is_valid_type(char *type);
 int				list_len(t_obj *obj);
 int				load_file(char **argv, int argc, int *fd);
 int				convert_file_to_string(int fd, char **input);
+int				cylinder_check(t_obj *cylinder);
+int				plane_check(t_obj *plane);
+int				sphere_check(t_obj *sphere);
+int				diffuse_light_check(t_diffuse_light *diffuse_light);
+int				camera_check(t_camera *camera);
+int				ambient_light_check(t_ambient_light *ambient_light);
 void			ft_free(void *to_free);
 void			free_str_tab(char **tab);
 void			free_list(t_obj *obj);
 void			free_list_error(t_obj *obj);
 void			clean_parsing_var(t_parsing *parsing_var);
 void			free_tab(void **tab, int size);
+int				sphere_format_error(char *str);
+int				plane_format_error(char *str);
+int				cylinder_format_error(char *str);
+int				is_valid_vertex(t_vec3 *vertex);
+int				is_in_range(double min, double max, double value);
+int				is_valid_rgb(t_vec3 *rgb);
+int				ambient_light_format_error(char *str);
+int				camera_format_error(char *str);
+int				diffuse_light_format_error(char *str);
+int				extension_error(char *str);
+int				arg_nb_error(void);
+int				is_dir_error(char *str);
+int				file_error(char *str);
+int				incomplete_file_error(char *str);
+int				strjoin_error(void);
+int				read_error(char *str);
+int				close_error(char *str);
+void			error_coordinates(void);
+void			error_diameter(void);
+void			error_rgb(void);
+void			error_height(void);
+void			error_vertex(void);
+void			error_intensity(void);
+void			file_format_error(void);
+int				invalid_type_error(char *str);
 
 /********************************** CAMERA ************************************/
 
@@ -81,6 +112,7 @@ void			check_limit_angle(double *angle);
 void			run_minirt(t_data *data);
 void			run_raytracing(t_mlx *mlx, t_data *data);
 void			init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color);
+void			init_hit(t_ray *hit);
 double			compute_shadow(
 					t_obj *obj, t_ray *ray, t_diffuse_light *light);
 t_vec3			get_color_pixel(t_obj *obj, t_data *data,

@@ -34,62 +34,6 @@ int	is_valid_vertex(t_vec3 *vertex)
 	return (TRUE);
 }
 
-int	ambient_light_check(t_ambient_light *ambient_light)
-{
-	if (!is_in_range((double)0, (double)1, (double)ambient_light->intensity))
-		return (FAIL);
-	if (!is_valid_rgb(ambient_light->color))
-		return (FAIL);
-	return (SUCCESS);
-}
-
-int	camera_check(t_camera *camera)
-{
-	if (!is_valid_vertex(camera->dir))
-		return (FAIL);
-	if (!is_in_range((double)0, (double)180, (double)camera->fov))
-		return (FAIL);
-	return (SUCCESS);
-}
-
-int	diffuse_light_check(t_diffuse_light *diffuse_light)
-{
-	if (!is_in_range((double)0, (double)1, diffuse_light->intensity))
-		return (FAIL);
-	return (SUCCESS);
-}
-
-int	sphere_check(t_obj *sphere)
-{
-	if (sphere->diameter <= 0)
-		return (FAIL);
-	if (!is_valid_rgb(sphere->color))
-		return (FAIL);
-	return (SUCCESS);
-}
-
-int	plane_check(t_obj *plane)
-{
-	if (!is_valid_vertex(plane->dir))
-		return (FAIL);
-	if (!is_valid_rgb(plane->color))
-		return (FAIL);
-	return (SUCCESS);
-}
-
-int	cylinder_check(t_obj *cylinder)
-{
-	if (!is_valid_vertex(cylinder->dir))
-		return (FAIL);
-	if (cylinder->diameter <= 0)
-		return (FAIL);
-	if (cylinder->height <= 0)
-		return (FAIL);
-	if (!is_valid_rgb(cylinder->color))
-		return (FAIL);
-	return (SUCCESS);
-}
-
 int	check(void *obj, int type)
 {
 	if (type == AMBIENT_LIGHT)

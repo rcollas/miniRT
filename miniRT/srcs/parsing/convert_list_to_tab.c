@@ -1,6 +1,5 @@
 #include "miniRT.h"
 
-
 void	copy_content(t_obj *dest, t_obj *src, int obj_nb)
 {
 	int	i;

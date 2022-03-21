@@ -19,6 +19,7 @@ UTILS = \
 			utils/safe_functions.c \
 			utils/display.c \
 			utils/print.c \
+			utils/exit_error.c \
 
 PARSING = \
 			parsing/parsing.c \
@@ -31,10 +32,19 @@ PARSING = \
 			parsing/utils.c \
 			parsing/convert_list_to_tab.c \
 			parsing/load_file.c \
+			parsing/free.c \
+			parsing/check_objs.c \
+			parsing/check_scene.c \
+			parsing/objs_error.c \
+			parsing/file_error.c \
+			parsing/function_error.c \
+			parsing/scene_error.c \
+			parsing/syntax_error.c \
 
 RAYTRACING = \
 			raytracing/raytracer.c \
 			raytracing/camera_init.c \
+			raytracing/hit_init.c \
 			raytracing/camera_move.c \
 
 OBJECTS = \

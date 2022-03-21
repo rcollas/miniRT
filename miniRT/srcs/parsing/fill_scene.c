@@ -65,7 +65,8 @@ void	fill_diffuse_light(t_parsing *parsing, char *line)
 		exit_error_parsing(DIFFUSE_LIGHT_FORMAT_ERROR, NULL, parsing);
 	}
 	parsing->scene->diffuse_light->type = DIFFUSE_LIGHT;
-	ret = fill_coordinates(parsing->obj_info[1], parsing->scene->diffuse_light->coord);
+	ret = fill_coordinates(parsing->obj_info[1],
+			parsing->scene->diffuse_light->coord);
 	parsing->scene->diffuse_light->intensity = ft_atof(parsing->obj_info[2]);
 	if (check(parsing->scene->diffuse_light, DIFFUSE_LIGHT) == FAIL || ret)
 	{
