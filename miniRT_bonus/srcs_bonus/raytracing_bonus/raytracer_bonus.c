@@ -79,13 +79,16 @@ void	run_raytracing(
 	int				ratio;
 
 	(void)mlx;
-	ratio = HEIGHT / THREADS;
+	ratio = HEIGHT;
+	if (THREADS > 1)
+		ratio /= THREADS;
 	init_camera_ray(&cam_ray, data);
 	while (thread->pixel_y < thread->max_height)
 	{
 		thread->pixel_x = -1;
 		while (++thread->pixel_x < WIDTH)
 		{
+			pixel_color = 0;
 			if (data->path_tracing)
 				run_path_tracing(&cam_ray, &pixel_color, data, thread);
 			else

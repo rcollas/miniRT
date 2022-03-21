@@ -4,6 +4,7 @@
 # define SPECULAR_COEFF 64
 # define NO_SHADOW 1.0f
 # define SHADOW_COEFF 0.3f
+# define LIGHT_INTENSITY 3.0f
 # define RESET "\033[0m"
 # define ORANGE "\033[38;5;215m"
 # define YELLOW "\033[38;5;229m"
