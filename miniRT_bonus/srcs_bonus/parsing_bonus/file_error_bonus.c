@@ -38,6 +38,6 @@ int	incomplete_file_error(char *str)
 	ft_putstr_fd("File is incomplete: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("\n\033[38;5;121m.rt must contain at least one camera C,"
-				 " one diffuse light L and one ambient light A\033[0m\n", 2);
+		" one diffuse light L and one ambient light A\033[0m\n", 2);
 	return (INCOMPLETE_FILE_ERROR);
 }

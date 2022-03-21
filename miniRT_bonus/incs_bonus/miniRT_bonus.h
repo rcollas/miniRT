@@ -104,6 +104,37 @@ void			format_bonus(_Bool has_texture);
 _Bool			check_file_bump_map(char *filename);
 _Bool			check_file_texture(char *filename);
 char			*copy_end_str(char *str, int length);
+void			get_cylinder_info(t_parsing *var, char *line, int i);
+void			get_plane_info(t_parsing *var, char *line, int i);
+void			get_sphere_info(t_parsing *var, char *line, int i);
+int				sphere_check(t_obj *sphere);
+int				plane_check(t_obj *plane);
+int				cylinder_check(t_obj *cylinder);
+int				square_check(t_obj *square);
+int				disk_check(t_obj *disk);
+int				diffuse_light_check(t_diffuse_light *diffuse_light);
+int				camera_check(t_camera *camera);
+int				ambient_light_check(t_ambient_light *ambient_light);
+void			get_disk_info(t_parsing *var, char *line, int i);
+void			get_cone_info(t_parsing *var, char *line, int i);
+void			get_sky_info(t_parsing *var, char *line, int i);
+void			get_square_info(t_parsing *var, char *line, int i);
+int				is_valid_vertex(t_vec3 *vertex);
+int				is_valid_rgb(t_vec3 *rgb);
+int				is_in_range(double min, double max, double value);
+int				close_error(char *str);
+int				strjoin_error(void);
+int				read_error(char *str);
+int				strdup_error(void);
+void			error_coordinates(void);
+void			error_diameter(void);
+void			error_height(void);
+void			error_rgb(void);
+void			error_vertex(void);
+void			error_intensity(void);
+void			format_bonus(_Bool has_texture);
+void			file_format_error(void);
+int				invalid_type_error(char *str);
 
 /********************************** CAMERA ************************************/
 
@@ -126,6 +157,8 @@ double			compute_shadow(
 					t_obj *obj, t_ray *ray, t_diffuse_light *light);
 t_vec3			get_color_pixel(t_obj *obj, t_data *data,
 					t_ray *ray, int rebound);
+void			init_var_hit(_Bool *hit_obj, t_ray *hit, t_vec3 *color);
+void			init_hit(t_ray *hit);
 
 /******************************** OBJECTS *************************************/
 

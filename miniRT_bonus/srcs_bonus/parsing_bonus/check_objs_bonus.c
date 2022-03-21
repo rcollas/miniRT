@@ -1,48 +1,69 @@
 #include "miniRT_bonus.h"
 
-int	sphere_format_error(char *str)
+int	sphere_check(t_obj *sphere)
 {
-	file_format_error();
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("\n\033[38;5;121m Expected:  [ID] sp   ", 2);
-	error_coordinates();
-	error_diameter();
-	if (BONUS)
-		format_bonus(HAS_TEXTURE);
-	else
-		error_rgb();
-	ft_putstr_fd("\033[0m\n\n", 2);
-	return (SPHERE_FORMAT_ERROR);
+	if (sphere->diameter <= 0)
+		return (FAIL);
+	if (!is_valid_rgb(sphere->color))
+		return (FAIL);
+	if (BONUS && sphere->has_texture == CHECKER
+		&& !is_valid_rgb(sphere->color_checker))
+		return (FAIL);
+	return (SUCCESS);
 }
 
-int	plane_format_error(char *str)
+int	plane_check(t_obj *plane)
 {
-	file_format_error();
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("\n\033[38;5;121m Expected:  [ID] pl   ", 2);
-	error_coordinates();
-	error_vertex();
-	if (BONUS)
-		format_bonus(NO_TEXTURE);
-	else
-		error_rgb();
-	ft_putstr_fd("\033[0m\n\n", 2);
-	return (PLANE_FORMAT_ERROR);
+	if (!is_valid_vertex(plane->dir))
+		return (FAIL);
+	if (!is_valid_rgb(plane->color))
+		return (FAIL);
+	if (BONUS && plane->has_texture == CHECKER
+		&& !is_valid_rgb(plane->color_checker))
+		return (FAIL);
+	return (SUCCESS);
 }
 
-int	cylinder_format_error(char *str)
+int	cylinder_check(t_obj *cylinder)
 {
-	file_format_error();
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("\n\033[38;5;121m Expected:  [ID] cy   ", 2);
-	error_coordinates();
-	error_vertex();
-	error_diameter();
-	error_height();
-	if (BONUS)
-		format_bonus(HAS_TEXTURE);
-	else
-		error_rgb();
-	ft_putstr_fd("\033[0m\n\n", 2);
-	return (CYLINDER_FORMAT_ERROR);
+	if (!is_valid_vertex(cylinder->dir))
+		return (FAIL);
+	if (cylinder->diameter <= 0)
+		return (FAIL);
+	if (cylinder->height <= 0)
+		return (FAIL);
+	if (!is_valid_rgb(cylinder->color))
+		return (FAIL);
+	if (BONUS && cylinder->has_texture == CHECKER
+		&& !is_valid_rgb(cylinder->color_checker))
+		return (FAIL);
+	return (SUCCESS);
+}
+
+int	square_check(t_obj *square)
+{
+	if (!is_valid_vertex(square->dir))
+		return (FAIL);
+	if (square->height <= 0)
+		return (FAIL);
+	if (!is_valid_rgb(square->color))
+		return (FAIL);
+	if (BONUS && square->has_texture == CHECKER
+		&& !is_valid_rgb(square->color_checker))
+		return (FAIL);
+	return (SUCCESS);
+}
+
+int	disk_check(t_obj *disk)
+{
+	if (!is_valid_vertex(disk->dir))
+		return (FAIL);
+	if (disk->diameter <= 0)
+		return (FAIL);
+	if (!is_valid_rgb(disk->color))
+		return (FAIL);
+	if (BONUS && disk->has_texture == CHECKER
+		&& !is_valid_rgb(disk->color_checker))
+		return (FAIL);
+	return (SUCCESS);
 }

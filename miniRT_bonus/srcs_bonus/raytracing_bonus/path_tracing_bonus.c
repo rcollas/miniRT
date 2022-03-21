@@ -80,8 +80,6 @@ t_vec3	get_color_pixel(t_obj *obj, t_data *data, t_ray *ray, int rebound)
 	{
 		get_random_ray(hit, random_ray);
 		final_color = get_light(data, hit, *ray);
-		// final_color = add_vec3(final_color, get_color_pixel(
-		// 			obj, data, random_ray, --rebound));
 		final_color = add_vec3(final_color, mul_vec3_and_const(
 					get_color_pixel(obj, data, random_ray, --rebound),
 					PATH_TRACING_COEFF));

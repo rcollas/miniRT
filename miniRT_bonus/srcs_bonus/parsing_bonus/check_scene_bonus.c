@@ -1,37 +1,26 @@
 #include "miniRT_bonus.h"
 
-int	ambient_light_format_error(char *str)
+int	ambient_light_check(t_ambient_light *ambient_light)
 {
-	file_format_error();
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("\n\033[38;5;121m Expected:  [ID] A   ", 2);
-	error_intensity();
-	error_rgb();
-	ft_putstr_fd("\033[0m\n\n", 2);
-	return (AMBIENT_LIGHT_FORMAT_ERROR);
+	if (!is_in_range((double)0, (double)1, (double)ambient_light->intensity))
+		return (FAIL);
+	if (!is_valid_rgb(ambient_light->color))
+		return (FAIL);
+	return (SUCCESS);
 }
 
-int	camera_format_error(char *str)
+int	camera_check(t_camera *camera)
 {
-	file_format_error();
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("\n\033[38;5;121m Expected:  [ID] C   ", 2);
-	error_coordinates();
-	error_vertex();
-	ft_putstr_fd("[FOV] 0-180   ", 2);
-	ft_putstr_fd("\033[0m\n\n", 2);
-	return (CAMERA_FORMAT_ERROR);
+	if (!is_valid_vertex(camera->dir))
+		return (FAIL);
+	if (!is_in_range((double)0, (double)180, (float)camera->fov))
+		return (FAIL);
+	return (SUCCESS);
 }
 
-int	diffuse_light_format_error(char *str)
+int	diffuse_light_check(t_diffuse_light *diffuse_light)
 {
-	file_format_error();
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("\n\033[38;5;121m Expected:  [ID] L   ", 2);
-	error_coordinates();
-	error_intensity();
-	if (BONUS)
-		error_rgb();
-	ft_putstr_fd("\033[0m\n\n", 2);
-	return (DIFFUSE_LIGHT_FORMAT_ERROR);
+	if (!is_in_range((double)0, (double)1, diffuse_light->intensity))
+		return (FAIL);
+	return (SUCCESS);
 }

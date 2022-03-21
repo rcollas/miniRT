@@ -38,10 +38,20 @@ PARSING_BONUS = \
 			parsing_bonus/utils_bonus.c \
 			parsing_bonus/convert_list_to_tab_bonus.c \
 			parsing_bonus/load_file_bonus.c \
+			parsing_bonus/check_objs_format_bonus.c \
+			parsing_bonus/check_objs_format2_bonus.c \
+			parsing_bonus/check_scene_format_bonus.c \
+			parsing_bonus/check_objs_bonus.c \
+			parsing_bonus/file_error_bonus.c \
+			parsing_bonus/fill_light_bonus.c \
+			parsing_bonus/get_obj_info_bonus.c \
 			parsing_bonus/check_objs_bonus.c \
 			parsing_bonus/check_scene_bonus.c \
-			parsing_bonus/check_objs_bonus2.c \
-			parsing_bonus/file_error_bonus.c \
+			parsing_bonus/get_obj_bonus_bonus.c \
+			parsing_bonus/free_bonus.c \
+			parsing_bonus/function_error_bonus.c \
+			parsing_bonus/format_error_bonus.c \
+			parsing_bonus/format_error2_bonus.c \
 
 RAYTRACING_BONUS = \
 			raytracing_bonus/raytracer_bonus.c \
@@ -49,6 +59,7 @@ RAYTRACING_BONUS = \
 			raytracing_bonus/multithreading_bonus.c \
 			raytracing_bonus/camera_init_bonus.c \
 			raytracing_bonus/camera_move_bonus.c \
+			raytracing_bonus/init_ray_bonus.c \
 
 TEXTURE_BONUS = \
 			texture_bonus/parsing_bonus.c \
@@ -165,9 +176,9 @@ $(BONUS_NAME):	$(OBJS_BONUS)
 libft:
 		@$(LIBFT_MAKE)
 
-debug:	 $(NAME_DEBUG)	
+debug:	 $(NAME_DEBUG)
 
-$(NAME_DEBUG):	$(OBJS) 
+$(NAME_DEBUG):	$(OBJS)
 					@make DEBUG=on --no-print-directory
 					@echo "$(BLUE)[mode DEBUG=on]$(RESET)"
 
