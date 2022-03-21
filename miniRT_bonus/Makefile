@@ -124,6 +124,8 @@ LIBFT_LIB	=	libft/libft.a
 
 LIBFT_MAKE	=	$(MAKE) bonus --no-print-directory -C $(LIBFT_PATH)
 
+MLX_MAKE	=	$(MAKE) --no-print-directory -C $(MLX_DIR)
+
 INCLUDE_DIR_BONUS	= ./incs_bonus
 
 INC_FILES_BONUS	= miniRT_bonus.h \
@@ -170,6 +172,7 @@ bonus:	$(BONUS_NAME)
 
 $(BONUS_NAME):	$(OBJS_BONUS)
 					@$(LIBFT_MAKE)
+					@$(MLX_MAKE)
 					@$(CC) $(CFLAGS) $^ -o $@ $(LIBFT_LIB) $(MLX_FLAG)
 					@echo "$(CUT)$(GREEN)✔ $(BONUS_NAME) created$(RESET)"
 
@@ -184,6 +187,7 @@ $(NAME_DEBUG):	$(OBJS)
 
 clean:
 			@make --no-print-directory -C $(LIBFT_PATH) clean
+			@make --no-print-directory -C $(MLX_DIR) clean
 			@$(RM) $(OBJS) $(OBJS_DIR)
 			@echo "$(RED)✘ clean$(RESET)"
 
