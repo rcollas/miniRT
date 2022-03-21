@@ -87,6 +87,7 @@ void	fill_diffuse_light(t_parsing *parsing, char *line)
 	int	ret;
 
 	i = 0;
+	parsing->scene->diffuse_light = NULL;
 	j = parsing->light_nb;
 	parsing->light_nb++;
 	while (parsing->obj_info[i])
