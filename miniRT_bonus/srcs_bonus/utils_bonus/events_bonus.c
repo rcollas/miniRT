@@ -65,6 +65,11 @@ int	key_hook(int key, t_data *data)
 		data->path_tracing = PATH_TRACING;
 		data->multithreading = MULTITHREADING;
 		ft_putchar_fd('\n', 1);
+		if (data->mlx->image)
+		{
+			mlx_destroy_image(data->mlx->ptr, data->mlx->image->img_ptr);
+			ft_free(data->mlx->image);
+		}
 		run_minirt(data);
 	}
 	return (0);

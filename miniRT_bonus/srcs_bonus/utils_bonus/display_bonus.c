@@ -3,14 +3,16 @@
 void	display_loading(t_data *data, t_thread *thread, int ratio)
 {
 	char	*msg;
+	char	*percent;
 
 	if (data->path_tracing && data->multithreading && thread->id == THREADS - 1)
 	{
 		msg = ft_strdup(ORANGE);
 		msg = ft_strjoin_and_free(
 				msg, "\r   Rendering scene with path_tracing... [");
-		msg = ft_strjoin_and_free(
-				msg, ft_itoa(100 * (thread->pixel_y % ratio) / ratio));
+		percent = ft_itoa(100 * (thread->pixel_y % ratio) / ratio);
+		msg = ft_strjoin_and_free(msg, percent);
+		clean_free(&percent);
 		msg = ft_strjoin_and_free(msg, "%]");
 		ft_putstr_fd(msg, 1);
 		clean_free(&msg);

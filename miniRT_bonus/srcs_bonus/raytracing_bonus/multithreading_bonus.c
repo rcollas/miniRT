@@ -7,9 +7,12 @@ void	*init_multithreading(void *void_thread)
 
 	thread = (t_thread *)void_thread;
 	data = (t_data *)thread->data;
-	thread->pixel_y = HEIGHT / THREADS * thread->id;
-	thread->max_height = HEIGHT / THREADS * (thread->id + 1);
-	run_raytracing(data->mlx, data, thread);
+	if (THREADS > 0)
+	{
+		thread->pixel_y = (int)(HEIGHT / THREADS * thread->id);
+		thread->max_height = (int)(HEIGHT / THREADS * (thread->id + 1));
+		run_raytracing(data->mlx, data, thread);
+	}
 	return (NULL);
 }
 

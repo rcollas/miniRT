@@ -25,7 +25,7 @@ t_vec3	compute_classic_light(t_scene *scene, t_ray hit, t_data *data)
 				data->obj, &hit, &scene->diffuse_light[i]);
 		light_dir = sub_vec3(*scene->diffuse_light[i].coord, hit.origin);
 		normalize_vec3(&light_dir);
-		intensity = 3 * dot_vec3(light_dir, hit.dir);
+		intensity = LIGHT_INTENSITY * dot_vec3(light_dir, hit.dir);
 		intensity *= (scene->diffuse_light[i].intensity / M_PI);
 		intensity *= hit.shadowing;
 		clamp_intensity(&intensity);
