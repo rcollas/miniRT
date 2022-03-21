@@ -1,5 +1,5 @@
-#ifndef LIB_MATH_H
-# define LIB_MATH_H
+#ifndef LIB_MATH_BONUS_H
+# define LIB_MATH_BONUS_H
 
 typedef struct s_vec2
 {

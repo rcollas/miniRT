@@ -1,5 +1,5 @@
-#ifndef STRUCT_H
-# define STRUCT_H
+#ifndef STRUCT_BONUS_H
+# define STRUCT_BONUS_H
 
 # include "lib_math_bonus.h"
 

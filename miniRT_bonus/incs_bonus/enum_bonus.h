@@ -1,5 +1,5 @@
-#ifndef ENUM_H
-# define ENUM_H
+#ifndef ENUM_BONUS_H
+# define ENUM_BONUS_H
 
 # define SPECULAR_COEFF 64
 # define NO_SHADOW 1.0f
@@ -13,7 +13,7 @@
 # define GREY "\033[38;5;243m"
 # define LIGHT_GREY "\033[38;5;249m"
 
-#define INT_MIN	-2147483648
+# define INT_MIN	-2147483648
 
 typedef enum s_define
 {
