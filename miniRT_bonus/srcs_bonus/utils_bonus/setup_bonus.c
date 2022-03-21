@@ -1,5 +1,13 @@
 #include "miniRT_bonus.h"
 
+void	init_mlx_ptr(t_mlx *mlx)
+{
+	mlx->ptr = NULL;
+	mlx->image = NULL;
+	mlx->window = NULL;
+	mlx->ptr = mlx_init();
+}
+
 t_mlx	*setup_mlx(t_parsing *parsing_var)
 {
 	t_mlx	*mlx;
@@ -9,10 +17,7 @@ t_mlx	*setup_mlx(t_parsing *parsing_var)
 	if (!mlx)
 		exit_error_parsing(MALLOC_ERROR, "malloc() failed", parsing_var);
 	ft_memset(mlx, 0, sizeof(t_mlx *));
-	mlx->ptr = NULL;
-	mlx->image = NULL;
-	mlx->window = NULL;
-	mlx->ptr = mlx_init();
+	init_mlx_ptr(mlx);
 	if (!mlx->ptr)
 	{
 		ft_free(mlx);

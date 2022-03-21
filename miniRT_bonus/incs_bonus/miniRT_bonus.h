@@ -75,6 +75,35 @@ void			free_list(t_obj *obj);
 void			free_list_error(t_obj *obj, t_mlx *mlx);
 void			clean_parsing_var(t_parsing *parsing_var);
 void			free_tab(void **tab, int size);
+int				exit_hook(t_data *data);
+void			destroy_texture(t_obj *obj, int obj_nb, t_mlx *mlx);
+int				extension_error(char *str);
+int				arg_nb_error(void);
+int				is_dir_error(char *str);
+int				file_error(char *str);
+int				incomplete_file_error(char *str);
+int				sphere_format_error(char *str);
+int				plane_format_error(char *str);
+int				cylinder_format_error(char *str);
+int				cone_format_error(char *str);
+int				square_format_error(char *str);
+int				disk_format_error(char *str);
+int				sky_format_error(char *str);
+int				ambient_light_format_error(char *str);
+int				camera_format_error(char *str);
+int				diffuse_light_format_error(char *str);
+void			error_coordinates(void);
+void			error_diameter(void);
+void			error_height(void);
+void			error_rgb(void);
+void			error_vertex(void);
+void			error_intensity(void);
+void			file_format_error(void);
+int				invalid_type_error(char *str);
+void			format_bonus(_Bool has_texture);
+_Bool			check_file_bump_map(char *filename);
+_Bool			check_file_texture(char *filename);
+char			*copy_end_str(char *str, int length);
 
 /********************************** CAMERA ************************************/
 

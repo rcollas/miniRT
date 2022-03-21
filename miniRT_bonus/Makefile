@@ -24,6 +24,7 @@ UTILS_BONUS = \
 			utils_bonus/safe_functions_bonus.c \
 			utils_bonus/display_bonus.c \
 			utils_bonus/print_bonus.c \
+			utils_bonus/exit_error_bonus.c \
 
 PARSING_BONUS = \
 			parsing_bonus/parsing_bonus.c \
@@ -37,6 +38,10 @@ PARSING_BONUS = \
 			parsing_bonus/utils_bonus.c \
 			parsing_bonus/convert_list_to_tab_bonus.c \
 			parsing_bonus/load_file_bonus.c \
+			parsing_bonus/check_objs_bonus.c \
+			parsing_bonus/check_scene_bonus.c \
+			parsing_bonus/check_objs_bonus2.c \
+			parsing_bonus/file_error_bonus.c \
 
 RAYTRACING_BONUS = \
 			raytracing_bonus/raytracer_bonus.c \
@@ -51,6 +56,7 @@ TEXTURE_BONUS = \
 			texture_bonus/checker_bonus.c \
 			texture_bonus/texture_bonus.c \
 			texture_bonus/bump_map_bonus.c \
+			texture_bonus/check_texture.c \
 
 OBJECTS_BONUS = \
 			objects_bonus/sphere_bonus.c \

@@ -1,13 +1,5 @@
 #include "miniRT_bonus.h"
 
-int	exit_hook(t_data *data)
-{
-	clean_data(data);
-	printf("\n");
-	exit(EXIT_SUCCESS);
-	return (0);
-}
-
 _Bool	move_camera(int key, t_camera *camera)
 {
 	t_vec3	*origin;
@@ -45,6 +37,19 @@ _Bool	tilt_camera(int key, t_camera *camera)
 	return (1);
 }
 
+void	run_pathtracing(t_data *data)
+{
+	data->path_tracing = PATH_TRACING;
+	data->multithreading = MULTITHREADING;
+	ft_putchar_fd('\n', 1);
+	if (data->mlx->image)
+	{
+		mlx_destroy_image(data->mlx->ptr, data->mlx->image->img_ptr);
+		ft_free(data->mlx->image);
+	}
+	run_minirt(data);
+}
+
 int	key_hook(int key, t_data *data)
 {
 	if (key == KEY_ESC)
@@ -62,15 +67,7 @@ int	key_hook(int key, t_data *data)
 	}
 	if (key == KEY_P)
 	{
-		data->path_tracing = PATH_TRACING;
-		data->multithreading = MULTITHREADING;
-		ft_putchar_fd('\n', 1);
-		if (data->mlx->image)
-		{
-			mlx_destroy_image(data->mlx->ptr, data->mlx->image->img_ptr);
-			ft_free(data->mlx->image);
-		}
-		run_minirt(data);
+		run_pathtracing(data);
 	}
 	return (0);
 }

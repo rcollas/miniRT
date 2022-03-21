@@ -48,18 +48,6 @@ void	clean_data(t_data *data)
 	clean_mlx(data->mlx);
 }
 
-void	exit_error(int errnum, char *error_msg, t_data *data)
-{
-	if (error_msg)
-	{
-		ft_putstr_fd("Error: ", 2);
-		ft_putstr_fd(error_msg, 2);
-		ft_putstr_fd("\n", 2);
-	}
-	clean_data(data);
-	exit(errnum);
-}
-
 void	clean_parsing_var(t_parsing *parsing_var)
 {
 	free_list_error(parsing_var->objs, parsing_var->mlx);
@@ -68,42 +56,4 @@ void	clean_parsing_var(t_parsing *parsing_var)
 	if (parsing_var->diffuse_light)
 		ft_free(parsing_var->scene->diffuse_light);
 	clean_mlx(parsing_var->mlx);
-}
-
-void	exit_error_parsing_end(int errnum, char *error_msg,
-	t_parsing *parsing_var, _Bool need_destroy_texture)
-{
-	if (error_msg)
-	{
-		ft_putstr_fd("Error: ", 2);
-		ft_putstr_fd(error_msg, 2);
-		ft_putstr_fd("\n", 2);
-	}
-	free_str_tab(parsing_var->input_list);
-	if (BONUS && need_destroy_texture)
-	{
-		destroy_texture(
-			parsing_var->objs, parsing_var->obj_nb, parsing_var->mlx);
-		free_list(parsing_var->objs);
-	}
-	else if (BONUS && !need_destroy_texture)
-		free_list_error(parsing_var->objs, parsing_var->mlx);
-	else
-		free_list(parsing_var->objs);
-	if (parsing_var->diffuse_light)
-		ft_free(parsing_var->scene->diffuse_light);
-	clean_mlx(parsing_var->mlx);
-	exit(errnum);
-}
-
-void	exit_error_parsing(int errnum, char *error_msg, t_parsing *parsing_var)
-{
-	if (error_msg)
-	{
-		ft_putstr_fd("Error: ", 2);
-		ft_putstr_fd(error_msg, 2);
-		ft_putstr_fd("\n", 2);
-	}
-	clean_parsing_var(parsing_var);
-	exit(errnum);
 }
