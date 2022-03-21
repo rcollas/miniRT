@@ -39,9 +39,7 @@ void	open_texture(t_image *texture, char *filename, t_parsing *var)
 			&texture->width, &texture->height);
 	ft_free(file);
 	if (!texture->img_ptr)
-	{
 		exit_error_parsing(MLX_ERROR, "mlx_xpm_file_to_image() failed", var);
-	}
 	texture->addr = mlx_get_data_addr(texture->img_ptr, &texture->bpp,
 			&texture->line_len, &texture->endian);
 	if (!texture->img_ptr)

@@ -44,6 +44,7 @@ void	free_str_tab(char **tab)
 			ft_free(tab[i]);
 		ft_free(tab);
 	}
+	tab = NULL;
 }
 
 void	free_tab(void **tab, int size)

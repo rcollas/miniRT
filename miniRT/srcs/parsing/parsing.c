@@ -64,5 +64,6 @@ int	parsing(char **argv, int argc, t_parsing *parsing_var)
 			INCOMPLETE_FILE_ERROR, NULL, parsing_var);
 	}
 	free_str_tab(parsing_var->input_list);
+	parsing_var->input_list = NULL;
 	return (SUCCESS);
 }
