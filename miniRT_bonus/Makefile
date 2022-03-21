@@ -85,6 +85,7 @@ LIGHTING_BONUS = \
 			lighting_bonus/phong_light_bonus.c \
 			lighting_bonus/color_create_bonus.c \
 			lighting_bonus/color_check_bonus.c \
+			lighting_bonus/colored_lights_bonus.c \
 
 LIB_MATH_BONUS = \
 			lib_math_bonus/vec2_op_bonus.c \

@@ -12,7 +12,7 @@
 # define GREY "\033[38;5;243m"
 # define LIGHT_GREY "\033[38;5;249m"
 
-#define INT_MIN -2147483648
+# define INT_MIN -2147483648
 
 typedef enum s_define
 {

@@ -1,5 +1,5 @@
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef MINIRT_BONUS_H
+# define MINIRT_BONUS_H
 
 # include <fcntl.h>
 # include <unistd.h>
@@ -24,6 +24,7 @@
 # include "error_bonus.h"
 # include "enum_bonus.h"
 # include "utils_bonus.h"
+# include <sys/time.h>
 # ifdef __linux__
 #  include "mlx_int.h"
 #  define IS_LINUX 1
@@ -190,6 +191,8 @@ unsigned long	create_trgb(int transparency, int red, int green, int blue);
 void			check_limit_color(t_vec3 *color);
 void			clamp_intensity(double *intensity);
 void			clamp_color(int *color);
+void			compute_obj_color(t_obj *obj, t_diffuse_light *light,
+					int light_nb);
 
 /********************************** TEXTURE ***********************************/
 
@@ -214,8 +217,6 @@ t_vec2			transform_point_in_obj_space(t_vec3 hit_point,
 					t_vec3 obj_origin, double max_dimension, t_vec3 obj_dir);
 
 /***************************** OPTIMIZATION UTILS *****************************/
-
-# include <sys/time.h>
 
 double			get_timestamp(double start);
 double			get_time(void);
