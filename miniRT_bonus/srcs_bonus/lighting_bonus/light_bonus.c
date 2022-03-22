@@ -29,15 +29,8 @@ t_vec3	compute_classic_light(t_scene *scene, t_ray hit, t_data *data)
 		intensity *= (scene->diffuse_light[i].intensity / M_PI);
 		intensity *= hit.shadowing;
 		clamp_intensity(&intensity);
-		t_vec3	color = add_vec3(*scene->diffuse_light[i].color, hit.color);
-		color = div_vec3_and_const(color, 2);
-//		printf("color R = %f\n", color.coord[R]);
-//		printf("color G = %f\n", color.coord[G]);
-//		printf("color B = %f\n", color.coord[B]);
-//		total_light = add_vec3(total_light, mul_vec3_and_const(
-//				*scene->diffuse_light[i].color, intensity));
 		total_light = add_vec3(total_light, mul_vec3_and_const(
-				color, intensity));
+				*scene->diffuse_light[i].color, intensity));
 	}
 	return (total_light);
 }
