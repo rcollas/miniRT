@@ -29,7 +29,7 @@ t_diffuse_light	*ft_realloc(t_parsing *parsing, t_diffuse_light *ptr)
 	return (new_ptr);
 }
 
-void	get_light_info(t_parsing *parsing, int j, char *line)
+void	get_light_info(t_parsing *parsing, int j, char *line, int i)
 {
 	int	ret;
 
@@ -38,7 +38,8 @@ void	get_light_info(t_parsing *parsing, int j, char *line)
 	parsing->scene->diffuse_light[j].type = DIFFUSE_LIGHT;
 	ret = fill_coordinates(parsing->obj_info[1],
 			parsing->scene->diffuse_light[j].coord);
-	ret += fill_rgb(parsing->obj_info[3],
+	if (i == 4)
+		ret += fill_rgb(parsing->obj_info[3],
 			parsing->scene->diffuse_light[j].color);
 	parsing->scene->diffuse_light[j].intensity = ft_atof(parsing->obj_info[2]);
 	if (check(&parsing->scene->diffuse_light[j], DIFFUSE_LIGHT) == FAIL || ret)
@@ -60,11 +61,11 @@ void	fill_diffuse_light(t_parsing *parsing, char *line)
 	parsing->light_nb++;
 	while (parsing->obj_info[i])
 		i++;
-	if (i != 4)
+	if (i != 3 && i != 4)
 	{
 		ft_free(parsing->scene->diffuse_light);
 		error(DIFFUSE_LIGHT_FORMAT_ERROR, line);
 		exit_error_parsing(DIFFUSE_LIGHT_FORMAT_ERROR, NULL, parsing);
 	}
-	get_light_info(parsing, j, line);
+	get_light_info(parsing, j, line, i);
 }

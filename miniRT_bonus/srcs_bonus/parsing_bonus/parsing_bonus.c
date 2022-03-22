@@ -12,6 +12,7 @@ void	parsing_var_init(t_parsing *var)
 	var->light_nb = 0;
 	var->obj_nb = 0;
 	var->has_texture = FALSE;
+	var->scene->diffuse_light = NULL;
 	var->mlx = NULL;
 	var->mlx = setup_mlx(var);
 }
