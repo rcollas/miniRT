@@ -41,6 +41,8 @@ void	get_light_info(t_parsing *parsing, int j, char *line, int i)
 	if (i == 4)
 		ret += fill_rgb(parsing->obj_info[3],
 			parsing->scene->diffuse_light[j].color);
+	else
+		copy_vec3(parsing->scene->diffuse_light[j].color, create_vec3(1, 1, 1));
 	parsing->scene->diffuse_light[j].intensity = ft_atof(parsing->obj_info[2]);
 	if (check(&parsing->scene->diffuse_light[j], DIFFUSE_LIGHT) == FAIL || ret)
 	{

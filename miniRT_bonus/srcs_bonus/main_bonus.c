@@ -9,6 +9,8 @@ int	main(int argc, char **argv)
 		exit_error_parsing_end(
 			MALLOC_ERROR, NULL, parsing_var, DESTROY_TEXTURE);
 	init_data(parsing_var, data);
+//	compute_obj_color(data->obj, data->scene->diffuse_light,
+//					  data->scene->light_nb);
 	init_euler_angles(data->scene->camera);
 	display_info_move_cam();
 	run_minirt(data);
