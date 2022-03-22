@@ -14,6 +14,7 @@ void	parsing_var_init(t_parsing *var)
 	var->has_texture = FALSE;
 	var->mlx = NULL;
 	var->mlx = setup_mlx(var);
+	var->scene->diffuse_light = NULL;
 }
 
 void	fill_structure(t_parsing *parsing_var)
