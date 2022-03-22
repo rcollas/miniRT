@@ -7,7 +7,7 @@ void	exit_error_parsing_end(int errnum,
 {
 	if (error_msg)
 	{
-		ft_putstr_fd("Error: ", 2);
+		ft_putstr_fd("Error\n", 2);
 		ft_putstr_fd(error_msg, 2);
 		ft_putstr_fd("\n", 2);
 	}
@@ -32,7 +32,7 @@ void	exit_error_parsing(int errnum, char *error_msg, t_parsing *parsing_var)
 {
 	if (error_msg)
 	{
-		ft_putstr_fd("Error: ", 2);
+		ft_putstr_fd("Error\n", 2);
 		ft_putstr_fd(error_msg, 2);
 		ft_putstr_fd("\n", 2);
 	}
@@ -44,7 +44,7 @@ void	exit_error(int errnum, char *error_msg, t_data *data)
 {
 	if (error_msg)
 	{
-		ft_putstr_fd("Error: ", 2);
+		ft_putstr_fd("Error\n", 2);
 		ft_putstr_fd(error_msg, 2);
 		ft_putstr_fd("\n", 2);
 	}

@@ -47,6 +47,8 @@ void	fill_camera(t_parsing *parsing, t_camera *camera, char *line)
 		error(CAMERA_FORMAT_ERROR, line);
 		exit_error_parsing(CAMERA_FORMAT_ERROR, NULL, parsing);
 	}
+	if (camera->fov > 179.0)
+		camera->fov = 179.0;
 	camera->fov *= M_PI / 180;
 	parsing->camera = TRUE;
 }

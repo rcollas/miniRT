@@ -1,7 +1,0 @@
-A 	0.1 255,255,255
-C 	0,0,0 0,0,-1 50
-L   15,15,-10  0.9
-#sp	0,0,-35  15 "image/earth.xpm" "image/earth_normal_map.xpm"
-sp	0,0,-35  15 10,10,10  255,255,255
-sp	7,-5,-25  4 "image/moon.xpm" "image/moon_normal_map.xpm" 244,244,244
-sky	0,0,-35  500 "image/stars.xpm"
