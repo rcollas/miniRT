@@ -175,6 +175,7 @@ _Bool			hit_hyperboloid(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			hit_cone(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			check_cone_height(t_ray *ray, t_obj *obj, double ray_dist);
 void			compute_normal_cone(t_ray *ray, t_obj *obj, t_ray *hit);
+void	print_color(t_vec3 color, char *str);
 
 /********************************* LIGHTING ***********************************/
 

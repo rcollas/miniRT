@@ -22,5 +22,7 @@ int	diffuse_light_check(t_diffuse_light *diffuse_light)
 {
 	if (!is_in_range((double)0, (double)1, diffuse_light->intensity))
 		return (FAIL);
+	if (!is_valid_rgb(diffuse_light->color))
+		return (FAIL);
 	return (SUCCESS);
 }
