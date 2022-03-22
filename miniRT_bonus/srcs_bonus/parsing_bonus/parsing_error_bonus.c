@@ -2,7 +2,7 @@
 
 int	parsing_error(int errnum, char *str)
 {
-	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd("Error\n", 2);
 	if (errnum == EXTENSION_ERROR)
 		return (extension_error(str));
 	if (errnum == ARG_NUMBER_ERROR)
@@ -45,7 +45,7 @@ int	error(int errnum, char *str)
 {
 	int	ret;
 
-	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd("Error\n", 2);
 	if (errnum == CLOSE_ERROR)
 		return (close_error(str));
 	if (errnum == READ_ERROR)

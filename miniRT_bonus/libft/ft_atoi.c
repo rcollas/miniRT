@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:46:33 by rcollas           #+#    #+#             */
-/*   Updated: 2022/01/20 16:22:32 by                  ###   ########.fr       */
+/*   Updated: 2022/03/22 10:29:39 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@ static	int	ft_is_space(char c)
 		|| c == ' ')
 		return (1);
 	return (0);
+}
+
+static long	result_atoi(const char *nptr, unsigned long long int nb, int sign)
+{
+	if (*nptr != '\0')
+		return (-2147483649);
+	if (nb > 2147483647 && sign == 1)
+		return (-2147483649);
+	else if (nb > 2147483648 && sign == -1)
+		return (-2147483649);
+	return (nb * sign);
 }
 
 long	ft_atoi(const char *nptr)
@@ -46,11 +57,5 @@ long	ft_atoi(const char *nptr)
 		nb = nb * 10 + *nptr - 48;
 		nptr++;
 	}
-	if (*nptr != '\0')
-		return (-2147483649);
-	if (nb > 2147483647 && sign == 1)
-		return (-2147483649);
-	else if (nb > 2147483648 && sign == -1)
-		return (-2147483649);
-	return (nb * sign);
+	return (result_atoi(nptr, nb, sign));
 }
