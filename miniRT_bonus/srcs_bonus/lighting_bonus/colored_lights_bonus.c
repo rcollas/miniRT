@@ -30,8 +30,8 @@ void	compute_obj_color(t_obj *obj, t_diffuse_light *light, int light_nb)
 		new_color = add_vec3(new_color, light_color);
 		*obj[i].color = div_vec3_and_const(new_color, (double)2);
 		*obj[i].color = div_vec3_and_const(*obj[i].color, (double)255);
-		printf("color R = %f\n", obj[i].color->coord[R]);
-		printf("color G = %f\n", obj[i].color->coord[G]);
-		printf("color B = %f\n", obj[i].color->coord[B]);
+		// printf("color R = %f\n", obj[i].color->coord[R]);
+		// printf("color G = %f\n", obj[i].color->coord[G]);
+		// printf("color B = %f\n", obj[i].color->coord[B]);
 	}
 }

@@ -51,6 +51,7 @@ t_vec2	transform_point_in_obj_space(
 {
 	t_vec2	new_point;
 
+	normalize_vec3(&obj_dir);
 	if (obj_dir.coord[X] == 1 || obj_dir.coord[X] == -1)
 	{
 		new_point.coord[X] = hit_point.coord[Z] - obj_origin.coord[Z];

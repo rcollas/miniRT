@@ -48,6 +48,7 @@ void	fill_cylinder(t_parsing *var, char *line)
 	}
 	else if (i != 6)
 		exit_error_parsing(error(CYLINDER_FORMAT_ERROR, line), NULL, var);
+	get_cylinder_info(var, line, i);
 }
 
 void	fill_obj(int type, t_parsing *var, char *line)
