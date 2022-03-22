@@ -8,7 +8,7 @@ t_vec3	get_diffuse_light(t_scene *scene, t_ray hit, t_vec3	light_dir)
 
 	normalize_vec3(&hit.dir);
 	cos_theta = fmax(0.0, dot_vec3(hit.dir, light_dir));
-	intensity = scene->diffuse_light->intensity * cos_theta;
+	intensity = scene->diffuse_light->intensity * cos_theta * LIGHT_INTENSITY;
 	intensity *= hit.shadowing;
 	clamp_intensity(&intensity);
 	diffuse_light = mul_vec3_and_const(*scene->diffuse_light->color, intensity);
