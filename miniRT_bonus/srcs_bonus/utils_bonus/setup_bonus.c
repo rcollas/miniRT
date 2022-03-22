@@ -70,7 +70,7 @@ void	init_data(t_parsing *parsing_var, t_data *data)
 	data->multithreading = NO_MULTITHREADING;
 	if (BONUS)
 	{
-		//data->lighting = PHONG_LIGHTING;
+		data->lighting = PHONG_LIGHTING;
 		data->path_tracing = NO_PATH_TRACING;
 		data->multithreading = MULTITHREADING;
 	}
