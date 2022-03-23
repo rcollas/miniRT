@@ -79,8 +79,6 @@ void	run_raytracing(
 		thread->pixel_y++;
 	}
 	display_end_loading(data, thread);
-	if (data->multithreading && THREADS > 0)
-		pthread_exit(NULL);
 }
 
 void	run_minirt(t_data *data)
