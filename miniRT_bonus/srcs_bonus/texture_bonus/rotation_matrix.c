@@ -143,29 +143,29 @@ t_matrix3	create_rotation_matrix(t_vec3 obj_dir)
 		angle[X] = atan2(vector[0].coord[Y], vector[1].coord[Y]);
 		angle[Z] = 0;
 	}
-	if (vector[2].coord[X] < 1)
-	{
-		if (vector[2].coord[X] > -1)
-		{
-			angle[Y] = asin(vector[2].coord[X]);
-			angle[X] = atan2(-vector[2].coord[Y], vector[2].coord[Z]);
-			angle[Z] = atan2(-vector[1].coord[X], vector[0].coord[X]);
-		}
-		else
-		{
-			angle[Y] = -M_PI / 2;
-			angle[X] = -atan2(vector[0].coord[Y], vector[1].coord[Y]);
-			angle[Z] = 0;
-		}
-	}
-	else
-	{
-		angle[Y] = M_PI / 2;
-		angle[X] = atan2(vector[0].coord[Y], vector[1].coord[Y]);
-		angle[Z] = 0;
-	}
+	// if (vector[2].coord[X] < 1)
+	// {
+	// 	if (vector[2].coord[X] > -1)
+	// 	{
+	// 		angle[Y] = asin(vector[2].coord[X]);
+	// 		angle[X] = atan2(-vector[2].coord[Y], vector[2].coord[Z]);
+	// 		angle[Z] = atan2(-vector[1].coord[X], vector[0].coord[X]);
+	// 	}
+	// 	else
+	// 	{
+	// 		angle[Y] = -M_PI / 2;
+	// 		angle[X] = -atan2(vector[0].coord[Y], vector[1].coord[Y]);
+	// 		angle[Z] = 0;
+	// 	}
+	// }
+	// else
+	// {
+	// 	angle[Y] = M_PI / 2;
+	// 	angle[X] = atan2(vector[0].coord[Y], vector[1].coord[Y]);
+	// 	angle[Z] = 0;
+	// }
 
-	printf("%f  %f  %f\n", angle[0], angle[1], angle[2]);
+	// printf("%f  %f  %f\n", angle[0], angle[1], angle[2]);
 
 	rotation_matrix = mul_matrix3(rotate_x(angle[X]), rotate_y(angle[Y]));
 	rotation_matrix.row_1 = get_normalized_vec3(rotation_matrix.row_1);
@@ -176,7 +176,7 @@ t_matrix3	create_rotation_matrix(t_vec3 obj_dir)
 	rotation_matrix.row_2 = get_normalized_vec3(rotation_matrix.row_2);
 	rotation_matrix.row_3 = get_normalized_vec3(rotation_matrix.row_3);
 
-	// print_matrix3(rotation_matrix);
+	print_matrix3(rotation_matrix);
 	// rotation_matrix = inverse_matrix3(rotation_matrix);
 
 	t_vec3	test;
