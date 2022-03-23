@@ -215,6 +215,7 @@ void			get_square_uv(t_ray hit, t_vec2 *uv);
 void			apply_bump_map(t_ray *hit);
 t_vec2			transform_point_in_obj_space(t_vec3 hit_point,
 					t_vec3 obj_origin, double max_dimension, t_vec3 obj_dir);
+t_matrix3		create_rotation_matrix(t_vec3 obj_dir);
 
 /***************************** OPTIMIZATION UTILS *****************************/
 

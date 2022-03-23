@@ -79,6 +79,8 @@ void	run_raytracing(
 		thread->pixel_y++;
 	}
 	display_end_loading(data, thread);
+	if (data->multithreading && THREADS > 0)
+		pthread_exit(NULL);
 }
 
 void	run_minirt(t_data *data)
@@ -90,8 +92,8 @@ void	run_minirt(t_data *data)
 	init_image(mlx, data);
 	data->cam_to_world_matrix = built_cam_to_world_matrix(data->scene->camera);
 	data->start_time = get_time();
-	compute_obj_color(data->obj, data->scene->diffuse_light,
-		data->scene->light_nb);
+	// compute_obj_color(data->obj, data->scene->diffuse_light,
+	// 	data->scene->light_nb);
 	main_thread.pixel_y = 0;
 	main_thread.max_height = HEIGHT;
 	if (data->multithreading && THREADS > 0)

@@ -15,12 +15,33 @@ void	get_sphere_uv(t_ray hit, t_vec2 *uv)
 	uv->coord[V] = 1 - phi / M_PI;
 }
 
+void	get_cylinder_uv(t_ray hit, t_vec2 *uv)
+{
+	double		theta;
+	double		raw_u;
+	t_matrix3	rotation_matrix;
+
+	normalize_vec3(&hit.dir);
+	rotation_matrix = create_rotation_matrix(*hit.obj->dir);
+	hit.dir = mul_dir_and_matrix3(hit.dir, rotation_matrix);
+	hit.origin = mul_dir_and_matrix3(hit.origin, rotation_matrix);
+	normalize_vec3(&hit.dir);
+	// printf("%f  %f  %f\n", hit.dir.coord[X], hit.dir.coord[Y], hit.dir.coord[Z]);
+	theta = atan2(hit.dir.coord[X], hit.dir.coord[Z]);
+	raw_u = theta / (2 * M_PI);
+	uv->coord[U] = 1 - (raw_u + 0.5);
+	uv->coord[V] = hit.origin.coord[Y];
+	// printf("u = %f   v = %f\n", uv->coord[U], uv->coord[V]);
+}
+
 // void	get_cylinder_uv(t_ray hit, t_vec2 *uv)
 // {
 // 	double	theta;
 // 	double	raw_u;
 // 	t_vec3	obj_dir;
+// 	double	diagonal;
 
+// 	diagonal = sqrt(4 * obj.radius * obj.radius + obj.height * obj.height) / 2;
 // 	copy_vec3(&obj_dir, *hit.obj->dir);
 // 	normalize_vec3(&obj_dir);
 // 	if (obj_dir.coord[X] == 1 || obj_dir.coord[X] == -1)
@@ -38,46 +59,6 @@ void	get_sphere_uv(t_ray hit, t_vec2 *uv)
 // 	else
 // 		uv->coord[V] = hit.origin.coord[Y];
 // }
-
-void	from_world_to_tangent_space(t_ray *hit, t_vec3 new_hit_dir)
-{
-	t_vec3		tangent;
-	t_vec3		bitangent;
-	t_matrix4	tbn_matrix;
-
-	normalize_vec3(&hit->dir);
-	tangent = cross_vec3(hit->dir, create_vec3(0.0, 1.0, 0.0));
-	if (!get_norm_vec3(tangent))
-		tangent = cross_vec3(hit->dir, create_vec3(0.0, 0.0, 1.0));
-	normalize_vec3(&tangent);
-	bitangent = cross_vec3(tangent, hit->dir);
-	normalize_vec3(&bitangent);
-	tbn_matrix.row_1 = create_vec4(
-			tangent.coord[X], bitangent.coord[X], hit->dir.coord[X], 0);
-	tbn_matrix.row_2 = create_vec4(
-			tangent.coord[Y], bitangent.coord[Y], hit->dir.coord[Y], 0);
-	tbn_matrix.row_3 = create_vec4(
-			tangent.coord[Z], bitangent.coord[Z], hit->dir.coord[Z], 0);
-	tbn_matrix.row_4 = create_vec4(0, 0, 0, 1);
-	tbn_matrix.row_1 = get_normalized_vec4(tbn_matrix.row_1);
-	tbn_matrix.row_2 = get_normalized_vec4(tbn_matrix.row_2);
-	tbn_matrix.row_3 = get_normalized_vec4(tbn_matrix.row_3);
-	hit->dir = mul_vec3_and_matrix4(new_hit_dir, tbn_matrix);
-}
-
-void	get_cylinder_uv(t_ray hit, t_vec2 *uv)
-{
-	double	theta;
-	double	raw_u;
-
-	from_world_to_tangent_space(&hit, hit.dir);
-	normalize_vec3(&hit.dir);
-	theta = atan2(hit.dir.coord[X], hit.dir.coord[Z]);
-	raw_u = theta / (2 * M_PI);
-	uv->coord[U] = 1 - (raw_u + 0.5);
-	uv->coord[V] = hit.origin.coord[Y];
-	// printf("u = %f   v = %f\n", uv->coord[U], uv->coord[V]);
-}
 
 void	get_plane_uv(t_ray hit, t_vec2 *uv)
 {
