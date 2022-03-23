@@ -1,5 +1,15 @@
 #include "miniRT_bonus.h"
 
+void	print_matrix3(t_matrix3 matrix)
+{
+	printf("row_1[x] = %f    row_1[y] = %f    row_1[z] = %f\n",
+		matrix.row_1.coord[X], matrix.row_1.coord[Y], matrix.row_1.coord[Z]);
+	printf("row_2[x] = %f    row_2[y] = %f    row_2[z] = %f\n",
+		matrix.row_2.coord[X], matrix.row_2.coord[Y], matrix.row_2.coord[Z]);
+	printf("row_3[x] = %f    row_3[y] = %f    row_3[z] = %f\n\n\n",
+		matrix.row_3.coord[X], matrix.row_3.coord[Y], matrix.row_3.coord[Z]);
+}
+
 t_matrix3	mul_matrix3(t_matrix3 matrix_1, t_matrix3 matrix_2)
 {
 	t_matrix3	new_matrix;
@@ -133,27 +143,30 @@ t_matrix3	create_rotation_matrix(t_vec3 obj_dir)
 		angle[X] = atan2(vector[0].coord[Y], vector[1].coord[Y]);
 		angle[Z] = 0;
 	}
-	// if (vector[2].coord[X] < 1)
-	// {
-	// 	if (vector[2].coord[X] > -1)
-	// 	{
-	// 		angle[Y] = asin(-vector[2].coord[X]);
-	// 		angle[Z] = atan2(vector[1].coord[X], vector[0].coord[X]);
-	// 		angle[X] = atan2(vector[2].coord[Y], vector[2].coord[Z]);
-	// 	}
-	// 	else
-	// 	{
-	// 		angle[Y] = M_PI / 2;
-	// 		angle[Z] = -atan2(-vector[1].coord[Z], vector[1].coord[Y]);
-	// 		angle[X] = 0;
-	// 	}
-	// }
-	// else
-	// {
-	// 	angle[Y] = -M_PI / 2;
-	// 	angle[Z] = atan2(-vector[1].coord[Z], vector[1].coord[Y]);
-	// 	angle[X] = 0;
-	// }
+	if (vector[2].coord[X] < 1)
+	{
+		if (vector[2].coord[X] > -1)
+		{
+			angle[Y] = asin(vector[2].coord[X]);
+			angle[X] = atan2(-vector[2].coord[Y], vector[2].coord[Z]);
+			angle[Z] = atan2(-vector[1].coord[X], vector[0].coord[X]);
+		}
+		else
+		{
+			angle[Y] = -M_PI / 2;
+			angle[X] = -atan2(vector[0].coord[Y], vector[1].coord[Y]);
+			angle[Z] = 0;
+		}
+	}
+	else
+	{
+		angle[Y] = M_PI / 2;
+		angle[X] = atan2(vector[0].coord[Y], vector[1].coord[Y]);
+		angle[Z] = 0;
+	}
+
+	printf("%f  %f  %f\n", angle[0], angle[1], angle[2]);
+
 	rotation_matrix = mul_matrix3(rotate_x(angle[X]), rotate_y(angle[Y]));
 	rotation_matrix.row_1 = get_normalized_vec3(rotation_matrix.row_1);
 	rotation_matrix.row_2 = get_normalized_vec3(rotation_matrix.row_2);
@@ -163,12 +176,13 @@ t_matrix3	create_rotation_matrix(t_vec3 obj_dir)
 	rotation_matrix.row_2 = get_normalized_vec3(rotation_matrix.row_2);
 	rotation_matrix.row_3 = get_normalized_vec3(rotation_matrix.row_3);
 
+	// print_matrix3(rotation_matrix);
 	// rotation_matrix = inverse_matrix3(rotation_matrix);
 
 	t_vec3	test;
 	test = mul_dir_and_matrix3(obj_dir, rotation_matrix);
 	normalize_vec3(&test);
-	printf("TEST : %f  %f  %f\n", test.coord[X], test.coord[Y], test.coord[Z]);
+	// printf("TEST : %f  %f  %f\n", test.coord[X], test.coord[Y], test.coord[Z]);
 
 	return (rotation_matrix);
 }

@@ -151,3 +151,27 @@ void	get_square_uv(t_ray hit, t_vec2 *uv)
 	if (hit.obj->dir->coord[Y] == 1)
 		uv->coord[V] = 1 - uv->coord[V];
 }
+
+// ROTATION ZYX :
+
+	// if (vector[2].coord[X] < 1)
+	// {
+	// 	if (vector[2].coord[X] > -1)
+	// 	{
+	// 		angle[Y] = asin(-vector[2].coord[X]);
+	// 		angle[Z] = atan2(vector[1].coord[X], vector[0].coord[X]);
+	// 		angle[X] = atan2(vector[2].coord[Y], vector[2].coord[Z]);
+	// 	}
+	// 	else
+	// 	{
+	// 		angle[Y] = M_PI / 2;
+	// 		angle[Z] = -atan2(-vector[1].coord[Z], vector[1].coord[Y]);
+	// 		angle[X] = 0;
+	// 	}
+	// }
+	// else
+	// {
+	// 	angle[Y] = -M_PI / 2;
+	// 	angle[Z] = atan2(-vector[1].coord[Z], vector[1].coord[Y]);
+	// 	angle[X] = 0;
+	// }
