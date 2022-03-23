@@ -192,7 +192,7 @@ unsigned long	create_trgb(int transparency, int red, int green, int blue);
 void			check_limit_color(t_vec3 *color);
 void			clamp_intensity(double *intensity);
 void			clamp_color(int *color);
-void			compute_obj_color(t_obj *obj, t_diffuse_light *light,
+t_vec3			compute_obj_color(t_obj *obj, t_diffuse_light *light,
 					int light_nb);
 
 /********************************** TEXTURE ***********************************/

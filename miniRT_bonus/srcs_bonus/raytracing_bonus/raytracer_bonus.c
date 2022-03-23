@@ -22,6 +22,21 @@ _Bool	check_hit_object(
 	return (FALSE);
 }
 
+t_vec3	compute_material(t_data *data, t_ray *hit, t_ray *ray)
+{
+	t_vec3	rgb;
+
+	if (BONUS)
+		handle_texture(hit);
+	rgb = mul_vec3(get_light(data, *hit, *ray),
+			compute_obj_color(hit->obj,
+				data->scene->diffuse_light,
+				data->scene->light_nb));
+	rgb = add_vec3(rgb,
+			mul_vec3(get_ambient_light(data->scene), hit->color));
+	return (rgb);
+}
+
 void	detect_intersection(
 	t_ray ray, unsigned long *color, t_data *data, t_thread *thread)
 {
@@ -43,11 +58,7 @@ void	detect_intersection(
 		i++;
 	}
 	if (hit_obj)
-	{
-		if (BONUS)
-			handle_texture(&hit);
-		rgb = mul_vec3(get_light(data, hit, ray), hit.color);
-	}
+		rgb =compute_material(data, &hit, &ray);
 	*color = create_rgb_struct(&rgb);
 }
 

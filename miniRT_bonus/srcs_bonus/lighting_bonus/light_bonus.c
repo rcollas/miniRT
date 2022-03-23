@@ -46,6 +46,6 @@ t_vec3	get_light(t_data *data, t_ray hit, t_ray ray)
 		else
 			total_light = compute_classic_light(data->scene, hit, data);
 	}
-	total_light = add_vec3(total_light, get_ambient_light(data->scene));
+	//total_light = add_vec3(total_light, get_ambient_light(data->scene));
 	return (total_light);
 }
