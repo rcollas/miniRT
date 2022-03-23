@@ -58,7 +58,7 @@ void	detect_intersection(
 		i++;
 	}
 	if (hit_obj)
-		rgb =compute_material(data, &hit, &ray);
+		rgb = compute_material(data, &hit, &ray);
 	*color = create_rgb_struct(&rgb);
 }
 

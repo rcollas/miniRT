@@ -1,12 +1,5 @@
 #include "miniRT_bonus.h"
 
-void	print_color(t_vec3 color, char *str)
-{
-	printf("%s R = %f\n", str, color.coord[R]);
-	printf("%s G = %f\n", str, color.coord[G]);
-	printf("%s B = %f\n", str, color.coord[B]);
-}
-
 t_vec3	get_diffuse_light(t_scene *scene, t_ray hit, t_vec3	light_dir, int i)
 {
 	double	cos_theta;
@@ -19,8 +12,6 @@ t_vec3	get_diffuse_light(t_scene *scene, t_ray hit, t_vec3	light_dir, int i)
 	intensity = scene->diffuse_light->intensity * cos_theta;
 	intensity *= hit.shadowing;
 	clamp_intensity(&intensity);
-	//diffuse_light = mul_vec3_and_const(*scene->diffuse_light[i].color,
-				//						intensity);
 	diffuse_light = mul_vec3_and_const(create_vec3(1, 1, 1), intensity);
 	return (diffuse_light);
 }
@@ -48,8 +39,6 @@ t_vec3	get_specular_light(
 			* pow(fmax(0.0, cos_theta), SPECULAR_COEFF);
 		intensity *= hit.shadowing;
 		clamp_intensity(&intensity);
-		//specular_light = mul_vec3_and_const(*scene->diffuse_light[i].color,
-		//									 intensity);
 		specular_light = mul_vec3_and_const(create_vec3(1, 1, 1), intensity);
 	}
 	return (specular_light);

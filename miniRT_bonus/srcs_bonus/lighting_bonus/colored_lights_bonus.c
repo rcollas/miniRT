@@ -10,7 +10,6 @@ t_vec3	compute_light_color(t_diffuse_light *light, int light_nb)
 	while (++i < light_nb)
 	{
 		light_color = add_vec3(light_color, *light[i].color);
-		//*light[i].color = create_vec3(1, 1, 1);
 	}
 	check_limit_color(&light_color);
 	return (light_color);
