@@ -26,5 +26,8 @@ void	compute_obj_color(t_obj *obj, t_diffuse_light *light, int light_nb)
 	while (++i < obj->obj_nb)
 	{
 		*obj[i].color = mul_vec3(*obj[i].color, light_color);
+		if (obj[i].has_texture == CHECKER)
+			*obj[i].color_checker = mul_vec3(
+					*obj[i].color_checker, light_color);
 	}
 }
