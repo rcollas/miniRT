@@ -35,6 +35,7 @@ void	update_camera_ray(t_ray *cam_ray, t_data *data, t_thread *thread)
 	cam_ray->dir.coord[Z] = -1.0;
 	cam_ray->dir = mul_dir_and_matrix4(cam_ray->dir, data->cam_to_world_matrix);
 	copy_vec3(&cam_ray->origin, *data->scene->camera->origin);
+	// cam_ray->origin = mul_dir_and_matrix4(cam_ray->origin, data->cam_to_world_matrix);
 	cam_ray->dir = sub_vec3(cam_ray->dir, cam_ray->origin);
 	normalize_vec3(&cam_ray->dir);
 	cam_ray->dist = INFINITY;
