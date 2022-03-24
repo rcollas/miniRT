@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 18:44:49 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 18:44:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/24 20:03:46 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	get_disk_info(t_parsing *var, char *line, int i)
 		exit_error_parsing(error(DISK_FORMAT_ERROR, line), NULL, var);
 	obj->hit_object = &hit_disk;
 	obj->get_uv_coord = &get_disk_uv;
-	obj->shine_factor = 0.2;
+	obj->shine_factor = 0.3;
 }
 
 void	get_cone_info(t_parsing *var, char *line, int i)

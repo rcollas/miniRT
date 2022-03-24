@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 11:07:01 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 11:07:02 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/24 19:12:14 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,13 @@ void	run_minirt(t_data *data)
 
 	mlx = data->mlx;
 	init_image(mlx, data);
-	data->cam_to_world_matrix = built_cam_to_world_matrix(data->scene->camera);
 	data->pixel_y = -1;
-	run_raytracing(mlx, data);
+	if (get_norm_vec3(*data->scene->camera->dir) && data->scene->camera->fov)
+	{
+		data->cam_to_world_matrix = built_cam_to_world_matrix(
+				data->scene->camera);
+		run_raytracing(mlx, data);
+	}
 	display_cam_param(data->scene->camera);
 	mlx_put_image_to_window(mlx->ptr, mlx->window, mlx->image->img_ptr, 0, 0);
 }

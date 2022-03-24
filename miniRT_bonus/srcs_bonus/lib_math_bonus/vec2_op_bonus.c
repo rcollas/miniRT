@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 18:35:38 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 18:35:39 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/24 19:15:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,15 @@ double	get_norm_vec2(t_vec2 vector)
 
 void	normalize_vec2(t_vec2 *vector)
 {
+	double	norm_reciprocal;
 	double	norm;
 
+	norm_reciprocal = 0;
 	norm = get_norm_vec2(*vector);
-	vector->coord[X] /= norm;
-	vector->coord[V] /= norm;
+	if (norm > 0)
+		norm_reciprocal = 1 / norm;
+	vector->coord[X] *= norm_reciprocal;
+	vector->coord[V] *= norm_reciprocal;
 }
 
 t_vec2	create_vec2(double x, double y)

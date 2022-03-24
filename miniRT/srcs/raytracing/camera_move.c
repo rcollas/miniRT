@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 11:06:49 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 18:17:53 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/24 19:40:30 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	compute_cam_axis(t_camera *camera)
 
 	normalize_vec3(camera->dir);
 	compute_cam_dir(camera);
-	camera->forward = mul_vec3(*camera->dir, create_vec3(-1, -1, 1));
+	camera->forward = mul_vec3(*camera->dir, create_vec3(-1, -1, -1));
 	tmp = create_vec3(0, 1, 0);
 	camera->right = cross_vec3(tmp, camera->forward);
 	if (!get_norm_vec3(camera->right))
