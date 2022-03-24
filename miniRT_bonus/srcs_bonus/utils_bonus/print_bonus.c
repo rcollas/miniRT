@@ -50,3 +50,10 @@ void	print_matrix3(t_matrix3 matrix)
 	printf("row_3[x] = %f    row_3[y] = %f    row_3[z] = %f\n\n\n",
 		matrix.row_3.coord[X], matrix.row_3.coord[Y], matrix.row_3.coord[Z]);
 }
+
+void print_color(t_vec3 color, char *str)
+{
+	printf("%s R = %f\n", str, color.coord[R]);
+	printf("%s G = %f\n", str, color.coord[G]);
+	printf("%s B = %f\n", str, color.coord[B]);
+}

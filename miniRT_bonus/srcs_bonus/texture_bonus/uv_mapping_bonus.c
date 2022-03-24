@@ -44,12 +44,20 @@ void	get_plane_uv(t_ray hit, t_vec2 *uv)
 
 void	get_square_uv(t_ray hit, t_vec2 *uv)
 {
-	t_matrix3	rotation_matrix;
+	t_vec2	point;
+	double	diagonal;
 
-	rotation_matrix = create_rotation_matrix(*hit.obj->dir);
-	hit.origin = mul_dir_and_matrix3(hit.origin, rotation_matrix);
-	uv->coord[U] = hit.origin.coord[X] * 0.5 + 0.5;
-	uv->coord[V] = hit.origin.coord[Z] * 0.5 + 0.5;
+	diagonal = sqrt(hit.obj->height * hit.obj->height
+			+ hit.obj->height + hit.obj->height);
+	point = transform_point_in_obj_space(
+			hit.origin, *hit.obj->origin, diagonal * 0.5, *hit.obj->dir);
+	uv->coord[U] = point.coord[X] * 0.5 + 0.5;
+	uv->coord[V] = point.coord[Y] * 0.5 + 0.5;
+	if (hit.obj->dir->coord[Z] == 1 || hit.obj->dir->coord[X] == -1
+		|| hit.obj->dir->coord[Y] == 1 || hit.obj->dir->coord[Y] == -1)
+		uv->coord[U] = 1 - uv->coord[U];
+	if (hit.obj->dir->coord[Y] == 1)
+		uv->coord[V] = 1 - uv->coord[V];
 }
 
 void	get_disk_uv(t_ray hit, t_vec2 *uv)

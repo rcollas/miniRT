@@ -24,8 +24,8 @@ void	get_checker_size(t_ray hit, double *checker_size)
 	}
 	if (hit.obj->type == SQUARE)
 	{
-		checker_size[U] = 2;
-		checker_size[V] = 2;
+		checker_size[U] = 15;
+		checker_size[V] = 15;
 	}
 }
 

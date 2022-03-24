@@ -1,7 +1,6 @@
 A 	0.2 255,255,255
-C  -36,0,-48  -1,0,0 80
+C  -36,0,-48  0,0,-0.6  80
 L 	-20,30,-30  0.8
-#sq   0,0,-30  0,0,-1 20 0,0,255 255,255,255
 sq   0,-10,-50  0,1,0 50 "image/grass.xpm" "image/grass_normal_map.xpm"
 sq   25,15,-50  1,0,0 50 "image/wall.xpm" "image/wall_normal_map.xpm"
 sq   0,15,-75  0,0,1 50 "image/wall.xpm" "image/wall_normal_map.xpm"

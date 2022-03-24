@@ -10,8 +10,12 @@ void	check_limit_angle(double *angle)
 
 void	init_euler_angles(t_camera *camera)
 {
+	normalize_vec3(&(*camera->dir));
 	camera->pitch_angle = asin(camera->dir->coord[Y]);
-	camera->yaw_angle = acos(camera->dir->coord[X] / cos(camera->pitch_angle));
+	camera->yaw_angle = asin(camera->dir->coord[Z] / cos(camera->pitch_angle));
+	if (!camera->yaw_angle)
+		camera->yaw_angle = acos(
+				camera->dir->coord[X] / cos(camera->pitch_angle));
 	camera->pitch_angle = convert_rad_to_deg(camera->pitch_angle);
 	camera->yaw_angle = convert_rad_to_deg(camera->yaw_angle);
 	check_limit_angle(&camera->pitch_angle);

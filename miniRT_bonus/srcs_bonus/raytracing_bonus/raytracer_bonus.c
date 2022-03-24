@@ -22,13 +22,6 @@ _Bool	check_hit_object(
 	return (FALSE);
 }
 
-void print_color(t_vec3 color, char *str)
-{
-	printf("%s R = %f\n", str, color.coord[R]);
-	printf("%s G = %f\n", str, color.coord[G]);
-	printf("%s B = %f\n", str, color.coord[B]);
-}
-
 t_vec3	compute_material(t_data *data, t_ray *hit, t_ray *ray)
 {
 	t_vec3	rgb;
@@ -37,8 +30,7 @@ t_vec3	compute_material(t_data *data, t_ray *hit, t_ray *ray)
 	if (BONUS)
 		handle_texture(hit);
 	rgb = mul_vec3(get_light(data, *hit, *ray),
-			compute_obj_color(hit->obj,
-				data->scene->diffuse_light,
+			compute_obj_color(hit, data->scene->diffuse_light,
 				data->scene->light_nb));
 	rgb = add_vec3(rgb,
 			mul_vec3(get_ambient_light(data->scene), hit->color));
