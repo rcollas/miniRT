@@ -17,10 +17,11 @@ void	compute_cam_axis(t_camera *camera)
 {
 	t_vec3	tmp;
 
-	// camera->forward = mul_vec3_and_const(*camera->dir, -1);
+	normalize_vec3(camera->dir);
+	camera->forward = mul_vec3(*camera->dir, create_vec3(-1, -1, 1));
+	// camera->forward = get_normalized_vec3(*camera->dir);
 	compute_cam_dir(camera);
 	// printf("%f  %f  %f\n", camera->dir->coord[X], camera->dir->coord[Y], camera->dir->coord[Z]);
-	camera->forward = get_normalized_vec3(*camera->dir);
 	tmp = create_vec3(0, 1, 0);
 	camera->right = cross_vec3(tmp, camera->forward);
 	if (!get_norm_vec3(camera->right))
