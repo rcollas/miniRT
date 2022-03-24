@@ -1,9 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit_error_bonus.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/24 18:41:58 by efrancon          #+#    #+#             */
+/*   Updated: 2022/03/24 18:42:34 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT_bonus.h"
 
-void	exit_error_parsing_end(int errnum,
-								char *error_msg,
-								t_parsing *parsing_var,
-								_Bool need_destroy_texture)
+void	exit_error_parsing_end(int errnum, char *error_msg,
+	t_parsing *parsing_var, _Bool need_destroy_texture)
 {
 	if (error_msg)
 	{

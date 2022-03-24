@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   phong_light_bonus.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/24 18:35:04 by efrancon          #+#    #+#             */
+/*   Updated: 2022/03/24 18:35:06 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT_bonus.h"
 
 t_vec3	get_diffuse_light(t_scene *scene, t_ray hit, t_vec3	light_dir, int i)
@@ -35,7 +47,7 @@ t_vec3	get_specular_light(
 	cos_theta = dot_vec3(reflected_ray, view_ray);
 	if (cos_theta > 0)
 	{
-		intensity = hit.obj->shine_factor
+		intensity = hit.obj->shine_factor * scene->diffuse_light->intensity
 			* pow(fmax(0.0, cos_theta), SPECULAR_COEFF);
 		intensity *= hit.shadowing;
 		clamp_intensity(&intensity);

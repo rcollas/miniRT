@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 10:52:33 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 10:52:35 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/24 18:13:44 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,7 @@ void	init_data(t_parsing *parsing_var, t_data *data)
 	data->scene = parsing_var->scene;
 	data->obj_nb = parsing_var->obj_nb;
 	data->mlx = parsing_var->mlx;
+	data->scene->camera->right = create_vec3(0, 0, 0);
+	data->scene->camera->up = create_vec3(0, 0, 0);
+	data->scene->camera->forward = create_vec3(0, 0, 0);
 }

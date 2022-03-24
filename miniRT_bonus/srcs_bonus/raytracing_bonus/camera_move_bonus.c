@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera_move_bonus.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/24 18:38:53 by efrancon          #+#    #+#             */
+/*   Updated: 2022/03/24 18:38:54 by efrancon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT_bonus.h"
 
 void	compute_cam_dir(t_camera *camera)
@@ -18,10 +30,8 @@ void	compute_cam_axis(t_camera *camera)
 	t_vec3	tmp;
 
 	normalize_vec3(camera->dir);
-	camera->forward = mul_vec3(*camera->dir, create_vec3(-1, -1, 1));
-	// camera->forward = get_normalized_vec3(*camera->dir);
 	compute_cam_dir(camera);
-	// printf("%f  %f  %f\n", camera->dir->coord[X], camera->dir->coord[Y], camera->dir->coord[Z]);
+	camera->forward = mul_vec3(*camera->dir, create_vec3(-1, -1, 1));
 	tmp = create_vec3(0, 1, 0);
 	camera->right = cross_vec3(tmp, camera->forward);
 	if (!get_norm_vec3(camera->right))
@@ -33,20 +43,6 @@ void	compute_cam_axis(t_camera *camera)
 	normalize_vec3(&camera->right);
 	normalize_vec3(&camera->up);
 }
-
-// void	compute_cam_axis(t_camera *camera)
-// {
-// 	t_vec3	tmp;
-
-// 	compute_cam_dir(camera);
-// 	camera->forward = get_normalized_vec3(*camera->dir);
-// 	if (cam_is_vertical_looking(camera->forward))
-// 		tmp = create_vec3(1, 0, 0);
-// 	else
-// 		tmp = create_vec3(0, 1, 0);
-// 	camera->right = cross_vec3(get_normalized_vec3(tmp), camera->forward);
-// 	camera->up = cross_vec3(camera->forward, camera->right);
-// }
 
 t_matrix4	built_cam_to_world_matrix(t_camera *camera)
 {
