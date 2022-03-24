@@ -26,78 +26,30 @@ void	get_cylinder_uv(t_ray hit, t_vec2 *uv)
 	hit.dir = mul_dir_and_matrix3(hit.dir, rotation_matrix);
 	hit.origin = mul_dir_and_matrix3(hit.origin, rotation_matrix);
 	normalize_vec3(&hit.dir);
-	// printf("%f  %f  %f\n", hit.dir.coord[X], hit.dir.coord[Y], hit.dir.coord[Z]);
 	theta = atan2(hit.dir.coord[X], hit.dir.coord[Z]);
 	raw_u = theta / (2 * M_PI);
 	uv->coord[U] = 1 - (raw_u + 0.5);
 	uv->coord[V] = hit.origin.coord[Y];
-	// printf("u = %f   v = %f\n", uv->coord[U], uv->coord[V]);
 }
-
-// void	get_cylinder_uv(t_ray hit, t_vec2 *uv)
-// {
-// 	double	theta;
-// 	double	raw_u;
-// 	t_vec3	obj_dir;
-// 	double	diagonal;
-
-// 	diagonal = sqrt(4 * obj.radius * obj.radius + obj.height * obj.height) / 2;
-// 	copy_vec3(&obj_dir, *hit.obj->dir);
-// 	normalize_vec3(&obj_dir);
-// 	if (obj_dir.coord[X] == 1 || obj_dir.coord[X] == -1)
-// 		theta = atan2(hit.dir.coord[Y], hit.dir.coord[Z]);
-// 	else if (obj_dir.coord[Z] == 1 || obj_dir.coord[Z] == -1)
-// 		theta = atan2(hit.dir.coord[X], hit.dir.coord[Y]);
-// 	else
-// 		theta = atan2(hit.dir.coord[X], hit.dir.coord[Z]);
-// 	raw_u = theta / (2 * M_PI);
-// 	uv->coord[U] = 1 - (raw_u + 0.5);
-// 	if (obj_dir.coord[X] == 1 || obj_dir.coord[X] == -1)
-// 		uv->coord[V] = hit.origin.coord[X];
-// 	else if (obj_dir.coord[Z] == 1 || obj_dir.coord[Z] == -1)
-// 		uv->coord[V] = hit.origin.coord[Z];
-// 	else
-// 		uv->coord[V] = hit.origin.coord[Y];
-// }
 
 void	get_plane_uv(t_ray hit, t_vec2 *uv)
 {
-	t_vec3	obj_dir;
+	t_matrix3	rotation_matrix;
 
-	copy_vec3(&obj_dir, *hit.obj->dir);
-	if (obj_dir.coord[X] == 1 || obj_dir.coord[X] == -1)
-	{
-		uv->coord[U] = hit.origin.coord[Y];
-		uv->coord[V] = hit.origin.coord[Z];
-	}
-	else if (obj_dir.coord[Z] == 1 || obj_dir.coord[Z] == -1)
-	{
-		uv->coord[U] = hit.origin.coord[X];
-		uv->coord[V] = hit.origin.coord[Y];
-	}
-	else
-	{
-		uv->coord[U] = hit.origin.coord[X];
-		uv->coord[V] = hit.origin.coord[Z];
-	}
+	rotation_matrix = create_rotation_matrix(*hit.obj->dir);
+	hit.origin = mul_dir_and_matrix3(hit.origin, rotation_matrix);
+	uv->coord[U] = hit.origin.coord[X];
+	uv->coord[V] = hit.origin.coord[Z];
 }
 
 void	get_square_uv(t_ray hit, t_vec2 *uv)
 {
-	t_vec2	point;
-	double	diagonal;
+	t_matrix3	rotation_matrix;
 
-	diagonal = sqrt(hit.obj->height * hit.obj->height
-			+ hit.obj->height + hit.obj->height);
-	point = transform_point_in_obj_space(
-			hit.origin, *hit.obj->origin, diagonal * 0.5, *hit.obj->dir);
-	uv->coord[U] = point.coord[X] * 0.5 + 0.5;
-	uv->coord[V] = point.coord[Y] * 0.5 + 0.5;
-	if (hit.obj->dir->coord[Z] == 1 || hit.obj->dir->coord[X] == -1
-		|| hit.obj->dir->coord[Y] == 1 || hit.obj->dir->coord[Y] == -1)
-		uv->coord[U] = 1 - uv->coord[U];
-	if (hit.obj->dir->coord[Y] == 1)
-		uv->coord[V] = 1 - uv->coord[V];
+	rotation_matrix = create_rotation_matrix(*hit.obj->dir);
+	hit.origin = mul_dir_and_matrix3(hit.origin, rotation_matrix);
+	uv->coord[U] = hit.origin.coord[X] * 0.5 + 0.5;
+	uv->coord[V] = hit.origin.coord[Z] * 0.5 + 0.5;
 }
 
 void	get_disk_uv(t_ray hit, t_vec2 *uv)
