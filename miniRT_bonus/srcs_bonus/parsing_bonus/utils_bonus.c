@@ -2,10 +2,10 @@
 
 int	ft_open(char *file, int *fd)
 {
-	*fd = open(file, __O_DIRECTORY);
+	*fd = open(file, O_DIRECTORY);
 	if (*fd >= 0)
 		return (parsing_error(IS_DIR_ERROR, file));
-	*fd = open(file, O_RDONLY | __O_NOFOLLOW);
+	*fd = open(file, O_RDONLY | O_NOFOLLOW);
 	if (*fd < 0)
 		return (parsing_error(FILE_ERROR, file));
 	return (SUCCESS);

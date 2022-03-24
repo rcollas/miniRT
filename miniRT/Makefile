@@ -84,9 +84,11 @@ SRC_DIR		= srcs
 MLX_DIR		= mlx
 
 ifeq ($(UNAME), Darwin)
+	MLX_DIR		= mlx_mac
 	MLX_INC		= mlx_osx
-	MLX_FLAG		= $(MLX_DIR)/libmlx_osx.a -framework OpenGL -framework Appkit
+	MLX_FLAG	= $(MLX_DIR)/libmlx.a -framework OpenGL -framework Appkit
 else
+	MLX_DIR		= mlx
 	MLX_INC		= mlx
 	MLX_FLAG	= $(MLX_DIR)/libmlx.a -lXext -lX11 -lm
 endif
