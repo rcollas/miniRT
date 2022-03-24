@@ -18,6 +18,7 @@ void	display_cam_param(t_camera *camera, t_data *data);
 void	display_loading(t_data *data, t_thread *thread, int ratio);
 void	display_end_loading(t_data *data, t_thread *thread);
 void	print_list(t_obj *obj);
-void	print_matrix(t_matrix4 matrix);
+void	print_matrix4(t_matrix4 matrix);
+void	print_matrix3(t_matrix3 matrix);
 
 #endif

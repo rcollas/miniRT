@@ -68,6 +68,7 @@ TEXTURE_BONUS = \
 			texture_bonus/texture_bonus.c \
 			texture_bonus/bump_map_bonus.c \
 			texture_bonus/check_texture.c \
+			texture_bonus/rotation_matrix.c \
 
 OBJECTS_BONUS = \
 			objects_bonus/sphere_bonus.c \
@@ -109,12 +110,12 @@ OBJS_DIR	= objs_bonus
 
 SRC_DIR_BONUS	= srcs_bonus
 
-MLX_DIR		= mlx
-
 ifeq ($(UNAME), Darwin)
+	MLX_DIR		= mlx_mac
 	MLX_INC		= mlx_osx
-	MLX_FLAG		= $(MLX_DIR)/libmlx_osx.a -framework OpenGL -framework Appkit
+	MLX_FLAG	= $(MLX_DIR)/libmlx.a -framework OpenGL -framework Appkit
 else
+	MLX_DIR		= mlx
 	MLX_INC		= mlx
 	MLX_FLAG	= $(MLX_DIR)/libmlx.a -lXext -lX11 -lm
 endif

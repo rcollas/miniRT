@@ -33,8 +33,10 @@ typedef struct s_matrix4
 
 /******************************* VEC2 OP *************************************/
 
+t_vec2			create_vec2(double x, double y);
 double			get_norm_vec2(t_vec2 vector);
 void			normalize_vec2(t_vec2 *vector);
+double			dot_vec2(t_vec2 vector_1, t_vec2 vector_2);
 
 /****************************** VEC3 INIT ************************************/
 
@@ -84,6 +86,7 @@ t_vec4			get_normalized_vec4(t_vec4 vector);
 t_vec3			mul_vec3_and_matrix4(t_vec3 vector, t_matrix4 matrix);
 t_vec3			mul_dir_and_matrix4(t_vec3 vector, t_matrix4 matrix);
 t_vec3			mul_dir_and_matrix3(t_vec3 vector, t_matrix3 matrix);
+t_matrix3		mul_matrix3(t_matrix3 matrix_1, t_matrix3 matrix_2);
 
 /********************************** TRIGO ************************************/
 

@@ -18,8 +18,12 @@ double	get_norm_vec3(t_vec3 vector)
 void	normalize_vec3(t_vec3 *vector)
 {
 	double	norm_reciprocal;
+	double	norm;
 
-	norm_reciprocal = 1 / get_norm_vec3(*vector);
+	norm_reciprocal = 0;
+	norm = get_norm_vec3(*vector);
+	if (norm > 0)
+		norm_reciprocal = 1 / norm;
 	vector->coord[X] *= norm_reciprocal;
 	vector->coord[Y] *= norm_reciprocal;
 	vector->coord[Z] *= norm_reciprocal;
