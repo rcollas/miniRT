@@ -56,7 +56,7 @@ void	update_camera_ray(t_ray *cam_ray, t_data *data)
 	cam_ray->dir.coord[X] = (2.0 * ((data->pixel_x + 0.5)
 				/ (double)WIDTH) - 1.0) * ratio * scale;
 	cam_ray->dir.coord[Y] = (1 - 2 * ((data->pixel_y + 0.5)
-				/ (double)HEIGHT)) * scale;
+									  / (double)HEIGHT)) * scale;
 	cam_ray->dir.coord[Z] = -1.0;
 	cam_ray->dir = mul_dir_and_matrix4(cam_ray->dir, data->cam_to_world_matrix);
 	copy_vec3(&cam_ray->origin, *data->scene->camera->origin);
