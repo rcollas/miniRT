@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_file_bonus.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/24 18:45:04 by efrancon          #+#    #+#             */
+/*   Updated: 2022/03/25 11:27:56 by                  ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT_bonus.h"
 
 _Bool	file_is_complete(t_parsing *var, char *file)
@@ -38,15 +50,15 @@ int	load_file(char **argv, int argc, int *fd)
 		parsing_error(ARG_NUMBER_ERROR, NULL);
 		return (FAIL);
 	}
+	if (is_valid_extension(argv[1]) == FALSE)
+	{
+		parsing_error(EXTENSION_ERROR, argv[1]);
+		return (FAIL);
+	}
 	if (ft_open(argv[1], fd) != SUCCESS)
 	{
 		safe_close(*fd);
 		return (FAIL);
-	}
-	if (is_valid_extension(argv[1]) == FALSE)
-	{
-		parsing_error(EXTENSION_ERROR, argv[1]);
-		safe_close(*fd);
 	}
 	return (SUCCESS);
 }

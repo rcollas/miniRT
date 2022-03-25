@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/24 18:45:25 by efrancon          #+#    #+#             */
+/*   Updated: 2022/03/25 11:27:56 by                  ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT_bonus.h"
 
 int	ft_open(char *file, int *fd)
@@ -44,4 +56,13 @@ int	is_valid_type(char *type)
 	if (ft_strcmp(type, "sq") == EQUAL)
 		return (SQUARE);
 	return (INVALID_TYPE_ERROR);
+}
+
+void	check_size_window(void)
+{
+	if (WIDTH < 1 || WIDTH > 1920 || HEIGHT < 1 || HEIGHT > 1080)
+	{
+		ft_putstr_fd("Error\nIncorrect size of the window\n", 2);
+		exit(INCORRECT_SIZE_WINDOW);
+	}
 }

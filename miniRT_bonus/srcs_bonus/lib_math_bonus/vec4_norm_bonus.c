@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vec4_norm_bonus.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/24 18:37:33 by efrancon          #+#    #+#             */
+/*   Updated: 2022/03/25 11:27:57 by                  ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT_bonus.h"
 
 double	get_norm2_vec4(t_vec4 vector)
@@ -22,8 +34,12 @@ double	get_norm_vec4(t_vec4 vector)
 void	normalize_vec4(t_vec4 *vector)
 {
 	double	norm_reciprocal;
+	double	norm;
 
-	norm_reciprocal = 1 / get_norm_vec4(*vector);
+	norm_reciprocal = 0;
+	norm = get_norm_vec4(*vector);
+	if (norm > 0)
+		norm_reciprocal = 1 / norm;
 	vector->coord[X] *= norm_reciprocal;
 	vector->coord[Y] *= norm_reciprocal;
 	vector->coord[Z] *= norm_reciprocal;

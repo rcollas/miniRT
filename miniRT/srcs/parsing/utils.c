@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 11:06:24 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 11:06:25 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/25 11:27:56 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,13 @@ int	is_valid_type(char *type)
 	if (ft_strcmp(type, "pl") == EQUAL)
 		return (PLANE);
 	return (INVALID_TYPE_ERROR);
+}
+
+void	check_size_window(void)
+{
+	if (WIDTH < 1 || WIDTH > 1920 || HEIGHT < 1 || HEIGHT > 1080)
+	{
+		ft_putstr_fd("Error\nIncorrect size of the window\n", 2);
+		exit(INCORRECT_SIZE_WINDOW);
+	}
 }

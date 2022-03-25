@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 11:06:44 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 16:39:43 by                  ###   ########.fr       */
+/*   Updated: 2022/03/25 00:41:30 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,25 @@ void	check_limit_angle(double *angle)
 
 void	init_euler_angles(t_camera *camera)
 {
+	normalize_vec3(&(*camera->dir));
 	camera->pitch_angle = asin(camera->dir->coord[Y]);
-	camera->yaw_angle = acos(camera->dir->coord[X] / cos(camera->pitch_angle));
+	if (camera->dir->coord[Z] / cos(camera->pitch_angle) < -1.0)
+		camera->yaw_angle = asin(-1.0);
+	else if (camera->dir->coord[Z] / cos(camera->pitch_angle) > 1.0)
+		camera->yaw_angle = asin(1.0);
+	else
+		camera->yaw_angle = asin(
+				camera->dir->coord[Z] / cos(camera->pitch_angle));
+	if (!camera->yaw_angle)
+	{
+		if (camera->dir->coord[X] / cos(camera->pitch_angle) < -1.0)
+			camera->yaw_angle = acos(-1.0);
+		else if (camera->dir->coord[X] / cos(camera->pitch_angle) > 1.0)
+			camera->yaw_angle = asin(1.0);
+		else
+			camera->yaw_angle = acos(
+					camera->dir->coord[X] / cos(camera->pitch_angle));
+	}
 	camera->pitch_angle = convert_rad_to_deg(camera->pitch_angle);
 	camera->yaw_angle = convert_rad_to_deg(camera->yaw_angle);
 	check_limit_angle(&camera->pitch_angle);

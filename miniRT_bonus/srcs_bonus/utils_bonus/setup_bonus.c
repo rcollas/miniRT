@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   setup_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/24 18:42:56 by efrancon          #+#    #+#             */
+/*   Updated: 2022/03/25 11:27:56 by                  ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT_bonus.h"
 
-void	init_mlx_ptr(t_mlx *mlx)
+void	init_mlx_all(t_mlx *mlx)
 {
 	mlx->ptr = NULL;
 	mlx->image = NULL;
@@ -17,7 +29,7 @@ t_mlx	*setup_mlx(t_parsing *parsing_var)
 	if (!mlx)
 		exit_error_parsing(MALLOC_ERROR, "malloc() failed", parsing_var);
 	ft_memset(mlx, 0, sizeof(t_mlx *));
-	init_mlx_ptr(mlx);
+	init_mlx_all(mlx);
 	if (!mlx->ptr)
 	{
 		ft_free(mlx);
@@ -35,6 +47,18 @@ t_mlx	*setup_mlx(t_parsing *parsing_var)
 	return (mlx);
 }
 
+void	init_image_all(t_image *image)
+{
+	ft_memset(image, 0, sizeof(t_image *));
+	image->img_ptr = NULL;
+	image->addr = NULL;
+	image->bpp = 0;
+	image->line_len = 0;
+	image->endian = 0;
+	image->width = 0;
+	image->height = 0;
+}
+
 void	init_image(t_mlx *mlx, t_data *data)
 {
 	t_image	*image;
@@ -43,9 +67,7 @@ void	init_image(t_mlx *mlx, t_data *data)
 	image = (t_image *)ft_calloc(1, sizeof(t_image));
 	if (!image)
 		exit_error(MALLOC_ERROR, "malloc() failed", data);
-	ft_memset(image, 0, sizeof(t_image *));
-	image->img_ptr = NULL;
-	image->addr = NULL;
+	init_image_all(image);
 	image->img_ptr = mlx_new_image(mlx->ptr, WIDTH, HEIGHT);
 	if (!image->img_ptr)
 	{
@@ -78,4 +100,7 @@ void	init_data(t_parsing *parsing_var, t_data *data)
 	data->scene = parsing_var->scene;
 	data->obj_nb = parsing_var->obj_nb;
 	data->mlx = parsing_var->mlx;
+	data->scene->camera->right = create_vec3(0, 0, 0);
+	data->scene->camera->up = create_vec3(0, 0, 0);
+	data->scene->camera->forward = create_vec3(0, 0, 0);
 }

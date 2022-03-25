@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enum_bonus.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/24 18:47:08 by efrancon          #+#    #+#             */
+/*   Updated: 2022/03/25 11:27:56 by                  ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef ENUM_BONUS_H
 # define ENUM_BONUS_H
 
@@ -81,6 +93,7 @@ typedef enum s_error
 	INCOMPLETE_FILE_ERROR		= 233,
 	MLX_ERROR					= 232,
 	INCORRECT_FILENAME			= 231,
+	INCORRECT_SIZE_WINDOW		= 230,
 }	t_error;
 
 # ifdef __linux__

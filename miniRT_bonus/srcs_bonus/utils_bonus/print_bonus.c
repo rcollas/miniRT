@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/24 18:42:41 by efrancon          #+#    #+#             */
+/*   Updated: 2022/03/25 11:27:56 by                  ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT_bonus.h"
 
 void	print_list(t_obj *obj)
@@ -51,7 +63,7 @@ void	print_matrix3(t_matrix3 matrix)
 		matrix.row_3.coord[X], matrix.row_3.coord[Y], matrix.row_3.coord[Z]);
 }
 
-void print_color(t_vec3 color, char *str)
+void	print_color(t_vec3 color, char *str)
 {
 	printf("%s R = %f\n", str, color.coord[R]);
 	printf("%s G = %f\n", str, color.coord[G]);

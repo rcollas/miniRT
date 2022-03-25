@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 10:50:58 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 10:50:59 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/25 11:27:56 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ _Bool	tilt_camera(int key, t_camera *camera)
 	else if (key == KEY_LEFT)
 		camera->yaw_angle -= 5.0;
 	else if (key == KEY_DOWN)
-		camera->pitch_angle += 5.0;
-	else if (key == KEY_UP)
 		camera->pitch_angle -= 5.0;
+	else if (key == KEY_UP)
+		camera->pitch_angle += 5.0;
 	else
 		return (0);
 	return (1);

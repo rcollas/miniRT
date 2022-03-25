@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raytracer_bonus.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/24 18:39:18 by efrancon          #+#    #+#             */
+/*   Updated: 2022/03/25 11:27:57 by                  ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT_bonus.h"
 
 _Bool	check_hit_object(
@@ -99,14 +111,20 @@ void	run_minirt(t_data *data)
 
 	mlx = data->mlx;
 	init_image(mlx, data);
-	data->cam_to_world_matrix = built_cam_to_world_matrix(data->scene->camera);
-	data->start_time = get_time();
 	main_thread.pixel_y = 0;
 	main_thread.max_height = HEIGHT;
-	if (data->multithreading && THREADS > 0)
-		run_multithreading(data);
-	else
-		run_raytracing(mlx, data, &main_thread);
+	data->start_time = get_time();
+	if (get_norm_vec3(*data->scene->camera->dir) && data->scene->camera->fov)
+	{
+		data->cam_to_world_matrix = built_cam_to_world_matrix(
+				data->scene->camera);
+		{
+			if (data->multithreading && THREADS > 0)
+				run_multithreading(data);
+			else
+				run_raytracing(mlx, data, &main_thread);
+		}
+	}
 	display_cam_param(data->scene->camera, data);
 	mlx_put_image_to_window(mlx->ptr, mlx->window, mlx->image->img_ptr, 0, 0);
 }

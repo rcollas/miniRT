@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/24 18:47:43 by efrancon          #+#    #+#             */
+/*   Updated: 2022/03/25 11:27:56 by                  ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef UTILS_BONUS_H
 # define UTILS_BONUS_H
 
@@ -7,6 +19,7 @@
 # include "error_bonus.h"
 # include "libft_bonus.h"
 
+void	check_size_window(void);
 void	ft_free(void *to_free);
 void	safe_close(int fd);
 int		ft_open(char *file, int *fd);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   miniRT_bonus.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/24 18:47:32 by efrancon          #+#    #+#             */
+/*   Updated: 2022/03/25 11:27:56 by                  ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINIRT_BONUS_H
 # define MINIRT_BONUS_H
 
@@ -175,7 +187,7 @@ _Bool			hit_hyperboloid(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			hit_cone(t_ray *ray, t_obj *obj, t_ray *hit);
 _Bool			check_cone_height(t_ray *ray, t_obj *obj, double ray_dist);
 void			compute_normal_cone(t_ray *ray, t_obj *obj, t_ray *hit);
-void	print_color(t_vec3 color, char *str);
+void			print_color(t_vec3 color, char *str);
 
 /********************************* LIGHTING ***********************************/
 
