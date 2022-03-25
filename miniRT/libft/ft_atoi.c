@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:46:33 by rcollas           #+#    #+#             */
-/*   Updated: 2022/03/22 18:13:16 by                  ###   ########.fr       */
+/*   Updated: 2022/03/25 14:02:09 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static long	result_atoi(const char *nptr, unsigned long long int nb, int sign)
 {
 	if (*nptr != '\0')
 		return (-2147483649);
-	if (nb > 2147483647 && sign == 1)
+	if (nb > 20000000 && sign == 1)
 		return (-2147483649);
-	else if (nb > 2147483648 && sign == -1)
+	else if (nb > 20000000 && sign == -1)
 		return (-2147483649);
 	return (nb * sign);
 }

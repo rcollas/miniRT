@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 15:26:48 by efrancon          #+#    #+#             */
-/*   Updated: 2022/02/22 14:31:13 by                  ###   ########.fr       */
+/*   Updated: 2022/03/25 14:01:31 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static double	convert_to_double(
 			return (-2147483649);
 		nptr++;
 	}
-	if (*nptr != '\0' || sign * (int_part + float_part / divisor) > 2147483647
-		|| sign * (int_part + float_part / divisor) < -2147483648)
+	if (*nptr != '\0' || sign * (int_part + float_part / divisor) > 20000000
+		|| sign * (int_part + float_part / divisor) < -20000000)
 		return (-2147483649);
 	return (sign * (int_part + float_part / divisor));
 }

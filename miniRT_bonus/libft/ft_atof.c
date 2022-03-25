@@ -43,8 +43,8 @@ static double	convert_to_double(
 			return (-2147483649);
 		nptr++;
 	}
-	if (*nptr != '\0' || sign * (int_part + float_part / divisor) > 2147483647
-		|| sign * (int_part + float_part / divisor) < -2147483648)
+	if (*nptr != '\0' || sign * (int_part + float_part / divisor) > 20000000
+		|| sign * (int_part + float_part / divisor) < -20000000)
 		return (-2147483649);
 	return (sign * (int_part + float_part / divisor));
 }
