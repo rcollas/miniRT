@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 18:38:53 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 19:51:23 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/25 01:17:45 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	compute_cam_dir(t_camera *camera)
 	double	pitch;
 
 	check_limit_angle(&camera->pitch_angle);
-	// printf("yaw = %f | pitch = %f\n", camera->yaw_angle, camera->pitch_angle);
 	yaw = convert_deg_to_rad(camera->yaw_angle);
 	pitch = convert_deg_to_rad(camera->pitch_angle);
 	camera->dir->coord[X] = cos(yaw) * cos(pitch);

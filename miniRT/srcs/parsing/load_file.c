@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 11:05:29 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 11:05:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/24 22:55:44 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,15 @@ int	load_file(char **argv, int argc, int *fd)
 		parsing_error(ARG_NUMBER_ERROR, NULL);
 		return (FAIL);
 	}
+	if (is_valid_extension(argv[1]) == FALSE)
+	{
+		parsing_error(EXTENSION_ERROR, argv[1]);
+		return (FAIL);
+	}
 	if (ft_open(argv[1], fd) != SUCCESS)
 	{
 		safe_close(*fd);
 		return (FAIL);
-	}
-	if (is_valid_extension(argv[1]) == FALSE)
-	{
-		parsing_error(EXTENSION_ERROR, argv[1]);
-		safe_close(*fd);
 	}
 	return (SUCCESS);
 }

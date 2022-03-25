@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 18:47:43 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 18:47:45 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/24 22:47:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "error_bonus.h"
 # include "libft_bonus.h"
 
+void	check_size_window(void);
 void	ft_free(void *to_free);
 void	safe_close(int fd);
 int		ft_open(char *file, int *fd);

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 11:06:49 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 19:40:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/25 01:16:17 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	compute_cam_dir(t_camera *camera)
 	camera->dir->coord[X] = cos(yaw) * cos(pitch);
 	camera->dir->coord[Y] = sin(pitch);
 	camera->dir->coord[Z] = sin(yaw) * cos(pitch);
+	normalize_vec3(camera->dir);
 }
 
 void	compute_cam_axis(t_camera *camera)

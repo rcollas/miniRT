@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 18:47:08 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 18:47:09 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/24 22:40:39 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef enum s_error
 	INCOMPLETE_FILE_ERROR		= 233,
 	MLX_ERROR					= 232,
 	INCORRECT_FILENAME			= 231,
+	INCORRECT_SIZE_WINDOW		= 230,
 }	t_error;
 
 # ifdef __linux__
