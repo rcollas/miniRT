@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 18:47:08 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 22:40:39 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/25 11:49:49 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # define SPECULAR_COEFF 64
 # define NO_SHADOW 1.0f
-# define SHADOW_COEFF 0.3f
 # define PATH_TRACING_COEFF 0.3f
 # define LIGHT_INTENSITY 3.0f
 # define RESET "\033[0m"
