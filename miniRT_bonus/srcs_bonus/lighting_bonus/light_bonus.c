@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 18:34:59 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 18:35:01 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/25 02:23:03 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ t_vec3	compute_classic_light(t_scene *scene, t_ray hit, t_data *data)
 		intensity *= (scene->diffuse_light[i].intensity / M_PI);
 		intensity *= hit.shadowing;
 		clamp_intensity(&intensity);
-		total_light = add_vec3_and_const(total_light, intensity);
+		total_light = add_vec3(total_light,
+				mul_vec3_and_const(*scene->diffuse_light[i].color, intensity));
 	}
 	return (total_light);
 }
@@ -58,5 +59,6 @@ t_vec3	get_light(t_data *data, t_ray hit, t_ray ray)
 		else
 			total_light = compute_classic_light(data->scene, hit, data);
 	}
+	total_light = add_vec3(total_light, get_ambient_light(data->scene));
 	return (total_light);
 }

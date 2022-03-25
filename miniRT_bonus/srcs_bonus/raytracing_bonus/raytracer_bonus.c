@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 18:39:18 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 18:39:19 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/25 02:13:09 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,7 @@ t_vec3	compute_material(t_data *data, t_ray *hit, t_ray *ray)
 	rgb = create_vec3(0, 0, 0);
 	if (BONUS)
 		handle_texture(hit);
-	rgb = mul_vec3(get_light(data, *hit, *ray),
-			compute_obj_color(hit, data->scene->diffuse_light,
-				data->scene->light_nb));
-	rgb = add_vec3(rgb,
-			mul_vec3(get_ambient_light(data->scene), hit->color));
+	rgb = mul_vec3(get_light(data, *hit, *ray), hit->color);
 	return (rgb);
 }
 

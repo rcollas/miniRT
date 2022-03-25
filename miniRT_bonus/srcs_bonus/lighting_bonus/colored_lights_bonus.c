@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 18:34:55 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/25 02:08:49 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/25 02:10:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ t_vec3	compute_obj_color(t_ray *hit, t_diffuse_light *light, int light_nb)
 	i = -1;
 	light_color = compute_light_color(light, light_nb);
 	obj_color = mul_vec3(hit->color, light_color);
-	return (obj_color);
+	return (hit->color);
 }
