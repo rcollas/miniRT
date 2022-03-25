@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 18:47:37 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/25 11:27:56 by                  ###   ########.fr       */
+/*   Updated: 2022/03/25 11:57:03 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_ray
 	int				obj_ref;
 	double			shadowing;
 	_Bool			inside_object;
+	int				i;
 	struct s_obj	*obj;
 }	t_ray;
 
