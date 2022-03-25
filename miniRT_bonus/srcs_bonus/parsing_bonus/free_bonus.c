@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 18:44:39 by efrancon          #+#    #+#             */
-/*   Updated: 2022/03/24 18:44:40 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/03/25 10:55:20 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ void	free_list_error(t_obj *obj, t_mlx *mlx)
 {
 	t_obj	*tmp;
 
-	while (obj)
+	while (obj && mlx->ptr)
 	{
 		tmp = obj->next;
-		if (obj->texture->has_texture)
+		if (obj->texture->has_texture && obj->texture->img_ptr)
 			mlx_destroy_image(mlx->ptr, obj->texture->img_ptr);
-		if (obj->bump_map->has_texture)
+		if (obj->bump_map->has_texture && obj->bump_map->img_ptr)
 			mlx_destroy_image(mlx->ptr, obj->bump_map->img_ptr);
 		ft_free(obj);
 		obj = tmp;
